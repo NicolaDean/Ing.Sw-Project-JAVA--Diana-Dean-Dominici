@@ -10,6 +10,7 @@ public class App
     {
 
         int b = 1;
-        System.out.println( "Hello World!" );
+        int pippo = 42;
+        System.out.println( "Hello AM12 GROUP!" );
     }
 }
