@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="907983fd-0854-48d7-8915-59af7b86c216" name="Default Changelist" comment="prova di funzionameto push 2">
+    <list default="true" id="907983fd-0854-48d7-8915-59af7b86c216" name="Default Changelist" comment="Prova merge">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/App.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -79,6 +80,7 @@
     <MESSAGE value="prova di funzionameto push" />
     <MESSAGE value="prova funzionamento 3" />
     <MESSAGE value="cancellazione funzionefede" />
-    <option name="LAST_COMMIT_MESSAGE" value="cancellazione funzionefede" />
+    <MESSAGE value="Prova merge" />
+    <option name="LAST_COMMIT_MESSAGE" value="Prova merge" />
   </component>
 </project>
