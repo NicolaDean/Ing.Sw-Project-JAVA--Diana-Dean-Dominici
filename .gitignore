@@ -1,2 +1,12 @@
-/AM12.iml
-/.idea/
+# Intellij
+.idea/
+*.iml
+*.iws
+.attach_pid*
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
