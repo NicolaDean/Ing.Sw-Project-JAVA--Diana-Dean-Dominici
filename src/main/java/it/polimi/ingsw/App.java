@@ -25,7 +25,5 @@ public class App {
 
 
     public int FunzLosca(){return 0;}
-
-
-    public boolean mannaggiaAGIT(){return false;}
+    public int FunzLoscaMergeATest(){return 0;}
 }
