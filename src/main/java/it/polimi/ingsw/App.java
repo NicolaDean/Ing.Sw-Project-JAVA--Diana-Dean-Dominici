@@ -13,4 +13,10 @@ public class App
         int pippo = 42;
         System.out.println( "Hello AM12 GROUP!" );
     }
+
+    public int funzionefede()
+    {
+        System.out.println( "funione fede a servizio" );
+        return 1;
+    }
 }
