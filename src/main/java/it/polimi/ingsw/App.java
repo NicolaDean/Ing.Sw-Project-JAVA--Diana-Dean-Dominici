@@ -1,9 +1,13 @@
 package it.polimi.ingsw;
 
-
-public class App {
-    public static void main(String[] args) {
-
-        System.out.println("Hello AM12 GROUP!");
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+        System.out.println( "Hello World!" );
     }
 }
