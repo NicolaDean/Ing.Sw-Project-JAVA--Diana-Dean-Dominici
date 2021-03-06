@@ -12,4 +12,8 @@ public class App {
         System.out.println("Hello AM12 GROUP!");
     }
 
+    public int funzionefede()
+    {
+        return 1;
+    }
 }
