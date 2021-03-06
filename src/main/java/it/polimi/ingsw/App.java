@@ -19,8 +19,7 @@ public class App {
 
     public int funzioneRichi()
     {
-        return 1;
-        //nicola vedi questa scritta?
+        return 2;
     }
 
 
