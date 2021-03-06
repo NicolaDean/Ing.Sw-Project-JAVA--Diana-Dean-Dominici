@@ -16,4 +16,6 @@ public class App {
     {
         return 1;
     }
+
+    public int FunzLosca(){return 0;}
 }
