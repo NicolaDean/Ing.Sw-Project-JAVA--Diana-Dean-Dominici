@@ -25,4 +25,5 @@ public class App {
 
 
     public int FunzLosca(){return 0;}
+    public int FunzLoscaMergeATest(){return 0;}
 }
