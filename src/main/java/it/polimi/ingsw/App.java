@@ -17,5 +17,12 @@ public class App {
         return 1;
     }
 
+    public int funzioneRichi()
+    {
+        return 1;
+        //nicola vedi questa scritta?
+    }
+
+
     public int FunzLosca(){return 0;}
 }
