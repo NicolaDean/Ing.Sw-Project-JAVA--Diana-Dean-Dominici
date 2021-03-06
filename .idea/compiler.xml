@@ -11,6 +11,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="AM12" target="1.7" />
+      <module name="ingswAM2021-Diana-Dean-Dominici" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

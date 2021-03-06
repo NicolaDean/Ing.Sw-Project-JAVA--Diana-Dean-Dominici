@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="907983fd-0854-48d7-8915-59af7b86c216" name="Default Changelist" comment="prova di funzionameto push 2">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/App.java" afterDir="false" />
-    </list>
+    <list default="true" id="907983fd-0854-48d7-8915-59af7b86c216" name="Default Changelist" comment="prova di funzionameto push 2" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,6 +15,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GithubPullRequestsUISettings">
     <option name="hiddenUrls">
@@ -77,6 +75,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="primo commit di prova" />
     <MESSAGE value="prova di funzionameto push" />
-    <option name="LAST_COMMIT_MESSAGE" value="prova di funzionameto push" />
+    <MESSAGE value="prova funzionamento 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="prova funzionamento 3" />
   </component>
 </project>
