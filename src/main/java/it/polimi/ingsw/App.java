@@ -21,8 +21,4 @@ public class App {
     {
         return 2;
     }
-
-
-    public int FunzLosca(){return 0;}
-    public int FunzLoscaMergeATest(){return 0;}
 }
