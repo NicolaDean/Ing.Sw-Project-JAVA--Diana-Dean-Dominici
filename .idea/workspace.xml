@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="907983fd-0854-48d7-8915-59af7b86c216" name="Default Changelist" comment="prova di funzionameto push 2" />
+    <list default="true" id="907983fd-0854-48d7-8915-59af7b86c216" name="Default Changelist" comment="prova di funzionameto push 2">
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/App.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,6 +78,7 @@
     <MESSAGE value="primo commit di prova" />
     <MESSAGE value="prova di funzionameto push" />
     <MESSAGE value="prova funzionamento 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="prova funzionamento 3" />
+    <MESSAGE value="cancellazione funzionefede" />
+    <option name="LAST_COMMIT_MESSAGE" value="cancellazione funzionefede" />
   </component>
 </project>
