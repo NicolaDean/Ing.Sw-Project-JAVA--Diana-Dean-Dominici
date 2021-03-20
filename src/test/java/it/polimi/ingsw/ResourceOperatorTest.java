@@ -60,4 +60,21 @@ public class ResourceOperatorTest {
 
         assertFalse(ResourceOperator.compare(a,b));
     }
+
+    @Test
+    public void TestResourceOperatorSum() throws Exception {
+        Resource a= new Resource(SHILD,2);
+        Resource b= new Resource(SHILD,1);
+
+        assertTrue(ResourceOperator.sum(a,b).getQuantity()==3);
+
+
+    }
+    @Test(expected = Exception.class)
+    public void TestResourceOperatorExceptionSum() throws Exception {
+        Resource a= new Resource(SHILD,2);
+        Resource b= new Resource(COIN,1);
+
+        Resource c = ResourceOperator.sum(a,b);
+    }
 }
