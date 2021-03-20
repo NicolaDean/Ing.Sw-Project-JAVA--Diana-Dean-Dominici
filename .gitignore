@@ -10,3 +10,4 @@
 # Maven
 log/
 target/
+/target/
