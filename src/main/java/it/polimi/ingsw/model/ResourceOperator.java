@@ -54,8 +54,30 @@ public class ResourceOperator {
     }
 
     /**
-     *
+     * Return true if all Resources of a is >= of b
+     * @param a
+     * @param b
+     * @return
      */
+    public static boolean compare(List<Resource> a,List<Resource> b)
+    {
+        boolean flag;//avoid to return true if 2 list have only different reource type
+
+        for(Resource resA : a)
+        {
+            flag = false;
+            for(Resource resB : b)
+            {
+                if(resA.getType() == resB.getType())
+                {
+                    if( resA.getQuantity() >= resB.getQuantity()) flag = true;
+                    else return false;
+                }
+            }
+            if(flag == false) return false;
+        }
+        return true;
+    }
 
 
 }
