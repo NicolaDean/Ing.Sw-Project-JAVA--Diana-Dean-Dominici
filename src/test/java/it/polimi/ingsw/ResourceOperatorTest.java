@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
-import static it.polimi.ingsw.enumeration.ResourceType.SERVANT;
 import static org.junit.Assert.*;
 
 /**

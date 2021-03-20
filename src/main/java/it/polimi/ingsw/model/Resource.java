@@ -3,8 +3,8 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.enumeration.*;
 
 public class Resource {
-    ResourceType Type;
-    int Quantity;
+    private ResourceType Type;
+    private int Quantity;
 
     public Resource(ResourceType type,int quantity)
     {
