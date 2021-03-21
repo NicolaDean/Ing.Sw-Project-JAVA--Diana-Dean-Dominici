@@ -2,13 +2,14 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.model.Resource;
 import it.polimi.ingsw.model.ResourceOperator;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
-import static org.junit.Assert.*;
 
 /**
  * This Test check the correct output from the Resource operation like comparison or sum/sub
