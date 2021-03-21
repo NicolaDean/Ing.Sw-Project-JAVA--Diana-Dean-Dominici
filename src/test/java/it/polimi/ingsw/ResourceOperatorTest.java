@@ -3,6 +3,8 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.model.Resource;
 import it.polimi.ingsw.model.ResourceOperator;
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 
@@ -70,11 +72,15 @@ public class ResourceOperatorTest {
 
 
     }
-    @Test(expected = Exception.class)
+    @Test
     public void TestResourceOperatorExceptionSum() throws Exception {
-        Resource a= new Resource(SHILD,2);
-        Resource b= new Resource(COIN,1);
+        Assertions.assertThrows(Exception.class,()->{
+            Resource a= new Resource(SHILD,2);
+            Resource b= new Resource(COIN,1);
 
-        Resource c = ResourceOperator.sum(a,b);
+            Resource c = ResourceOperator.sum(a,b);
+        });
+
+
     }
 }
