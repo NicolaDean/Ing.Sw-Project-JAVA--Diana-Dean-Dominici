@@ -1,6 +1,8 @@
 package it.polimi.ingsw;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import it.polimi.ingsw.model.Dashboard;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -19,6 +21,12 @@ public class AppTest
     public void ResourceTest() throws Exception {
         ResourceOperatorTest tmp = new ResourceOperatorTest();
         tmp.AllResourceTest();
+    }
+    @Test
+    public void DashboardTest()
+    {
+        DashboardTest tmp = new DashboardTest();
+        tmp.TestAll();
     }
 
     @Test

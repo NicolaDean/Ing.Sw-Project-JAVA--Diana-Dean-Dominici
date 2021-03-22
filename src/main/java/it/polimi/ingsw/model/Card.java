@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Card {
 
@@ -19,9 +20,14 @@ public class Card {
 
     /**
      * Methods that tells if you have enough resources to buy the card
-     * @param db
+     * @param dash Dashboard pointer
      * @return
      */
-    public boolean checkCost(Dashboard db) {boolean Outcome = false; return Outcome;}
+    public boolean checkCost(Dashboard dash) {
+        List<Resource> resAvailable = dash.getAllAvailableResource();
+
+        boolean out = ResourceOperator.compare(resAvailable,this.Cost);
+        return out;
+    }
 
 }
