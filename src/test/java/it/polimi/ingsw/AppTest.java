@@ -12,13 +12,21 @@ import java.util.List;
 public class AppTest 
 {
     /**
-     * Rigorous Test :-)
+     *  Calls all Test Resources
+     * @throws Exception .
      */
+    @Test
+    public void ResourceTest() throws Exception {
+        ResourceOperatorTest tmp = new ResourceOperatorTest();
+        tmp.AllResourceTest();
+    }
+
     @Test
     public void shouldAnswerWithTrue()
     {
         assertTrue( true );
     }
+
 
 
 }

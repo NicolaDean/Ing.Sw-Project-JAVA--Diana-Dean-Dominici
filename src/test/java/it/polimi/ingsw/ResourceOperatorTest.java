@@ -17,6 +17,17 @@ import static it.polimi.ingsw.enumeration.ResourceType.*;
  * This Test check the correct output from the Resource operation like comparison or sum/sub
  */
 public class ResourceOperatorTest {
+
+    @Test
+    public void AllResourceTest() throws Exception {
+        TestResourceOperatorCompare();
+        TestResourceOperatorSum();
+        TestResourceOperatorExceptionSum();
+    }
+
+    /**
+     * Test different Possible Scenario for Resources List comparison
+     */
     @Test
     public void TestResourceOperatorCompare()
     {
@@ -63,17 +74,27 @@ public class ResourceOperatorTest {
         assertFalse(ResourceOperator.compare(a,b));
     }
 
+    /**
+     * Test that the sum are calculated correctly
+     * @throws Exception if resource type is different
+     */
+
     @Test
     public void TestResourceOperatorSum() throws Exception {
         Resource a= new Resource(SHILD,2);
         Resource b= new Resource(SHILD,1);
 
-        assertTrue(ResourceOperator.sum(a,b).getQuantity()==3);
+        Resource c =  ResourceOperator.sum(a,b);
+        assertTrue(c.getQuantity()==3 && c.getType() == a.getType() && c.getType() == b.getType() );
 
 
     }
+
+    /**
+     * Test if Sum of 2 resource with different Type throw exeption
+     */
     @Test
-    public void TestResourceOperatorExceptionSum() throws Exception {
+    public void TestResourceOperatorExceptionSum() {
         Assertions.assertThrows(Exception.class,()->{
             Resource a= new Resource(SHILD,2);
             Resource b= new Resource(COIN,1);
