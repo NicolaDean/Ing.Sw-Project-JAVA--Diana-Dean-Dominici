@@ -4,10 +4,10 @@ import java.util.List;
 
 public class Card {
 
-    private ArrayList<Resource> Cost = new ArrayList<Resource>();
+    private List<Resource> Cost = new ArrayList<Resource>();
     private int VictoryPoints;
 
-    public Card(ArrayList<Resource> cost, int victoryPoints) {
+    public Card(List<Resource> cost, int victoryPoints) {
         Cost = cost;
         VictoryPoints = victoryPoints;
     }

@@ -12,8 +12,13 @@ public class ProductionCard extends Card{
     private List<Resource> RawMaterials;
     private List<Resource> ObtainedMaterials;
 
-    public ProductionCard(ArrayList<Resource> cost, int victoryPoints) {
+    public ProductionCard(List<Resource> cost, int victoryPoints,int level) {
         super(cost, victoryPoints);
+        this.Level = level;
+    }
+
+    public int getLevel() {
+        return Level;
     }
 
     public CardType getType() {
@@ -59,11 +64,12 @@ public class ProductionCard extends Card{
         return out;
     }
 
-    public boolean buy(Dashboard dash)
+    public boolean buy(Dashboard dash,int pos)
     {
         boolean out = this.checkCost(dash);
 
-        //Pusha la carta nella dashboard
+        //Notify Dashboard asking for position  (es notify(this)) instead of having pos parameter
+        dash.setProcuctionCard(this,pos);
         return out;
     }
 

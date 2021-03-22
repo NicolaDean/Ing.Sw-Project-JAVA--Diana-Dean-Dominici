@@ -2,21 +2,22 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.enumeration.ResourceType;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class Dashboard {
     Storage Storage;
     Resource [] Chest;
-    Queue<ProductionCard>[] ProducionCards;
+    Stack<ProductionCard>[] ProducionCards;
     boolean [] PapalToken;
 
     public Dashboard()
     {
+        this.ProducionCards = new Stack[3];
 
+        this.ProducionCards[0] = new Stack<ProductionCard>();
+        this.ProducionCards[1] = new Stack<ProductionCard>();
+        this.ProducionCards[2] = new Stack<ProductionCard>();
     }
 
     public int getScore(){
@@ -31,7 +32,13 @@ public class Dashboard {
      */
     public boolean setProcuctionCard(ProductionCard card,int pos)
     {
-        return false;
+        boolean out = this.checkValidPosition(card,pos);
+
+        if(out)
+        {
+            this.ProducionCards[pos].add(card);
+        }
+        return out;
     }
 
     /**
@@ -42,7 +49,26 @@ public class Dashboard {
      */
     private boolean checkValidPosition(ProductionCard card, int pos)
     {
-        return false;
+
+        if(!ProducionCards[pos].isEmpty())
+        {
+            if(ProducionCards[pos].peek().getLevel() == card.getLevel()-1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            if(card.getLevel()==1)
+                return true;
+            else
+                return false;
+        }
+
     }
 
     /**
@@ -83,9 +109,9 @@ public class Dashboard {
     {
         int vp=0;
 
-        for(Queue<ProductionCard> queue : ProducionCards)
+        for(Stack<ProductionCard> stack : ProducionCards)
         {
-            vp +=queue.stream().mapToInt(ProductionCard::getScore).sum();
+            vp +=stack.stream().mapToInt(ProductionCard::getScore).sum();
         }
         return vp;
     }

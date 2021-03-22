@@ -13,21 +13,6 @@ import java.util.List;
  */
 public class AppTest 
 {
-    /**
-     *  Calls all Test Resources
-     * @throws Exception .
-     */
-    @Test
-    public void ResourceTest() throws Exception {
-        ResourceOperatorTest tmp = new ResourceOperatorTest();
-        tmp.AllResourceTest();
-    }
-    @Test
-    public void DashboardTest()
-    {
-        DashboardTest tmp = new DashboardTest();
-        tmp.TestAll();
-    }
 
     @Test
     public void shouldAnswerWithTrue()

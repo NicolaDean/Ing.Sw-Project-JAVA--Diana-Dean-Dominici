@@ -48,7 +48,9 @@ public class Player {
     /**
      * Cominica la fine del turno alla classe game
      */
-    public void endTurn(){}
+    public void endTurn(){
+        //Notify Game with event
+    }
 
     /**
      * Calculate the score from the Production Cards, Player position and ...
