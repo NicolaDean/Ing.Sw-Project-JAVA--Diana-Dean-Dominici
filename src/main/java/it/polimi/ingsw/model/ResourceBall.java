@@ -2,15 +2,21 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.enumeration.ResourceType;
 
-public class ResourceBall  extends BasicBall{
-    ResourceType Type;
+import java.awt.*;
 
-    public ResourceBall(ResourceType type) {
-        Type = type;
-    }
+public abstract class ResourceBall  extends BasicBall{
 
-    public void active(Player p){
-        //chiede al player dove aggiungere le risorse
-        //p.getDashboard().getStorage().safeInsertion(new Resource(Type,1),posizioneChiestaPrima);
-    }
+    /**
+     * Add Resource to the player
+     * @param p: player that get ball
+     */
+    @Override
+    public abstract void active(Player p);
+
+    /**
+     *
+     * @return type color
+     */
+    @Override
+    public abstract Color getColor();
 }

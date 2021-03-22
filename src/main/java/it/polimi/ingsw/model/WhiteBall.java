@@ -2,14 +2,14 @@ package it.polimi.ingsw.model;
 
 import java.awt.*;
 
-public class RedBall extends BasicBall{
+public class WhiteBall extends BasicBall{
     /**
-     * increment papal position
+     * active ability
      * @param P: player that get red ball
      */
     @Override
     public void active(Player P){
-        P.incrementPosition();
+        //attiva abilità leader
     }
 
     /**
@@ -18,6 +18,6 @@ public class RedBall extends BasicBall{
      */
     @Override
     public Color getColor() {
-        return Color.red;
+        return Color.white;
     }
 }
