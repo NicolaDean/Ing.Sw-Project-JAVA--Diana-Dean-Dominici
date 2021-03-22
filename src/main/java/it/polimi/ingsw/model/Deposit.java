@@ -60,7 +60,8 @@ public class Deposit {
 
         int a = Resource.getQuantity();
             try {
-                Resource result = ResourceOperator.sub(Resource, in);
+                Resource result = Resource;
+                result = ResourceOperator.sub(Resource, in);
                 if (Resource.getQuantity() >= in.getQuantity())
                 {   a = -1;
                     if(result.getQuantity()==0)
@@ -71,6 +72,7 @@ public class Deposit {
 
 
             } catch (Exception e) {
+                a = -1;
                 System.out.println(e.getMessage());
             }
 
