@@ -34,6 +34,21 @@ public class DepositTest {
     }
 
     /**
+     * test the insert of an invalid resource
+     * @throws Exception
+     */
+    @Test
+    public void TestInvalidDepositInsertion() throws Exception
+    {
+        Deposit testdeposit = new Deposit(3);
+        testdeposit.setNewDeposit(COIN, 2);
+        Resource r = new Resource(SHILD, 1);
+        testdeposit.safeInsertion(r);
+        assertTrue(testdeposit.getResource().getQuantity()==2 && testdeposit.getResource().getType()==COIN);
+
+    }
+
+    /**
      * test the safeSubtraction
      * @throws Exception
      */
@@ -49,6 +64,22 @@ public class DepositTest {
     }
 
     /**
+     * test the sub of an invalid resource
+     * @throws Exception
+     */
+    @Test
+    public void TestInvalidDepositSub() throws Exception
+    {
+        Deposit testdeposit = new Deposit(3);
+        testdeposit.setNewDeposit(COIN, 2);
+        Resource r = new Resource(SHILD, 1);
+        testdeposit.safeSubtraction(r);
+        assertTrue(testdeposit.getResource().getQuantity()==2 && testdeposit.getResource().getType()==COIN);
+
+    }
+
+
+    /**
      * Test the exceptions of safeInsertion
      */
     @Test
@@ -58,9 +89,8 @@ public class DepositTest {
             testdeposit.setNewDeposit(COIN, 2);
             Resource r = new Resource(COIN, 1);
             testdeposit.safeInsertion(r);
-
-
         });
+
     }
 
     /**
