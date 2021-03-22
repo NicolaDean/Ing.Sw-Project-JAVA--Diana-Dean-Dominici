@@ -98,7 +98,6 @@ public class ResourceOperatorTest {
         Assertions.assertThrows(Exception.class,()->{
             Resource a= new Resource(SHILD,2);
             Resource b= new Resource(COIN,1);
-
             Resource c = ResourceOperator.sum(a,b);
         });
 

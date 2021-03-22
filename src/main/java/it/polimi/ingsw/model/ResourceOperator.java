@@ -43,7 +43,7 @@ public class ResourceOperator {
      */
     public static Resource sub(Resource a,Resource b) throws Exception
     {
-        if(Compare(a,b))
+        if(a.getType() == b.getType())
         {
             return new Resource(a.getType(), a.getQuantity()-b.getQuantity());
         }
