@@ -7,17 +7,27 @@ import java.util.stream.Stream;
 
 public class Dashboard {
     Storage Storage;
-    Resource [] Chest;
+    List<Resource> Chest;
     Stack<ProductionCard>[] ProducionCards;
     boolean [] PapalToken;
 
     public Dashboard()
     {
+        Storage = new Storage();
+        Chest = new ArrayList<Resource>();
+
         this.ProducionCards = new Stack[3];
 
         this.ProducionCards[0] = new Stack<ProductionCard>();
         this.ProducionCards[1] = new Stack<ProductionCard>();
         this.ProducionCards[2] = new Stack<ProductionCard>();
+
+        PapalToken = new boolean[3];
+        for(int i=0;i<3;i++)
+        {
+            PapalToken[i]=false;
+        }
+
     }
 
     public int getScore(){
