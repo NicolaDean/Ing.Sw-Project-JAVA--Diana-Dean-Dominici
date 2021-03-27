@@ -3,28 +3,28 @@ package it.polimi.ingsw.model;
 
 public class Player {
 
-    private String Nickname;
-    private boolean ConnectionState;
-    private LeaderCard[] Leaders;
-    private Dashboard Dashboard;
-    private int Position;
-    private int Score;
+    private String nickname;
+    private boolean connectionState;
+    private LeaderCard[] leaders;
+    private Dashboard dashboard;
+    private int position;
+    private int score;
 
     public Player(String nickname,LeaderCard[] drawedCards)
     {
-        this.Nickname = nickname;
+        this.nickname = nickname;
     }
 
     public String getNickname()
     {
-        return this.Nickname;
+        return this.nickname;
     }
     /**
      * increment player position by 1
      */
     public void incrementPosition()
     {
-        this.Position++;
+        this.position++;
     }
 
     /**
@@ -34,15 +34,15 @@ public class Player {
      */
     public boolean checkConnection()
     {
-        return this.ConnectionState;
+        return this.connectionState;
     }
 
     public int getPosition() {
-        return this.Position;
+        return this.position;
     }
 
     public Dashboard getDashboard() {
-        return this.Dashboard;
+        return this.dashboard;
     }
 
     /**
@@ -58,7 +58,7 @@ public class Player {
      */
     private int getDashboardScore()
     {
-        return this.Dashboard.getScore();
+        return this.dashboard.getScore();
     }
 
     /**
@@ -68,7 +68,7 @@ public class Player {
     private int getCardsScore()
     {
         int vp=0;
-        for(LeaderCard Leader : Leaders)
+        for(LeaderCard Leader : leaders)
         {
             vp+=Leader.getScore();
         }
@@ -90,7 +90,7 @@ public class Player {
      */
     public void DiscardLeader(int position)
     {
-        Leaders[position] = null;
+        leaders[position] = null;
     }
 
 

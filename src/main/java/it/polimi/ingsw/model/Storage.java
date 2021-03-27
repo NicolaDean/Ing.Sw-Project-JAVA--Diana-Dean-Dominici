@@ -1,17 +1,17 @@
 package it.polimi.ingsw.model;
 
 public class Storage {
-    private Deposit[] Storage = new Deposit[3];
-    private boolean BonusActive;
+    private Deposit[] storage = new Deposit[3];
+    private boolean bonusActive;
 
     /**
      * constructor of Storage, it initializes the 3 storages with 1, 2, and 3 respectively as maxSize
      */
     public Storage() {
-        Storage[0] = new Deposit(1);
-        Storage[1] = new Deposit(2);
-        Storage[2] = new Deposit(3);
-        BonusActive = false;
+        storage[0] = new Deposit(1);
+        storage[1] = new Deposit(2);
+        storage[2] = new Deposit(3);
+        bonusActive = false;
     }
 
     /**
@@ -21,11 +21,11 @@ public class Storage {
      * @throws Exception if the swap is not possibile because of space limits of the deposits
      */
     public void swapDeposit(int pos1, int pos2) throws Exception {
-        if (Storage[pos1].getResource().getQuantity() <= Storage[pos2].getSizeMax() && Storage[pos2].getResource().getQuantity() <= Storage[pos1].getSizeMax())
+        if (storage[pos1].getResource().getQuantity() <= storage[pos2].getSizeMax() && storage[pos2].getResource().getQuantity() <= storage[pos1].getSizeMax())
         {
-            Resource tmp = Storage[pos1].getResource();
-            Storage[pos1].setNewDeposit(Storage[pos2].getResource().getType(), Storage[pos2].getResource().getQuantity());
-            Storage[pos2].setNewDeposit(tmp.getType(), tmp.getQuantity());
+            Resource tmp = storage[pos1].getResource();
+            storage[pos1].setNewDeposit(storage[pos2].getResource().getType(), storage[pos2].getResource().getQuantity());
+            storage[pos2].setNewDeposit(tmp.getType(), tmp.getQuantity());
 
         }
         else
@@ -40,7 +40,7 @@ public class Storage {
      */
     public void safeInsertion(Resource in, int pos) throws Exception
     {
-        Storage[pos].safeInsertion(in);
+        storage[pos].safeInsertion(in);
     }
 
     /**
@@ -51,21 +51,21 @@ public class Storage {
      */
     public void safeSubtraction(Resource in, int pos) throws Exception
     {
-        Storage[pos].safeSubtraction(in);
+        storage[pos].safeSubtraction(in);
     }
 
     /**
      * sets the bonus deposit to true
      */
     public void setBonusActive() {
-        BonusActive = true;
+        bonusActive = true;
     }
 
     public Deposit[] getStorage() {
-        return Storage;
+        return storage;
     }
 
     public boolean isBonusActive() {
-        return BonusActive;
+        return bonusActive;
     }
 }

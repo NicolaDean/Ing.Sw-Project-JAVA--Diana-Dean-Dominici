@@ -4,15 +4,15 @@ import java.util.List;
 import java.util.Stack;
 
 public class Game {
-    List<Player> Players;
-    LeaderCard [] Leaders;
-    Stack<ProductionCard>[][] ProductionDecks;
-    Market Market;
-    CellScore[] ScorePositions;
-    PapalSpace [] PapalSpaces;
-    int CurrentPapalSpaceToReach;
-    int Calamaio;
-    int CurrentPlayer;
+    List<Player> players;
+    LeaderCard [] leaders;
+    Stack<ProductionCard>[][] productionDecks;
+    Market market;
+    CellScore[] scorePositions;
+    PapalSpace [] papalSpaces;
+    int currentPapalSpaceToReach;
+    int calamaio;
+    int currentPlayer;
 
     public Game()
     {

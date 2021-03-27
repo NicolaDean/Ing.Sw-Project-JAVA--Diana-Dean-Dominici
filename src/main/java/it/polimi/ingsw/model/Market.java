@@ -1,12 +1,8 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.enumeration.ResourceType;
-
-import java.security.PublicKey;
-
 public class Market {
-    private BasicBall DiscardedResouce;
-    private BasicBall Resouces[][] = { { new WhiteBall(), new WhiteBall() , new WhiteBall() ,new WhiteBall() } ,
+    private BasicBall discardedResouce;
+    private BasicBall resouces[][] = { { new WhiteBall(), new WhiteBall() , new WhiteBall() ,new WhiteBall() } ,
                                { new BlueBall(), new BlueBall() , new GrayBall() ,new GrayBall() } ,
                                { new YellowBall(), new YellowBall() , new VioletBall() ,new VioletBall() } };
 
@@ -14,7 +10,7 @@ public class Market {
      * build e shuffle balls
      */
     public Market() {
-        DiscardedResouce = new RedBall();
+        discardedResouce = new RedBall();
         Randomized();
     }
 
@@ -23,7 +19,7 @@ public class Market {
      * @return balls
      */
     public BasicBall[][] getResouces() {
-        return Resouces;
+        return resouces;
     }
 
     /**
@@ -31,7 +27,7 @@ public class Market {
      * @return discarded ball
      */
     public BasicBall getDiscardedResouce() {
-        return DiscardedResouce;
+        return discardedResouce;
     }
 
     /**
@@ -46,16 +42,16 @@ public class Market {
                 for(int j = 0; j < 4; j++){
                     r=(int)(Math.random()*10)%3;
                     c=(int)(Math.random()*10)%4;
-                    Tmp = Resouces[i][j];
-                    Resouces[i][j] = Resouces[r][c];
-                    Resouces[r][c] = Tmp;
+                    Tmp = resouces[i][j];
+                    resouces[i][j] = resouces[r][c];
+                    resouces[r][c] = Tmp;
 
                     if((int)(Math.random()*10)<4){
                         r=(int)(Math.random()*10)%3;
                         c=(int)(Math.random()*10)%4;
-                        Tmp = Resouces[r][c];
-                        Resouces[r][c] = DiscardedResouce;
-                        DiscardedResouce = Tmp;
+                        Tmp = resouces[r][c];
+                        resouces[r][c] = discardedResouce;
+                        discardedResouce = Tmp;
                     }
                 }
             }
@@ -75,14 +71,14 @@ public class Market {
             throw new IllegalArgumentException("invalid position");
         } else {
             for (int i = 1; i < 4; i++) {
-                Resouces[Pos][i].active(P);
-                Tmp = Resouces[Pos][i];
-                Resouces[Pos][i] = Resouces[Pos][0];
-                Resouces[Pos][0] = Tmp;
+                resouces[Pos][i].active(P);
+                Tmp = resouces[Pos][i];
+                resouces[Pos][i] = resouces[Pos][0];
+                resouces[Pos][0] = Tmp;
             }
-            Tmp = DiscardedResouce;
-            DiscardedResouce = Resouces[Pos][0];
-            Resouces[Pos][0] = Tmp;
+            Tmp = discardedResouce;
+            discardedResouce = resouces[Pos][0];
+            resouces[Pos][0] = Tmp;
         }
     }
     /**
@@ -97,14 +93,14 @@ public class Market {
             throw new IllegalArgumentException("invalid position");
         } else {
             for (int i = 1; i < 3; i++) {
-                Resouces[i][Pos].active(P);
-                Tmp = Resouces[i][Pos];
-                Resouces[i][Pos] = Resouces[0][Pos];
-                Resouces[0][Pos] = Tmp;
+                resouces[i][Pos].active(P);
+                Tmp = resouces[i][Pos];
+                resouces[i][Pos] = resouces[0][Pos];
+                resouces[0][Pos] = Tmp;
             }
-            Tmp = DiscardedResouce;
-            DiscardedResouce = Resouces[0][Pos];
-            Resouces[0][Pos] = Tmp;
+            Tmp = discardedResouce;
+            discardedResouce = resouces[0][Pos];
+            resouces[0][Pos] = Tmp;
         }
     }
 

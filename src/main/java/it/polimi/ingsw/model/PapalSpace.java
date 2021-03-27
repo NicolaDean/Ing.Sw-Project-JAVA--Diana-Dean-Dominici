@@ -4,14 +4,14 @@ package it.polimi.ingsw.model;
 import java.util.List;
 
 public class PapalSpace {
-    int InitialPosition;
-    int FinalPosition;
+    int initialPosition;
+    int finalPosition;
 
 
     public PapalSpace(int start,int finish)
     {
-        this.InitialPosition = start;
-        this.FinalPosition = finish;
+        this.initialPosition = start;
+        this.finalPosition = finish;
     }
 
     public void CheckPlayerPositions(List<Player> Player)

@@ -3,20 +3,20 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.enumeration.ResourceType;
 
 public class Deposit {
-    final int SizeMax; //the capacity of the deposit (it can be 1, 2 or 3)
-    private Resource Resource; //the resource type that the deposit can contain (it can change during the game so it is not final)
+    final int sizeMax; //the capacity of the deposit (it can be 1, 2 or 3)
+    private Resource resource; //the resource type that the deposit can contain (it can change during the game so it is not final)
 
 
     public Deposit(int sizeMax) {
-        SizeMax = sizeMax;
+        this.sizeMax = sizeMax;
     }
 
     public int getSizeMax() {
-        return SizeMax;
+        return sizeMax;
     }
 
     public it.polimi.ingsw.model.Resource getResource() {
-        return Resource;
+        return resource;
     }
 
     /**
@@ -26,21 +26,21 @@ public class Deposit {
      */
     public void safeInsertion(Resource in) throws Exception
     {
-        if(Resource==null)
+        if(resource ==null)
             setNewDeposit(in.getType(), in.getQuantity());
         else {
-            Resource result = Resource;
+            Resource result = resource;
             try {
 
-                result = ResourceOperator.sum(in, Resource);
-                if (result.getQuantity() <= SizeMax)
-                    Resource = result;
+                result = ResourceOperator.sum(in, resource);
+                if (result.getQuantity() <= sizeMax)
+                    resource = result;
 
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-            if (result.getQuantity() > SizeMax)
+            if (result.getQuantity() > sizeMax)
                 throw new Exception("the capacity has been exceeded, operation failed");
         }
 
@@ -54,20 +54,20 @@ public class Deposit {
     public void safeSubtraction(Resource in) throws Exception
     {
 
-        if(Resource==null)
+        if(resource ==null)
             throw new Exception("The deposit is empty");
 
 
-        int a = Resource.getQuantity();
+        int a = resource.getQuantity();
             try {
-                Resource result = Resource;
-                result = ResourceOperator.sub(Resource, in);
-                if (Resource.getQuantity() >= in.getQuantity())
+                Resource result = resource;
+                result = ResourceOperator.sub(resource, in);
+                if (resource.getQuantity() >= in.getQuantity())
                 {   a = -1;
                     if(result.getQuantity()==0)
-                        Resource = null;
+                        resource = null;
                     else
-                        Resource = result;
+                        resource = result;
                 }
 
 
@@ -76,7 +76,7 @@ public class Deposit {
                 System.out.println(e.getMessage());
             }
 
-            if(a == Resource.getQuantity())
+            if(a == resource.getQuantity())
                 throw new Exception("not enough resources, operation failed");
 
     }
@@ -88,7 +88,7 @@ public class Deposit {
      */
     public void setNewDeposit(ResourceType Rtype, int Rquantity )
     {
-        Resource = new Resource(Rtype, Rquantity);
+        resource = new Resource(Rtype, Rquantity);
     }
 
 }

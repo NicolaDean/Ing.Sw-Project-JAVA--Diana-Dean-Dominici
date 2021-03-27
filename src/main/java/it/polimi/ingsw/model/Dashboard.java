@@ -3,29 +3,29 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.enumeration.ResourceType;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 public class Dashboard {
-    Storage Storage;
-    List<Resource> Chest;
-    Stack<ProductionCard>[] ProducionCards;
-    boolean [] PapalToken;
+    Storage storage;
+    List<Resource> chest;
+    Stack<ProductionCard>[] producionCards;
+    boolean [] papalToken;
+    //List<Resource> bonusResources;
 
     public Dashboard()
     {
-        Storage = new Storage();
-        Chest = new ArrayList<Resource>();
+        storage = new Storage();
+        chest = new ArrayList<Resource>();
 
-        this.ProducionCards = new Stack[3];
+        this.producionCards = new Stack[3];
 
-        this.ProducionCards[0] = new Stack<ProductionCard>();
-        this.ProducionCards[1] = new Stack<ProductionCard>();
-        this.ProducionCards[2] = new Stack<ProductionCard>();
+        this.producionCards[0] = new Stack<ProductionCard>();
+        this.producionCards[1] = new Stack<ProductionCard>();
+        this.producionCards[2] = new Stack<ProductionCard>();
 
-        PapalToken = new boolean[3];
+        papalToken = new boolean[3];
         for(int i=0;i<3;i++)
         {
-            PapalToken[i]=false;
+            papalToken[i]=false;
         }
 
     }
@@ -46,7 +46,7 @@ public class Dashboard {
 
         if(out)
         {
-            this.ProducionCards[pos].add(card);
+            this.producionCards[pos].add(card);
         }
         return out;
     }
@@ -60,9 +60,9 @@ public class Dashboard {
     private boolean checkValidPosition(ProductionCard card, int pos)
     {
 
-        if(!ProducionCards[pos].isEmpty())
+        if(!producionCards[pos].isEmpty())
         {
-            if(ProducionCards[pos].peek().getLevel() == card.getLevel()-1)
+            if(producionCards[pos].peek().getLevel() == card.getLevel()-1)
             {
                 return true;
             }
@@ -119,7 +119,7 @@ public class Dashboard {
     {
         int vp=0;
 
-        for(Stack<ProductionCard> stack : ProducionCards)
+        for(Stack<ProductionCard> stack : producionCards)
         {
             vp +=stack.stream().mapToInt(ProductionCard::getScore).sum();
         }

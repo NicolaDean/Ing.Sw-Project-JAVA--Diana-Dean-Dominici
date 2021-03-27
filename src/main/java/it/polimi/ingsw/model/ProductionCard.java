@@ -2,27 +2,26 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.enumeration.CardType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductionCard extends Card{
 
-    private CardType Type;
-    private int Level;
-    private List<Resource> RawMaterials;
-    private List<Resource> ObtainedMaterials;
+    private CardType type;
+    private int level;
+    private List<Resource> rawMaterials;
+    private List<Resource> obtainedMaterials;
 
     public ProductionCard(List<Resource> cost, int victoryPoints,int level) {
         super(cost, victoryPoints);
-        this.Level = level;
+        this.level = level;
     }
 
     public int getLevel() {
-        return Level;
+        return level;
     }
 
     public CardType getType() {
-        return Type;
+        return type;
     }
 
     /**
@@ -48,7 +47,7 @@ public class ProductionCard extends Card{
 
         List<Resource> resAvailable = dash.getAllAvailableResource();
 
-        boolean out = ResourceOperator.compare(resAvailable,this.RawMaterials);
+        boolean out = ResourceOperator.compare(resAvailable,this.rawMaterials);
 
         if(out)
         {
@@ -69,6 +68,8 @@ public class ProductionCard extends Card{
         boolean out = this.checkCost(dash);
 
         //Notify Dashboard asking for position  (es notify(this)) instead of having pos parameter
+
+        //
         dash.setProcuctionCard(this,pos);
         return out;
     }
