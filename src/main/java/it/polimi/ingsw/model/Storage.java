@@ -1,8 +1,12 @@
 package it.polimi.ingsw.model;
 
+import java.sql.ClientInfoStatus;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Storage {
     private Deposit[] storage = new Deposit[3];
-    private boolean bonusActive;
+
 
     /**
      * constructor of Storage, it initializes the 3 storages with 1, 2, and 3 respectively as maxSize
@@ -11,7 +15,7 @@ public class Storage {
         storage[0] = new Deposit(1);
         storage[1] = new Deposit(2);
         storage[2] = new Deposit(3);
-        bonusActive = false;
+
     }
 
     /**
@@ -40,7 +44,24 @@ public class Storage {
      */
     public void safeInsertion(Resource in, int pos) throws Exception
     {
-        storage[pos].safeInsertion(in);
+        boolean tmp = false;
+        if(storage[pos].getResource() == null){
+            for(int i=0; i<3; i++) {
+                if (i!= pos && storage[i].getResource()!= null) {
+                    if (in.getType() == storage[i].getResource().getType()) {
+                        tmp = true;
+                    }
+
+                }
+            }
+            if(!tmp)
+                storage[pos].setNewDeposit(in.getType(), in.getQuantity());
+            else {
+                throw new Exception("there is already a slot with this type of resource");
+            }
+        }
+        else
+            storage[pos].safeInsertion(in);
     }
 
     /**
@@ -57,15 +78,21 @@ public class Storage {
     /**
      * sets the bonus deposit to true
      */
-    public void setBonusActive() {
-        bonusActive = true;
-    }
+
 
     public Deposit[] getStorage() {
         return storage;
     }
 
-    public boolean isBonusActive() {
-        return bonusActive;
+    public List<Resource> getStorageAsList() {
+
+        List resourcelist = new ArrayList();
+        resourcelist.add(storage[0].getResource());
+        resourcelist.add(storage[1].getResource());
+        resourcelist.add(storage[2].getResource());
+        return resourcelist;
+
     }
+
+
 }

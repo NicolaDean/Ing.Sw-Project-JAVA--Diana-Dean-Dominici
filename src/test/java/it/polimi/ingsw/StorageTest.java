@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import it.polimi.ingsw.model.Resource;
 import it.polimi.ingsw.model.ResourceOperator;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static it.polimi.ingsw.enumeration.ResourceType.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -54,5 +58,37 @@ public class StorageTest {
 
     }
 
+    @Test
+    public void TestResourcesAsList() throws Exception {
+        Storage testStorage = new Storage();
+        Resource a = new Resource(SHILD, 1);
+        Resource b = new Resource(COIN, 1);
+        Resource c = new Resource(ROCK, 2);
+        testStorage.safeInsertion(a, 0);
+        testStorage.safeInsertion(b, 1);
+        testStorage.safeInsertion(c, 2);
 
-}
+        List<Resource> list=testStorage.getStorageAsList();
+        assertTrue(ResourceOperator.Compare(list.get(0), a)&&
+                ResourceOperator.Compare(list.get(1), b)&&
+                ResourceOperator.Compare(list.get(2), c));
+        }
+
+    @Test
+    public void TestWrongTypeInsertion() {
+        Assertions.assertThrows(Exception.class,()->{
+            Storage testStorage = new Storage();
+            Resource a = new Resource(SHILD, 1);
+            Resource b = new Resource(ROCK, 1);
+            Resource c = new Resource(ROCK, 2);
+            testStorage.safeInsertion(a, 0);
+            testStorage.safeInsertion(b, 1);
+            testStorage.safeInsertion(c, 2);
+
+
+        });
+    }
+    }
+
+
+
