@@ -54,19 +54,16 @@ public class Deposit {
     public void safeSubtraction(Resource in) throws Exception
     {
 
-        if(resource ==null)
+        if(resource == null)
             throw new Exception("The deposit is empty");
 
 
         int a = resource.getQuantity();
             try {
-                Resource result = resource;
+                Resource result;
                 result = ResourceOperator.sub(resource, in);
                 if (resource.getQuantity() >= in.getQuantity())
                 {   a = -1;
-                    if(result.getQuantity()==0)
-                        resource = null;
-                    else
                         resource = result;
                 }
 
@@ -76,7 +73,7 @@ public class Deposit {
                 System.out.println(e.getMessage());
             }
 
-            if(a == resource.getQuantity())
+            if(resource != null && a == resource.getQuantity())
                 throw new Exception("not enough resources, operation failed");
 
     }
@@ -89,6 +86,10 @@ public class Deposit {
     public void setNewDeposit(ResourceType Rtype, int Rquantity )
     {
         resource = new Resource(Rtype, Rquantity);
+        if (Rquantity == 0) {
+
+            resource = null;
+        }
     }
 
 }
