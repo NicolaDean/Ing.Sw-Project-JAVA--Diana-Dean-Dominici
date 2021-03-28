@@ -4,6 +4,7 @@ import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Dashboard;
 import it.polimi.ingsw.model.ProductionCard;
 import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.model.ResourceList;
 import org.junit.jupiter.api.Test;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
@@ -84,6 +85,7 @@ public class DashboardTest {
         dash.storageInsertion(new Resource(COIN,1),0);
         dash.storageInsertion(new Resource(SERVANT,2),0);
 
+
         List<Resource> tmp = dash.getAllAvailableResource();
 
         for(Resource res:tmp)
@@ -101,6 +103,8 @@ public class DashboardTest {
         dash.storageInsertion(new Resource(COIN,1),0);
         dash.storageInsertion(new Resource(SERVANT,2),2);
 
+
+        List<Resource> tmp = dash.getAllAvailableResource();
 
         //production without raw material
         assertFalse(dash.basicProduction(COIN,SHILD,ROCK));

@@ -15,9 +15,9 @@ public class Dashboard {
     public Dashboard()
     {
         storage = new Storage();
-        chest = new ArrayList<Resource>();
+        //chest = new ArrayList<Resource>();
 
-        //chest = new ResourceList();
+        chest = new ResourceList();
 
         this.producionCards = new Stack[3];
 
@@ -48,7 +48,7 @@ public class Dashboard {
 
     public void chestInsertion(Resource res)
     {
-        this.chest = ResourceOperator.compactedInsertion(this.chest,res);
+        this.chest.add(res);
     }
     public void chestInsertion(List<Resource> res)
     {

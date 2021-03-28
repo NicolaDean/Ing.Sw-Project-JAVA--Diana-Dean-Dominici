@@ -97,7 +97,7 @@ public class Storage {
     }
 
     public List<Resource> getStorageAsList() {
-        List <Resource> resourcelist = new ArrayList<>();
+        List <Resource> resourcelist = new ResourceList();
         resourcelist.add(storage[0].getResource());
         resourcelist.add(storage[1].getResource());
         resourcelist.add(storage[2].getResource());
