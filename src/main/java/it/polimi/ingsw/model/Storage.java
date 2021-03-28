@@ -35,11 +35,11 @@ public class Storage {
                 Resource tmp = storage[pos1].getResource();
                 storage[pos1].setNewDeposit(storage[pos2].getResource().getType(), storage[pos2].getResource().getQuantity());
                 storage[pos2].setNewDeposit(tmp.getType(), tmp.getQuantity());
-
             } else
                 throw new Exception("the swap is not possible");
         }
     }
+
 
     /**
      * inserts new resources in a deposit
@@ -98,9 +98,10 @@ public class Storage {
 
     public List<Resource> getStorageAsList() {
         List <Resource> resourcelist = new ArrayList<>();
-        resourcelist.add(storage[0].getResource());
-        resourcelist.add(storage[1].getResource());
-        resourcelist.add(storage[2].getResource());
+        for(int i = 0; i<5; i++) {
+            if (storage[i] != null)
+            resourcelist.add(storage[i].getResource());
+        }
         return resourcelist;
     }
 

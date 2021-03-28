@@ -64,7 +64,6 @@ public class StorageTest {
         testStorage.safeInsertion(a, 0);
         testStorage.safeInsertion(b, 1);
         testStorage.safeInsertion(c, 2);
-
         List<Resource> list = testStorage.getStorageAsList();
         assertTrue(ResourceOperator.Compare(list.get(0), a) &&
                 ResourceOperator.Compare(list.get(1), b) &&
