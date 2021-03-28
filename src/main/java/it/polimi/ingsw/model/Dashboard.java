@@ -9,12 +9,15 @@ public class Dashboard {
     List<Resource> chest;
     Stack<ProductionCard>[] producionCards;
     boolean [] papalToken;
-    //List<Resource> bonusResources;
+    List<Resource> bonusResources;
+
 
     public Dashboard()
     {
         storage = new Storage();
         chest = new ArrayList<Resource>();
+
+        //chest = new ResourceList();
 
         this.producionCards = new Stack[3];
 
@@ -34,6 +37,23 @@ public class Dashboard {
         return 0;
     }
 
+    public void storageInsertion(Resource res,int pos)
+    {
+        try {
+            this.storage.safeInsertion(res,pos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void chestInsertion(Resource res)
+    {
+        this.chest = ResourceOperator.compactedInsertion(this.chest,res);
+    }
+    public void chestInsertion(List<Resource> res)
+    {
+        this.chest = ResourceOperator.merge(this.chest,res);
+    }
     /**
      *
      * @param card Card to position
@@ -101,14 +121,23 @@ public class Dashboard {
         if(output)
         {
             Resource ob = new Resource(obtain,1);
-            //ADD TO CHEST ob resource
+            this.chestInsertion(new Resource(obtain,1));
         }
         return output;
     }
 
+    public List<Resource> getDiscount()
+    {
+        return this.bonusResources;
+    }
+
+    /**
+     *
+     * @return get All resource from all possible sources
+     */
     public List<Resource> getAllAvailableResource()
     {
-        return new ArrayList<Resource>();
+        return ResourceOperator.merge(this.storage.getStorageAsList(),this.chest);
     }
 
     /**
@@ -125,4 +154,6 @@ public class Dashboard {
         }
         return vp;
     }
-}
+
+
+    }

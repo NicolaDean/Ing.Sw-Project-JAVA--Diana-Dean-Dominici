@@ -90,8 +90,10 @@ public class Player {
      */
     public void DiscardLeader(int position)
     {
-        leaders[position] = null;
+        this.leaders[position] = null;
     }
+
+    public void ActivateLeader(int position){ }
 
 
 }

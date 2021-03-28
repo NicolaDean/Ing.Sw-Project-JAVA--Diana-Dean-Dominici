@@ -18,6 +18,10 @@ public class Card {
      */
     public int getScore() {int Score = this.victoryPoints; return  Score;}
 
+    public List<Resource> getCost()
+    {
+        return this.cost;
+    }
     /**
      * Methods that tells if you have enough resources to buy the card
      * @param dash Dashboard pointer
