@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
-import it.polimi.ingsw.enumeration.ResourceType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResourceOperator {
@@ -77,6 +77,29 @@ public class ResourceOperator {
             if(flag == false) return false;
         }
         return true;
+    }
+
+    /**
+     * Merge two Resource list Grouping quantity by Resource type
+     * @param a list 1
+     * @param b list 2
+     * @return a new list with all element of a and b grouped by resourceType
+     */
+    public static List<Resource> merge(List<Resource>a , List<Resource> b)
+    {
+        List<Resource> tmp = new ResourceList();
+
+        for(Resource res :a)
+        {
+            tmp.add(res);
+        }
+        for(Resource res:b)
+        {
+            tmp.add(res);
+        }
+
+
+        return tmp;
     }
 
 

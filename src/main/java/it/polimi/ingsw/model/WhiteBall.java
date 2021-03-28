@@ -1,3 +1,4 @@
+
 package it.polimi.ingsw.model;
 
 import java.awt.*;
@@ -8,8 +9,10 @@ public class WhiteBall extends BasicBall{
      * @param P: player that get red ball
      */
     @Override
-    public void active(Player P){
+    public void active(Player P)
+    {
         //attiva abilità leader
+
     }
 
     /**
@@ -21,3 +24,10 @@ public class WhiteBall extends BasicBall{
         return Color.white;
     }
 }
+
+
+/*
+    int num= Controller.Model.getPlayerWhiteBonus();
+
+
+ */

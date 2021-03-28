@@ -34,43 +34,54 @@ public class ProductionCard extends Card{
         return this.getType() == card.getType();
     }
 
+
+    @Override
+    public boolean checkCost(Dashboard dash) {
+        List<Resource> tmp = ResourceOperator.merge(dash.getDiscount(),dash.getAllAvailableResource());
+
+        boolean out = ResourceOperator.compare(this.getCost(),tmp);
+
+        return out;
+    }
+
     /**
-     *
+     * Player select A production card trough the view and this model method will be called to activate
      * @param dash Dashboard of the player
-     * @return  true id
+     * @return  true if the activation goes well
      */
     public boolean activate(Dashboard dash)
     {
-        //Il metodo activate controlla tramite getAvailableRes se ha le risorse e poi la attiva a prescindere
-        //Nel mentre notifica il controller del magazzino che sono state
-        // estratte X risorse e che chieda all'utente da dove estrarle
 
+        //Check if necesary resources are availabe
         List<Resource> resAvailable = dash.getAllAvailableResource();
-
         boolean out = ResourceOperator.compare(resAvailable,this.rawMaterials);
 
+        //if true add obtained resources to the chest
         if(out)
         {
-            //NOTIFY SPENDED and OBTAINED RESOURCE TO DASHBOARD
-            //(es: notifyProductionExecuted(
-            // (la dash si occupera di chiedere dove estrare le spese
-            // e sucessivamente aggiungere le ottenute al froziere
-            //La dashboard avrà anche l'opzione annulla in caso l'utente ci ripensi
-
-            //In questo modo il codice diventa asincrono e non interattivo
+            dash.chestInsertion(this.obtainedMaterials);
         }
 
         return out;
     }
 
-    public boolean buy(Dashboard dash,int pos)
+
+    /**
+     *
+     * @param dash the player dashboard
+     * @param pos positioning of the card inside the dashboard
+     * @return true if all goes in the right way
+     */
+    public boolean buy(Dashboard dash, int pos)
     {
+        //First Buy the card then ask player where chose resource in the controller
         boolean out = this.checkCost(dash);
 
-        //Notify Dashboard asking for position  (es notify(this)) instead of having pos parameter
+        if(out)
+        {
+            dash.setProcuctionCard(this,pos);
+        }
 
-        //
-        dash.setProcuctionCard(this,pos);
         return out;
     }
 
