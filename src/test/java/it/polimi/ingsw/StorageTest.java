@@ -55,19 +55,23 @@ public class StorageTest {
     }
 
     @Test
-    public void TestResourcesAsList() throws Exception {
+    public void TestStorageAsList() throws Exception {
         Storage testStorage = new Storage();
         Resource a = new Resource(SHIELD, 1);
         Resource b = new Resource(COIN, 1);
         Resource c = new Resource(ROCK, 2);
+        Resource d = new Resource(ROCK, 4);
         testStorage.safeInsertion(a, 0);
         testStorage.safeInsertion(b, 1);
         testStorage.safeInsertion(c, 2);
-
         List<Resource> list = testStorage.getStorageAsList();
+        DepositBonus bonus = new DepositBonus(list, 3, ROCK);
+        bonus.activate(testStorage);
+        testStorage.safeInsertion(c, 3);
+        list = testStorage.getStorageAsList();
         assertTrue(ResourceOperator.Compare(list.get(0), a) &&
                 ResourceOperator.Compare(list.get(1), b) &&
-                ResourceOperator.Compare(list.get(2), c));
+                ResourceOperator.Compare(list.get(2), d));
     }
 
     /**
@@ -80,6 +84,8 @@ public class StorageTest {
             Resource a = new Resource(SHIELD, 1);
             Resource b = new Resource(ROCK, 1);
             Resource c = new Resource(ROCK, 2);
+            List<Resource> list = testStorage.getStorageAsList();
+            DepositBonus bonus = new DepositBonus(list, 3, ROCK);
             testStorage.safeInsertion(a, 0);
             testStorage.safeInsertion(b, 1);
             testStorage.safeInsertion(c, 2);

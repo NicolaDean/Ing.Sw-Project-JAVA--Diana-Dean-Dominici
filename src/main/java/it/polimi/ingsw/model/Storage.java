@@ -96,29 +96,34 @@ public class Storage {
         return storage;
     }
 
-    public List<Resource> getStorageAsList() {
-        List <Resource> resourcelist = new ResourceList();
-        resourcelist.add(storage[0].getResource());
-        resourcelist.add(storage[1].getResource());
-        resourcelist.add(storage[2].getResource());
+    /**
+     * return the storage as a list of resources
+     * @return
+     */
+    public ResourceList getStorageAsList() {
+        ResourceList resourcelist = new ResourceList();
+        for (int i = 0; i < 5; i++) {
+            if (storage[i] != null)
+                resourcelist.add(storage[i].getResource());
+        }
         return resourcelist;
     }
 
-    /**
-     * initialize a bonus deposit (leader)
-     * @param type
-     */
-    public void initializeBonusDeposit(ResourceType type)
-    {
-        int i;
-        if(storage[3] == null)
-            i=3;
-        else
-            i=4;
+        /**
+         * initialize a bonus deposit (leader)
+         * @param type
+         */
+        public void initializeBonusDeposit (ResourceType type)
+        {
+            int i;
+            if (storage[3] == null)
+                i = 3;
+            else
+                i = 4;
 
-        storage[i] = new Deposit(2);
-        storage[i].setNewDeposit(type, 0);
+            storage[i] = new Deposit(2);
+            storage[i].setNewDeposit(type, 0);
 
+        }
     }
 
-}
