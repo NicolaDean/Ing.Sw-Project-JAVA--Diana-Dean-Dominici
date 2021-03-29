@@ -95,7 +95,7 @@ public class MarketTest {
         ArrayList<Resource> r = new ArrayList<>();
         LeaderCard l[] = {new LeaderCard(r,1), new LeaderCard(r,1) };
         Player p=new Player("nick",l);
-        r.add(new Resource(ResourceType.SHILD,3));
+        r.add(new Resource(ResourceType.SHIELD,3));
         r.add(new Resource(ResourceType.COIN,10));
 
         int i;
@@ -129,7 +129,7 @@ public class MarketTest {
         ArrayList<Resource> r = new ArrayList<>();
         LeaderCard l[] = {new LeaderCard(r,1), new LeaderCard(r,1) };
         Player p=new Player("nick",l);
-        r.add(new Resource(ResourceType.SHILD,3));
+        r.add(new Resource(ResourceType.SHIELD,3));
         r.add(new Resource(ResourceType.COIN,10));
 
         int i;
@@ -163,7 +163,7 @@ public class MarketTest {
         ArrayList<Resource> r = new ArrayList<>();
         LeaderCard l[] = {new LeaderCard(r,1), new LeaderCard(r,1) };
         Player p=new Player("nick",l);
-        r.add(new Resource(ResourceType.SHILD,3));
+        r.add(new Resource(ResourceType.SHIELD,3));
         r.add(new Resource(ResourceType.COIN,10));
 
         int i;
@@ -197,7 +197,7 @@ public class MarketTest {
         ArrayList<Resource> r = new ArrayList<>();
         LeaderCard l[] = {new LeaderCard(r,1), new LeaderCard(r,1) };
         Player p=new Player("nick",l);
-        r.add(new Resource(ResourceType.SHILD,3));
+        r.add(new Resource(ResourceType.SHIELD,3));
         r.add(new Resource(ResourceType.COIN,10));
 
         int i;

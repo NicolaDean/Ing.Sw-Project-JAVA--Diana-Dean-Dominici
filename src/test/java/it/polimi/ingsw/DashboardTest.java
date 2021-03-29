@@ -1,17 +1,12 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Dashboard;
 import it.polimi.ingsw.model.ProductionCard;
 import it.polimi.ingsw.model.Resource;
-import it.polimi.ingsw.model.ResourceList;
 import org.junit.jupiter.api.Test;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
 import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +102,7 @@ public class DashboardTest {
         List<Resource> tmp = dash.getAllAvailableResource();
 
         //production without raw material
-        assertFalse(dash.basicProduction(COIN,SHILD,ROCK));
+        assertFalse(dash.basicProduction(COIN, SHIELD,ROCK));
 
         //production with raw material
         assertTrue(dash.basicProduction(COIN,SERVANT,ROCK));

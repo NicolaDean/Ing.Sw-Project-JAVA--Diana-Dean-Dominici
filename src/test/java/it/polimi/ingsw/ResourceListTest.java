@@ -26,4 +26,19 @@ public class ResourceListTest {
         }
 
     }
+
+    @Test
+
+    public void RemovingTest()
+    {
+        List<Resource> tmp = new ResourceList();
+
+        tmp.add(new Resource(COIN,2));
+        tmp.remove(new Resource(COIN,1));
+
+        for(Resource res:tmp)
+        {
+            if(res.getType() == COIN) assertTrue(res.getQuantity()==1);
+        }
+    }
 }

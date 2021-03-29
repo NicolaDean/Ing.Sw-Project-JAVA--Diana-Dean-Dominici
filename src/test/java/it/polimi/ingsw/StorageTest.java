@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
@@ -20,7 +19,7 @@ public class StorageTest {
     @Test
     public void TestCorrectDepositSwap() throws Exception {
         Storage testStorage = new Storage();
-        Resource a = new Resource(SHILD, 1);
+        Resource a = new Resource(SHIELD, 1);
         Resource b = new Resource(COIN, 1);
         Resource c = new Resource(ROCK, 2);
         testStorage.safeInsertion(a, 0);
@@ -43,7 +42,7 @@ public class StorageTest {
     public void TestInvalidSwap() {
         Assertions.assertThrows(Exception.class, () -> {
             Storage testStorage = new Storage();
-            Resource a = new Resource(SHILD, 1);
+            Resource a = new Resource(SHIELD, 1);
             Resource b = new Resource(COIN, 2);
             Resource c = new Resource(ROCK, 3);
             testStorage.safeInsertion(a, 0);
@@ -58,7 +57,7 @@ public class StorageTest {
     @Test
     public void TestResourcesAsList() throws Exception {
         Storage testStorage = new Storage();
-        Resource a = new Resource(SHILD, 1);
+        Resource a = new Resource(SHIELD, 1);
         Resource b = new Resource(COIN, 1);
         Resource c = new Resource(ROCK, 2);
         testStorage.safeInsertion(a, 0);
@@ -78,7 +77,7 @@ public class StorageTest {
     public void TestWrongTypeInsertion() {
         Assertions.assertThrows(Exception.class, () -> {
             Storage testStorage = new Storage();
-            Resource a = new Resource(SHILD, 1);
+            Resource a = new Resource(SHIELD, 1);
             Resource b = new Resource(ROCK, 1);
             Resource c = new Resource(ROCK, 2);
             testStorage.safeInsertion(a, 0);
@@ -96,7 +95,7 @@ public class StorageTest {
     public void TestBonusStorage() throws Exception {
 
         Storage testStorage = new Storage();
-        Resource a = new Resource(SHILD, 1);
+        Resource a = new Resource(SHIELD, 1);
         Resource b = new Resource(ROCK, 1);
         Resource c = new Resource(COIN, 2);
         testStorage.safeInsertion(a, 0);
@@ -104,7 +103,7 @@ public class StorageTest {
         testStorage.safeInsertion(c, 2);
         List<Resource> list = testStorage.getStorageAsList();
         DepositBonus bonus = new DepositBonus(list, 3, ROCK);
-        DepositBonus bonus2 = new DepositBonus(list, 3, SHILD);
+        DepositBonus bonus2 = new DepositBonus(list, 3, SHIELD);
         bonus.activate(testStorage);
         testStorage.safeInsertion(b, 3);
         bonus2.activate(testStorage);
@@ -122,7 +121,7 @@ public class StorageTest {
     public void TestBonusStorageSub() throws Exception {
 
         Storage testStorage = new Storage();
-        Resource a = new Resource(SHILD, 1);
+        Resource a = new Resource(SHIELD, 1);
         Resource b = new Resource(ROCK, 1);
         Resource c = new Resource(COIN, 2);
         testStorage.safeInsertion(b, 1);
@@ -131,7 +130,7 @@ public class StorageTest {
         testStorage.safeInsertion(c, 2);
         List<Resource> list = testStorage.getStorageAsList();
         DepositBonus bonus = new DepositBonus(list, 3, ROCK);
-        DepositBonus bonus2 = new DepositBonus(list, 3, SHILD);
+        DepositBonus bonus2 = new DepositBonus(list, 3, SHIELD);
         bonus.activate(testStorage);
         testStorage.safeInsertion(b, 3);
         bonus2.activate(testStorage);
@@ -151,7 +150,7 @@ public class StorageTest {
     public void TestBonusSwap() {
         Assertions.assertThrows(Exception.class, () -> {
             Storage testStorage = new Storage();
-            Resource a = new Resource(SHILD, 1);
+            Resource a = new Resource(SHIELD, 1);
             Resource b = new Resource(ROCK, 1);
             Resource c = new Resource(COIN, 2);
             testStorage.safeInsertion(a, 0);
@@ -159,7 +158,7 @@ public class StorageTest {
             testStorage.safeInsertion(c, 2);
             List<Resource> list = testStorage.getStorageAsList();
             DepositBonus bonus = new DepositBonus(list, 3, ROCK);
-            DepositBonus bonus2 = new DepositBonus(list, 3, SHILD);
+            DepositBonus bonus2 = new DepositBonus(list, 3, SHIELD);
             bonus.activate(testStorage);
             testStorage.safeInsertion(b, 3);
             bonus2.activate(testStorage);

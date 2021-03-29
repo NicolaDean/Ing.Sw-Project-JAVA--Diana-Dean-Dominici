@@ -16,6 +16,15 @@ public class ProductionCard extends Card{
         this.level = level;
     }
 
+    public ProductionCard(List<Resource> cost,List<Resource> raw,List<Resource>obt,int victoryPoints,int level)
+    {
+        super(cost,victoryPoints);
+        this.level = level;
+        this.rawMaterials = raw;
+        this.obtainedMaterials = obt;
+
+    }
+
     public int getLevel() {
         return level;
     }
@@ -37,15 +46,17 @@ public class ProductionCard extends Card{
 
     @Override
     public boolean checkCost(Dashboard dash) {
-        List<Resource> tmp = ResourceOperator.merge(dash.getDiscount(),dash.getAllAvailableResource());
+        List<Resource> availableRes = ResourceOperator.merge(dash.getDiscount(),dash.getAllAvailableResource());
 
-        boolean out = ResourceOperator.compare(this.getCost(),tmp);
+        boolean out = ResourceOperator.compare(availableRes,this.getCost());
 
         return out;
     }
 
+
     /**
      * Player select A production card trough the view and this model method will be called to activate
+     * THIS FUNCTION DOSNT REMOVE COST RESOURCE (it will be done by controller)
      * @param dash Dashboard of the player
      * @return  true if the activation goes well
      */

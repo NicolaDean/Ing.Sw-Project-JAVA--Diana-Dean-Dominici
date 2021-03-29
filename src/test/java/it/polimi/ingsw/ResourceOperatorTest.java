@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.model.ResourceList;
 import it.polimi.ingsw.model.ResourceOperator;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,16 +32,16 @@ public class ResourceOperatorTest {
     @Test
     public void TestResourceOperatorCompare()
     {
-        List<Resource> a = new ArrayList<Resource>();
-        List<Resource> b = new ArrayList<Resource>();
+        List<Resource> a = new ResourceList();
+        List<Resource> b = new ResourceList();
 
 
         //Test True case
-        a.add(new Resource(SHILD,2));
+        a.add(new Resource(SHIELD,2));
         a.add(new Resource(COIN,1));
         a.add(new Resource(SERVANT,3));
 
-        b.add(new Resource(SHILD,1));
+        b.add(new Resource(SHIELD,1));
         b.add(new Resource(COIN,1));
         b.add(new Resource(SERVANT,1));
 
@@ -50,11 +51,11 @@ public class ResourceOperatorTest {
         a  = new ArrayList<Resource>();
         b  = new ArrayList<Resource>();
 
-        a.add(new Resource(SHILD,1));
+        a.add(new Resource(SHIELD,1));
         a.add(new Resource(COIN,1));
         a.add(new Resource(SERVANT,1));
 
-        b.add(new Resource(SHILD,2));
+        b.add(new Resource(SHIELD,2));
         b.add(new Resource(COIN,2));
         b.add(new Resource(SERVANT,2));
 
@@ -64,7 +65,7 @@ public class ResourceOperatorTest {
         a  = new ArrayList<Resource>();
         b  = new ArrayList<Resource>();
 
-        a.add(new Resource(SHILD,2));
+        a.add(new Resource(SHIELD,2));
         a.add(new Resource(COIN,1));
 
         b.add(new Resource(SERVANT,2));
@@ -81,8 +82,8 @@ public class ResourceOperatorTest {
 
     @Test
     public void TestResourceOperatorSum() throws Exception {
-        Resource a= new Resource(SHILD,2);
-        Resource b= new Resource(SHILD,1);
+        Resource a= new Resource(SHIELD,2);
+        Resource b= new Resource(SHIELD,1);
 
         Resource c =  ResourceOperator.sum(a,b);
         assertTrue(c.getQuantity()==3 && c.getType() == a.getType() && c.getType() == b.getType() );
@@ -96,7 +97,7 @@ public class ResourceOperatorTest {
     @Test
     public void TestResourceOperatorExceptionSum() {
         Assertions.assertThrows(Exception.class,()->{
-            Resource a= new Resource(SHILD,2);
+            Resource a= new Resource(SHIELD,2);
             Resource b= new Resource(COIN,1);
             Resource c = ResourceOperator.sum(a,b);
         });

@@ -18,4 +18,7 @@ public class Game {
     {
 
     }
+
+    //public boolean addPlayer(String nickname)
+    //
 }
