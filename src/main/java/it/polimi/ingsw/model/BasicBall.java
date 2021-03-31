@@ -2,7 +2,11 @@ package it.polimi.ingsw.model;
 
 import java.awt.*;
 
-public abstract class BasicBall {
-    public abstract void active(Player p);
-    public abstract Color getColor();
+public class BasicBall {
+    public void active(Player p,int pos){}
+    public void active(Player p){}
+
+    public Color getColor(){
+        return Color.BLACK;
+    }
 }

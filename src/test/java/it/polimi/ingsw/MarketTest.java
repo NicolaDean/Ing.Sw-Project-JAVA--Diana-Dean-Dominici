@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MarketTest {
 
@@ -97,62 +97,32 @@ public class MarketTest {
         Player p=new Player("nick",l);
         r.add(new Resource(ResourceType.SHILD,3));
         r.add(new Resource(ResourceType.COIN,10));
-
-        int i;
         Market m=new Market();
-        BasicBall n[],dis;
-        for(int j=0;j<10000;j++) {
+        BasicBall n[],f[],dis;
+        for(int i=0;i<3;i++) {
             try {
-                i=(int)(Math.random()*10)%3;
                 n=m.getResouces()[i].clone();
                 dis=m.getDiscardedResouce();
-                m.exstractRow(i+1, p);
-                assertTrue(m.getDiscardedResouce().equals(n[3]));
-                assertTrue(m.getResouces()[i][0].equals(dis));
-                assertTrue(m.getResouces()[i][1].equals(n[0]));
-                assertTrue(m.getResouces()[i][2].equals(n[1]));
-                assertTrue(m.getResouces()[i][3].equals(n[2]));
+                f=m.exstractRow(i+1, p);
+                assertEquals(dis, m.getResouces()[i][0]);
+                assertEquals(n[0], m.getResouces()[i][1]);
+                assertEquals(n[1], m.getResouces()[i][2]);
+                assertEquals(n[2], m.getResouces()[i][3]);
+                assertEquals(n[3], m.getDiscardedResouce());
+
+                assertEquals(n[0], f[0]);
+                assertEquals(n[1], f[1]);
+                assertEquals(n[2], f[2]);
+                assertEquals(n[3], f[3]);
 
             }catch (Exception e){
-                assertTrue(false);
+                fail();
             }
         }
         checkMarketConsistency(m);
     }
 
-    /**
-     * check exstraction row with exeption
-     */
-    @Test
-    public void checkExstractionRowWithExeption(){
 
-        ArrayList<Resource> r = new ArrayList<>();
-        LeaderCard l[] = {new LeaderCard(r,1), new LeaderCard(r,1) };
-        Player p=new Player("nick",l);
-        r.add(new Resource(ResourceType.SHILD,3));
-        r.add(new Resource(ResourceType.COIN,10));
-
-        int i;
-        Market m=new Market();
-        BasicBall n[],dis;
-        for(int j=0;j<10000;j++) {
-            try {
-                i=(int)(Math.random()*10);
-                n=m.getResouces()[i].clone();
-                dis=m.getDiscardedResouce();
-                m.exstractRow(i+1, p);
-                assertTrue(m.getDiscardedResouce().equals(n[3]));
-                assertTrue(m.getResouces()[i][0].equals(dis));
-                assertTrue(m.getResouces()[i][1].equals(n[0]));
-                assertTrue(m.getResouces()[i][2].equals(n[1]));
-                assertTrue(m.getResouces()[i][3].equals(n[2]));
-
-            }catch (Exception e){
-                assertTrue(true);
-            }
-        }
-        checkMarketConsistency(m);
-    }
 
     /**
      * check exstraction column
@@ -166,59 +136,33 @@ public class MarketTest {
         r.add(new Resource(ResourceType.SHILD,3));
         r.add(new Resource(ResourceType.COIN,10));
 
-        int i;
         Market m=new Market();
         Color n[] = new Color[3],dis;
-        for(int j=0;j<10000;j++) {
+        BasicBall f[];
+        for(int i=0;i<4;i++) {
             try {
-                i=(int)(Math.random()*10)%3;
                 n[0]=m.getResouces()[0][i].getColor();
                 n[1]=m.getResouces()[1][i].getColor();
                 n[2]=m.getResouces()[2][i].getColor();
                 dis=m.getDiscardedResouce().getColor();
-                m.exstractColumn(i+1, p);
-                assertTrue(m.getDiscardedResouce().getColor().equals(n[2]));
-                assertTrue(m.getResouces()[0][i].getColor().equals(dis));
-                assertTrue(m.getResouces()[1][i].getColor().equals(n[0]));
-                assertTrue(m.getResouces()[2][i].getColor().equals(n[1]));
-            }catch (Exception e){
-                assertTrue(false);
+                f=m.exstractColumn(i+1, p);
+
+                assertEquals(dis, m.getResouces()[0][i].getColor());
+                assertEquals(n[0], m.getResouces()[1][i].getColor());
+                assertEquals(n[1], m.getResouces()[2][i].getColor());
+                assertEquals(n[2], m.getDiscardedResouce().getColor());
+
+                assertEquals(n[0], f[0].getColor());
+                assertEquals(n[1], f[1].getColor());
+                assertEquals(n[2], f[2].getColor());
+
+            }catch (IllegalArgumentException e){
+                fail();
             }
+
         }
         checkMarketConsistency(m);
     }
 
-    /**
-     * check exstraction column with exeption
-     */
-    @Test
-    public void checkExstractionColumnWithExeption(){
 
-        ArrayList<Resource> r = new ArrayList<>();
-        LeaderCard l[] = {new LeaderCard(r,1), new LeaderCard(r,1) };
-        Player p=new Player("nick",l);
-        r.add(new Resource(ResourceType.SHILD,3));
-        r.add(new Resource(ResourceType.COIN,10));
-
-        int i;
-        Market m=new Market();
-        Color n[] = new Color[3],dis;
-        for(int j=0;j<10000;j++) {
-            try {
-                i=(int)(Math.random()*10);
-                n[0]=m.getResouces()[0][i].getColor();
-                n[1]=m.getResouces()[1][i].getColor();
-                n[2]=m.getResouces()[2][i].getColor();
-                dis=m.getDiscardedResouce().getColor();
-                m.exstractColumn(i+1, p);
-                assertTrue(m.getDiscardedResouce().getColor().equals(n[2]));
-                assertTrue(m.getResouces()[0][i].getColor().equals(dis));
-                assertTrue(m.getResouces()[1][i].getColor().equals(n[0]));
-                assertTrue(m.getResouces()[2][i].getColor().equals(n[1]));
-            }catch (Exception e){
-                assertTrue(true);
-            }
-        }
-        checkMarketConsistency(m);
-    }
 }

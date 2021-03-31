@@ -4,19 +4,13 @@ import it.polimi.ingsw.enumeration.ResourceType;
 
 import java.awt.*;
 
-public abstract class ResourceBall  extends BasicBall{
+public class ResourceBall  extends BasicBall {
 
-    /**
-     * Add Resource to the player
-     * @param p: player that get ball
-     */
-    @Override
-    public abstract void active(Player p);
+    public void active(Player p, int pos) { }
 
-    /**
-     *
-     * @return type color
-     */
-    @Override
-    public abstract Color getColor();
+    public void active(Player p) {}
+
+    public Color getColor() {
+        return Color.BLACK;
+    }
 }

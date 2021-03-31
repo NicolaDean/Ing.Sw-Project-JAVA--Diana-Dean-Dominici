@@ -2,16 +2,20 @@ package it.polimi.ingsw.model;
 
 import java.awt.*;
 
+import static it.polimi.ingsw.enumeration.ResourceType.SERVANT;
+import static it.polimi.ingsw.enumeration.ResourceType.SHILD;
+
 public class VioletBall extends ResourceBall{
     /**
      * Add Resource to the player
-     * @param p: player that get ball
+     * @param p player
+     * @param pos position (between 1 and 3)
      */
     @Override
-    public void active(Player p){
-        //chiede al player dove aggiungere le risorse tramite View
-        //p.getDashboard().getStorage().safeInsertion(new Resource(SERVANT,1),posizioneChiestaPrima);
+    public void active(Player p, int pos){
+        p.getDashboard().storageInsertion(new Resource(SERVANT,1),pos);
     }
+
 
     /**
      *
