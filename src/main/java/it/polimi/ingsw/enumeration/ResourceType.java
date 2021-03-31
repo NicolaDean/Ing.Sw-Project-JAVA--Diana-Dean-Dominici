@@ -1,7 +1,7 @@
 package it.polimi.ingsw.enumeration;
 
 public enum ResourceType {
-    SHILD,
+    SHIELD,
     ROCK,
     COIN,
     SERVANT,

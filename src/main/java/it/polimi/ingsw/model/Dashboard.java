@@ -126,6 +126,29 @@ public class Dashboard {
         return output;
     }
 
+
+
+    public boolean production(int pos)
+    {
+        boolean out = this.producionCards[pos].peek().activate(this);
+
+        return out;
+    }
+
+    public void applyChestCosts(Resource res)
+    {
+        this.chest.remove(res);
+    }
+
+    public void applyStorageCosts(Resource res,int pos)
+    {
+        try {
+            this.storage.safeSubtraction(res,pos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<Resource> getDiscount()
     {
         return this.bonusResources;

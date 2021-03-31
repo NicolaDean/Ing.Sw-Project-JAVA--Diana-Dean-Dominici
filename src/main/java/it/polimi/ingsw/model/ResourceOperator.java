@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.enumeration.ResourceType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,18 +57,19 @@ public class ResourceOperator {
 
     /**
      * Return true if all Resources of a is >= of b
-     * @param a
-     * @param b
+     * @param maxThen
+     * @param minThen
      * @return
+     *
      */
-    public static boolean compare(List<Resource> a,List<Resource> b)
+    public static boolean compare(List<Resource> maxThen,List<Resource> minThen)
     {
         boolean flag;//avoid to return true if 2 list have only different reource type
 
-        for(Resource resA : a)
+        for(Resource resA : maxThen)
         {
             flag = false;
-            for(Resource resB : b)
+            for(Resource resB : minThen)
             {
                 if(resA.getType() == resB.getType())
                 {
@@ -89,6 +92,9 @@ public class ResourceOperator {
     {
         List<Resource> tmp = new ResourceList();
 
+        if(a == null) return b;
+        if(b == null) return a;
+
         for(Resource res :a)
         {
             tmp.add(res);
@@ -100,6 +106,15 @@ public class ResourceOperator {
 
 
         return tmp;
+    }
+
+    public static int extractQuantityOf(ResourceType type,List<Resource> list)
+    {
+        for(Resource res:list)
+        {
+            if(res.getType() == type) return res.getQuantity();
+        }
+        return 0;
     }
 
 

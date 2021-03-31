@@ -85,7 +85,47 @@ public class ResourceList implements List
 
     @Override
     public boolean remove(Object o) {
-        return this.resources.remove(o);
+
+        Resource r = (Resource) o;
+
+        int pos=0;
+
+        if (r == null) return false;
+        if(this.resources.isEmpty())
+        {
+            return false;
+        }
+        else
+        {
+            for(Resource res :this.resources)
+            {
+                if(res!= null)
+                {
+                    if(res.getType() == r.getType())
+                    {
+                        try {
+                            if(res.getQuantity() >= r.getQuantity())
+                            {
+                                this.resources.set(pos,ResourceOperator.sub(res,r));
+                                return true;
+                            }
+                            else{
+                                return false;
+                            }
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            return false;
+                        }
+                    }
+                }
+
+                pos++;
+
+            }
+            return false;
+        }
     }
 
     @Override
@@ -104,12 +144,12 @@ public class ResourceList implements List
     }
 
     @Override
-    public Object get(int index) {
+    public Resource get(int index) {
         return this.resources.get(index);
     }
 
     @Override
-    public Object set(int index, Object element) {
+    public Resource set(int index, Object element) {
         return this.resources.set(index,(Resource) element);
     }
 
@@ -119,7 +159,7 @@ public class ResourceList implements List
     }
 
     @Override
-    public Object remove(int index) {
+    public Resource remove(int index) {
         return this.resources.remove(index);
     }
 

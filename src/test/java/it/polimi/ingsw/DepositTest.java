@@ -1,9 +1,7 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Deposit;
 import it.polimi.ingsw.model.Resource;
-import it.polimi.ingsw.model.ResourceOperator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static it.polimi.ingsw.enumeration.ResourceType.*;
@@ -42,7 +40,7 @@ public class DepositTest {
     {
         Deposit testdeposit = new Deposit(3);
         testdeposit.setNewDeposit(COIN, 2);
-        Resource r = new Resource(SHILD, 1);
+        Resource r = new Resource(SHIELD, 1);
         testdeposit.safeInsertion(r);
         assertTrue(testdeposit.getResource().getQuantity()==2 && testdeposit.getResource().getType()==COIN);
 
@@ -72,7 +70,7 @@ public class DepositTest {
     {
         Deposit testdeposit = new Deposit(3);
         testdeposit.setNewDeposit(COIN, 2);
-        Resource r = new Resource(SHILD, 1);
+        Resource r = new Resource(SHIELD, 1);
         testdeposit.safeSubtraction(r);
         assertTrue(testdeposit.getResource().getQuantity()==2 && testdeposit.getResource().getType()==COIN);
 
