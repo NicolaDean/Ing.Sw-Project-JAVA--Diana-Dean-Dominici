@@ -4,14 +4,16 @@ import it.polimi.ingsw.enumeration.ResourceType;
 
 import java.util.List;
 
-public class LeaderTradeCard extends  LeaderCard implements Production{
+public class LeaderTradeCard extends  LeaderCard implements BonusProduction {
 
-    private List<Resource> rawMaterial;
+    private ResourceType obtain;
 
-    public LeaderTradeCard(List<Resource> cost, int victoryPoints) {
-        super(cost, victoryPoints);
-        this.rawMaterial = null;
+    public LeaderTradeCard(List<Resource> cost, int victoryPoints, ResourceType type) {
+        super(cost, victoryPoints, type);
+
+        this.obtain = null;
     }
+
 
     @Override
     public void activate(Player p)
@@ -19,20 +21,34 @@ public class LeaderTradeCard extends  LeaderCard implements Production{
         //Add himself to the Player production card list
     }
 
+    public void setupProduction(){
+
+    }
 
     //USER can select the card and call the method "changeRawMat()" or
-    public void produce(Player P,ResourceType a, ResourceType b)
+    @Override
+    public boolean produce(Player p, ResourceType pay)
     {
+        int possession = ResourceOperator.extractQuantityOf(pay,p.getDashboard().getAllAvailableResource());
+
+        if(possession > 1)
+        {
+            p.chestInsertion(new Resource(this.getType(),1));
+            p.incrementPosition(); //Get a faith point
+            return true;
+        }
+        else
+        {
+            return false;
+        }
 
     }
 
     @Override
-    public boolean produce(Dashboard dashboard) {
-        return false;
+    public Resource getProdCost()
+    {
+        return new Resource(this.getType(),1);
     }
 
-    @Override
-    public boolean produce(Dashboard dashboard, ResourceType obtain) {
-        return false;
-    }
+
 }

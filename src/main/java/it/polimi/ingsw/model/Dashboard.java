@@ -226,4 +226,9 @@ public class Dashboard {
     }
 
 
+    public void addDepositBonus(ResourceType typeBonus)
+    {
+        this.storage.initializeBonusDeposit(typeBonus);
+    }
+
     }

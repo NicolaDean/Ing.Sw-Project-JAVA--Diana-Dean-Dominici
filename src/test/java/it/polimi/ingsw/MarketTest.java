@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static it.polimi.ingsw.enumeration.ResourceType.COIN;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MarketTest {
@@ -93,10 +94,10 @@ public class MarketTest {
     public void checkExstractionRow(){
 
         ArrayList<Resource> r = new ArrayList<>();
-        LeaderCard l[] = {new LeaderCard(r,1), new LeaderCard(r,1) };
+        LeaderCard l[] = {new LeaderCard(r,1,COIN), new LeaderCard(r,1,COIN) };
         Player p=new Player("nick",l);
         r.add(new Resource(ResourceType.SHIELD,3));
-        r.add(new Resource(ResourceType.COIN,10));
+        r.add(new Resource(COIN,10));
 
         int i;
         Market m=new Market();
@@ -127,10 +128,10 @@ public class MarketTest {
     public void checkExstractionRowWithExeption(){
 
         ArrayList<Resource> r = new ArrayList<>();
-        LeaderCard l[] = {new LeaderCard(r,1), new LeaderCard(r,1) };
+        LeaderCard l[] = {new LeaderCard(r,1,COIN), new LeaderCard(r,1,COIN) };
         Player p=new Player("nick",l);
         r.add(new Resource(ResourceType.SHIELD,3));
-        r.add(new Resource(ResourceType.COIN,10));
+        r.add(new Resource(COIN,10));
 
         int i;
         Market m=new Market();
@@ -161,10 +162,10 @@ public class MarketTest {
     public void checkExstractionColumn(){
 
         ArrayList<Resource> r = new ArrayList<>();
-        LeaderCard l[] = {new LeaderCard(r,1), new LeaderCard(r,1) };
+        LeaderCard l[] = {new LeaderCard(r,1,COIN), new LeaderCard(r,1,COIN) };
         Player p=new Player("nick",l);
         r.add(new Resource(ResourceType.SHIELD,3));
-        r.add(new Resource(ResourceType.COIN,10));
+        r.add(new Resource(COIN,10));
 
         int i;
         Market m=new Market();
@@ -195,10 +196,10 @@ public class MarketTest {
     public void checkExstractionColumnWithExeption(){
 
         ArrayList<Resource> r = new ArrayList<>();
-        LeaderCard l[] = {new LeaderCard(r,1), new LeaderCard(r,1) };
+        LeaderCard l[] = {new LeaderCard(r,1,COIN), new LeaderCard(r,1,COIN) };
         Player p=new Player("nick",l);
         r.add(new Resource(ResourceType.SHIELD,3));
-        r.add(new Resource(ResourceType.COIN,10));
+        r.add(new Resource(COIN,10));
 
         int i;
         Market m=new Market();

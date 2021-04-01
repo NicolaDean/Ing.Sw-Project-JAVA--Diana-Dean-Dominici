@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
 
+import it.polimi.ingsw.enumeration.ResourceType;
+
 public class Player {
 
     private String nickname;
@@ -12,6 +14,7 @@ public class Player {
 
     public Player(String nickname,LeaderCard[] drawedCards)
     {
+        this.dashboard = new Dashboard();
         this.nickname = nickname;
     }
 
@@ -138,14 +141,18 @@ public class Player {
         this.dashboard.applyChestCosts(resource);
     }
 
-    public void insertBonusProduction()
-    {
 
-    }
-
-
+    /**
+     *
+     * @param res Add a permanent discount to the player Dashboard
+     */
     public void addDiscount(Resource res)
     {
         this.dashboard.setDiscount( res);
+    }
+
+    public void addDepositBonus(ResourceType typeBonus)
+    {
+        this.dashboard.addDepositBonus(typeBonus);
     }
 }
