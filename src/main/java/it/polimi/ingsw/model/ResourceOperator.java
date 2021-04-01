@@ -117,5 +117,14 @@ public class ResourceOperator {
         return 0;
     }
 
+    public static Resource extractResourceOf(ResourceType type,List<Resource> list)
+    {
+        for(Resource res:list)
+        {
+            if(res.getType() == type) return res;
+        }
+        return new Resource(type,0);
+    }
+
 
 }

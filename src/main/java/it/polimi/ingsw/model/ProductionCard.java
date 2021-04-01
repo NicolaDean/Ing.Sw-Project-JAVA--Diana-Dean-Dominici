@@ -96,4 +96,21 @@ public class ProductionCard extends Card{
         return out;
     }
 
+    /**
+     * get the card price with the applied discount
+     * @param dash the player dashboard
+     * @return the cost of the card discounted(full price instead)
+     */
+
+    public List<Resource> getCost(Dashboard dash)
+    {
+        List<Resource> cost = super.getCost();
+
+        for(Resource scont : dash.getDiscount())
+        {
+            cost.remove(scont);
+        }
+        return cost;
+    }
+
 }

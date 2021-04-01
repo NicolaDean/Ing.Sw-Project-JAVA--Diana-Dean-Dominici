@@ -38,6 +38,11 @@ public class Dashboard {
         return 0;
     }
 
+    /**
+     *  Insert a resource in the storage
+     * @param res resource to insert
+     * @param pos deposit to select
+     */
     public void storageInsertion(Resource res, int pos)
     {
         try {
@@ -48,10 +53,19 @@ public class Dashboard {
 
     }
 
+    /**
+     *  Chest insertion
+     * @param res resource to insert
+     */
     public void chestInsertion(Resource res)
     {
         this.chest.add(res);
     }
+
+    /**
+     *  insert a list into the chest
+     * @param res resources to insert
+     */
     public void chestInsertion(List<Resource> res)
     {
         this.chest = ResourceOperator.merge(this.chest,res);
@@ -131,7 +145,11 @@ public class Dashboard {
     }
 
 
-
+    /**
+     * Activate the production of a production card
+     * @param pos stack of card to select
+     * @return true if the activation goes well
+     */
     public boolean production(int pos)
     {
         boolean out = this.producionCards[pos].peek().produce(this);
@@ -139,20 +157,35 @@ public class Dashboard {
         return out;
     }
 
+    /**
+     * Apply the cost of that particular res on the chest
+     * @param res resource to pay
+     */
     public void applyChestCosts(Resource res)
     {
         this.chest.remove(res);
     }
 
+    /**
+     * apply a cost on the storage ( and check if discount is available)
+     * @param res resource to pay
+     * @param pos deposit to select
+     */
     public void applyStorageCosts(Resource res,int pos)
     {
-        try {
-            this.storage.safeSubtraction(res,pos);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            try {
+                this.storage.safeSubtraction(res,pos);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
     }
 
+    /**
+     *
+     * @return infinite bonus resources available
+     */
     public List<Resource> getDiscount()
     {
         return this.bonusResources;
@@ -180,6 +213,16 @@ public class Dashboard {
             vp +=stack.stream().mapToInt(ProductionCard::getScore).sum();
         }
         return vp;
+    }
+
+    public void setDiscount(Resource res)
+    {
+        if(this.bonusResources == null)
+        {
+            this.bonusResources = new ResourceList();
+        }
+
+        this.bonusResources.add(res);
     }
 
 

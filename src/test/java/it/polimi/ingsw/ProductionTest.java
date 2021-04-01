@@ -127,4 +127,39 @@ public class ProductionTest {
 
 
     }
+
+    @Test
+
+    public void discountedCostTest()
+    {
+
+        //COST
+        List<Resource> cost = new ResourceList();
+        cost.add(new Resource(COIN,1));
+        cost.add(new Resource(ROCK,1));
+        cost.add(new Resource(SHIELD,1));
+
+        //RAW MAT
+        List<Resource> raw = new ResourceList();
+        raw.add(new Resource(COIN,2));
+
+        //OBTAINED
+        List<Resource> obt = new ResourceList();
+        obt.add(new Resource(ROCK,1));
+
+        //BUY A CARD
+        ProductionCard card = new ProductionCard(cost,raw,obt,2,1);
+
+        Player p = new Player();
+
+        p.addDiscount(new Resource(COIN,1));
+
+        List<Resource> resultCost = card.getCost(p.getDashboard());
+
+        assertTrue(ResourceOperator.extractQuantityOf(ROCK,resultCost) == 1);
+        assertTrue(ResourceOperator.extractQuantityOf(COIN,resultCost) == 0);
+        assertTrue(ResourceOperator.extractQuantityOf(SHIELD,resultCost) == 1);
+        assertTrue(ResourceOperator.extractQuantityOf(SERVANT,resultCost) == 0);
+
+    }
 }

@@ -19,6 +19,8 @@ public class LeaderTradeCard extends  LeaderCard implements Production{
         //Add himself to the Player production card list
     }
 
+
+    //USER can select the card and call the method "changeRawMat()" or
     public void produce(Player P,ResourceType a, ResourceType b)
     {
 

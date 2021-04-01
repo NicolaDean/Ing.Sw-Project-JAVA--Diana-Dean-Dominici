@@ -15,6 +15,10 @@ public class Player {
         this.nickname = nickname;
     }
 
+    public Player() {
+        this.dashboard = new Dashboard();
+    }
+
     public String getNickname()
     {
         return this.nickname;
@@ -139,4 +143,9 @@ public class Player {
 
     }
 
+
+    public void addDiscount(Resource res)
+    {
+        this.dashboard.setDiscount( res);
+    }
 }
