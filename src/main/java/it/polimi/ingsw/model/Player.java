@@ -88,12 +88,55 @@ public class Player {
      * Delete Leader from the Leader List of the player
      * @param position
      */
-    public void DiscardLeader(int position)
+    public void discardLeader(int position)
     {
         this.leaders[position] = null;
     }
 
-    public void ActivateLeader(int position){ }
+    public void activateLeader(int position){ }
 
+
+    /**
+     *  Add resource to chest
+     * @param resource resource to add
+     */
+    public void chestInsertion(Resource resource)
+    {
+        this.dashboard.chestInsertion(resource);
+    }
+
+    /**
+     *  insert resources in storage
+     * @param resource resource to put in storage
+     * @param position deposit to select
+     */
+    public void storageInsertion(Resource resource,int position)
+    {
+        this.dashboard.storageInsertion(resource,position);
+    }
+
+    /**
+     * apply a cost to the storage
+     * @param resource resource to pay
+     * @param position deposit to select
+     */
+    public void payStorageResource(Resource resource,int position)
+    {
+        this.dashboard.applyStorageCosts(resource,position);
+    }
+
+    /**
+     *
+     * @param resource resource to pay
+     */
+    public void payChestResource(Resource resource)
+    {
+        this.dashboard.applyChestCosts(resource);
+    }
+
+    public void insertBonusProduction()
+    {
+
+    }
 
 }

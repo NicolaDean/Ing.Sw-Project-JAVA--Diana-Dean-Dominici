@@ -60,7 +60,7 @@ public class ProductionCard extends Card{
      * @param dash Dashboard of the player
      * @return  true if the activation goes well
      */
-    public boolean activate(Dashboard dash)
+    public boolean produce(Dashboard dash)
     {
 
         //Check if necesary resources are availabe

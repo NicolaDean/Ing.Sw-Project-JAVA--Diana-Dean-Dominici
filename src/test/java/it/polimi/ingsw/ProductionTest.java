@@ -119,6 +119,7 @@ public class ProductionTest {
         check  = dash.getAllAvailableResource();
 
 
+        //Check Cost apply and resource adding
         assertTrue(ResourceOperator.extractQuantityOf(ROCK,check) == 3);
         assertTrue(ResourceOperator.extractQuantityOf(COIN,check) == 0);
         assertTrue(ResourceOperator.extractQuantityOf(SHIELD,check) == 0);

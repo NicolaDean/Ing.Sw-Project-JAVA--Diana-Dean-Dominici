@@ -7,4 +7,9 @@ public class LeaderCard extends Card{
     public LeaderCard(List<Resource> cost, int victoryPoints) {
         super(cost, victoryPoints);
     }
+
+    public void activate(Player p)
+    {
+
+    }
 }

@@ -38,13 +38,14 @@ public class Dashboard {
         return 0;
     }
 
-    public void storageInsertion(Resource res,int pos)
+    public void storageInsertion(Resource res, int pos)
     {
         try {
             this.storage.safeInsertion(res,pos);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public void chestInsertion(Resource res)
@@ -63,6 +64,8 @@ public class Dashboard {
      */
     public boolean setProcuctionCard(ProductionCard card,int pos)
     {
+        if(pos > 2)return false;//invalid position
+
         boolean out = this.checkValidPosition(card,pos);
 
         if(out)
@@ -131,7 +134,7 @@ public class Dashboard {
 
     public boolean production(int pos)
     {
-        boolean out = this.producionCards[pos].peek().activate(this);
+        boolean out = this.producionCards[pos].peek().produce(this);
 
         return out;
     }
