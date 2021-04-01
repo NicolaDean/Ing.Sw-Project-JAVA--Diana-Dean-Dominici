@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.enumeration.ResourceType;
+
 import java.util.*;
 
 
@@ -11,6 +13,12 @@ public class ResourceList implements List
     public ResourceList()
     {
         resources = new ArrayList<>();
+
+        //Add One Empty Resource for each type
+        for(ResourceType r : ResourceType.values())
+        {
+            resources.add(new Resource(r,0));
+        }
     }
 
     @Override

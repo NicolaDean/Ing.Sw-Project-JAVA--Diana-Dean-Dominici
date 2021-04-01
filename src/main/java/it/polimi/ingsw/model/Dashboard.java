@@ -30,6 +30,7 @@ public class Dashboard {
         {
             papalToken[i]=false;
         }
+        bonusResources = null;
 
     }
 
@@ -113,7 +114,7 @@ public class Dashboard {
         List<Resource> availableRes = this.getAllAvailableResource();
 
         //NEED TO ADD A COMPARE OVERLOADING (list<resource>,resource)
-        List<Resource> tmp = new ArrayList<Resource>();
+        List<Resource> tmp = new ResourceList();
         tmp.add(new Resource(spendOne,1));
         tmp.add(new Resource(spendTwo,1));
 

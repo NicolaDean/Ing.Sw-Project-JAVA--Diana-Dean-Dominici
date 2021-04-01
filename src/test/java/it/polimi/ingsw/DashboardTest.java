@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.model.Dashboard;
 import it.polimi.ingsw.model.ProductionCard;
 import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.model.ResourceOperator;
 import org.junit.jupiter.api.Test;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
@@ -78,17 +79,14 @@ public class DashboardTest {
         dash.chestInsertion(new Resource(COIN,1));
 
         dash.storageInsertion(new Resource(COIN,1),0);
-        dash.storageInsertion(new Resource(SERVANT,2),0);
+        dash.storageInsertion(new Resource(SERVANT,2),1);
 
 
         List<Resource> tmp = dash.getAllAvailableResource();
 
-        for(Resource res:tmp)
-        {
-            if(res.getType() == COIN) assertTrue(res.getQuantity() == 3);
-            if(res.getType() == SERVANT) assertTrue(res.getQuantity() == 2);
-            if(res.getType() == ROCK) assertTrue(res.getQuantity() == 2);
-        }
+        assertTrue(ResourceOperator.extractQuantityOf(COIN,tmp) == 3);
+        assertTrue(ResourceOperator.extractQuantityOf(SERVANT,tmp) == 2);
+        assertTrue(ResourceOperator.extractQuantityOf(ROCK,tmp) == 2);
     }
 
     @Test void TestProduction()

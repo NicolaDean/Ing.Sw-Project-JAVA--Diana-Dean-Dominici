@@ -69,9 +69,12 @@ public class StorageTest {
         bonus.activate(testStorage);
         testStorage.safeInsertion(c, 3);
         list = testStorage.getStorageAsList();
-        assertTrue(ResourceOperator.Compare(list.get(0), a) &&
-                ResourceOperator.Compare(list.get(1), b) &&
-                ResourceOperator.Compare(list.get(2), d));
+
+        assertTrue(ResourceOperator.extractQuantityOf(a.getType(),list) == a.getQuantity());
+        assertTrue(ResourceOperator.extractQuantityOf(b.getType(),list) == b.getQuantity());
+        assertTrue(ResourceOperator.extractQuantityOf(c.getType(),list) == 2*c.getQuantity());
+
+
     }
 
     /**
