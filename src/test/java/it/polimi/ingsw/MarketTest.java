@@ -162,7 +162,162 @@ public class MarketTest {
         }
         checkMarketConsistency(m);
     }
+    @Test
+    public void activityTestNoWhite(){
+        ResourceList r = new ResourceList();
+        LeaderCard l[] = {new LeaderCard(r,1, ResourceType.COIN), new LeaderCard(r,1, ResourceType.SERVANT) };
+        Player p=new Player("nick",l);
+        BasicBall[] b;
+        int tmpShield=0,tmpCoin=0,tmpRock=0,tmpSeverant=0,tmpfaith=0;
+        Market m=new Market();
 
+
+
+        b=m.exstractColumn(1 , p );
+
+        for(BasicBall i:b){
+
+            if (i.getColor() == Color.yellow) {
+                tmpCoin++;
+            }
+
+            if (i.getColor() == Color.magenta) {
+                tmpSeverant++;
+            }
+
+            if (i.getColor() == Color.gray) {
+                tmpRock++;
+            }
+
+            if (i.getColor() == Color.blue) {
+                tmpShield++;
+            }
+
+            if (i.getColor() == Color.red){
+                tmpfaith++;
+            }
+
+        }
+
+        for(BasicBall i:b) {
+            if (i.getColor() == Color.yellow) {
+                try {
+                    if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(ResourceType.COIN).get(0) ) > tmpCoin)
+                        i.active(p,p.getDashboard().getStorage().findType(ResourceType.COIN).get(0));
+                } catch (Exception e) {
+                    tmpCoin=0;
+                }
+            }
+
+            if (i.getColor() == Color.magenta) {
+                try {
+                    if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(ResourceType.SERVANT).get(0) ) > tmpSeverant)
+                        i.active(p,p.getDashboard().getStorage().findType(ResourceType.SERVANT).get(0));
+                } catch (Exception e) {
+                    tmpSeverant=0;
+                }
+            }
+            if (i.getColor() == Color.gray) {
+                try {
+                    if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(ResourceType.ROCK).get(0) ) > tmpRock)
+                        i.active(p,p.getDashboard().getStorage().findType(ResourceType.ROCK).get(0));
+                } catch (Exception e) {
+                    tmpRock=0;
+                }
+            }
+            if (i.getColor() == Color.blue) {
+                try {
+                    if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(ResourceType.SHIELD).get(0) ) > tmpShield)
+                        i.active(p,p.getDashboard().getStorage().findType(ResourceType.SHIELD).get(0));
+                } catch (Exception e) {
+                    tmpShield=0;
+                }
+            }
+            if (i.getColor() == Color.red){
+                i.active(p);
+            }
+        }
+
+        assertEquals(tmpSeverant, ResourceOperator.extractQuantityOf(ResourceType.SERVANT, p.getDashboard().getAllAvailableResource()));
+        assertEquals(tmpCoin, ResourceOperator.extractQuantityOf(ResourceType.COIN, p.getDashboard().getAllAvailableResource()));
+        assertEquals(tmpRock, ResourceOperator.extractQuantityOf(ResourceType.ROCK, p.getDashboard().getAllAvailableResource()));
+        assertEquals(tmpShield, ResourceOperator.extractQuantityOf(ResourceType.SHIELD, p.getDashboard().getAllAvailableResource()));
+        assertEquals(tmpfaith, p.getPosition());
+
+
+        for(int cont=1;cont<5;cont++){
+            b=m.exstractColumn(cont , p );
+
+            for(BasicBall i:b){
+
+                if (i.getColor() == Color.yellow) {
+                    tmpCoin++;
+                }
+
+                if (i.getColor() == Color.magenta) {
+                    tmpSeverant++;
+                }
+
+                if (i.getColor() == Color.gray) {
+                    tmpRock++;
+                }
+
+                if (i.getColor() == Color.blue) {
+                    tmpShield++;
+                }
+
+                if (i.getColor() == Color.red){
+                    tmpfaith++;
+                }
+
+            }
+            for(BasicBall i:b) {
+                if (i.getColor() == Color.yellow) {
+                    try {
+                        if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(ResourceType.COIN).get(0) ) > tmpCoin)
+                            i.active(p,p.getDashboard().getStorage().findType(ResourceType.COIN).get(0));
+                    } catch (Exception e) {
+                        tmpCoin=0;
+                    }
+                }
+
+                if (i.getColor() == Color.magenta) {
+                    try {
+                        if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(ResourceType.SERVANT).get(0) ) > tmpSeverant)
+                            i.active(p,p.getDashboard().getStorage().findType(ResourceType.SERVANT).get(0));
+                    } catch (Exception e) {
+                        tmpSeverant=0;
+                    }
+                }
+                if (i.getColor() == Color.gray) {
+                    try {
+                        if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(ResourceType.ROCK).get(0) ) > tmpRock)
+                            i.active(p,p.getDashboard().getStorage().findType(ResourceType.ROCK).get(0));
+                    } catch (Exception e) {
+                        tmpRock=0;
+                    }
+                }
+                if (i.getColor() == Color.blue) {
+                    try {
+                        if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(ResourceType.SHIELD).get(0) ) > tmpShield)
+                            i.active(p,p.getDashboard().getStorage().findType(ResourceType.SHIELD).get(0));
+                    } catch (Exception e) {
+                        tmpShield=0;
+                    }
+                }
+                if (i.getColor() == Color.red){
+                    i.active(p);
+                }
+            }
+
+            assertEquals(tmpSeverant, ResourceOperator.extractQuantityOf(ResourceType.SERVANT, p.getDashboard().getAllAvailableResource()));
+            assertEquals(tmpCoin, ResourceOperator.extractQuantityOf(ResourceType.COIN, p.getDashboard().getAllAvailableResource()));
+            assertEquals(tmpRock, ResourceOperator.extractQuantityOf(ResourceType.ROCK, p.getDashboard().getAllAvailableResource()));
+            assertEquals(tmpShield, ResourceOperator.extractQuantityOf(ResourceType.SHIELD, p.getDashboard().getAllAvailableResource()));
+            assertEquals(tmpfaith, p.getPosition());
+
+        }
+    }
 
 
 }
