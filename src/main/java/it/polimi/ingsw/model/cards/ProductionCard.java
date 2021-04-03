@@ -109,9 +109,12 @@ public class ProductionCard extends Card {
     {
         List<Resource> cost = super.getCost();
 
-        for(Resource scont : dash.getDiscount())
+        if(dash.getDiscount() != null)
         {
-            cost.remove(scont);
+            for(Resource scont : dash.getDiscount())
+            {
+                cost.remove(scont);
+            }
         }
         return cost;
     }

@@ -105,4 +105,23 @@ public class DashboardTest {
         //production with raw material
         assertTrue(dash.basicProduction(COIN,SERVANT,ROCK));
     }
+
+    @Test
+    void TestPendingCost()
+    {
+        List<Resource> res = new ArrayList<Resource>();
+        Dashboard dash = new Dashboard();
+
+        res.add(new Resource(COIN,2));
+
+        ProductionCard tmp = new ProductionCard(res,3,1);
+
+        dash.setProcuctionCard(tmp,1);
+
+        assertTrue(ResourceOperator.extractQuantityOf(COIN,dash.getPendingCost())==2);
+        assertTrue(ResourceOperator.extractQuantityOf(ROCK,dash.getPendingCost())==0);
+        assertTrue(ResourceOperator.extractQuantityOf(SERVANT,dash.getPendingCost())==0);
+        assertTrue(ResourceOperator.extractQuantityOf(SHIELD,dash.getPendingCost())==0);
+
+    }
 }

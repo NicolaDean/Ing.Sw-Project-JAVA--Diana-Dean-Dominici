@@ -14,6 +14,7 @@ public class Dashboard {
     private Stack<ProductionCard>[] producionCards;
     private boolean [] papalToken;
     private List<Resource> bonusResources;
+    private List<Resource>pendingCost;
 
 
     public Storage getStorage() {
@@ -39,7 +40,7 @@ public class Dashboard {
             papalToken[i]=false;
         }
         bonusResources = null;
-
+        pendingCost = new ResourceList();
     }
 
     public int getScore(){
@@ -76,7 +77,7 @@ public class Dashboard {
      */
     public void chestInsertion(List<Resource> res)
     {
-        this.chest = ResourceOperator.merge(this.chest,res);
+        this.chest.addAll(res);
     }
     /**
      *
@@ -93,6 +94,7 @@ public class Dashboard {
         if(out)
         {
             this.producionCards[pos].add(card);
+            this.pendingCost.addAll(card.getCost(this));//Add card cost to the pendingPayment
         }
         return out;
     }
@@ -148,6 +150,8 @@ public class Dashboard {
         {
             Resource ob = new Resource(obtain,1);
             this.chestInsertion(new Resource(obtain,1));
+            this.pendingCost.add(new Resource(spendOne,1));
+            this.pendingCost.add(new Resource(spendTwo,1));
         }
         return output;
     }
@@ -160,7 +164,13 @@ public class Dashboard {
      */
     public boolean production(int pos)
     {
-        boolean out = this.producionCards[pos].peek().produce(this);
+        ProductionCard card = this.producionCards[pos].peek();
+        boolean out = card.produce(this);
+
+        if(out)
+        {
+            this.pendingCost.addAll(card.getCost(this));
+        }
 
         return out;
     }
@@ -173,7 +183,14 @@ public class Dashboard {
      */
     public void applyChestCosts(Resource res)
     {
+        this.pendingCost.remove(res);
         this.chest.remove(res);
+    }
+
+    public void applyChestCosts(List<Resource> res)
+    {
+        this.pendingCost.retainAll(res);
+        this.chest.removeAll(res);
     }
 
     /**
@@ -185,11 +202,10 @@ public class Dashboard {
     {
             try {
                 this.storage.safeSubtraction(res,pos);
+                this.pendingCost.remove(res);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
     }
 
     /**
@@ -225,6 +241,10 @@ public class Dashboard {
         return vp;
     }
 
+    public List<Resource> getPendingCost()
+    {
+        return this.pendingCost;
+    }
     public void setDiscount(Resource res)
     {
         if(this.bonusResources == null)
@@ -236,6 +256,10 @@ public class Dashboard {
     }
 
 
+    /**
+     * Add a deposit bonus
+     * @param typeBonus resource given from the bonus
+     */
     public void addDepositBonus(ResourceType typeBonus)
     {
         this.storage.initializeBonusDeposit(typeBonus);

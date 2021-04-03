@@ -28,7 +28,16 @@ public class ResourceList implements List
 
     @Override
     public boolean isEmpty() {
-        return resources.isEmpty();
+
+        //Is null
+        if(this.resources.isEmpty())return true;
+
+        //Check all resource has 0 quantity
+        for(Resource res: this.resources)
+        {
+            if(res.getQuantity() !=0) return false;
+        }
+        return true;
     }
 
     @Override
@@ -138,7 +147,11 @@ public class ResourceList implements List
 
     @Override
     public boolean addAll(Collection c) {
-        return false;
+        for(Object res:c)
+        {
+            this.add(res);
+        }
+        return true;
     }
 
     @Override
@@ -203,7 +216,12 @@ public class ResourceList implements List
 
     @Override
     public boolean removeAll( Collection c) {
-        return this.resources.removeAll(c);
+
+        for(Object res: c)
+        {
+            this.remove(res);
+        }
+        return true;
     }
 
     @Override

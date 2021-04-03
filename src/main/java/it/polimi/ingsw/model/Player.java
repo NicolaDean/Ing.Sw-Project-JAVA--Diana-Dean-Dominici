@@ -7,13 +7,14 @@ import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 
+import java.util.List;
+
 public class Player {
 
     private String nickname;
     private boolean connectionState;
     private LeaderCard[] leaders;
     private Dashboard dashboard;
-    private ResourceList pendingCost;
     private int position;
     private int score;
 
@@ -137,18 +138,19 @@ public class Player {
         this.dashboard.storageInsertion(resource,position);
     }
 
-    /**
+    /**Remove the resourced payed from the pendingCost and remove resources from storage
      * apply a cost to the storage
      * @param resource resource to pay
      * @param position deposit to select
      */
     public void payStorageResource(Resource resource,int position)
     {
+
         this.dashboard.applyStorageCosts(resource,position);
     }
 
     /**
-     *
+     * Remove the resourced payed from the pendingCost and remove resources from chest
      * @param resource resource to pay
      */
     public void payChestResource(Resource resource)
@@ -156,7 +158,23 @@ public class Player {
         this.dashboard.applyChestCosts(resource);
     }
 
+    /**
+     * Remove a list of resources from the chest ( and remove them also from pendingCost)
+     * @param resource
+     */
+    public void payChestResource(List<Resource> resource)
+    {
+        this.dashboard.applyChestCosts(resource);
+    }
 
+    /**
+     * get the debits of this player
+     * @return the list of resources this player need to pay (for a production or a buyed card)
+     */
+    public List<Resource> getPendingCost()
+    {
+        return this.dashboard.getPendingCost();
+    }
     /**
      *
      * @param res Add a permanent discount to the player Dashboard
