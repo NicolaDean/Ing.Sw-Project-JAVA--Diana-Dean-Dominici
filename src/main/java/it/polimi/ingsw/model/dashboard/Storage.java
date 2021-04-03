@@ -108,6 +108,7 @@ public class Storage {
             return (storage[pos].getSizeMax() - storage[pos].getResource().getQuantity());
         else
             return storage[pos].getSizeMax();
+
     }
 
 
