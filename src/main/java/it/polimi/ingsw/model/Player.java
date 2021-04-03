@@ -2,6 +2,10 @@ package it.polimi.ingsw.model;
 
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.model.cards.LeaderCard;
+import it.polimi.ingsw.model.dashboard.Dashboard;
+import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
 
 public class Player {
 
@@ -9,6 +13,7 @@ public class Player {
     private boolean connectionState;
     private LeaderCard[] leaders;
     private Dashboard dashboard;
+    private ResourceList pendingCost;
     private int position;
     private int score;
 
@@ -48,6 +53,15 @@ public class Player {
 
     public int getPosition() {
         return this.position;
+    }
+
+    /**
+     *  adding resourcing
+     * @param r resource
+     * @param p position
+     */
+    public void addResource(Resource r, int p){
+        dashboard.storageInsertion(new Resource(r.getType(),r.getQuantity()),p);
     }
 
     public Dashboard getDashboard() {
@@ -103,7 +117,6 @@ public class Player {
     }
 
     public void activateLeader(int position){ }
-
 
     /**
      *  Add resource to chest

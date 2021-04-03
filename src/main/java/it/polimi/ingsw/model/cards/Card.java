@@ -1,5 +1,9 @@
-package it.polimi.ingsw.model;
-import java.util.ArrayList;
+package it.polimi.ingsw.model.cards;
+import it.polimi.ingsw.model.dashboard.Dashboard;
+import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.model.resources.ResourceOperator;
+
 import java.util.List;
 
 public class Card {

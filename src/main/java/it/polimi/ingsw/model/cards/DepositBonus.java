@@ -1,6 +1,8 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.List;
 
@@ -20,10 +22,3 @@ public class DepositBonus extends LeaderCard{
     }
 }
 
-
-/*
-    public void activate(Player p)
-    {
-        p.addDepositBonus(this.getType());
-    }
- */

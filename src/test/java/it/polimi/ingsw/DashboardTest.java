@@ -1,9 +1,9 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.model.Dashboard;
-import it.polimi.ingsw.model.ProductionCard;
-import it.polimi.ingsw.model.Resource;
-import it.polimi.ingsw.model.ResourceOperator;
+import it.polimi.ingsw.model.dashboard.Dashboard;
+import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceOperator;
 import org.junit.jupiter.api.Test;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
