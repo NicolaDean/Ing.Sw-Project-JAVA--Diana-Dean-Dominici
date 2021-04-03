@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import org.jetbrains.annotations.NotNull;
 
 public class Player {
 
@@ -9,8 +10,11 @@ public class Player {
     private boolean connectionState;
     private LeaderCard[] leaders;
     private Dashboard dashboard;
+    private ResourceList pendingCost;
     private int position;
     private int score;
+
+
 
     public Player(String nickname,LeaderCard[] drawedCards)
     {
@@ -46,6 +50,15 @@ public class Player {
 
     public int getPosition() {
         return this.position;
+    }
+
+    /**
+     *  adding resourcing
+     * @param r resource
+     * @param p position
+     */
+    public void addResource(@NotNull Resource r, int p){
+        dashboard.storageInsertion(new Resource(r.getType(),r.getQuantity()),p);
     }
 
     public Dashboard getDashboard() {
@@ -101,7 +114,6 @@ public class Player {
     }
 
     public void activateLeader(int position){ }
-
 
     /**
      *  Add resource to chest

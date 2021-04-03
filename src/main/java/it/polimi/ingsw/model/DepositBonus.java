@@ -11,12 +11,12 @@ public class DepositBonus extends LeaderCard{
     }
 
     /**
-     * activate the bonus of the card adding a deposit in the storage
-     * @param storage
+     * initialize the bonus deposit inside the player's storage
+     * @param player the player whom the deposit bonus needs to be initialized
      */
-    public void activate(Storage storage)
+    public void activate(Player player)
     {
-        storage.initializeBonusDeposit(this.getType());
+        player.getDashboard().getStorage().initializeBonusDeposit(this.getType());
     }
 }
 

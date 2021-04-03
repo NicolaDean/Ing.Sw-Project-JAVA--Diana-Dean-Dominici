@@ -5,12 +5,16 @@ import it.polimi.ingsw.enumeration.ResourceType;
 import java.util.*;
 
 public class Dashboard {
-    Storage storage;
-    List<Resource> chest;
-    Stack<ProductionCard>[] producionCards;
-    boolean [] papalToken;
-    List<Resource> bonusResources;
+    private Storage storage;
+    private List<Resource> chest;
+    private Stack<ProductionCard>[] producionCards;
+    private boolean [] papalToken;
+    private List<Resource> bonusResources;
 
+
+    public Storage getStorage() {
+        return storage;
+    }
 
     public Dashboard()
     {

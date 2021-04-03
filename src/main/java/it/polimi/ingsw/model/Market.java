@@ -11,7 +11,7 @@ public class Market {
      */
     public Market() {
         discardedResouce = new RedBall();
-        Randomized();
+        randomized();
     }
 
     /**
@@ -33,7 +33,7 @@ public class Market {
     /**
      * shuffle balls 300 times
      */
-    private void Randomized(){
+    private void randomized(){
         BasicBall Tmp;
         int r,c,n=2;
 
@@ -60,50 +60,57 @@ public class Market {
     }
 
     /**
-     *
-     * @param Pos row position, it must be between 1 and 3
-     * @param P player
+     *extraction row
+     * @param pos row position, it must be between 1 and 3
+     * @param p player
      */
-    public void exstractRow(int Pos,Player P) {
-        BasicBall Tmp;
-        Pos--;
-        if ((Pos > 2) || (Pos < 0)) {
+    public BasicBall[] exstractRow(int pos,Player p) {
+        BasicBall tmp;
+        BasicBall out[] = new BasicBall[4];
+        if ((pos > 3) || (pos < 1)) {
             throw new IllegalArgumentException("invalid position");
         } else {
+            pos--;
+
+            for (int i = 0; i < 4; i++)
+                out[i] = resouces[pos][i];
+
             for (int i = 1; i < 4; i++) {
-                resouces[Pos][i].active(P);
-                Tmp = resouces[Pos][i];
-                resouces[Pos][i] = resouces[Pos][0];
-                resouces[Pos][0] = Tmp;
+                tmp = resouces[pos][i];
+                resouces[pos][i] = resouces[pos][0];
+                resouces[pos][0] = tmp;
             }
-            Tmp = discardedResouce;
-            discardedResouce = resouces[Pos][0];
-            resouces[Pos][0] = Tmp;
+            tmp = discardedResouce;
+            discardedResouce = resouces[pos][0];
+            resouces[pos][0] = tmp;
+
         }
+        return out;
     }
     /**
      *
-     * @param Pos column position, it must be between 1 and 4
-     * @param P player
+     * @param pos column position, it must be between 1 and 4
+     * @param p player
      */
-    public void exstractColumn(int Pos,Player P) {
-        BasicBall Tmp;
-        Pos--;
-        if (Pos > 3 || Pos < 0) {
+    public BasicBall[] exstractColumn(int pos,Player p) {
+        BasicBall tmp;
+        BasicBall out[] = new BasicBall[3];
+        if ((pos > 4) || (pos < 1)) {
             throw new IllegalArgumentException("invalid position");
         } else {
+            pos--;
+            for (int i = 0; i < 3; i++)
+                    out[i] = resouces[i][pos];
+
             for (int i = 1; i < 3; i++) {
-                resouces[i][Pos].active(P);
-                Tmp = resouces[i][Pos];
-                resouces[i][Pos] = resouces[0][Pos];
-                resouces[0][Pos] = Tmp;
+                tmp = resouces[i][pos];
+                resouces[i][pos] = resouces[0][pos];
+                resouces[0][pos] = tmp;
             }
-            Tmp = discardedResouce;
-            discardedResouce = resouces[0][Pos];
-            resouces[0][Pos] = Tmp;
+            tmp = discardedResouce;
+            discardedResouce = resouces[0][pos];
+            resouces[0][pos] = tmp;
         }
+        return out;
     }
-
-
-
 }
