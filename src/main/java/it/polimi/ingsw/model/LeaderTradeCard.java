@@ -27,9 +27,9 @@ public class LeaderTradeCard extends  LeaderCard implements BonusProduction {
 
     //USER can select the card and call the method "changeRawMat()" or
     @Override
-    public boolean produce(Player p, ResourceType pay)
+    public boolean produce(Player p, ResourceType obtain)
     {
-        int possession = ResourceOperator.extractQuantityOf(pay,p.getDashboard().getAllAvailableResource());
+        int possession = ResourceOperator.extractQuantityOf(obtain,p.getDashboard().getAllAvailableResource());
 
         if(possession > 1)
         {

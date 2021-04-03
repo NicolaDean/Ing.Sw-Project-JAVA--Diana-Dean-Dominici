@@ -157,6 +157,8 @@ public class Dashboard {
         return out;
     }
 
+
+
     /**
      * Apply the cost of that particular res on the chest
      * @param res resource to pay
