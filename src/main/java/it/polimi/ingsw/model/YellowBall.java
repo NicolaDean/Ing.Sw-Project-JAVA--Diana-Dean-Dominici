@@ -3,7 +3,6 @@ package it.polimi.ingsw.model;
 import java.awt.*;
 
 import static it.polimi.ingsw.enumeration.ResourceType.COIN;
-import static it.polimi.ingsw.enumeration.ResourceType.SHILD;
 
 public class YellowBall extends ResourceBall{
     /**

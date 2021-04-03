@@ -3,7 +3,6 @@ package it.polimi.ingsw.model;
 import java.awt.*;
 
 import static it.polimi.ingsw.enumeration.ResourceType.ROCK;
-import static it.polimi.ingsw.enumeration.ResourceType.SHILD;
 
 public class GrayBall extends ResourceBall{
     /**

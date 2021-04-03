@@ -12,6 +12,8 @@ public class Player {
 
     public Player(String nickname,LeaderCard[] drawedCards)
     {
+        dashboard = new Dashboard();
+        position=0;
         this.nickname = nickname;
     }
 

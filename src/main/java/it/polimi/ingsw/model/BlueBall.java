@@ -4,7 +4,7 @@ import it.polimi.ingsw.enumeration.ResourceType;
 
 import java.awt.*;
 
-import static it.polimi.ingsw.enumeration.ResourceType.SHILD;
+import static it.polimi.ingsw.enumeration.ResourceType.SHIELD;
 
 public class BlueBall extends ResourceBall{
 
@@ -15,7 +15,7 @@ public class BlueBall extends ResourceBall{
      */
     @Override
     public void active(Player p, int pos){
-        p.getDashboard().storageInsertion(new Resource(SHILD,1),pos);
+        p.getDashboard().storageInsertion(new Resource(SHIELD,1),pos);
     }
 
     /**

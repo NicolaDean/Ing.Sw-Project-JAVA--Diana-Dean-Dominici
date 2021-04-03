@@ -3,7 +3,6 @@ package it.polimi.ingsw.model;
 import java.awt.*;
 
 import static it.polimi.ingsw.enumeration.ResourceType.SERVANT;
-import static it.polimi.ingsw.enumeration.ResourceType.SHILD;
 
 public class VioletBall extends ResourceBall{
     /**
