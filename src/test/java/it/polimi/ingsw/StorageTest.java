@@ -36,6 +36,31 @@ public class StorageTest {
     }
 
     /**
+     * tesrt the function to find which deposits contain a certain resourcetype
+     * @throws Exception
+     */
+    @Test
+    public void TestTypeFind() throws Exception {
+
+        Player player = new Player();
+        Resource a = new Resource(SHIELD, 1);
+        Resource b = new Resource(COIN, 1);
+        Resource c = new Resource(ROCK, 2);
+        Resource d = new Resource(ROCK, 4);
+        player.getDashboard().getStorage().safeInsertion(a, 0);
+        player.getDashboard().getStorage().safeInsertion(b, 1);
+        player.getDashboard().getStorage().safeInsertion(c, 2);
+        List<Resource> list = player.getDashboard().getStorage().getStorageAsList();
+        DepositBonus bonus = new DepositBonus(list, 3, ROCK);
+        bonus.activate(player);
+        player.getDashboard().getStorage().safeInsertion(c, 3);
+        List<Integer> positions = player.getDashboard().getStorage().findType(ROCK);
+        List<Integer> positions2 = player.getDashboard().getStorage().findType(COIN);
+
+        assertTrue(positions.get(0)== 2 && positions.get(1)== 3 && positions2.get(0)== 1);
+
+    }
+    /**
      * checks if exceptions are thrown correctly
      */
     @Test
@@ -56,19 +81,19 @@ public class StorageTest {
 
     @Test
     public void TestStorageAsList() throws Exception {
-        Storage testStorage = new Storage();
+        Player player = new Player();
         Resource a = new Resource(SHIELD, 1);
         Resource b = new Resource(COIN, 1);
         Resource c = new Resource(ROCK, 2);
         Resource d = new Resource(ROCK, 4);
-        testStorage.safeInsertion(a, 0);
-        testStorage.safeInsertion(b, 1);
-        testStorage.safeInsertion(c, 2);
-        List<Resource> list = testStorage.getStorageAsList();
+        player.getDashboard().getStorage().safeInsertion(a, 0);
+        player.getDashboard().getStorage().safeInsertion(b, 1);
+        player.getDashboard().getStorage().safeInsertion(c, 2);
+        List<Resource> list = player.getDashboard().getStorage().getStorageAsList();
         DepositBonus bonus = new DepositBonus(list, 3, ROCK);
-        bonus.activate(testStorage);
-        testStorage.safeInsertion(c, 3);
-        list = testStorage.getStorageAsList();
+        bonus.activate(player);
+        player.getDashboard().getStorage().safeInsertion(c, 3);
+        list = player.getDashboard().getStorage().getStorageAsList();
 
         assertTrue(ResourceOperator.extractQuantityOf(a.getType(),list) == a.getQuantity());
         assertTrue(ResourceOperator.extractQuantityOf(b.getType(),list) == b.getQuantity());
@@ -103,22 +128,22 @@ public class StorageTest {
     @Test
     public void TestBonusStorage() throws Exception {
 
-        Storage testStorage = new Storage();
+        Player player = new Player();
         Resource a = new Resource(SHIELD, 1);
         Resource b = new Resource(ROCK, 1);
         Resource c = new Resource(COIN, 2);
-        testStorage.safeInsertion(a, 0);
-        testStorage.safeInsertion(b, 1);
-        testStorage.safeInsertion(c, 2);
-        List<Resource> list = testStorage.getStorageAsList();
+        player.getDashboard().getStorage().safeInsertion(a, 0);
+        player.getDashboard().getStorage().safeInsertion(b, 1);
+        player.getDashboard().getStorage().safeInsertion(c, 2);
+        List<Resource> list = player.getDashboard().getStorage().getStorageAsList();
         DepositBonus bonus = new DepositBonus(list, 3, ROCK);
         DepositBonus bonus2 = new DepositBonus(list, 3, SHIELD);
-        bonus.activate(testStorage);
-        testStorage.safeInsertion(b, 3);
-        bonus2.activate(testStorage);
-        testStorage.safeInsertion(a, 4);
-        assertTrue(ResourceOperator.Compare(testStorage.getStorage()[3].getResource(), b) &&
-                ResourceOperator.Compare(testStorage.getStorage()[4].getResource(), a));
+        bonus.activate(player);
+        player.getDashboard().getStorage().safeInsertion(b, 3);
+        bonus2.activate(player);
+        player.getDashboard().getStorage().safeInsertion(a, 4);
+        assertTrue(ResourceOperator.Compare(player.getDashboard().getStorage().getStorage()[3].getResource(), b) &&
+                ResourceOperator.Compare(player.getDashboard().getStorage().getStorage()[4].getResource(), a));
 
     }
 
@@ -129,27 +154,27 @@ public class StorageTest {
     @Test
     public void TestBonusStorageSub() throws Exception {
 
-        Storage testStorage = new Storage();
+        Player player = new Player();
         Resource a = new Resource(SHIELD, 1);
         Resource b = new Resource(ROCK, 1);
         Resource c = new Resource(COIN, 2);
-        testStorage.safeInsertion(b, 1);
-        testStorage.safeSubtraction(b, 1);
-        testStorage.safeInsertion(a, 1);
-        testStorage.safeInsertion(c, 2);
-        List<Resource> list = testStorage.getStorageAsList();
+        player.getDashboard().getStorage().safeInsertion(b, 1);
+        player.getDashboard().getStorage().safeSubtraction(b, 1);
+        player.getDashboard().getStorage().safeInsertion(a, 1);
+        player.getDashboard().getStorage().safeInsertion(c, 2);
+        List<Resource> list = player.getDashboard().getStorage().getStorageAsList();
         DepositBonus bonus = new DepositBonus(list, 3, ROCK);
         DepositBonus bonus2 = new DepositBonus(list, 3, SHIELD);
-        bonus.activate(testStorage);
-        testStorage.safeInsertion(b, 3);
-        bonus2.activate(testStorage);
-        testStorage.safeInsertion(a, 4);
-        testStorage.safeSubtraction(a, 4);
-        testStorage.safeInsertion(b, 4);
-        testStorage.safeSubtraction(b, 3);
-        testStorage.safeSubtraction(a, 1);
-        testStorage.safeInsertion(b, 1);
-        testStorage.safeInsertion(a, 3);
+        bonus.activate(player);
+        player.getDashboard().getStorage().safeInsertion(b, 3);
+        bonus2.activate(player);
+        player.getDashboard().getStorage().safeInsertion(a, 4);
+        player.getDashboard().getStorage().safeSubtraction(a, 4);
+        player.getDashboard().getStorage().safeInsertion(b, 4);
+        player.getDashboard().getStorage().safeSubtraction(b, 3);
+        player.getDashboard().getStorage().safeSubtraction(a, 1);
+        player.getDashboard().getStorage().safeInsertion(b, 1);
+        player.getDashboard().getStorage().safeInsertion(a, 3);
     }
 
     /**
@@ -158,21 +183,21 @@ public class StorageTest {
     @Test
     public void TestBonusSwap() {
         Assertions.assertThrows(Exception.class, () -> {
-            Storage testStorage = new Storage();
+            Player player = new Player();
             Resource a = new Resource(SHIELD, 1);
             Resource b = new Resource(ROCK, 1);
             Resource c = new Resource(COIN, 2);
-            testStorage.safeInsertion(a, 0);
-            testStorage.safeInsertion(b, 1);
-            testStorage.safeInsertion(c, 2);
-            List<Resource> list = testStorage.getStorageAsList();
+            player.getDashboard().getStorage().safeInsertion(a, 0);
+            player.getDashboard().getStorage().safeInsertion(b, 1);
+            player.getDashboard().getStorage().safeInsertion(c, 2);
+            List<Resource> list = player.getDashboard().getStorage().getStorageAsList();
             DepositBonus bonus = new DepositBonus(list, 3, ROCK);
             DepositBonus bonus2 = new DepositBonus(list, 3, SHIELD);
-            bonus.activate(testStorage);
-            testStorage.safeInsertion(b, 3);
-            bonus2.activate(testStorage);
-            testStorage.safeInsertion(a, 4);
-            testStorage.swapDeposit(3, 1);
+            bonus.activate(player);
+            player.getDashboard().getStorage().safeInsertion(b, 3);
+            bonus2.activate(player);
+            player.getDashboard().getStorage().safeInsertion(a, 4);
+            player.getDashboard().getStorage().swapDeposit(3, 1);
         });
 
     }

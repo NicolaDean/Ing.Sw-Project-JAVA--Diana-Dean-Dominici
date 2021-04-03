@@ -73,6 +73,40 @@ public class Storage {
     }
 
     /**
+     * it looks for deposits that contain a certain type
+     * @param type
+     * @return
+     * @throws Exception
+     */
+    public List<Integer> findType(ResourceType type) throws Exception
+    {
+        List<Integer> indexes = new ArrayList<Integer>();
+        boolean a = false;
+        for(int i = 0; i<5; i++)
+        {
+            if (storage[i] != null && storage[i].getResource().getType() == type) {
+                indexes.add(i);
+                a = true;
+            }
+        }
+
+        if (!a)
+            throw new Exception("there are no deposits with this resourcetype");
+    return indexes;
+    }
+
+    /**
+     * returns the free spaces of a deposit
+     * @param pos
+     * @return
+     */
+    public int getFreeSpace(int pos)
+    {
+        return (storage[pos].getSizeMax() - storage[pos].getResource().getQuantity());
+    }
+
+
+    /**
      * removes resources from a deposit
      * @param in the resource to add
      * @param pos the deposit position
