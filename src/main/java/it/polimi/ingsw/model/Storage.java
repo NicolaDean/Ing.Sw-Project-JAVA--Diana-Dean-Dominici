@@ -102,7 +102,10 @@ public class Storage {
      */
     public int getFreeSpace(int pos)
     {
-        return (storage[pos].getSizeMax() - storage[pos].getResource().getQuantity());
+        if (storage[pos] != null)
+            return (storage[pos].getSizeMax() - storage[pos].getResource().getQuantity());
+        else
+            return storage[pos].getSizeMax();
     }
 
 
