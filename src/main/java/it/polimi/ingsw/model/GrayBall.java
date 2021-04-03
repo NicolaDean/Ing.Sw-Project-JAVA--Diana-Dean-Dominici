@@ -12,7 +12,7 @@ public class GrayBall extends ResourceBall{
      */
     @Override
     public void active(Player p, int pos){
-        p.getDashboard().storageInsertion(new Resource(ROCK,1),pos);
+        p.addResource(new Resource(ROCK,1),pos);
     }
 
 

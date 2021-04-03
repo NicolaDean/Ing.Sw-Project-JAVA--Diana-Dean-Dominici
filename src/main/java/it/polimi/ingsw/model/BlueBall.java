@@ -15,7 +15,7 @@ public class BlueBall extends ResourceBall{
      */
     @Override
     public void active(Player p, int pos){
-        p.getDashboard().storageInsertion(new Resource(SHIELD,1),pos);
+        p.addResource(new Resource(SHIELD,1),pos);
     }
 
     /**

@@ -12,7 +12,7 @@ public class VioletBall extends ResourceBall{
      */
     @Override
     public void active(Player p, int pos){
-        p.getDashboard().storageInsertion(new Resource(SERVANT,1),pos);
+        p.addResource(new Resource(SERVANT,1),pos);
     }
 
 

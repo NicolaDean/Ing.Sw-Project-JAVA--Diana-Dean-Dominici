@@ -12,7 +12,7 @@ public class YellowBall extends ResourceBall{
      */
     @Override
     public void active(Player p, int pos){
-        p.getDashboard().storageInsertion(new Resource(COIN,1),pos);
+        p.addResource(new Resource(COIN,1),pos);
     }
 
 
