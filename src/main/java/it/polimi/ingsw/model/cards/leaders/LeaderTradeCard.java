@@ -20,12 +20,15 @@ public class LeaderTradeCard extends LeaderCard implements BonusProduction {
 
 
     @Override
-    public void activate(Player p)
+    public boolean activate(Player p)
     {
-        //Add himself to the Player production card list
-    }
+        boolean out = super.activate(p);
+        if(out)
+        {
+            p.addTradeBonus(this);
+        }
 
-    public void setupProduction(){
+        return out;
 
     }
 
@@ -33,11 +36,11 @@ public class LeaderTradeCard extends LeaderCard implements BonusProduction {
     @Override
     public boolean produce(Player p, ResourceType obtain)
     {
-        int possession = ResourceOperator.extractQuantityOf(obtain,p.getDashboard().getAllAvailableResource());
+        int possession = ResourceOperator.extractQuantityOf(this.getType(),p.getDashboard().getAllAvailableResource());
 
-        if(possession > 1)
+        if(possession >= 1)
         {
-            p.chestInsertion(new Resource(this.getType(),1));
+            p.chestInsertion(new Resource(obtain,1));
             p.incrementPosition(); //Get a faith point
             return true;
         }

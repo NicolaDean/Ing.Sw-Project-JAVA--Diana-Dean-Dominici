@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.dashboard;
 
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.cards.leaders.BonusProduction;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.model.resources.ResourceOperator;
@@ -98,6 +99,7 @@ public class Dashboard {
         }
         return out;
     }
+
 
     /**
      *
@@ -245,6 +247,13 @@ public class Dashboard {
     {
         return this.pendingCost;
     }
+    public void setPendingCost(List<Resource> pending)
+    {
+        this.pendingCost.addAll(pending);}
+
+    public void setPendingCost(Resource pending)
+    {
+        this.pendingCost.add(pending);}
     public void setDiscount(Resource res)
     {
         if(this.bonusResources == null)

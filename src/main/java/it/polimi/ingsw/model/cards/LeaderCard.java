@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.cards;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceOperator;
 
 import java.util.List;
 
@@ -19,8 +20,9 @@ public class LeaderCard extends Card{
     {
         return this.type;
     }
-    public void activate(Player p)
+    public boolean activate(Player p)
     {
-
+        boolean out = ResourceOperator.compare(p.getDashboard().getAllAvailableResource(),this.getCost());
+        return  out;
     }
 }

@@ -15,8 +15,12 @@ public class LeaderDiscountCard extends LeaderCard {
     }
 
     @Override
-    public void activate(Player p)
+    public boolean activate(Player p)
     {
-        p.addDiscount(new Resource(this.getType(),1));
+        boolean out = super.activate(p);
+        if(out) {
+            p.addDiscount(new Resource(this.getType(), 1));
+        }
+        return out;
     }
 }
