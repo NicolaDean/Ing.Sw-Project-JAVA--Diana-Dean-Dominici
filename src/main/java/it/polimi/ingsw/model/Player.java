@@ -12,6 +12,8 @@ public class Player {
     private int position;
     private int score;
 
+
+
     public Player(String nickname,LeaderCard[] drawedCards)
     {
         this.dashboard = new Dashboard();
