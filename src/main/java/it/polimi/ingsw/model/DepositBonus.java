@@ -5,11 +5,9 @@ import it.polimi.ingsw.enumeration.ResourceType;
 import java.util.List;
 
 public class DepositBonus extends LeaderCard{
-    ResourceType resourcetype;
 
     public DepositBonus(List<Resource> cost, int victoryPoints, ResourceType resourcetype) {
-        super(cost, victoryPoints);
-        this.resourcetype = resourcetype;
+        super(cost, victoryPoints,resourcetype);
     }
 
     /**
@@ -18,6 +16,14 @@ public class DepositBonus extends LeaderCard{
      */
     public void activate(Storage storage)
     {
-        storage.initializeBonusDeposit(resourcetype);
+        storage.initializeBonusDeposit(this.getType());
     }
 }
+
+
+/*
+    public void activate(Player p)
+    {
+        p.addDepositBonus(this.getType());
+    }
+ */

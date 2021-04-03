@@ -1,8 +1,5 @@
 package it.polimi.ingsw;
-import it.polimi.ingsw.model.Dashboard;
-import it.polimi.ingsw.model.ProductionCard;
-import it.polimi.ingsw.model.Resource;
-import it.polimi.ingsw.model.ResourceList;
+import it.polimi.ingsw.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -39,7 +36,7 @@ public class ProductionTest {
     {
         Dashboard dash = new Dashboard();
 
-        dash.chestInsertion(new Resource(COIN,1));
+        dash.chestInsertion(new Resource(COIN,2));
         dash.chestInsertion(new Resource(ROCK,1));
 
 
@@ -67,6 +64,15 @@ public class ProductionTest {
         dash.chestInsertion(new Resource(ROCK,3));
         dash.storageInsertion(new Resource(SHIELD,1),0);
 
+        List<Resource> check = new ResourceList();
+        check = dash.getAllAvailableResource();
+
+        //Check RESOURCE INSERTION
+        assertTrue(ResourceOperator.extractQuantityOf(ROCK,check) == 3);
+        assertTrue(ResourceOperator.extractQuantityOf(COIN,check) == 1);
+        assertTrue(ResourceOperator.extractQuantityOf(SHIELD,check) == 1);
+        assertTrue(ResourceOperator.extractQuantityOf(SERVANT,check) == 0);
+
         //COST
         List<Resource> cost = new ResourceList();
         cost.add(new Resource(COIN,1));
@@ -75,11 +81,11 @@ public class ProductionTest {
 
         //RAW MAT
         List<Resource> raw = new ResourceList();
-        cost.add(new Resource(COIN,2));
+        raw.add(new Resource(COIN,2));
 
         //OBTAINED
         List<Resource> obt = new ResourceList();
-        cost.add(new Resource(ROCK,1));
+        obt.add(new Resource(ROCK,1));
 
         //BUY A CARD
         ProductionCard card = new ProductionCard(cost,raw,obt,2,1);
@@ -90,14 +96,13 @@ public class ProductionTest {
         dash.applyChestCosts(new Resource(ROCK,1));
         dash.applyStorageCosts(new Resource(SHIELD,1),0);
 
+
+        check  = dash.getAllAvailableResource();
         //Check Application of costs
-        cost  = dash.getAllAvailableResource();
-        for(Resource res: cost)
-        {
-            if(res.getType() == ROCK) assertTrue(res.getQuantity() == 2);
-            if(res.getType() == COIN) assertTrue(res.getQuantity() == 0);
-            if(res.getType() == SHIELD) assertTrue(res.getQuantity() == 0);
-        }
+        assertTrue(ResourceOperator.extractQuantityOf(ROCK,check) == 2);
+        assertTrue(ResourceOperator.extractQuantityOf(COIN,check) == 0);
+        assertTrue(ResourceOperator.extractQuantityOf(SHIELD,check) == 0);
+        assertTrue(ResourceOperator.extractQuantityOf(SERVANT,check) == 0);
 
         //Sorage Refill
 
@@ -111,15 +116,50 @@ public class ProductionTest {
         dash.applyStorageCosts(new Resource(COIN,2),1);
 
         //Check Application of costs
-        cost  = dash.getAllAvailableResource();
+        check  = dash.getAllAvailableResource();
 
-        for(Resource res: cost)
-        {
-            if(res.getType() == ROCK) assertTrue(res.getQuantity() == 1);
-            if(res.getType() == COIN) assertTrue(res.getQuantity() == 0);
-            if(res.getType() == SHIELD) assertTrue(res.getQuantity() == 0);
-        }
 
+        //Check Cost apply and resource adding
+        assertTrue(ResourceOperator.extractQuantityOf(ROCK,check) == 3);
+        assertTrue(ResourceOperator.extractQuantityOf(COIN,check) == 0);
+        assertTrue(ResourceOperator.extractQuantityOf(SHIELD,check) == 0);
+        assertTrue(ResourceOperator.extractQuantityOf(SERVANT,check) == 0);
+
+
+    }
+
+    @Test
+
+    public void discountedCostTest()
+    {
+
+        //COST
+        List<Resource> cost = new ResourceList();
+        cost.add(new Resource(COIN,1));
+        cost.add(new Resource(ROCK,1));
+        cost.add(new Resource(SHIELD,1));
+
+        //RAW MAT
+        List<Resource> raw = new ResourceList();
+        raw.add(new Resource(COIN,2));
+
+        //OBTAINED
+        List<Resource> obt = new ResourceList();
+        obt.add(new Resource(ROCK,1));
+
+        //BUY A CARD
+        ProductionCard card = new ProductionCard(cost,raw,obt,2,1);
+
+        Player p = new Player();
+
+        p.addDiscount(new Resource(COIN,1));
+
+        List<Resource> resultCost = card.getCost(p.getDashboard());
+
+        assertTrue(ResourceOperator.extractQuantityOf(ROCK,resultCost) == 1);
+        assertTrue(ResourceOperator.extractQuantityOf(COIN,resultCost) == 0);
+        assertTrue(ResourceOperator.extractQuantityOf(SHIELD,resultCost) == 1);
+        assertTrue(ResourceOperator.extractQuantityOf(SERVANT,resultCost) == 0);
 
     }
 }

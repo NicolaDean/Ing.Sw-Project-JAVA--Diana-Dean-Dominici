@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.model.Resource;
 import it.polimi.ingsw.model.ResourceList;
+import it.polimi.ingsw.model.ResourceOperator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
@@ -19,12 +20,9 @@ public class ResourceListTest {
         tmp.add(new Resource(ROCK,2));
         tmp.add(new Resource(COIN,3));
 
-        for(Resource res:tmp)
-        {
-            if(res.getType() == COIN) assertTrue(res.getQuantity()==5);
-            if(res.getType() == ROCK) assertTrue(res.getQuantity()==2);
-        }
 
+        assertTrue(ResourceOperator.extractQuantityOf(COIN,tmp) == 5);
+        assertTrue(ResourceOperator.extractQuantityOf(ROCK,tmp) == 2);
     }
 
     @Test
@@ -36,9 +34,6 @@ public class ResourceListTest {
         tmp.add(new Resource(COIN,2));
         tmp.remove(new Resource(COIN,1));
 
-        for(Resource res:tmp)
-        {
-            if(res.getType() == COIN) assertTrue(res.getQuantity()==1);
-        }
+        assertTrue(ResourceOperator.extractQuantityOf(COIN,tmp) == 1);
     }
 }

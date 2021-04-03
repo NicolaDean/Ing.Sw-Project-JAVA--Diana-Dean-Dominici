@@ -30,6 +30,7 @@ public class Dashboard {
         {
             papalToken[i]=false;
         }
+        bonusResources = null;
 
     }
 
@@ -37,19 +38,34 @@ public class Dashboard {
         return 0;
     }
 
-    public void storageInsertion(Resource res,int pos)
+    /**
+     *  Insert a resource in the storage
+     * @param res resource to insert
+     * @param pos deposit to select
+     */
+    public void storageInsertion(Resource res, int pos)
     {
         try {
             this.storage.safeInsertion(res,pos);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
+    /**
+     *  Chest insertion
+     * @param res resource to insert
+     */
     public void chestInsertion(Resource res)
     {
         this.chest.add(res);
     }
+
+    /**
+     *  insert a list into the chest
+     * @param res resources to insert
+     */
     public void chestInsertion(List<Resource> res)
     {
         this.chest = ResourceOperator.merge(this.chest,res);
@@ -62,6 +78,8 @@ public class Dashboard {
      */
     public boolean setProcuctionCard(ProductionCard card,int pos)
     {
+        if(pos > 2)return false;//invalid position
+
         boolean out = this.checkValidPosition(card,pos);
 
         if(out)
@@ -113,7 +131,7 @@ public class Dashboard {
         List<Resource> availableRes = this.getAllAvailableResource();
 
         //NEED TO ADD A COMPARE OVERLOADING (list<resource>,resource)
-        List<Resource> tmp = new ArrayList<Resource>();
+        List<Resource> tmp = new ResourceList();
         tmp.add(new Resource(spendOne,1));
         tmp.add(new Resource(spendTwo,1));
 
@@ -127,28 +145,47 @@ public class Dashboard {
     }
 
 
-
+    /**
+     * Activate the production of a production card
+     * @param pos stack of card to select
+     * @return true if the activation goes well
+     */
     public boolean production(int pos)
     {
-        boolean out = this.producionCards[pos].peek().activate(this);
+        boolean out = this.producionCards[pos].peek().produce(this);
 
         return out;
     }
 
+    /**
+     * Apply the cost of that particular res on the chest
+     * @param res resource to pay
+     */
     public void applyChestCosts(Resource res)
     {
         this.chest.remove(res);
     }
 
+    /**
+     * apply a cost on the storage ( and check if discount is available)
+     * @param res resource to pay
+     * @param pos deposit to select
+     */
     public void applyStorageCosts(Resource res,int pos)
     {
-        try {
-            this.storage.safeSubtraction(res,pos);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            try {
+                this.storage.safeSubtraction(res,pos);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
     }
 
+    /**
+     *
+     * @return infinite bonus resources available
+     */
     public List<Resource> getDiscount()
     {
         return this.bonusResources;
@@ -178,5 +215,20 @@ public class Dashboard {
         return vp;
     }
 
+    public void setDiscount(Resource res)
+    {
+        if(this.bonusResources == null)
+        {
+            this.bonusResources = new ResourceList();
+        }
+
+        this.bonusResources.add(res);
+    }
+
+
+    public void addDepositBonus(ResourceType typeBonus)
+    {
+        this.storage.initializeBonusDeposit(typeBonus);
+    }
 
     }

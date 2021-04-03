@@ -93,7 +93,7 @@ public class MarketTest {
     public void checkExstractionRow(){
 
         ArrayList<Resource> r = new ArrayList<>();
-        LeaderCard l[] = {new LeaderCard(r,1), new LeaderCard(r,1) };
+        LeaderCard l[] = {new LeaderCard(r,1,ResourceType.COIN), new LeaderCard(r,1,ResourceType.COIN) };
         Player p=new Player("nick",l);
         r.add(new Resource(ResourceType.SHIELD,3));
         r.add(new Resource(ResourceType.COIN,10));
@@ -130,7 +130,7 @@ public class MarketTest {
     public void checkExstractionColumn(){
 
         ArrayList<Resource> r = new ArrayList<>();
-        LeaderCard l[] = {new LeaderCard(r,1), new LeaderCard(r,1) };
+        LeaderCard l[] = {new LeaderCard(r,1,ResourceType.COIN), new LeaderCard(r,1,ResourceType.COIN) };
         Player p=new Player("nick",l);
         r.add(new Resource(ResourceType.SHIELD,3));
         r.add(new Resource(ResourceType.COIN,10));
