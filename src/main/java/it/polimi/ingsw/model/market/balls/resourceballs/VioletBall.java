@@ -1,10 +1,14 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.market.balls.resourceballs;
+
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.market.balls.ResourceBall;
+import it.polimi.ingsw.model.resources.Resource;
 
 import java.awt.*;
 
 import static it.polimi.ingsw.enumeration.ResourceType.SERVANT;
 
-public class VioletBall extends ResourceBall{
+public class VioletBall extends ResourceBall {
     /**
      * Add Resource to the player
      * @param p player

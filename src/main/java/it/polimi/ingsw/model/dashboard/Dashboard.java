@@ -1,6 +1,10 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.dashboard;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.model.resources.ResourceOperator;
 
 import java.util.*;
 

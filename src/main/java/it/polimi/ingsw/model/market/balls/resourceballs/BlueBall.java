@@ -1,12 +1,14 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.market.balls.resourceballs;
 
-import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.market.balls.ResourceBall;
+import it.polimi.ingsw.model.resources.Resource;
 
 import java.awt.*;
 
 import static it.polimi.ingsw.enumeration.ResourceType.SHIELD;
 
-public class BlueBall extends ResourceBall{
+public class BlueBall extends ResourceBall {
 
     /**
      * Add Resource to the player

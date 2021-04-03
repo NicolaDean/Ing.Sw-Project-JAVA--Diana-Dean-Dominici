@@ -1,8 +1,7 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.resources;
 
 import it.polimi.ingsw.enumeration.ResourceType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ResourceOperator {

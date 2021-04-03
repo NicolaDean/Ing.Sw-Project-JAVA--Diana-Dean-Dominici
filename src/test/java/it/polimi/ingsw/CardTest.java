@@ -1,11 +1,10 @@
 package it.polimi.ingsw;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Assertions;
 
-import it.polimi.ingsw.model.Card;
-import it.polimi.ingsw.model.Dashboard;
-import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.model.cards.Card;
+import it.polimi.ingsw.model.dashboard.Dashboard;
+import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.ArrayList;
 import java.util.List;

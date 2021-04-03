@@ -1,4 +1,11 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.market;
+
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.market.balls.*;
+import it.polimi.ingsw.model.market.balls.resourceballs.BlueBall;
+import it.polimi.ingsw.model.market.balls.resourceballs.GrayBall;
+import it.polimi.ingsw.model.market.balls.resourceballs.VioletBall;
+import it.polimi.ingsw.model.market.balls.resourceballs.YellowBall;
 
 public class Market {
     private BasicBall discardedResouce;
@@ -64,7 +71,7 @@ public class Market {
      * @param pos row position, it must be between 1 and 3
      * @param p player
      */
-    public BasicBall[] exstractRow(int pos,Player p) {
+    public BasicBall[] exstractRow(int pos, Player p) {
         BasicBall tmp;
         BasicBall out[] = new BasicBall[4];
         if ((pos > 3) || (pos < 1)) {

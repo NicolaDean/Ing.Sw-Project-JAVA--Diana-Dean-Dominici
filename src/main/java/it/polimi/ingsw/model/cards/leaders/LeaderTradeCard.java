@@ -1,10 +1,15 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.cards.leaders;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.model.cards.BonusProduction;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.cards.LeaderCard;
+import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceOperator;
 
 import java.util.List;
 
-public class LeaderTradeCard extends  LeaderCard implements BonusProduction {
+public class LeaderTradeCard extends LeaderCard implements BonusProduction {
 
     private ResourceType obtain;
 

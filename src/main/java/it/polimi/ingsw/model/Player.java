@@ -2,7 +2,10 @@ package it.polimi.ingsw.model;
 
 
 import it.polimi.ingsw.enumeration.ResourceType;
-import org.jetbrains.annotations.NotNull;
+import it.polimi.ingsw.model.cards.LeaderCard;
+import it.polimi.ingsw.model.dashboard.Dashboard;
+import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
 
 public class Player {
 
@@ -57,7 +60,7 @@ public class Player {
      * @param r resource
      * @param p position
      */
-    public void addResource(@NotNull Resource r, int p){
+    public void addResource(Resource r, int p){
         dashboard.storageInsertion(new Resource(r.getType(),r.getQuantity()),p);
     }
 

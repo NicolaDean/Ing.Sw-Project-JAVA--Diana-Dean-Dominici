@@ -1,6 +1,8 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.dashboard;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceOperator;
 
 public class Deposit {
     final int sizeMax; //the capacity of the deposit (it can be 1, 2 or 3)
@@ -15,7 +17,7 @@ public class Deposit {
         return sizeMax;
     }
 
-    public it.polimi.ingsw.model.Resource getResource() {
+    public Resource getResource() {
         return resource;
     }
 

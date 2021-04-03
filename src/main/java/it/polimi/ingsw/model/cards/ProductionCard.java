@@ -1,10 +1,13 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.enumeration.CardType;
+import it.polimi.ingsw.model.dashboard.Dashboard;
+import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceOperator;
 
 import java.util.List;
 
-public class ProductionCard extends Card{
+public class ProductionCard extends Card {
 
     private CardType type;
     private int level;

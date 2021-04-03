@@ -1,9 +1,11 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.dashboard;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
+
 import static it.polimi.ingsw.enumeration.ResourceType.*;
 
-import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,5 +1,10 @@
 package it.polimi.ingsw;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.dashboard.Dashboard;
+import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.model.resources.ResourceOperator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

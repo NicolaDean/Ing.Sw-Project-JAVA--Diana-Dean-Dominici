@@ -1,4 +1,6 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.market.balls;
+
+import it.polimi.ingsw.model.Player;
 
 import java.awt.*;
 
