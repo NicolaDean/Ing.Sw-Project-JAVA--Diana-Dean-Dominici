@@ -1,0 +1,37 @@
+[
+  {
+
+    "type": "GREEN",
+    "level":1,
+    "victoryPoints": 1,
+    "rawMaterials":
+    [
+      {"type":"SHIELD","quantity":2}
+    ],
+    "obtainedMaterials":
+    [
+      {"type":"FAITH","quantity":1}
+    ],
+    "cost":
+    [
+      {"type":"COIN","quantity":1}
+    ]
+  },
+  {
+    "type": "PURPLE",
+    "level":1,
+    "victoryPoints": 1,
+    "rawMaterials":
+    [
+      {"type":"ROCK","quantity":1}
+    ],
+    "obtainedMaterials":
+    [
+      {"type":"FAITH","quantity":1}
+    ],
+    "cost":
+    [
+      {"type":"SERVANT","quantity":2}
+    ]
+  }
+]

@@ -20,7 +20,7 @@ public class Game {
 
     public Game()
     {
-
+        
     }
 
     //public boolean addPlayer(String nickname)

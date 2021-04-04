@@ -1,8 +1,10 @@
 package it.polimi.ingsw.model.cards;
 
+import com.google.gson.JsonObject;
 import it.polimi.ingsw.enumeration.CardType;
 import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 
 import java.util.List;
@@ -14,6 +16,17 @@ public class ProductionCard extends Card {
     private List<Resource> rawMaterials;
     private List<Resource> obtainedMaterials;
 
+
+    //Empty Constructor for GSON
+    public ProductionCard(List<Resource> cost,List<Resource> raw,List<Resource>obt,int victoryPoints,int level,CardType type)
+    {
+        super(cost,victoryPoints);
+        this.level = level;
+        this.rawMaterials =  raw;
+        this.obtainedMaterials =  obt;
+        this.type = type;
+    }
+
     public ProductionCard(List<Resource> cost, int victoryPoints,int level) {
         super(cost, victoryPoints);
         this.level = level;
@@ -23,10 +36,11 @@ public class ProductionCard extends Card {
     {
         super(cost,victoryPoints);
         this.level = level;
-        this.rawMaterials = raw;
-        this.obtainedMaterials = obt;
-
+        this.rawMaterials =  raw;
+        this.obtainedMaterials =  obt;
     }
+
+
 
     public int getLevel() {
         return level;

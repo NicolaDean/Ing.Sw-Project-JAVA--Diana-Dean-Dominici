@@ -1,0 +1,20 @@
+{
+  "leaderCards":
+  [
+    {
+      "id":0,
+      "cost":
+      [
+        {
+          "type":"COIN",
+          "quantity":1
+        },
+        {
+          "type":"COIN",
+          "quantity":1
+        }
+      ]
+    }
+
+  ]
+}

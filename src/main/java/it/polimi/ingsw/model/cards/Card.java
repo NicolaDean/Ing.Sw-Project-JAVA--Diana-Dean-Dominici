@@ -11,6 +11,10 @@ public class Card {
     private List<Resource> cost = new ResourceList();
     private int victoryPoints;
 
+    public Card()
+    {
+        this.cost = new ResourceList();
+    }
     public Card(List<Resource> cost, int victoryPoints) {
         this.cost = cost;
         this.victoryPoints = victoryPoints;

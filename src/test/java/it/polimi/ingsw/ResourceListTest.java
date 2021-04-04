@@ -36,4 +36,17 @@ public class ResourceListTest {
 
         assertTrue(ResourceOperator.extractQuantityOf(COIN,tmp) == 1);
     }
+
+    @Test
+
+    public void isEmptyTest()
+    {
+        List<Resource> tmp = new ResourceList();
+
+        assertTrue(tmp.isEmpty());
+
+        tmp.add(new Resource(COIN,1));
+
+        assertFalse(tmp.isEmpty());
+    }
 }
