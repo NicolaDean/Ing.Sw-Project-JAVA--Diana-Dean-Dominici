@@ -1,6 +1,7 @@
 [
   {
 
+    "id": 0,
     "type": "GREEN",
     "level":1,
     "victoryPoints": 1,
@@ -18,6 +19,7 @@
     ]
   },
   {
+    "id": 1,
     "type": "PURPLE",
     "level":1,
     "victoryPoints": 1,
@@ -32,6 +34,243 @@
     "cost":
     [
       {"type":"SERVANT","quantity":2}
+    ]
+  },
+  {
+    "id": 2,
+    "type": "BLU",
+    "level":1,
+    "victoryPoints": 1,
+    "rawMaterials":
+    [
+      {"type":"SHIELD","quantity":1}
+    ],
+    "obtainedMaterials":
+    [
+      {"type":"FAITH","quantity":1}
+    ],
+    "cost":
+    [
+      {"type":"COIN","quantity":2}
+    ]
+  },
+  {
+    "id": 3,
+    "type": "YELLOW",
+    "level":1,
+    "victoryPoints": 1,
+    "rawMaterials":
+    [
+      {"type":"SERVANT","quantity":1}
+    ],
+    "obtainedMaterials":
+    [
+      {"type":"FAITH","quantity":1}
+    ],
+    "cost":
+    [
+      {"type":"ROCK","quantity":2}
+    ]
+  },
+  {
+    "id": 4,
+    "type": "GREEN",
+    "level":1,
+    "victoryPoints": 2,
+    "rawMaterials":
+    [
+      {"type":"ROCK","quantity":1}
+    ],
+    "obtainedMaterials":
+    [
+      {"type":"SERVANT","quantity":1}
+    ],
+    "cost":
+    [
+      {"type":"SHIELD","quantity":1},
+      {"type":"ROCK","quantity":1},
+      {"type":"SERVANT","quantity":1}
+    ]
+  },
+  {
+    "id": 5,
+    "type": "PURPLE",
+    "level":1,
+    "victoryPoints": 2,
+    "rawMaterials":
+    [
+      {"type":"COIN","quantity":1}
+    ],
+    "obtainedMaterials":
+    [
+      {"type":"SHIELD","quantity":1}
+    ],
+    "cost":
+    [
+      {"type":"SHIELD","quantity":1},
+      {"type":"COIN","quantity":1},
+      {"type":"SERVANT","quantity":1}
+    ]
+  },
+  {
+    "id": 6,
+    "type": "BLU",
+    "level":1,
+    "victoryPoints": 2,
+    "rawMaterials":
+    [
+      {"type":"SERVANT","quantity":1}
+    ],
+    "obtainedMaterials":
+    [
+      {"type":"ROCK","quantity":1}
+    ],
+    "cost":
+    [
+      {"type":"COIN","quantity":1},
+      {"type":"ROCK","quantity":1},
+      {"type":"SERVANT","quantity":1}
+    ]
+  },
+  {
+    "id": 7,
+    "type": "YELLOW",
+    "level":1,
+    "victoryPoints": 2,
+    "rawMaterials":
+    [
+      {"type":"SHIELD","quantity":1}
+    ],
+    "obtainedMaterials":
+    [
+      {"type":"COIN","quantity":1}
+    ],
+    "cost":
+    [
+      {"type":"SHIELD","quantity":1},
+      {"type":"COIN","quantity":1},
+      {"type":"ROCK","quantity":1}
+    ]
+  },
+  {
+    "id": 8,
+    "type": "GREEN",
+    "level":1,
+    "victoryPoints": 3,
+    "rawMaterials":
+    [
+      {"type":"SERVANT","quantity":2}
+    ],
+    "obtainedMaterials":
+    [
+      {"type":"COIN","quantity":1},
+      {"type":"SHIELD","quantity":1},
+      {"type":"ROCK","quantity":1}
+    ],
+    "cost":
+    [
+      {"type":"SHIELD","quantity":3}
+    ]
+  },
+  {
+    "id": 9,
+    "type": "PURPLE",
+    "level":1,
+    "victoryPoints": 3,
+    "rawMaterials":
+    [
+      {"type":"COIN","quantity":2}
+    ],
+    "obtainedMaterials":
+    [
+      {"type":"SERVANT","quantity":1},
+      {"type":"SHIELD","quantity":1},
+      {"type":"ROCK","quantity":1}
+    ],
+    "cost":
+    [
+      {"type":"SERVANT","quantity":3}
+    ]
+  },
+  {
+    "id": 10,
+    "type": "GREEN",
+    "level":1,
+    "victoryPoints": 3,
+    "rawMaterials":
+    [
+      {"type":"ROCK","quantity":2}
+    ],
+    "obtainedMaterials":
+    [
+      {"type":"COIN","quantity":1},
+      {"type":"SHIELD","quantity":1},
+      {"type":"SERVANT","quantity":1}
+    ],
+    "cost":
+    [
+      {"type":"COIN","quantity":3}
+    ]
+  },
+  {
+    "id": 11,
+    "type": "YELLOW",
+    "level":1,
+    "victoryPoints": 3,
+    "rawMaterials":
+    [
+      {"type":"SHIELD","quantity":2}
+    ],
+    "obtainedMaterials":
+    [
+      {"type":"COIN","quantity":1},
+      {"type":"SERVANT","quantity":1},
+      {"type":"ROCK","quantity":1}
+    ],
+    "cost":
+    [
+      {"type":"ROCK","quantity":3}
+    ]
+  },
+  {
+    "id": 12,
+    "type": "GREEN",
+    "level":1,
+    "victoryPoints": 3,
+    "rawMaterials":
+    [
+      {"type":"SERVANT","quantity":2}
+    ],
+    "obtainedMaterials":
+    [
+      {"type":"COIN","quantity":1},
+      {"type":"SHIELD","quantity":1},
+      {"type":"ROCK","quantity":1}
+    ],
+    "cost":
+    [
+      {"type":"SHIELD","quantity":3}
+    ]
+  },
+  {
+    "id": 13,
+    "type": "GREEN",
+    "level":1,
+    "victoryPoints": 4,
+    "rawMaterials":
+    [
+      {"type":"ROCK","quantity":1},
+      {"type":"SERVANT","quantity":1}
+    ],
+    "obtainedMaterials":
+    [
+      {"type":"COIN","quantity":2},
+      {"type":"FAITH","quantity":1}
+    ],
+    "cost":
+    [
+      {"type":"COIN","quantity":2},
+      {"type":"SHIELD","quantity":2}
     ]
   }
 ]

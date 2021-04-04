@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.cards.JsonCardFactory;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.market.Market;
@@ -20,7 +21,7 @@ public class Game {
 
     public Game()
     {
-        
+        this.productionDecks = JsonCardFactory.loadProductionCardsFromJsonFile();
     }
 
     //public boolean addPlayer(String nickname)

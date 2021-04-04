@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.dashboard;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProduction;
 import it.polimi.ingsw.model.resources.Resource;
@@ -164,10 +165,10 @@ public class Dashboard {
      * @param pos stack of card to select
      * @return true if the activation goes well
      */
-    public boolean production(int pos)
+    public boolean production(Player p, int pos)
     {
         ProductionCard card = this.producionCards[pos].peek();
-        boolean out = card.produce(this);
+        boolean out = card.produce(p);
 
         if(out)
         {

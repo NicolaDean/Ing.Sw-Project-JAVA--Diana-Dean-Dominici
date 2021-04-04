@@ -12,8 +12,7 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
 
@@ -23,20 +22,44 @@ public class JsonCardFactory {
      * Read a json file and give back a list of cards
      * @throws Exception file dosnt exist
      */
-    public static List<ProductionCard> loadProductionCardsFromJsonFile() throws Exception {
+    public static Stack<ProductionCard>[][] loadProductionCardsFromJsonFile() {
         String path = "json/productionCards.json";
         InputStream is = JsonCardFactory.class.getClassLoader().getResourceAsStream(path);
 
-        if (is == null) throw new Exception("File " + path + " not found");
+        if (is == null) try {
+            throw new Exception("File " + path + " not found");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         JsonParser parser = new JsonParser();
         JsonArray array = parser.parse(new InputStreamReader(is)).getAsJsonArray();
 
         //Load All cards
-        List<ProductionCard>cards = buildProductionCardListFromJsonArray(array);;
+        List<ProductionCard>cards = buildProductionCardListFromJsonArray(array);
+        //Mix cards
+        Collections.shuffle(cards);
 
-        System.out.println("test finito");
-        return cards;
+        //Assign cards to the right Stack
+
+        return spitCardsInDeks(cards);
+    }
+
+    public static Stack<ProductionCard>[][] spitCardsInDeks(List<ProductionCard> cards)
+    {
+        Stack<ProductionCard>[][] decks = new Stack[3][4];
+
+        for(ProductionCard card :cards)
+        {
+            int level = card.getLevel()-1;
+            int type= card.getType().ordinal();
+
+            if(decks[level][type] == null) decks[level][type] = new Stack<ProductionCard>();
+
+            decks[level][type].add(card);
+        }
+
+        return decks;
     }
 
     /**
@@ -76,7 +99,7 @@ public class JsonCardFactory {
             lists = currCard.getAsJsonArray("obtainedMaterials");
             obtained = buildResourceListFromJsonArray(lists);
 
-            ProductionCard c = new ProductionCard(cost,raw,obtained,victoryPoints,level,type);
+            ProductionCard c = new ProductionCard(cost,raw,obtained,victoryPoints,level,0,type);
             cards.add(c);
         }
         return cards;

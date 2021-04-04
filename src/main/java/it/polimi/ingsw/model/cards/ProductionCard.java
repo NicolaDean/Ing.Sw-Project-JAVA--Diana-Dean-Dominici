@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.cards;
 
 import com.google.gson.JsonObject;
 import it.polimi.ingsw.enumeration.CardType;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
@@ -13,18 +14,20 @@ public class ProductionCard extends Card {
 
     private CardType type;
     private int level;
+    private int obtainedFaith;
     private List<Resource> rawMaterials;
     private List<Resource> obtainedMaterials;
 
 
     //Empty Constructor for GSON
-    public ProductionCard(List<Resource> cost,List<Resource> raw,List<Resource>obt,int victoryPoints,int level,CardType type)
+    public ProductionCard(List<Resource> cost,List<Resource> raw,List<Resource>obt,int victoryPoints,int level,int obtainedFaith,CardType type)
     {
         super(cost,victoryPoints);
         this.level = level;
         this.rawMaterials =  raw;
         this.obtainedMaterials =  obt;
         this.type = type;
+        this.obtainedFaith = obtainedFaith;
     }
 
     public ProductionCard(List<Resource> cost, int victoryPoints,int level) {
@@ -74,20 +77,21 @@ public class ProductionCard extends Card {
     /**
      * Player select A production card trough the view and this model method will be called to activate
      * THIS FUNCTION DOSNT REMOVE COST RESOURCE (it will be done by controller)
-     * @param dash Dashboard of the player
+     * @param p Dashboard of the player
      * @return  true if the activation goes well
      */
-    public boolean produce(Dashboard dash)
+    public boolean produce(Player p)
     {
 
         //Check if necesary resources are availabe
-        List<Resource> resAvailable = dash.getAllAvailableResource();
+        List<Resource> resAvailable = p.getDashboard().getAllAvailableResource();
         boolean out = ResourceOperator.compare(resAvailable,this.rawMaterials);
 
         //if true add obtained resources to the chest
         if(out)
         {
-            dash.chestInsertion(this.obtainedMaterials);
+            if(this.obtainedFaith == 1)p.incrementPosition();
+            p.chestInsertion(this.obtainedMaterials);
         }
 
         return out;

@@ -24,6 +24,7 @@ public class Player {
 
     public Player(String nickname,LeaderCard[] drawedCards)
     {
+        this.dashboard = new Dashboard();
         this.leaders = drawedCards;
         this.dashboard = new Dashboard();
         this.nickname = nickname;
@@ -130,6 +131,14 @@ public class Player {
      * @param resource resource to add
      */
     public void chestInsertion(Resource resource)
+    {
+        this.dashboard.chestInsertion(resource);
+    }
+    /**
+     *  Add resource to chest
+     * @param resource resource to add
+     */
+    public void chestInsertion(List<Resource> resource)
     {
         this.dashboard.chestInsertion(resource);
     }
