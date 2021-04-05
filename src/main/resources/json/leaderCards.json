@@ -20,7 +20,7 @@
     "victoryPoints": 2,
     "requirementsCard":
     [
-      {"type": "BLUEE","level": -1,"quantity":1},
+      {"type": "BLUE","level": -1,"quantity":1},
       {"type": "PURPLE","level": -1,"quantity":1}
     ],
     "requirementsResource":
