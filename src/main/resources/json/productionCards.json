@@ -38,7 +38,7 @@
   },
   {
     "id": 2,
-    "type": "BLU",
+    "type": "BLUE",
     "level":1,
     "victoryPoints": 1,
     "obtainedFaith": 1,
@@ -116,7 +116,7 @@
   },
   {
     "id": 6,
-    "type": "BLU",
+    "type": "BLUE",
     "level":1,
     "victoryPoints": 2,
     "obtainedFaith": 0,
@@ -280,6 +280,48 @@
     [
       {"type":"COIN","quantity":2},
       {"type":"SHIELD","quantity":2}
+    ]
+  },
+  {
+    "id": 14,
+    "type": "PURPLE",
+    "level":1,
+    "victoryPoints": 4,
+    "obtainedFaith": 1,
+    "rawMaterials":
+    [
+      {"type":"COIN","quantity":1},
+      {"type":"SHIELD","quantity":1}
+    ],
+    "obtainedMaterials":
+    [
+      {"type":"ROCK","quantity":2}
+    ],
+    "cost":
+    [
+      {"type":"SERVANT","quantity":2},
+      {"type":"ROCK","quantity":2}
+    ]
+  },
+  {
+    "id": 15,
+    "type": "PURPLE",
+    "level":1,
+    "victoryPoints": 4,
+    "obtainedFaith": 1,
+    "rawMaterials":
+    [
+      {"type":"COIN","quantity":1},
+      {"type":"SHIELD","quantity":1}
+    ],
+    "obtainedMaterials":
+    [
+      {"type":"ROCK","quantity":2}
+    ],
+    "cost":
+    [
+      {"type":"SERVANT","quantity":2},
+      {"type":"ROCK","quantity":2}
     ]
   }
 ]
