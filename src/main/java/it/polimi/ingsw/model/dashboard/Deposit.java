@@ -89,7 +89,6 @@ public class Deposit {
     {
         resource = new Resource(Rtype, Rquantity);
         if (Rquantity == 0) {
-
             resource = null;
         }
     }
