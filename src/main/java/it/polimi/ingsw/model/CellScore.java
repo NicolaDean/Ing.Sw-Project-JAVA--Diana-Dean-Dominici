@@ -1,9 +1,15 @@
 package it.polimi.ingsw.model;
 
 public class CellScore {
-    int position;
-    int score;
+    private int position;
+    private int score;
 
+
+    public CellScore(int position,int score)
+    {
+        this.position = position;
+        this.score = score;
+    }
     boolean checkSurpassed(int pos)
     {
         return pos >= this.position;

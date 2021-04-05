@@ -1,17 +1,15 @@
 [
-    {
-      "id":0,
-      "cost":
-      [
-        {
-          "type":"COIN",
-          "quantity":1
-        },
-        {
-          "type":"COIN",
-          "quantity":1
-        }
-      ]
-    }
+  {
+    "id": 0,
+    "cardType": "WHITE",
+    "resourceType": "COIN",
+    "victoryPoints": 4,
+
+    "requirements":
+    [
+      {"type":"ROCK","quantity":1},
+      {"type":"SERVANT","quantity":1}
+    ]
+  }
 
   ]

@@ -1,22 +1,21 @@
-package it.polimi.ingsw.model.cards;
+package it.polimi.ingsw.model.factory;
 
 import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.enumeration.CardType;
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.model.cards.LeaderCard;
+import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.cards.leaders.DepositBonus;
+import it.polimi.ingsw.model.cards.leaders.LeaderDiscountCard;
+import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.util.*;
 
-import static it.polimi.ingsw.enumeration.ResourceType.*;
-
-public class JsonCardFactory {
+public class CardFactory {
 
     /**
      * Read a json file and give back a list of cards
@@ -24,7 +23,7 @@ public class JsonCardFactory {
      */
     public static Stack<ProductionCard>[][] loadProductionCardsFromJsonFile() {
         String path = "json/productionCards.json";
-        InputStream is = JsonCardFactory.class.getClassLoader().getResourceAsStream(path);
+        InputStream is = CardFactory.class.getClassLoader().getResourceAsStream(path);
 
         if (is == null) try {
             throw new Exception("File " + path + " not found");
@@ -124,4 +123,60 @@ public class JsonCardFactory {
 
         return list;
     }
+
+    /**
+     * Generate a leader card from jsonObject
+     * @param card a json Object containing a card
+     * @return a new leader
+     */
+    public static LeaderCard buildLeaderCardFromJsonObject(JsonObject card) {
+        ResourceType type = ResourceType.valueOf(card.get("resourceType").getAsString());
+        int victoryPoint = card.get("victoryPoints").getAsInt();
+
+        List<Resource> requirment = buildResourceListFromJsonArray(card.get("requirements").getAsJsonArray());
+
+        String cardType = card.get("cardType").getAsString();
+
+        switch (cardType) {
+            case "WHITE":
+                return new LeaderCard(requirment, victoryPoint, type);
+            case "DISCOUNT":
+                return new LeaderDiscountCard(requirment, victoryPoint, type);
+            case "TRADE":
+                return new LeaderTradeCard(requirment, victoryPoint, type);
+            case "DEPOSIT":
+                return new DepositBonus(requirment, victoryPoint, type);
+            default:
+                return new LeaderCard(requirment, victoryPoint, type);
+        }
+    }
+
+
+        public static LeaderCard[] loadLeaderCardsFromJsonFile()
+        {
+            String path = "json/leaderCards.json";
+            InputStream is = CardFactory.class.getClassLoader().getResourceAsStream(path);
+
+            if (is == null) try {
+                throw new Exception("File " + path + " not found");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            JsonParser parser = new JsonParser();
+            JsonArray array = parser.parse(new InputStreamReader(is)).getAsJsonArray();
+
+            int size = array.size();
+            LeaderCard [] out = new LeaderCard[size];
+
+            for(int i=0;i<size;i++)
+            {
+                JsonObject card = array.get(i).getAsJsonObject();
+                out[i] = buildLeaderCardFromJsonObject(card);
+            }
+
+            return out;
+        }
+
+
 }
