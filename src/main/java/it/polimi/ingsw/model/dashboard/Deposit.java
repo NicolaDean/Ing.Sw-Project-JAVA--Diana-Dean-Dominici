@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.dashboard;
 
-import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.enumeration.resourceType;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 
@@ -85,7 +85,7 @@ public class Deposit {
      * @param Rtype
      * @param Rquantity
      */
-    public void setNewDeposit(ResourceType Rtype, int Rquantity )
+    public void setNewDeposit(resourceType Rtype, int Rquantity )
     {
         resource = new Resource(Rtype, Rquantity);
         if (Rquantity == 0) {

@@ -9,8 +9,8 @@ import it.polimi.ingsw.model.resources.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-import static it.polimi.ingsw.enumeration.ResourceType.COIN;
-import static it.polimi.ingsw.enumeration.ResourceType.SERVANT;
+import static it.polimi.ingsw.enumeration.resourceType.COIN;
+import static it.polimi.ingsw.enumeration.resourceType.SERVANT;
 
 public class CardTest {
 

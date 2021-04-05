@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.resources.Resource;
 
 import java.awt.*;
 
-import static it.polimi.ingsw.enumeration.ResourceType.ROCK;
+import static it.polimi.ingsw.enumeration.resourceType.ROCK;
 
 public class GrayBall extends ResourceBall {
     /**

@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.resources.Resource;
 
 import java.awt.*;
 
-import static it.polimi.ingsw.enumeration.ResourceType.COIN;
+import static it.polimi.ingsw.enumeration.resourceType.COIN;
 
 public class YellowBall extends ResourceBall {
     /**

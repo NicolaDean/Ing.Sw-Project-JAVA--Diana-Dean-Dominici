@@ -1,9 +1,8 @@
 package it.polimi.ingsw.enumeration;
 
-public enum ResourceType {
+public enum resourceType {
     SHIELD,
     ROCK,
     COIN,
-    SERVANT,
-    FAITH
+    SERVANT
 }

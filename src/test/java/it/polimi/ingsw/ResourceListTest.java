@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 
-import static it.polimi.ingsw.enumeration.ResourceType.*;
+import static it.polimi.ingsw.enumeration.resourceType.*;
 
 public class ResourceListTest {
 

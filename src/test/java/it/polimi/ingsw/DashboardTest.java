@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 import org.junit.jupiter.api.Test;
 
-import static it.polimi.ingsw.enumeration.ResourceType.*;
+import static it.polimi.ingsw.enumeration.resourceType.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;

@@ -63,6 +63,26 @@ public class ProductionCard extends Card {
         return this.getType() == card.getType();
     }
 
+    /**
+     *
+     * @param card type to compare
+     * @return true if type is equals
+     */
+    public boolean compareType(PrerequisiteCard card)
+    {
+        boolean out = false;
+
+
+        //If level is not negative check level
+        if(level != -1)
+        {
+            if(card.getLevel() != this.level) return false;
+        }
+
+        //If level is ok or not necessary check Type
+        return this.getType() == card.getType();
+
+    }
 
     @Override
     public boolean checkCost(Dashboard dash) {

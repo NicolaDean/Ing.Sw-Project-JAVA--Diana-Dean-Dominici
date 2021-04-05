@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.cards.PrerequisiteCard;
 import it.polimi.ingsw.model.cards.leaders.DepositBonus;
 import it.polimi.ingsw.model.dashboard.Storage;
 import it.polimi.ingsw.model.resources.Resource;
@@ -8,9 +9,10 @@ import it.polimi.ingsw.model.resources.ResourceOperator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static it.polimi.ingsw.enumeration.ResourceType.*;
+import static it.polimi.ingsw.enumeration.resourceType.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StorageTest {
@@ -55,7 +57,7 @@ public class StorageTest {
         player.getDashboard().getStorage().safeInsertion(b, 1);
         player.getDashboard().getStorage().safeInsertion(c, 2);
         List<Resource> list = player.getDashboard().getStorage().getStorageAsList();
-        DepositBonus bonus = new DepositBonus(list, 3, ROCK);
+        DepositBonus bonus = new DepositBonus(list,new ArrayList<PrerequisiteCard>(), 3, ROCK);
         bonus.activate(player);
         player.getDashboard().getStorage().safeInsertion(c, 3);
         List<Integer> positions = player.getDashboard().getStorage().findType(ROCK);
@@ -94,7 +96,7 @@ public class StorageTest {
         player.getDashboard().getStorage().safeInsertion(b, 1);
         player.getDashboard().getStorage().safeInsertion(c, 2);
         List<Resource> list = player.getDashboard().getStorage().getStorageAsList();
-        DepositBonus bonus = new DepositBonus(list, 3, ROCK);
+        DepositBonus bonus = new DepositBonus(list,new ArrayList<PrerequisiteCard>(), 3, ROCK);
         bonus.activate(player);
         player.getDashboard().getStorage().safeInsertion(c, 3);
         list = player.getDashboard().getStorage().getStorageAsList();
@@ -117,7 +119,7 @@ public class StorageTest {
             Resource b = new Resource(ROCK, 1);
             Resource c = new Resource(ROCK, 2);
             List<Resource> list = testStorage.getStorageAsList();
-            DepositBonus bonus = new DepositBonus(list, 3, ROCK);
+            DepositBonus bonus = new DepositBonus(list,new ArrayList<PrerequisiteCard>(), 3, ROCK);
             testStorage.safeInsertion(a, 0);
             testStorage.safeInsertion(b, 1);
             testStorage.safeInsertion(c, 2);
@@ -140,8 +142,8 @@ public class StorageTest {
         player.getDashboard().getStorage().safeInsertion(b, 1);
         player.getDashboard().getStorage().safeInsertion(c, 2);
         List<Resource> list = player.getDashboard().getStorage().getStorageAsList();
-        DepositBonus bonus = new DepositBonus(list, 3, ROCK);
-        DepositBonus bonus2 = new DepositBonus(list, 3, SHIELD);
+        DepositBonus bonus = new DepositBonus(list, new ArrayList<PrerequisiteCard>(),3, ROCK);
+        DepositBonus bonus2 = new DepositBonus(list,new ArrayList<PrerequisiteCard>(), 3, SHIELD);
         bonus.activate(player);
         player.getDashboard().getStorage().safeInsertion(b, 3);
         bonus2.activate(player);
@@ -167,8 +169,8 @@ public class StorageTest {
         player.getDashboard().getStorage().safeInsertion(a, 1);
         player.getDashboard().getStorage().safeInsertion(c, 2);
         List<Resource> list = player.getDashboard().getStorage().getStorageAsList();
-        DepositBonus bonus = new DepositBonus(list, 3, ROCK);
-        DepositBonus bonus2 = new DepositBonus(list, 3, SHIELD);
+        DepositBonus bonus = new DepositBonus(list,new ArrayList<PrerequisiteCard>(), 3, ROCK);
+        DepositBonus bonus2 = new DepositBonus(list,new ArrayList<PrerequisiteCard>(), 3, SHIELD);
         bonus.activate(player);
         player.getDashboard().getStorage().safeInsertion(b, 3);
         bonus2.activate(player);
@@ -195,8 +197,8 @@ public class StorageTest {
             player.getDashboard().getStorage().safeInsertion(b, 1);
             player.getDashboard().getStorage().safeInsertion(c, 2);
             List<Resource> list = player.getDashboard().getStorage().getStorageAsList();
-            DepositBonus bonus = new DepositBonus(list, 3, ROCK);
-            DepositBonus bonus2 = new DepositBonus(list, 3, SHIELD);
+            DepositBonus bonus = new DepositBonus(list,new ArrayList<PrerequisiteCard>(), 3, ROCK);
+            DepositBonus bonus2 = new DepositBonus(list,new ArrayList<PrerequisiteCard>(), 3, SHIELD);
             bonus.activate(player);
             player.getDashboard().getStorage().safeInsertion(b, 3);
             bonus2.activate(player);

@@ -3,10 +3,10 @@ package it.polimi.ingsw.model.resources;
 import it.polimi.ingsw.enumeration.*;
 
 public class Resource {
-    private ResourceType type;
+    private resourceType type;
     private int quantity;
 
-    public Resource(ResourceType type,int quantity)
+    public Resource(resourceType type, int quantity)
     {
         this.type = type;
         this.quantity = quantity;
@@ -24,7 +24,7 @@ public class Resource {
      *
      * get Method for type
      */
-    public ResourceType getType()
+    public resourceType getType()
     {
         return this.type;
     }

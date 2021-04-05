@@ -4,8 +4,11 @@
     "cardType": "WHITE",
     "resourceType": "COIN",
     "victoryPoints": 4,
-
-    "requirements":
+    "requirementsCard":
+    [
+      {"type": "YELLOW","level": -1}
+    ],
+    "requirementsResource":
     [
       {"type":"ROCK","quantity":1},
       {"type":"SERVANT","quantity":1}

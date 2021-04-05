@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model.dashboard;
 
-import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.enumeration.resourceType;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.cards.PrerequisiteCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
-import it.polimi.ingsw.model.cards.leaders.BonusProduction;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.model.resources.ResourceOperator;
@@ -139,7 +139,7 @@ public class Dashboard {
      * @param obtain    Type i want
      * @return true if i can do a basicProduction
      */
-    public boolean basicProduction(ResourceType spendOne, ResourceType spendTwo,ResourceType obtain)
+    public boolean basicProduction(resourceType spendOne, resourceType spendTwo, resourceType obtain)
     {
         List<Resource> availableRes = this.getAllAvailableResource();
 
@@ -265,12 +265,35 @@ public class Dashboard {
         this.bonusResources.add(res);
     }
 
+    /**
+     *  check if the prerequisite card is iside the dashboard or not
+     * @param requirements prerequisite card
+     * @return true if exist
+     */
+    public boolean checkCardPresence(List<PrerequisiteCard> requirements)
+    {
+        //foreach stack and foreach card in it check if it match the prerequisite (if true return true)
+        for(Stack<ProductionCard> s:this.producionCards)
+        {
+            //For each card of the stack
+            for(ProductionCard card:s)
+            {
+                //For each prerequisite
+                for(PrerequisiteCard requirement:requirements)
+                {
+                    //Check matching
+                    if(card.compareType(requirement)) return true;
+                }
+            }
+        }
+        return false;
+    }
 
     /**
      * Add a deposit bonus
      * @param typeBonus resource given from the bonus
      */
-    public void addDepositBonus(ResourceType typeBonus)
+    public void addDepositBonus(resourceType typeBonus)
     {
         this.storage.initializeBonusDeposit(typeBonus);
     }

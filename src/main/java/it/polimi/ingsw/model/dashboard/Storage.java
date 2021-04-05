@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model.dashboard;
 
-import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.enumeration.resourceType;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 
-import static it.polimi.ingsw.enumeration.ResourceType.*;
+import static it.polimi.ingsw.enumeration.resourceType.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +80,7 @@ public class Storage {
      * @return
      * @throws Exception
      */
-    public List<Integer> findType(ResourceType type) throws Exception
+    public List<Integer> findType(resourceType type) throws Exception
     {
         List<Integer> indexes = new ArrayList<Integer>();
         boolean a = false;
@@ -153,7 +153,7 @@ public class Storage {
          * initialize a bonus deposit (leader)
          * @param type
          */
-        public void initializeBonusDeposit (ResourceType type)
+        public void initializeBonusDeposit (resourceType type)
         {
             int i;
             if (storage[3] == null)

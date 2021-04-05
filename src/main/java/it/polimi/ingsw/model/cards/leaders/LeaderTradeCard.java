@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model.cards.leaders;
 
-import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.enumeration.resourceType;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.LeaderCard;
+import it.polimi.ingsw.model.cards.PrerequisiteCard;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 
@@ -10,10 +11,10 @@ import java.util.List;
 
 public class LeaderTradeCard extends LeaderCard implements BonusProduction {
 
-    private ResourceType obtain;
+    private resourceType obtain;
 
-    public LeaderTradeCard(List<Resource> cost, int victoryPoints, ResourceType type) {
-        super(cost, victoryPoints, type);
+    public LeaderTradeCard(List<Resource> cost, List<PrerequisiteCard> cardPrequisite, int victoryPoints, resourceType type) {
+        super(cost,cardPrequisite, victoryPoints, type);
 
         this.obtain = null;
     }
@@ -34,7 +35,7 @@ public class LeaderTradeCard extends LeaderCard implements BonusProduction {
 
     //USER can select the card and call the method "changeRawMat()" or
     @Override
-    public boolean produce(Player p, ResourceType obtain)
+    public boolean produce(Player p, resourceType obtain)
     {
         int possession = ResourceOperator.extractQuantityOf(this.getType(),p.getDashboard().getAllAvailableResource());
 

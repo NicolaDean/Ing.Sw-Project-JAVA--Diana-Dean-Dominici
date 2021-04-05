@@ -2,12 +2,14 @@ package it.polimi.ingsw.model.factory;
 
 import com.google.gson.*;
 import it.polimi.ingsw.enumeration.CardType;
-import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.enumeration.resourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
+import it.polimi.ingsw.model.cards.PrerequisiteCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.DepositBonus;
 import it.polimi.ingsw.model.cards.leaders.LeaderDiscountCard;
 import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
+import it.polimi.ingsw.model.cards.leaders.LeaderWhiteCard;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 
@@ -35,7 +37,7 @@ public class CardFactory {
         JsonArray array = parser.parse(new InputStreamReader(is)).getAsJsonArray();
 
         //Load All cards
-        List<ProductionCard>cards = buildProductionCardListFromJsonArray(array);
+        List<ProductionCard>cards = loadProductionCardListFromJsonArray(array);
         //Mix cards
         Collections.shuffle(cards);
 
@@ -66,42 +68,50 @@ public class CardFactory {
      * @param array Json Array
      * @return a list of Production cards
      */
-    public static List<ProductionCard> buildProductionCardListFromJsonArray(JsonArray array)
+    public static List<ProductionCard> loadProductionCardListFromJsonArray(JsonArray array)
     {
 
         List<ProductionCard> cards = new ArrayList<>();
         for(JsonElement o:array)
         {
-            //Preparing the Lists of resources
-            List<Resource> cost = new ResourceList();
-            List<Resource> obtained= new ResourceList();
-            List<Resource> raw = new ResourceList();
-
             //LOAD CURRENT CARD
             JsonObject currCard = o.getAsJsonObject();
 
-            //GET LEVEL,VictoryPoint and type of card
-            int level = currCard.get("level").getAsInt();
-            int victoryPoints = currCard.get("victoryPoints").getAsInt();
-            CardType type = CardType.valueOf(currCard.get("type").getAsString());
-
-
-            //LOAD COST
-            JsonArray lists = currCard.getAsJsonArray("cost");
-            cost = buildResourceListFromJsonArray(lists);
-
-            //LOAD RAW MAT
-            lists = currCard.getAsJsonArray("rawMaterials");
-            raw = buildResourceListFromJsonArray(lists);
-
-            //LOAD OBTAINED MAT
-            lists = currCard.getAsJsonArray("obtainedMaterials");
-            obtained = buildResourceListFromJsonArray(lists);
-
-            ProductionCard c = new ProductionCard(cost,raw,obtained,victoryPoints,level,0,type);
+            ProductionCard c = buildProductionCardFromJsonObject(currCard);
             cards.add(c);
         }
         return cards;
+    }
+
+    public static ProductionCard buildProductionCardFromJsonObject(JsonObject currCard)
+    {
+        //Preparing the Lists of resources
+        List<Resource> cost = new ResourceList();
+        List<Resource> obtained= new ResourceList();
+        List<Resource> raw = new ResourceList();
+
+
+
+        //GET LEVEL,VictoryPoint,faith, and type of card
+        int level = currCard.get("level").getAsInt();
+        int victoryPoints = currCard.get("victoryPoints").getAsInt();
+        int obtainedFaith = currCard.get("obtainedFaith").getAsInt();
+        CardType type = CardType.valueOf(currCard.get("type").getAsString());
+
+        //LOAD COST
+        JsonArray lists = currCard.getAsJsonArray("cost");
+        cost = buildResourceListFromJsonArray(lists);
+
+        //LOAD RAW MAT
+        lists = currCard.getAsJsonArray("rawMaterials");
+        raw = buildResourceListFromJsonArray(lists);
+
+        //LOAD OBTAINED MAT
+        lists = currCard.getAsJsonArray("obtainedMaterials");
+        obtained = buildResourceListFromJsonArray(lists);
+
+        ProductionCard c = new ProductionCard(cost,raw,obtained,victoryPoints,level,obtainedFaith,type);
+        return c;
     }
     /**
      * Given a JSON array of resources build a ResourceList from it
@@ -111,11 +121,12 @@ public class CardFactory {
     public static List<Resource> buildResourceListFromJsonArray(JsonArray array)
     {
         List<Resource> list = new ResourceList();
+        if(array.size() == 0) return list;
         for(JsonElement o:array)
         {
             JsonObject res = o.getAsJsonObject();
 
-            ResourceType t = ResourceType.valueOf(res.get("type").getAsString());
+            resourceType t = resourceType.valueOf(res.get("type").getAsString());
             int qty = res.get("quantity").getAsInt();
 
             list.add(new Resource(t,qty));
@@ -125,29 +136,50 @@ public class CardFactory {
     }
 
     /**
+     * Generate a list of prerequisite from json array
+     * @return a list of prerequisite
+     */
+    public static List<PrerequisiteCard> buildPrerequisiteCardListFromJsonArray(JsonArray array)
+    {
+        List<PrerequisiteCard> list = new ArrayList<>();
+        if(array.size() == 0) return list;
+
+        for(JsonElement o:array)
+        {
+            JsonObject card = o.getAsJsonObject();
+
+            CardType type = CardType.valueOf(card.get("type").getAsString());
+            int level = card.get("level").getAsInt();
+
+            list.add(new PrerequisiteCard(type,level));
+        }
+
+        return list;
+    }
+    /**
      * Generate a leader card from jsonObject
      * @param card a json Object containing a card
      * @return a new leader
      */
     public static LeaderCard buildLeaderCardFromJsonObject(JsonObject card) {
-        ResourceType type = ResourceType.valueOf(card.get("resourceType").getAsString());
+        resourceType type = resourceType.valueOf(card.get("resourceType").getAsString());
         int victoryPoint = card.get("victoryPoints").getAsInt();
-
-        List<Resource> requirment = buildResourceListFromJsonArray(card.get("requirements").getAsJsonArray());
+        List<PrerequisiteCard> requirmentCard = buildPrerequisiteCardListFromJsonArray(card.get("requirementsCard").getAsJsonArray());
+        List<Resource> requirment = buildResourceListFromJsonArray(card.get("requirementsResource").getAsJsonArray());
 
         String cardType = card.get("cardType").getAsString();
 
         switch (cardType) {
             case "WHITE":
-                return new LeaderCard(requirment, victoryPoint, type);
+                return new LeaderWhiteCard(requirment,requirmentCard, victoryPoint, type);
             case "DISCOUNT":
-                return new LeaderDiscountCard(requirment, victoryPoint, type);
+                return new LeaderDiscountCard(requirment,requirmentCard, victoryPoint, type);
             case "TRADE":
-                return new LeaderTradeCard(requirment, victoryPoint, type);
+                return new LeaderTradeCard(requirment,requirmentCard, victoryPoint, type);
             case "DEPOSIT":
-                return new DepositBonus(requirment, victoryPoint, type);
+                return new DepositBonus(requirment,requirmentCard, victoryPoint, type);
             default:
-                return new LeaderCard(requirment, victoryPoint, type);
+                return new LeaderCard(requirment,requirmentCard, victoryPoint, type);
         }
     }
 

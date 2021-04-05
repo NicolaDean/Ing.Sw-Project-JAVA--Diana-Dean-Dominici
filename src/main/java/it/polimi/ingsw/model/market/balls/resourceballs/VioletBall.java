@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.resources.Resource;
 
 import java.awt.*;
 
-import static it.polimi.ingsw.enumeration.ResourceType.SERVANT;
+import static it.polimi.ingsw.enumeration.resourceType.SERVANT;
 
 public class VioletBall extends ResourceBall {
     /**
