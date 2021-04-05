@@ -1,18 +1,220 @@
 [
   {
     "id": 0,
-    "cardType": "WHITE",
-    "resourceType": "COIN",
-    "victoryPoints": 4,
+    "cardType": "DISCOUNT",
+    "resourceType": "SERVANT",
+    "victoryPoints": 2,
     "requirementsCard":
     [
-      {"type": "YELLOW","level": -1}
+      {"type": "YELLOW","level": -1,"quantity":1},
+      {"type": "GREEN","level": -1,"quantity":1}
     ],
     "requirementsResource":
     [
-      {"type":"ROCK","quantity":1},
-      {"type":"SERVANT","quantity":1}
+    ]
+  },
+  {
+    "id": 1,
+    "cardType": "DISCOUNT",
+    "resourceType": "SHIELD",
+    "victoryPoints": 2,
+    "requirementsCard":
+    [
+      {"type": "BLUEE","level": -1,"quantity":1},
+      {"type": "PURPLE","level": -1,"quantity":1}
+    ],
+    "requirementsResource":
+    [
+    ]
+  },
+  {
+    "id": 2,
+    "cardType": "DISCOUNT",
+    "resourceType": "ROCK",
+    "victoryPoints": 2,
+    "requirementsCard":
+    [
+      {"type": "BLUE","level": -1,"quantity":1},
+      {"type": "GREEN","level": -1,"quantity":1}
+    ],
+    "requirementsResource":
+    [
+    ]
+  },
+  {
+    "id": 3,
+    "cardType": "DISCOUNT",
+    "resourceType": "COIN",
+    "victoryPoints": 2,
+    "requirementsCard":
+    [
+      {"type": "YELLOW","level": -1,"quantity":1},
+      {"type": "PURPLE","level": -1,"quantity":1}
+    ],
+    "requirementsResource":
+    [
+    ]
+  },
+  {
+    "id": 4,
+    "cardType": "DEPOSIT",
+    "resourceType": "ROCK",
+    "victoryPoints": 3,
+    "requirementsCard":
+    [
+    ],
+    "requirementsResource":
+    [
+      {"type":"COIN","quantity":5}
+    ]
+  },
+  {
+    "id": 5,
+    "cardType": "DEPOSIT",
+    "resourceType": "SERVANT",
+    "victoryPoints": 3,
+    "requirementsCard":
+    [
+    ],
+    "requirementsResource":
+    [
+      {"type":"ROCK","quantity":5}
+    ]
+  },
+  {
+    "id": 6,
+    "cardType": "DEPOSIT",
+    "resourceType": "SHIELD",
+    "victoryPoints": 3,
+    "requirementsCard":
+    [
+    ],
+    "requirementsResource":
+    [
+      {"type":"SERVANT","quantity":5}
+    ]
+  },
+  {
+    "id": 7,
+    "cardType": "DEPOSIT",
+    "resourceType": "COIN",
+    "victoryPoints": 3,
+    "requirementsCard":
+    [
+    ],
+    "requirementsResource":
+    [
+      {"type":"SHIELD","quantity":5}
+    ]
+  },
+  {
+    "id": 8,
+    "cardType": "WHITE",
+    "resourceType": "SERVANT",
+    "victoryPoints": 5,
+    "requirementsCard":
+    [
+      {"type": "YELLOW","level": -1,"quantity":2},
+      {"type": "BLUE","level": -1,"quantity":1}
+    ],
+    "requirementsResource":
+    [
+    ]
+  },
+  {
+    "id": 9,
+    "cardType": "WHITE",
+    "resourceType": "SHIELD",
+    "victoryPoints": 5,
+    "requirementsCard":
+    [
+      {"type": "GREEN","level": -1,"quantity":2},
+      {"type": "PURPLE","level": -1,"quantity":1}
+    ],
+    "requirementsResource":
+    [
+    ]
+  },
+  {
+    "id": 10,
+    "cardType": "WHITE",
+    "resourceType": "ROCK",
+    "victoryPoints": 5,
+    "requirementsCard":
+    [
+      {"type": "BLUE","level": -1,"quantity":2},
+      {"type": "YELLOW","level": -1,"quantity":1}
+    ],
+    "requirementsResource":
+    [
+    ]
+  },
+  {
+    "id": 11,
+    "cardType": "WHITE",
+    "resourceType": "COIN",
+    "victoryPoints": 5,
+    "requirementsCard":
+    [
+      {"type": "PURPLE","level": -1,"quantity":2},
+      {"type": "GREEN","level": -1,"quantity":1}
+    ],
+    "requirementsResource":
+    [
+    ]
+  },
+  {
+    "id": 12,
+    "cardType": "TRADE",
+    "resourceType": "SHIELD",
+    "victoryPoints": 5,
+    "requirementsCard":
+    [
+      {"type": "YELLOW","level": 2,"quantity":1}
+    ],
+    "requirementsResource":
+    [
+    ]
+  },
+  {
+    "id": 13,
+    "cardType": "TRADE",
+    "resourceType": "SERVANT",
+    "victoryPoints": 5,
+    "requirementsCard":
+    [
+      {"type": "BLUE","level": 2,"quantity":1}
+    ],
+    "requirementsResource":
+    [
+    ]
+  },
+  {
+    "id": 14,
+    "cardType": "TRADE",
+    "resourceType": "ROCK",
+    "victoryPoints": 5,
+    "requirementsCard":
+    [
+      {"type": "PURPLE","level": 2,"quantity":1}
+    ],
+    "requirementsResource":
+    [
+    ]
+  },
+  {
+    "id": 15,
+    "cardType": "TRADE",
+    "resourceType": "COIN",
+    "victoryPoints": 5,
+    "requirementsCard":
+    [
+      {"type": "GREEN","level": 2,"quantity":1}
+    ],
+    "requirementsResource":
+    [
     ]
   }
+
 
   ]

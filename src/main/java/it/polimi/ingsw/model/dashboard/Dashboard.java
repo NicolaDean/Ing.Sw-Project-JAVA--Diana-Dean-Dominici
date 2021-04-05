@@ -275,18 +275,20 @@ public class Dashboard {
         //foreach stack and foreach card in it check if it match the prerequisite (if true return true)
         for(Stack<ProductionCard> s:this.producionCards)
         {
-            //For each card of the stack
-            for(ProductionCard card:s)
+            //For each prerequisite
+            for(PrerequisiteCard requirement:requirements)
             {
-                //For each prerequisite
-                for(PrerequisiteCard requirement:requirements)
+                int quantity = 0;
+                //For each card of the stack
+                for(ProductionCard card:s)
                 {
                     //Check matching
-                    if(card.compareType(requirement)) return true;
+                    if(card.compareType(requirement)) quantity++;
                 }
+                if(quantity < requirement.getQuantity()) return false;
             }
         }
-        return false;
+        return true;
     }
 
     /**

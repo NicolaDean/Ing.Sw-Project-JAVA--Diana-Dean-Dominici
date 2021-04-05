@@ -150,8 +150,9 @@ public class CardFactory {
 
             CardType type = CardType.valueOf(card.get("type").getAsString());
             int level = card.get("level").getAsInt();
+            int quantity = card.get("quantity").getAsInt();
 
-            list.add(new PrerequisiteCard(type,level));
+            list.add(new PrerequisiteCard(type,level,quantity));
         }
 
         return list;
