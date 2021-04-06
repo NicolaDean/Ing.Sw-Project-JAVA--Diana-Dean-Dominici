@@ -1,26 +1,24 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.enumeration.CardType;
-import it.polimi.ingsw.enumeration.resourceType;
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.resources.Resource;
-import it.polimi.ingsw.model.resources.ResourceOperator;
 
 import java.util.List;
 
 public class LeaderCard extends Card{
 
-    private resourceType type;
+    private ResourceType type;
     private List<PrerequisiteCard> cardPrequisite;
 
 
-    public LeaderCard(List<Resource> cost,List<PrerequisiteCard> cardPrequisite, int victoryPoints, resourceType type) {
+    public LeaderCard(List<Resource> cost,List<PrerequisiteCard> cardPrequisite, int victoryPoints, ResourceType type) {
         super(cost, victoryPoints);
         this.type = type;
         this.cardPrequisite = cardPrequisite;
     }
 
-    public resourceType getType()
+    public ResourceType getType()
     {
         return this.type;
     }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.dashboard;
 
-import it.polimi.ingsw.enumeration.resourceType;
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.PrerequisiteCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
@@ -139,7 +139,7 @@ public class Dashboard {
      * @param obtain    Type i want
      * @return true if i can do a basicProduction
      */
-    public boolean basicProduction(resourceType spendOne, resourceType spendTwo, resourceType obtain)
+    public boolean basicProduction(ResourceType spendOne, ResourceType spendTwo, ResourceType obtain)
     {
         List<Resource> availableRes = this.getAllAvailableResource();
 
@@ -295,7 +295,7 @@ public class Dashboard {
      * Add a deposit bonus
      * @param typeBonus resource given from the bonus
      */
-    public void addDepositBonus(resourceType typeBonus)
+    public void addDepositBonus(ResourceType typeBonus)
     {
         this.storage.initializeBonusDeposit(typeBonus);
     }

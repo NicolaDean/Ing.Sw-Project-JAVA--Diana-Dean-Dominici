@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 
-import it.polimi.ingsw.enumeration.resourceType;
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProduction;
 import it.polimi.ingsw.model.dashboard.Dashboard;
@@ -229,7 +229,7 @@ public class Player {
      * @param resWanted the resource i want to obtain
      * @return true if the production is done false is something dosnt gone well
      */
-    public boolean bonusProduction(int pos, resourceType resWanted)
+    public boolean bonusProduction(int pos, ResourceType resWanted)
     {
         BonusProduction card = this.bonusProductions.get(pos);
         boolean out = card.produce(this,resWanted);

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.resources;
 
-import it.polimi.ingsw.enumeration.resourceType;
+import it.polimi.ingsw.enumeration.ResourceType;
 
 import java.util.List;
 
@@ -107,7 +107,7 @@ public class ResourceOperator {
         return tmp;
     }
 
-    public static int extractQuantityOf(resourceType type, List<Resource> list)
+    public static int extractQuantityOf(ResourceType type, List<Resource> list)
     {
         for(Resource res:list)
         {
@@ -116,7 +116,7 @@ public class ResourceOperator {
         return 0;
     }
 
-    public static Resource extractResourceOf(resourceType type, List<Resource> list)
+    public static Resource extractResourceOf(ResourceType type, List<Resource> list)
     {
         for(Resource res:list)
         {
