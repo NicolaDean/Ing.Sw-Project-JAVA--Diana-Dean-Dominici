@@ -1,6 +1,6 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.enumeration.ResourceType;
+import static it.polimi.ingsw.enumeration.ResourceType.*;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
@@ -14,7 +14,7 @@ import it.polimi.ingsw.model.resources.ResourceOperator;
 import java.util.ArrayList;
 import java.util.List;
 
-import static it.polimi.ingsw.enumeration.ResourceType.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
@@ -51,8 +51,9 @@ public class LeadersTest {
 
         cost.add(new Resource(COIN,1));
 
-        LeaderCard l[] = {new LeaderTradeCard(cost,new ArrayList<>(),1,COIN), new LeaderCard(cost,new ArrayList<>(),1, ResourceType.COIN) };
-        Player p=new Player("nick",l);
+        LeaderCard l[] = {new LeaderTradeCard(cost,new ArrayList<>(),1,COIN), new LeaderCard(cost,new ArrayList<>(),1, COIN) };
+        Player p=new Player("nick");
+        p.setLeaders(l);
 
         p.chestInsertion(new Resource(COIN,1));
         //LEADER ACTIVATION

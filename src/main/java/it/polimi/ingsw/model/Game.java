@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.factory.MapFactory;
 import it.polimi.ingsw.model.market.Market;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -17,8 +18,8 @@ public class Game {
     List<CellScore> scorePositions ;
     List<PapalSpace> papalSpaces;
     int currentPapalSpaceToReach;
-    int calamaio;
     int currentPlayer;
+    int nofplayers=0;
 
     public Game()
     {
@@ -27,9 +28,35 @@ public class Game {
         this.leaders         = CardFactory.loadLeaderCardsFromJsonFile();
         this.papalSpaces     = MapFactory.loadPapalSpacesFromJsonFile();
         this.scorePositions  = MapFactory.loadCellScoresFromJsonFile();
-
     }
 
-    //public boolean addPlayer(String nickname)
-    //
+
+
+
+    public void addPlayer(String nickname, LeaderCard[] leaders) throws Exception
+    {
+        if(nofplayers<4) {
+            for (Player p: players) {
+                if(p.getNickname().equals(nickname))
+                    throw new Exception("Nickname already taken, please choose another nickname");
+            }
+            players.add(new Player(nickname));
+            nofplayers++;
+        }
+        else
+            throw new Exception("There are already 4 players");
+    }
+
+    // vengono estratti 4 leader dal controller che poi chiede al player (tramite view) quali due tenere e il nickname che ha scelto,
+    // dopodichè viene chiamata questa funzione per inizializzare il suddetto player
+    public void startGame() throws Exception
+    {
+        if(nofplayers==0)
+            throw new Exception("There are no players");
+        Collections.shuffle(players);
+        players.get(0).setInkwell();
+    }
+
+
+
 }

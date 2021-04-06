@@ -19,12 +19,20 @@ public class Player {
     private int position;
     private int score;
     private List<BonusProduction> bonusProductions;
+    boolean inkwell;
 
 
-    public Player(String nickname,LeaderCard[] drawedCards)
+    public void setInkwell() {
+        this.inkwell = true;
+    }
+
+    public void setLeaders(LeaderCard[] leaders) {
+        this.leaders = leaders;
+    }
+
+    public Player(String nickname)
     {
         this.dashboard = new Dashboard();
-        this.leaders = drawedCards;
         this.dashboard = new Dashboard();
         this.nickname = nickname;
         this.bonusProductions =null;
