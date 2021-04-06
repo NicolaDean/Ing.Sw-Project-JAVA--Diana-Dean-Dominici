@@ -42,4 +42,10 @@ public class Card {
         return out;
     }
 
+    public int getVictoryPoints() {
+        return victoryPoints;
+    }
 }
+
+//if(resourceRequisite && cardRequisite)
+//            p.increaseScore(this.getVictoryPoints());

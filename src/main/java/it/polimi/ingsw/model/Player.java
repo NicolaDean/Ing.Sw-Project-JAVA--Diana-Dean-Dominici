@@ -17,7 +17,7 @@ public class Player {
     private LeaderCard[] leaders;
     private Dashboard dashboard;
     private int position;
-    private int score;
+    private int score = 0;
     private List<BonusProduction> bonusProductions;
     boolean inkwell;
 
@@ -229,6 +229,11 @@ public class Player {
         if(this.bonusProductions == null) this.bonusProductions = new ArrayList<>();
 
         this.bonusProductions.add(bonus);
+    }
+
+    public void increaseScore(int n)
+    {
+        score = score + n;
     }
 
     /**

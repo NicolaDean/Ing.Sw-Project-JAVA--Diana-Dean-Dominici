@@ -114,24 +114,28 @@ public class ProductionCard extends Card {
             p.chestInsertion(this.obtainedMaterials);
         }
 
+
         return out;
     }
 
 
     /**
      *
-     * @param dash the player dashboard
+     * @param p the player that buys the card
      * @param pos positioning of the card inside the dashboard
      * @return true if all goes in the right way
      */
-    public boolean buy(Dashboard dash, int pos)
+    public boolean buy(Player p, int pos)
     {
         //First Buy the card then ask player where chose resource in the controller
-        boolean out = this.checkCost(dash);
+        boolean out = this.checkCost(p.getDashboard());
 
         if(out)
         {
-            dash.setProcuctionCard(this,pos);
+           out = p.getDashboard().setProcuctionCard(this,pos);
+           if (out)
+               p.increaseScore(this.getVictoryPoints());
+
         }
 
         return out;
