@@ -52,7 +52,8 @@ public class LeadersTest {
         cost.add(new Resource(COIN,1));
 
         LeaderCard l[] = {new LeaderTradeCard(cost,new ArrayList<>(),1,COIN), new LeaderCard(cost,new ArrayList<>(),1, resourceType.COIN) };
-        Player p=new Player("nick",l);
+        Player p=new Player("nick");
+        p.setLeaders(l);
 
         p.chestInsertion(new Resource(COIN,1));
         //LEADER ACTIVATION

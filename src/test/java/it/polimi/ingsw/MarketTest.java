@@ -100,7 +100,7 @@ public class MarketTest {
 
         ArrayList<Resource> r = new ArrayList<>();
         LeaderCard l[] = {new LeaderCard(r,new ArrayList<>(),1, resourceType.COIN), new LeaderCard(r,new ArrayList<>(),1, resourceType.COIN) };
-        Player p=new Player("nick",l);
+        Player p=new Player("nick");
         r.add(new Resource(resourceType.SHIELD,3));
         r.add(new Resource(resourceType.COIN,10));
         Market m=new Market();
@@ -137,7 +137,7 @@ public class MarketTest {
 
         ArrayList<Resource> r = new ArrayList<>();
         LeaderCard l[] = {new LeaderCard(r,new ArrayList<>(),1, resourceType.COIN), new LeaderCard(r,new ArrayList<>(),1, resourceType.COIN) };
-        Player p=new Player("nick",l);
+        Player p=new Player("nick");
         r.add(new Resource(resourceType.SHIELD,3));
         r.add(new Resource(resourceType.COIN,10));
 
@@ -172,7 +172,7 @@ public class MarketTest {
     public void activityTestNoWhite(){
         ResourceList r = new ResourceList();
         LeaderCard l[] = {new LeaderCard(r,new ArrayList<>(),1, resourceType.COIN), new LeaderCard(r,new ArrayList<>(),1, resourceType.SERVANT) };
-        Player p=new Player("nick",l);
+        Player p=new Player("nick");
         BasicBall[] b;
         int tmpShield=0,tmpCoin=0,tmpRock=0,tmpSeverant=0,tmpfaith=0;
         Market m=new Market();
