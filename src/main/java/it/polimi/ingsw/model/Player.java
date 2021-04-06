@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 
-import it.polimi.ingsw.enumeration.resourceType;
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProduction;
 import it.polimi.ingsw.model.dashboard.Dashboard;
@@ -37,17 +37,18 @@ public class Player {
         this.nickname = nickname;
         this.bonusProductions =null;
     }
-
-    public Player() {
+    public Player(){
         this.dashboard = new Dashboard();
+        nickname = "Test";
     }
 
     public String getNickname()
     {
         return this.nickname;
     }
+
     /**
-     * increment player position by 1
+     * Increment player position by 1
      */
     public void incrementPosition()
     {
@@ -55,7 +56,7 @@ public class Player {
     }
 
     /**
-     * true if Online
+     * True if Online
      * false if Offline
      * @return
      */
@@ -69,7 +70,7 @@ public class Player {
     }
 
     /**
-     *  adding resourcing
+     *  Adding resourcing
      * @param r resource
      * @param p position
      */
@@ -79,13 +80,6 @@ public class Player {
 
     public Dashboard getDashboard() {
         return this.dashboard;
-    }
-
-    /**
-     * Cominica la fine del turno alla classe game
-     */
-    public void endTurn(){
-        //Notify Game with event
     }
 
     /**
@@ -101,8 +95,7 @@ public class Player {
      * Calculate the score from the Leader Victory Points
      * @return
      */
-    private int getCardsScore()
-    {
+    private int getCardsScore() {
         int vp=0;
         for(LeaderCard Leader : leaders)
         {
@@ -151,7 +144,7 @@ public class Player {
     }
 
     /**
-     *  insert resources in storage
+     * Insert resources in storage
      * @param resource resource to put in storage
      * @param position deposit to select
      */
@@ -161,13 +154,11 @@ public class Player {
     }
 
     /**Remove the resourced payed from the pendingCost and remove resources from storage
-     * apply a cost to the storage
+     * Apply a cost to the storage
      * @param resource resource to pay
      * @param position deposit to select
      */
-    public void payStorageResource(Resource resource,int position)
-    {
-
+    public void payStorageResource(Resource resource,int position) {
         this.dashboard.applyStorageCosts(resource,position);
     }
 
@@ -206,10 +197,28 @@ public class Player {
         this.dashboard.setDiscount( res);
     }
 
-    public void addDepositBonus(resourceType typeBonus)
+    public void addDepositBonus(ResourceType typeBonus)
     {
         this.dashboard.addDepositBonus(typeBonus);
     }
+
+    /**
+     * Choose leader from 4 card
+     * @param l leader card
+     * @param discard1 first leader to discard
+     * @param discard2 second leader to discard
+     */
+    public void chooseLeader(LeaderCard l[],int discard1,int discard2){
+        int pos=0;
+        for(int i=0; i<4; i++)
+            if((i!=discard1)&&(i!=discard2)){
+                leaders[pos]=l[i];
+                pos++;
+            }
+
+    }
+
+
 
     /**
      * Add the bonusProduction interface to the player so that he can activate bonus production
@@ -228,7 +237,7 @@ public class Player {
      * @param resWanted the resource i want to obtain
      * @return true if the production is done false is something dosnt gone well
      */
-    public boolean bonusProduction(int pos, resourceType resWanted)
+    public boolean bonusProduction(int pos, ResourceType resWanted)
     {
         BonusProduction card = this.bonusProductions.get(pos);
         boolean out = card.produce(this,resWanted);
