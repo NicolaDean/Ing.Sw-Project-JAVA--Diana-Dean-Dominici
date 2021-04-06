@@ -36,6 +36,10 @@ public class Game {
     public void addPlayer(String nickname, LeaderCard[] leaders) throws Exception
     {
         if(nofplayers<4) {
+            for (Player p: players) {
+                if(p.getNickname().equals(nickname))
+                    throw new Exception("Nickname already taken, please choose another nickname");
+            }
             players.add(new Player(nickname));
             nofplayers++;
         }
