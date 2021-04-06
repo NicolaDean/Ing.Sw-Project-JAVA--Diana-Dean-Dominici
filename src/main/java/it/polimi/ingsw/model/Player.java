@@ -21,17 +21,18 @@ public class Player {
         this.dashboard = new Dashboard();
         this.nickname = nickname;
     }
-
-    public Player() {
-        this.dashboard = new Dashboard();
+    public Player(){
+        dashboard = new Dashboard();
+        nickname = "Test";
     }
 
     public String getNickname()
     {
         return this.nickname;
     }
+
     /**
-     * increment player position by 1
+     * Increment player position by 1
      */
     public void incrementPosition()
     {
@@ -39,7 +40,7 @@ public class Player {
     }
 
     /**
-     * true if Online
+     * True if Online
      * false if Offline
      * @return
      */
@@ -53,7 +54,7 @@ public class Player {
     }
 
     /**
-     *  adding resourcing
+     *  Adding resourcing
      * @param r resource
      * @param p position
      */
@@ -63,13 +64,6 @@ public class Player {
 
     public Dashboard getDashboard() {
         return this.dashboard;
-    }
-
-    /**
-     * Cominica la fine del turno alla classe game
-     */
-    public void endTurn(){
-        //Notify Game with event
     }
 
     /**
@@ -85,8 +79,7 @@ public class Player {
      * Calculate the score from the Leader Victory Points
      * @return
      */
-    private int getCardsScore()
-    {
+    private int getCardsScore() {
         int vp=0;
         for(LeaderCard Leader : leaders)
         {
@@ -113,8 +106,6 @@ public class Player {
         this.leaders[position] = null;
     }
 
-    public void activateLeader(int position){ }
-
     /**
      *  Add resource to chest
      * @param resource resource to add
@@ -125,7 +116,7 @@ public class Player {
     }
 
     /**
-     *  insert resources in storage
+     * Insert resources in storage
      * @param resource resource to put in storage
      * @param position deposit to select
      */
@@ -135,12 +126,11 @@ public class Player {
     }
 
     /**
-     * apply a cost to the storage
+     * Apply a cost to the storage
      * @param resource resource to pay
      * @param position deposit to select
      */
-    public void payStorageResource(Resource resource,int position)
-    {
+    public void payStorageResource(Resource resource,int position) {
         this.dashboard.applyStorageCosts(resource,position);
     }
 
@@ -167,4 +157,22 @@ public class Player {
     {
         this.dashboard.addDepositBonus(typeBonus);
     }
+
+    /**
+     * Choose leader from 4 card
+     * @param l leader card
+     * @param discard1 first leader to discard
+     * @param discard2 second leader to discard
+     */
+    public void chooseLeader(LeaderCard l[],int discard1,int discard2){
+        int pos=0;
+        for(int i=0; i<4; i++)
+            if((i!=discard1)&&(i!=discard2)){
+                leaders[pos]=l[i];
+                pos++;
+            }
+
+    }
+
+
 }
