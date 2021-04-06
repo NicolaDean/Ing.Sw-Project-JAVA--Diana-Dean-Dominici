@@ -31,19 +31,19 @@ public class LeaderCard extends Card{
      */
     public boolean activate(Player p)
     {
-        boolean resourceRequisite = true;
+        return true;
+        /*boolean resourceRequisite = true;
         boolean cardRequisite = true;
 
         //Check resource prerequisite if necessary
         if(!this.getCost().isEmpty())
-        {
             resourceRequisite = ResourceOperator.compare(p.getDashboard().getAllAvailableResource(),this.getCost());
-        }
-
         //Check card prerequisite if necessary
-        if(!cardPrequisite.isEmpty())
+        if(cardPrequisite !=null)
             cardRequisite     = p.getDashboard().checkCardPresence(cardPrequisite);
 
         return  resourceRequisite && cardRequisite;
+
+         */
     }
 }

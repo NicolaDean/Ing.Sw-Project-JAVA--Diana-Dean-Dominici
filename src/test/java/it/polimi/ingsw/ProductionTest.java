@@ -17,10 +17,10 @@ public class ProductionTest {
     @Test
     public void CheckCost()
     {
-        Dashboard dash = new Dashboard();
+        Player p = new Player();
 
-        dash.chestInsertion(new Resource(COIN,1));
-        dash.chestInsertion(new Resource(ROCK,1));
+        p.getDashboard().chestInsertion(new Resource(COIN,1));
+        p.getDashboard().chestInsertion(new Resource(ROCK,1));
 
         List<Resource> tmp = new ResourceList();
 
@@ -30,19 +30,20 @@ public class ProductionTest {
 
         ProductionCard card = new ProductionCard(tmp,2,1);
 
-        assertFalse(card.checkCost(dash));
+        assertFalse(card.checkCost(p.getDashboard()));
 
-        dash.storageInsertion(new Resource(SHIELD,1),0);
-        assertTrue(card.checkCost(dash));
+        p.getDashboard().storageInsertion(new Resource(SHIELD,1),0);
+        assertTrue(card.checkCost(p.getDashboard()));
     }
 
     @Test
     public void BuyTest()
     {
-        Dashboard dash = new Dashboard();
+        Player p = new Player();
 
-        dash.chestInsertion(new Resource(COIN,2));
-        dash.chestInsertion(new Resource(ROCK,1));
+
+        p.getDashboard().chestInsertion(new Resource(COIN,2));
+        p.getDashboard().chestInsertion(new Resource(ROCK,1));
 
 
         List<Resource> tmp = new ResourceList();
@@ -53,11 +54,11 @@ public class ProductionTest {
 
         ProductionCard card = new ProductionCard(tmp,2,1);
 
-        assertFalse(card.buy(dash,0));
+        assertFalse(card.buy(p,0));
 
 
-        dash.storageInsertion(new Resource(SHIELD,1),0);
-        assertTrue(card.buy(dash,0));
+        p.getDashboard().storageInsertion(new Resource(SHIELD,1),0);
+        assertTrue(card.buy(p,0));
     }
 
     @Test
@@ -94,7 +95,7 @@ public class ProductionTest {
 
         //BUY A CARD
         ProductionCard card = new ProductionCard(cost,raw,obt,2,1);
-        assertTrue(card.buy( p.getDashboard(),0));
+        assertTrue(card.buy( p,0));
 
         //Apllying costs
         p.getDashboard().applyChestCosts(new Resource(COIN,1));

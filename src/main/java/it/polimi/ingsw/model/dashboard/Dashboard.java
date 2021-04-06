@@ -97,6 +97,8 @@ public class Dashboard {
         {
             this.producionCards[pos].add(card);
             this.pendingCost.addAll(card.getCost(this));//Add card cost to the pendingPayment
+
+
         }
         return out;
     }

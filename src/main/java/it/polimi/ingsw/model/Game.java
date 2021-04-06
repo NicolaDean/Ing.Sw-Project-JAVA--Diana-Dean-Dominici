@@ -61,7 +61,7 @@ public class Game {
      * this function changes the turn and so the current player who is supposed to play
      * @return
      */
-    public Player changeTurn()
+    public Player nextTurn()
     {
         if(currentPlayer == nofplayers -1)
             currentPlayer = 0;
