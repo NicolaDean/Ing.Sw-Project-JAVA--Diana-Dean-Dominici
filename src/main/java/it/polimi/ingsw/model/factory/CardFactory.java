@@ -200,15 +200,18 @@ public class CardFactory {
             JsonArray array = parser.parse(new InputStreamReader(is)).getAsJsonArray();
 
             int size = array.size();
-            LeaderCard [] out = new LeaderCard[size];
+            List<LeaderCard> leaders = new ArrayList<>();
 
             for(int i=0;i<size;i++)
             {
                 JsonObject card = array.get(i).getAsJsonObject();
-                out[i] = buildLeaderCardFromJsonObject(card);
+                leaders.add(buildLeaderCardFromJsonObject(card));
             }
 
-            return out;
+            Collections.shuffle(leaders);
+            LeaderCard [] out = new LeaderCard[size];
+
+            return leaders.toArray(out);
         }
 
 

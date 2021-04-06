@@ -1,8 +1,12 @@
 package it.polimi.ingsw;
 
+import static it.polimi.ingsw.enumeration.CardType.YELLOW;
 import static it.polimi.ingsw.enumeration.ResourceType.*;
+
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.LeaderCard;
+import it.polimi.ingsw.model.cards.PrerequisiteCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
 import it.polimi.ingsw.model.dashboard.Dashboard;
@@ -73,6 +77,33 @@ public class LeadersTest {
         assertEquals(ResourceOperator.extractQuantityOf(SERVANT,p.getDashboard().getAllAvailableResource()),0);
         assertEquals(ResourceOperator.extractQuantityOf(SHIELD,p.getDashboard().getAllAvailableResource()),0);
         assertEquals(ResourceOperator.extractQuantityOf(ROCK,p.getDashboard().getAllAvailableResource()),1);
+
+
+
+    }
+
+    @Test
+    public void checkPrerequisite()
+    {
+        Game g = new Game();
+        LeaderCard [] leaders = new LeaderCard[1];
+        List<Resource> cost = new ResourceList();
+
+        cost.add(new Resource(COIN,1));
+
+        List<PrerequisiteCard> cards = new ArrayList<>();
+        cards.add(new PrerequisiteCard(YELLOW,1,1));
+
+        LeaderCard c = new LeaderCard(cost,cards,1,COIN);
+
+        Player p = new Player("nicola");
+        ProductionCard card = new ProductionCard(new ResourceList(),new ResourceList(),new ResourceList(),1,1,1,YELLOW);
+        p.chestInsertion(new Resource(COIN,2));
+        card.buy(p.getDashboard(),1);
+
+
+
+        assertTrue(c.activate(p));
 
 
 
