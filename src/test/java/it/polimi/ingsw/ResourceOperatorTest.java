@@ -1,8 +1,8 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.model.Resource;
-import it.polimi.ingsw.model.ResourceList;
-import it.polimi.ingsw.model.ResourceOperator;
+import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.model.resources.ResourceOperator;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Assertions;
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static it.polimi.ingsw.enumeration.ResourceType.*;
+import static it.polimi.ingsw.enumeration.resourceType.*;
 
 /**
  * This Test check the correct output from the Resource operation like comparison or sum/sub

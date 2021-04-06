@@ -1,13 +1,13 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.model.Resource;
-import it.polimi.ingsw.model.ResourceList;
-import it.polimi.ingsw.model.ResourceOperator;
+import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.model.resources.ResourceOperator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 
-import static it.polimi.ingsw.enumeration.ResourceType.*;
+import static it.polimi.ingsw.enumeration.resourceType.*;
 
 public class ResourceListTest {
 
@@ -35,5 +35,18 @@ public class ResourceListTest {
         tmp.remove(new Resource(COIN,1));
 
         assertTrue(ResourceOperator.extractQuantityOf(COIN,tmp) == 1);
+    }
+
+    @Test
+
+    public void isEmptyTest()
+    {
+        List<Resource> tmp = new ResourceList();
+
+        assertTrue(tmp.isEmpty());
+
+        tmp.add(new Resource(COIN,1));
+
+        assertFalse(tmp.isEmpty());
     }
 }

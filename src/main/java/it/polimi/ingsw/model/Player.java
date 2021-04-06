@@ -1,8 +1,14 @@
 package it.polimi.ingsw.model;
 
 
-import it.polimi.ingsw.enumeration.ResourceType;
-import org.jetbrains.annotations.NotNull;
+import it.polimi.ingsw.enumeration.resourceType;
+import it.polimi.ingsw.model.cards.LeaderCard;
+import it.polimi.ingsw.model.cards.leaders.BonusProduction;
+import it.polimi.ingsw.model.dashboard.Dashboard;
+import it.polimi.ingsw.model.resources.Resource;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
 
@@ -10,19 +16,21 @@ public class Player {
     private boolean connectionState;
     private LeaderCard[] leaders;
     private Dashboard dashboard;
-    private ResourceList pendingCost;
     private int position;
     private int score;
-
+    private List<BonusProduction> bonusProductions;
 
 
     public Player(String nickname,LeaderCard[] drawedCards)
     {
         this.dashboard = new Dashboard();
+        this.leaders = drawedCards;
+        this.dashboard = new Dashboard();
         this.nickname = nickname;
+        this.bonusProductions =null;
     }
     public Player(){
-        dashboard = new Dashboard();
+        this.dashboard = new Dashboard();
         nickname = "Test";
     }
 
@@ -58,7 +66,7 @@ public class Player {
      * @param r resource
      * @param p position
      */
-    public void addResource(@NotNull Resource r, int p){
+    public void addResource(Resource r, int p){
         dashboard.storageInsertion(new Resource(r.getType(),r.getQuantity()),p);
     }
 
@@ -106,11 +114,23 @@ public class Player {
         this.leaders[position] = null;
     }
 
+    public boolean activateLeader(int position){
+        return this.leaders[position].activate(this);
+    }
+
     /**
      *  Add resource to chest
      * @param resource resource to add
      */
     public void chestInsertion(Resource resource)
+    {
+        this.dashboard.chestInsertion(resource);
+    }
+    /**
+     *  Add resource to chest
+     * @param resource resource to add
+     */
+    public void chestInsertion(List<Resource> resource)
     {
         this.dashboard.chestInsertion(resource);
     }
@@ -125,7 +145,7 @@ public class Player {
         this.dashboard.storageInsertion(resource,position);
     }
 
-    /**
+    /**Remove the resourced payed from the pendingCost and remove resources from storage
      * Apply a cost to the storage
      * @param resource resource to pay
      * @param position deposit to select
@@ -135,7 +155,7 @@ public class Player {
     }
 
     /**
-     *
+     * Remove the resourced payed from the pendingCost and remove resources from chest
      * @param resource resource to pay
      */
     public void payChestResource(Resource resource)
@@ -143,7 +163,23 @@ public class Player {
         this.dashboard.applyChestCosts(resource);
     }
 
+    /**
+     * Remove a list of resources from the chest ( and remove them also from pendingCost)
+     * @param resource
+     */
+    public void payChestResource(List<Resource> resource)
+    {
+        this.dashboard.applyChestCosts(resource);
+    }
 
+    /**
+     * get the debits of this player
+     * @return the list of resources this player need to pay (for a production or a buyed card)
+     */
+    public List<Resource> getPendingCost()
+    {
+        return this.dashboard.getPendingCost();
+    }
     /**
      *
      * @param res Add a permanent discount to the player Dashboard
@@ -175,4 +211,32 @@ public class Player {
     }
 
 
+
+    /**
+     * Add the bonusProduction interface to the player so that he can activate bonus production
+     * @param bonus the activated  Leader Card
+     */
+    public void addTradeBonus(BonusProduction bonus)
+    {
+        if(this.bonusProductions == null) this.bonusProductions = new ArrayList<>();
+
+        this.bonusProductions.add(bonus);
+    }
+
+    /**
+     * produce something through the bonus production interface
+     * @param pos the leader card to use (if thers more then 1)
+     * @param resWanted the resource i want to obtain
+     * @return true if the production is done false is something dosnt gone well
+     */
+    public boolean bonusProduction(int pos, resourceType resWanted)
+    {
+        BonusProduction card = this.bonusProductions.get(pos);
+        boolean out = card.produce(this,resWanted);
+        if(out)
+        {
+            this.dashboard.setPendingCost(card.getProdCost()); //if goes well add the cost to the pending cost
+        }
+        return out;
+    }
 }

@@ -1,17 +1,16 @@
 package it.polimi.ingsw;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Assertions;
 
-import it.polimi.ingsw.model.Card;
-import it.polimi.ingsw.model.Dashboard;
-import it.polimi.ingsw.model.Resource;
+import it.polimi.ingsw.model.cards.Card;
+import it.polimi.ingsw.model.dashboard.Dashboard;
+import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static it.polimi.ingsw.enumeration.ResourceType.COIN;
-import static it.polimi.ingsw.enumeration.ResourceType.SERVANT;
+import static it.polimi.ingsw.enumeration.resourceType.COIN;
+import static it.polimi.ingsw.enumeration.resourceType.SERVANT;
 
 public class CardTest {
 

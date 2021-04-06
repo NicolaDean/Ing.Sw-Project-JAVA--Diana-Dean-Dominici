@@ -1,10 +1,15 @@
 package it.polimi.ingsw;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.dashboard.Dashboard;
+import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.model.resources.ResourceOperator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static it.polimi.ingsw.enumeration.ResourceType.*;
+import static it.polimi.ingsw.enumeration.resourceType.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ProductionTest {
@@ -56,16 +61,16 @@ public class ProductionTest {
     }
 
     @Test
-    public void ActivateTest()
+    public void ProductionTest()
     {
-        Dashboard dash = new Dashboard();
+        Player p = new Player();
 
-        dash.chestInsertion(new Resource(COIN,1));
-        dash.chestInsertion(new Resource(ROCK,3));
-        dash.storageInsertion(new Resource(SHIELD,1),0);
+        p.getDashboard().chestInsertion(new Resource(COIN,1));
+        p.getDashboard().chestInsertion(new Resource(ROCK,3));
+        p.getDashboard().storageInsertion(new Resource(SHIELD,1),0);
 
         List<Resource> check = new ResourceList();
-        check = dash.getAllAvailableResource();
+        check =  p.getDashboard().getAllAvailableResource();
 
         //Check RESOURCE INSERTION
         assertTrue(ResourceOperator.extractQuantityOf(ROCK,check) == 3);
@@ -89,15 +94,15 @@ public class ProductionTest {
 
         //BUY A CARD
         ProductionCard card = new ProductionCard(cost,raw,obt,2,1);
-        assertTrue(card.buy(dash,0));
+        assertTrue(card.buy( p.getDashboard(),0));
 
         //Apllying costs
-        dash.applyChestCosts(new Resource(COIN,1));
-        dash.applyChestCosts(new Resource(ROCK,1));
-        dash.applyStorageCosts(new Resource(SHIELD,1),0);
+        p.getDashboard().applyChestCosts(new Resource(COIN,1));
+        p.getDashboard().applyChestCosts(new Resource(ROCK,1));
+        p.getDashboard().applyStorageCosts(new Resource(SHIELD,1),0);
 
 
-        check  = dash.getAllAvailableResource();
+        check  =  p.getDashboard().getAllAvailableResource();
         //Check Application of costs
         assertTrue(ResourceOperator.extractQuantityOf(ROCK,check) == 2);
         assertTrue(ResourceOperator.extractQuantityOf(COIN,check) == 0);
@@ -106,17 +111,17 @@ public class ProductionTest {
 
         //Sorage Refill
 
-        dash.storageInsertion(new Resource(COIN,2),1);
+        p.getDashboard().storageInsertion(new Resource(COIN,2),1);
 
         //Production
-        dash.production(0);
+        p.getDashboard().production(p,0);
 
         //Cost Application
 
-        dash.applyStorageCosts(new Resource(COIN,2),1);
+        p.getDashboard().applyStorageCosts(new Resource(COIN,2),1);
 
         //Check Application of costs
-        check  = dash.getAllAvailableResource();
+        check  =  p.getDashboard().getAllAvailableResource();
 
 
         //Check Cost apply and resource adding
