@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.factory;
 
 import com.google.gson.*;
 import it.polimi.ingsw.enumeration.CardType;
-import it.polimi.ingsw.enumeration.resourceType;
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.PrerequisiteCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
@@ -126,7 +126,7 @@ public class CardFactory {
         {
             JsonObject res = o.getAsJsonObject();
 
-            resourceType t = resourceType.valueOf(res.get("type").getAsString());
+            ResourceType t = ResourceType.valueOf(res.get("type").getAsString());
             int qty = res.get("quantity").getAsInt();
 
             list.add(new Resource(t,qty));
@@ -163,7 +163,7 @@ public class CardFactory {
      * @return a new leader
      */
     public static LeaderCard buildLeaderCardFromJsonObject(JsonObject card) {
-        resourceType type = resourceType.valueOf(card.get("resourceType").getAsString());
+        ResourceType type = ResourceType.valueOf(card.get("resourceType").getAsString());
         int victoryPoint = card.get("victoryPoints").getAsInt();
         List<PrerequisiteCard> requirmentCard = buildPrerequisiteCardListFromJsonArray(card.get("requirementsCard").getAsJsonArray());
         List<Resource> requirment = buildResourceListFromJsonArray(card.get("requirementsResource").getAsJsonArray());

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static it.polimi.ingsw.enumeration.resourceType.*;
+import static it.polimi.ingsw.enumeration.ResourceType.*;
 
 /**
  * This Test check the correct output from the Resource operation like comparison or sum/sub

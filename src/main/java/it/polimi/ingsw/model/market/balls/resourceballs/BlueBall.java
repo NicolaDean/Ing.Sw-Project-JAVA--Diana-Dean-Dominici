@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.resources.Resource;
 
 import java.awt.*;
 
-import static it.polimi.ingsw.enumeration.resourceType.SHIELD;
+import static it.polimi.ingsw.enumeration.ResourceType.SHIELD;
 
 public class BlueBall extends ResourceBall {
 

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.cards.leaders;
 
-import it.polimi.ingsw.enumeration.resourceType;
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.PrerequisiteCard;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DepositBonus extends LeaderCard {
 
-    public DepositBonus(List<Resource> cost, List<PrerequisiteCard> cardPrequisite, int victoryPoints, resourceType resourcetype) {
+    public DepositBonus(List<Resource> cost, List<PrerequisiteCard> cardPrequisite, int victoryPoints, ResourceType resourcetype) {
         super(cost,cardPrequisite, victoryPoints, resourcetype);
     }
 
