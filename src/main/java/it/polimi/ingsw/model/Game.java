@@ -30,9 +30,6 @@ public class Game {
         this.scorePositions  = MapFactory.loadCellScoresFromJsonFile();
     }
 
-
-
-
     public void addPlayer(String nickname, LeaderCard[] leaders) throws Exception
     {
         if(nofplayers<4) {
@@ -47,16 +44,30 @@ public class Game {
             throw new Exception("There are already 4 players");
     }
 
-    // vengono estratti 4 leader dal controller che poi chiede al player (tramite view) quali due tenere e il nickname che ha scelto,
-    // dopodichè viene chiamata questa funzione per inizializzare il suddetto player
+    /**
+     * this method starts the game by shuffling the players and setting the currentPlayer (the one with the Inkwell)
+     * @throws Exception if the are no players to start the game
+     */
     public void startGame() throws Exception
     {
         if(nofplayers==0)
             throw new Exception("There are no players");
         Collections.shuffle(players);
         players.get(0).setInkwell();
+        currentPlayer = 0;
     }
 
-
+    /**
+     * this function changes the turn and so the current player who is supposed to play
+     * @return
+     */
+    public Player changeTurn()
+    {
+        if(currentPlayer == nofplayers -1)
+            currentPlayer = 0;
+        else
+            currentPlayer++;
+        return players.get(currentPlayer);
+    }
 
 }
