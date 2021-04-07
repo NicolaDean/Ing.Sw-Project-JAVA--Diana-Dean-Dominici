@@ -17,7 +17,19 @@ public class PapalSpace {
         this.score = score;
     }
 
-    public boolean checkPlayerPositions(Player p)
+    public boolean checkPlayerInsidePapalSpace(Player p)
+    {
+        if(p.getPosition() >= this.initialPosition)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public boolean checkPlayerSurpassPapalSpace(Player p)
     {
         if(p.getPosition() >= this.finalPosition)
         {
@@ -38,12 +50,30 @@ public class PapalSpace {
         //Modifica i player a seconda dlela loro pos
         for(Player p:players)
         {
-            if(this.checkPlayerPositions(p))
+            if(this.checkPlayerSurpassPapalSpace(p))
             {
-                //Incrementa punteggio
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean checkPapalSpaceActivation(List<Player> players)
+    {
+        boolean out = checkPlayersPositions(players);
+
+        if(out)
+        {
+            for(Player p:players)
+            {
+                if(this.checkPlayerInsidePapalSpace(p))
+                {
+                    p.increaseScore(this.score);
+                }
+            }
+        }
+
+        return out;
+
     }
 }

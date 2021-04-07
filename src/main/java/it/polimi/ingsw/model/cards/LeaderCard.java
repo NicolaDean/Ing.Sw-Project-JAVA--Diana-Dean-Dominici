@@ -41,8 +41,10 @@ public class LeaderCard extends Card{
         if(cardPrequisite !=null)
             cardRequisite     = p.getDashboard().checkCardPresence(cardPrequisite);
 
+        boolean out = resourceRequisite && cardRequisite;
+        if(out)
+            p.increaseScore(this.getVictoryPoints());
+
         return  resourceRequisite && cardRequisite;
-
-
     }
 }

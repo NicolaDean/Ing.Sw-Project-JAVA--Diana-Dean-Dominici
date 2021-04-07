@@ -56,6 +56,14 @@ public class Player {
     }
 
     /**
+     * Increment position by the number in input
+     * @param numberOfCell cell to increse
+     */
+    public void incrementPosition(int numberOfCell)
+    {
+        this.position+=numberOfCell;
+    }
+    /**
      * True if Online
      * false if Offline
      * @return

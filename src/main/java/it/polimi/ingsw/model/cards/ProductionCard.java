@@ -110,7 +110,7 @@ public class ProductionCard extends Card {
         //if true add obtained resources to the chest
         if(out)
         {
-            if(this.obtainedFaith == 1)p.incrementPosition();
+            p.incrementPosition(this.obtainedFaith);
             p.chestInsertion(this.obtainedMaterials);
         }
 

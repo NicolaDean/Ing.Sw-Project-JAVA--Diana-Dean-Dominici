@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.factory.MapFactory;
 import it.polimi.ingsw.model.market.Market;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
@@ -28,6 +29,9 @@ public class Game {
         this.leaders         = CardFactory.loadLeaderCardsFromJsonFile();
         this.papalSpaces     = MapFactory.loadPapalSpacesFromJsonFile();
         this.scorePositions  = MapFactory.loadCellScoresFromJsonFile();
+
+        this.players = new ArrayList<>();
+        this.currentPapalSpaceToReach = 0;
     }
 
     public void addPlayer(String nickname, LeaderCard[] leaders) throws Exception
@@ -67,6 +71,16 @@ public class Game {
             currentPlayer = 0;
         else
             currentPlayer++;
+
+        if(this.currentPapalSpaceToReach < this.papalSpaces.size())
+        {
+            //Check if someone surpass a papal space and in case add the score of papalToken to the players
+            boolean out = this.papalSpaces.get(this.currentPapalSpaceToReach).checkPapalSpaceActivation(this.players);
+            if(out){
+                this.currentPapalSpaceToReach++;
+            }
+        }
+
         return players.get(currentPlayer);
     }
 
