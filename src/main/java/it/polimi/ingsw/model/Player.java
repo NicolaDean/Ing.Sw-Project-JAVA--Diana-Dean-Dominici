@@ -22,7 +22,24 @@ public class Player {
     private boolean inkwell;
     private int pendingWhiteBall;
     private ArrayList<BasicBall> bonusball;
+    private boolean[] surpassedcells;
 
+    public boolean[] getSurpassedcells() {
+        return surpassedcells;
+    }
+
+    public Player(String nickname, int nofcells)
+    {
+        surpassedcells = new boolean[nofcells];
+        for (boolean a:surpassedcells) {
+            a=false;
+        }
+        this.dashboard = new Dashboard();
+        this.dashboard = new Dashboard();
+        this.nickname = nickname;
+        this.bonusProductions =null;
+        bonusball = new ArrayList<>();
+    }
 
 
     public Player(String nickname)
@@ -279,6 +296,10 @@ public class Player {
     public void increaseScore(int n)
     {
         score = score + n;
+    }
+    public void decreaseScore(int n)
+    {
+        score = score - n;
     }
 
     /**

@@ -15,6 +15,10 @@ public class CellScore {
         return pos >= this.position;
     }
 
+    public int getPosition() {
+        return position;
+    }
+
     public int getScore() {
         return score;
     }

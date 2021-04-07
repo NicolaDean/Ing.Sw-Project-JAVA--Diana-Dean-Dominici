@@ -43,7 +43,7 @@ public class Game {
                 if(p.getNickname().equals(nickname))
                     throw new Exception("Nickname already taken, please choose another nickname");
             }
-            players.add(new Player(nickname));
+            players.add(new Player(nickname, scorePositions.size()));
             nofplayers++;
         }
         else
@@ -98,6 +98,30 @@ public class Game {
             boolean out = this.papalSpaces.get(this.currentPapalSpaceToReach).checkPapalSpaceActivation(this.players);
             if(out){
                 this.currentPapalSpaceToReach++;
+            }
+
+            //check for each player if they surpassed a new scoreposition, in that case the player score is increased accordingly
+            for (Player p:players) {
+
+                int position = p.getPosition();
+                int i = -1;
+                for (CellScore cell:scorePositions) {
+                    if (position >= cell.getPosition()) {
+                        i++;
+                    }
+                }
+
+                if(i!=-1 && !p.getSurpassedcells()[i])
+                {
+                    p.getSurpassedcells()[i]=true;
+                    p.increaseScore(scorePositions.get(i).getScore());
+                    if(i>0)
+                        p.decreaseScore(scorePositions.get(i-1).getScore());
+                }
+
+
+
+
             }
         }
 
