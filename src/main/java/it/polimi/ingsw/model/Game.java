@@ -84,7 +84,7 @@ public class Game {
 
     /**
      * this function changes the turn and so the current player who is supposed to play
-     * @return
+     * @return the new player that is supposed to play
      */
     public Player nextTurn()
     {
@@ -101,27 +101,27 @@ public class Game {
                 this.currentPapalSpaceToReach++;
             }
 
-            //check for each player if they surpassed a new scoreposition, in that case the player score is increased accordingly
-            for (Player p:players) {
+        }
 
-                int position = p.getPosition();
-                int i = -1;
-                for (CellScore cell:scorePositions) {
-                    if (position >= cell.getPosition()) {
-                        i++;
-                    }
+        //check for each player if they surpassed a new scoreposition, in that case the player score is increased accordingly
+        for (Player p:players) {
+
+            int position = p.getPosition();
+            int i = -1;
+            for (CellScore cell:scorePositions) {
+                if (position >= cell.getPosition()) {
+                    i++;
                 }
+            }
 
-                if(i!=-1 && !p.getSurpassedcells()[i])
-                {
-                    p.getSurpassedcells()[i]=true;
-                    p.increaseScore(scorePositions.get(i).getScore());
+            if(i!=-1 && !p.getSurpassedcells()[i])
+            {
+                p.getSurpassedcells()[i]=true;
+                p.increaseScore(scorePositions.get(i).getScore());
 
-                    if(i>0)
-                        p.decreaseScore(p.getLastadded());
-                    p.setLastadded(scorePositions.get(i).getScore());
-                }
-
+                if(i>0)
+                    p.decreaseScore(p.getLastadded());
+                p.setLastadded(scorePositions.get(i).getScore());
             }
         }
 
