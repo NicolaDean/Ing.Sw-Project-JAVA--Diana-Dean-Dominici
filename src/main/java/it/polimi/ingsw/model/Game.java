@@ -23,6 +23,7 @@ public class Game {
     int currentPapalSpaceToReach;
     int currentPlayer;
     int nofplayers=0;
+    private int leaderCount=0;
 
     public Game()
     {
@@ -128,5 +129,20 @@ public class Game {
         return players.get(currentPlayer);
     }
 
+    /**
+     * gets 4 leaders from the leader deck
+     * @return an array of 4 leaders
+     */
+    public LeaderCard[] get4leaders()
+    {
+        LeaderCard[] lead = new  LeaderCard[4];
+        for(int i=0; i<4; i++)
+        {
+            lead[i] = leaders[leaderCount];
+            leaders[leaderCount]=null;
+            leaderCount++;
+        }
+        return lead;
+    }
 
 }
