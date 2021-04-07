@@ -1,10 +1,12 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.factory.CardFactory;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.factory.MapFactory;
 import it.polimi.ingsw.model.market.Market;
+import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,6 +61,24 @@ public class Game {
         Collections.shuffle(players);
         players.get(0).setInkwell();
         currentPlayer = 0;
+    }
+
+
+    /**
+     * Discard resource of a player and increment other position
+     * @param p player that want to discard
+     * @param res resource to discard
+     * @param pos deposit pos
+     * @throws Exception wrong deposit
+     */
+    public void discardResource(Player p, Resource res,int pos) throws Exception {
+        p.getDashboard().getStorage().safeSubtraction(res,pos);
+
+        for(Player x:this.players)
+        {
+            if(x.getNickname() != p.getNickname())
+                x.incrementPosition(res.getQuantity());
+        }
     }
 
     /**
