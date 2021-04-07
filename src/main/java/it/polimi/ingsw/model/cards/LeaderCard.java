@@ -31,8 +31,7 @@ public class LeaderCard extends Card{
      */
     public boolean activate(Player p)
     {
-        return true;
-        /*boolean resourceRequisite = true;
+        boolean resourceRequisite = true;
         boolean cardRequisite = true;
 
         //Check resource prerequisite if necessary
@@ -44,6 +43,6 @@ public class LeaderCard extends Card{
 
         return  resourceRequisite && cardRequisite;
 
-         */
+
     }
 }

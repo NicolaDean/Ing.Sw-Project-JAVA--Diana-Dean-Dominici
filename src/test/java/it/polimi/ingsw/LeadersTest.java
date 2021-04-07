@@ -99,7 +99,7 @@ public class LeadersTest {
         Player p = new Player("nicola");
         ProductionCard card = new ProductionCard(new ResourceList(),new ResourceList(),new ResourceList(),1,1,1,YELLOW);
         p.chestInsertion(new Resource(COIN,2));
-        card.buy(p.getDashboard(),1);
+        card.buy(p,1);
 
 
 
