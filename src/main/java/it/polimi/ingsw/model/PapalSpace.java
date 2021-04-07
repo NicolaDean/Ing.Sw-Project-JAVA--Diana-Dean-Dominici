@@ -17,9 +17,63 @@ public class PapalSpace {
         this.score = score;
     }
 
-    public void CheckPlayerPositions(List<Player> Player)
+    public boolean checkPlayerInsidePapalSpace(Player p)
     {
-        //Poi riceverà List<observer> invece che player
-        //Player.notifyPlayer();
+        if(p.getPosition() >= this.initialPosition)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public boolean checkPlayerSurpassPapalSpace(Player p)
+    {
+        if(p.getPosition() >= this.finalPosition)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    /**
+     *
+     * @param players the list of players
+     * @return true if some player reach this papalSpace
+     */
+    public boolean checkPlayersPositions(List<Player> players)
+    {
+        //Modifica i player a seconda dlela loro pos
+        for(Player p:players)
+        {
+            if(this.checkPlayerSurpassPapalSpace(p))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkPapalSpaceActivation(List<Player> players)
+    {
+        boolean out = checkPlayersPositions(players);
+
+        if(out)
+        {
+            for(Player p:players)
+            {
+                if(this.checkPlayerInsidePapalSpace(p))
+                {
+                    p.increaseScore(this.score);
+                }
+            }
+        }
+
+        return out;
+
     }
 }

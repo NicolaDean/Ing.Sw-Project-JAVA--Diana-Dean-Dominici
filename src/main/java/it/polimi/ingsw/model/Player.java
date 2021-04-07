@@ -18,7 +18,7 @@ public class Player {
     private LeaderCard[] leaders;
     private Dashboard dashboard;
     private int position;
-    private int score;
+    private int score = 0;
     private List<BonusProduction> bonusProductions;
     private boolean inkwell;
     private int pendingWhiteBall;
@@ -95,6 +95,14 @@ public class Player {
         this.position++;
     }
 
+    /**
+     * Increment position by the number in input
+     * @param numberOfCell cell to increse
+     */
+    public void incrementPosition(int numberOfCell)
+    {
+        this.position+=numberOfCell;
+    }
     /**
      * True if Online
      * false if Offline
@@ -267,6 +275,11 @@ public class Player {
         if(this.bonusProductions == null) this.bonusProductions = new ArrayList<>();
 
         this.bonusProductions.add(bonus);
+    }
+
+    public void increaseScore(int n)
+    {
+        score = score + n;
     }
 
     /**

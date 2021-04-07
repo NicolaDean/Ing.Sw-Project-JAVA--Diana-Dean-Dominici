@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.cards;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceOperator;
 
 import java.util.List;
 
@@ -30,8 +31,7 @@ public class LeaderCard extends Card{
      */
     public boolean activate(Player p)
     {
-        return true;
-        /*boolean resourceRequisite = true;
+        boolean resourceRequisite = true;
         boolean cardRequisite = true;
 
         //Check resource prerequisite if necessary
@@ -41,6 +41,10 @@ public class LeaderCard extends Card{
         if(cardPrequisite !=null)
             cardRequisite     = p.getDashboard().checkCardPresence(cardPrequisite);
 
-        return  resourceRequisite && cardRequisite;*/
+        boolean out = resourceRequisite && cardRequisite;
+        if(out)
+            p.increaseScore(this.getVictoryPoints());
+
+        return  resourceRequisite && cardRequisite;
     }
 }

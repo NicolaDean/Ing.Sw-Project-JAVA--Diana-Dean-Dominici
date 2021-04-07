@@ -97,6 +97,8 @@ public class Dashboard {
         {
             this.producionCards[pos].add(card);
             this.pendingCost.addAll(card.getCost(this));//Add card cost to the pendingPayment
+
+
         }
         return out;
     }
@@ -272,21 +274,24 @@ public class Dashboard {
      */
     public boolean checkCardPresence(List<PrerequisiteCard> requirements)
     {
-        //foreach stack and foreach card in it check if it match the prerequisite (if true return true)
-        for(Stack<ProductionCard> s:this.producionCards)
+        //For each prerequisite
+        for(PrerequisiteCard requirement:requirements)
         {
-            //For each prerequisite
-            for(PrerequisiteCard requirement:requirements)
+            int quantity = 0;
+            //foreach stack and foreach card in it check if it match the prerequisite (if true return true)
+            for(Stack<ProductionCard> s:this.producionCards)
             {
-                int quantity = 0;
+
+
                 //For each card of the stack
                 for(ProductionCard card:s)
                 {
                     //Check matching
                     if(card.compareType(requirement)) quantity++;
                 }
-                if(quantity < requirement.getQuantity()) return false;
+
             }
+            if(quantity < requirement.getQuantity()) return false;
         }
         return true;
     }
