@@ -6,15 +6,18 @@ import it.polimi.ingsw.model.Player;
 import java.awt.*;
 
 public class WhiteBall extends BasicBall{
+
     /**
      * active ability
-     * @param P: player that get red ball
+     * @param p: player that get red ball
      */
     @Override
-    public void active(Player P)
-    {
-        //attiva abilità leader
-
+    public void active(Player p,int pos) {
+        int size= p.getBonusball().size();
+        if(size<=1)
+            p.getBonusball().get(0).active(p,pos);
+        if(size==2)
+            p.incrementPendingWhiteBall();
     }
 
     /**
@@ -25,6 +28,7 @@ public class WhiteBall extends BasicBall{
     public Color getColor() {
         return Color.white;
     }
+
 }
 
 
