@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model;
 
-
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProduction;
 import it.polimi.ingsw.model.dashboard.Dashboard;
+import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.ArrayList;
@@ -19,8 +19,29 @@ public class Player {
     private int position;
     private int score = 0;
     private List<BonusProduction> bonusProductions;
-    boolean inkwell;
+    private boolean inkwell;
+    private int pendingWhiteBall;
+    private ArrayList<BasicBall> bonusball;
 
+
+
+    public Player(String nickname)
+    {
+        this.dashboard = new Dashboard();
+        this.dashboard = new Dashboard();
+        this.nickname = nickname;
+        this.bonusProductions =null;
+        bonusball = new ArrayList<>();
+    }
+
+    public Player(){
+        this.dashboard = new Dashboard();
+        nickname = "Test";
+    }
+
+    public ArrayList<BasicBall> getBonusball() {
+        return bonusball;
+    }
 
     public void setInkwell() {
         this.inkwell = true;
@@ -30,21 +51,39 @@ public class Player {
         this.leaders = leaders;
     }
 
-    public Player(String nickname)
-    {
-        this.dashboard = new Dashboard();
-        this.dashboard = new Dashboard();
-        this.nickname = nickname;
-        this.bonusProductions =null;
-    }
-    public Player(){
-        this.dashboard = new Dashboard();
-        nickname = "Test";
-    }
-
     public String getNickname()
     {
         return this.nickname;
+    }
+
+    public Dashboard getDashboard() {
+        return this.dashboard;
+    }
+
+    public int getPosition() {
+        return this.position;
+    }
+
+    /**
+     * Add Basic ball
+     * @param b ball to adding
+     */
+    public void addBonusball(BasicBall b){
+        bonusball.add(b);
+    }
+
+    /**
+     * Increment pendingWhiteBall
+     */
+    public void incrementPendingWhiteBall(){
+        pendingWhiteBall++;
+    }
+
+    /**
+     * set pendingwhiteBall = 0
+     */
+    public void solvePendingWhiteBall(){
+        pendingWhiteBall=0;
     }
 
     /**
@@ -73,10 +112,6 @@ public class Player {
         return this.connectionState;
     }
 
-    public int getPosition() {
-        return this.position;
-    }
-
     /**
      *  Adding resourcing
      * @param r resource
@@ -84,10 +119,6 @@ public class Player {
      */
     public void addResource(Resource r, int p){
         dashboard.storageInsertion(new Resource(r.getType(),r.getQuantity()),p);
-    }
-
-    public Dashboard getDashboard() {
-        return this.dashboard;
     }
 
     /**
@@ -130,6 +161,12 @@ public class Player {
         this.leaders[position] = null;
     }
 
+
+    /**
+     * Activate leader
+     * @param position position leader
+     * @return true if it's active
+     */
     public boolean activateLeader(int position){
         return this.leaders[position].activate(this);
     }
