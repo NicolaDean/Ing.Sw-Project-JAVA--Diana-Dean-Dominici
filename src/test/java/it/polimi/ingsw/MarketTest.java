@@ -338,6 +338,7 @@ public class MarketTest {
      */
     @Test
     public void activityTest(){
+        //activity test
         Player p=new Player("nick");
         LeaderCard l[]= new LeaderCard[]{
                 new LeaderWhiteCard(new ResourceList(), new ArrayList<PrerequisiteCard>() , 2, COIN),
