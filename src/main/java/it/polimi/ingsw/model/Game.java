@@ -40,7 +40,6 @@ public class Game {
     /**
      * function to add a new player to the game
      * @param nickname the nickname of the player
-     * @param leaders the 2 leader cards that the player choose
      * @throws Exception
      */
     public void addPlayer(String nickname) throws Exception
