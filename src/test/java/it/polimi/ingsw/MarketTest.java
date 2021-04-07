@@ -340,8 +340,8 @@ public class MarketTest {
     public void activityTest(){
         Player p=new Player("nick");
         LeaderCard l[]= new LeaderCard[]{
-                new LeaderWhiteCard(new ResourceList(), new ResourceList() , 2, COIN),
-                new LeaderWhiteCard(new ResourceList(),  new ResourceList() , 2, SHIELD)};
+                new LeaderWhiteCard(new ResourceList(), new ArrayList<PrerequisiteCard>() , 2, COIN),
+                new LeaderWhiteCard(new ResourceList(), new ArrayList<PrerequisiteCard>() , 2, SHIELD)};
         p.setLeaders(l);
         p.activateLeader(1);
         BasicBall[] b;

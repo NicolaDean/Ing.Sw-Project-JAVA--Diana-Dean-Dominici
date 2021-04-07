@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProduction;
