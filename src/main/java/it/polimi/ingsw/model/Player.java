@@ -23,7 +23,15 @@ public class Player {
     private int pendingWhiteBall;
     private ArrayList<BasicBall> bonusball;
     private boolean[] surpassedcells;
-    int lastadded = 0;
+    private int lastadded = 0;
+
+    public void setLastadded(int lastadded) {
+        this.lastadded = lastadded;
+    }
+
+    public int getLastadded() {
+        return lastadded;
+    }
 
     public boolean[] getSurpassedcells() {
         return surpassedcells;

@@ -118,8 +118,8 @@ public class Game {
                     p.increaseScore(scorePositions.get(i).getScore());
 
                     if(i>0)
-                        p.decreaseScore(p.lastadded);
-                    p.lastadded= scorePositions.get(i).getScore();
+                        p.decreaseScore(p.getLastadded());
+                    p.setLastadded(scorePositions.get(i).getScore());
                 }
 
             }
