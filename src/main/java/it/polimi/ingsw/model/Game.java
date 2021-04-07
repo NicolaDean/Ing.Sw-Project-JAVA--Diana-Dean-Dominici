@@ -54,13 +54,14 @@ public class Game {
      * this method starts the game by shuffling the players and setting the currentPlayer (the one with the Inkwell)
      * @throws Exception if the are no players to start the game
      */
-    public void startGame() throws Exception
+    public Player startGame() throws Exception
     {
         if(nofplayers==0)
             throw new Exception("There are no players");
         Collections.shuffle(players);
         players.get(0).setInkwell();
         currentPlayer = 0;
+        return players.get(currentPlayer);
     }
 
 
