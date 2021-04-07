@@ -26,10 +26,10 @@ public class GameTest {
 
         Game game = new Game();
 
-        game.addPlayer("nicola",new LeaderCard[0]);
-        game.addPlayer("federico",new LeaderCard[0]);
-        game.addPlayer("riccardo",new LeaderCard[0]);
-        game.addPlayer("eliot",new LeaderCard[0]);
+        game.addPlayer("nicola");
+        game.addPlayer("federico");
+        game.addPlayer("riccardo");
+        game.addPlayer("eliot");
 
         game.startGame();
 

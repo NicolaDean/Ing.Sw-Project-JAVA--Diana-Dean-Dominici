@@ -37,7 +37,13 @@ public class Game {
         this.currentPapalSpaceToReach = 0;
     }
 
-    public void addPlayer(String nickname, LeaderCard[] leaders) throws Exception
+    /**
+     * function to add a new player to the game
+     * @param nickname the nickname of the player
+     * @param leaders the 2 leader cards that the player choose
+     * @throws Exception
+     */
+    public void addPlayer(String nickname) throws Exception
     {
         if(nofplayers<4) {
             for (Player p: players) {
@@ -49,6 +55,16 @@ public class Game {
         }
         else
             throw new Exception("There are already 4 players");
+    }
+
+    /**
+     * method to set the leader cards of the player
+     * @param p
+     * @param l
+     */
+    public void setLeaders(Player p, LeaderCard[] l)
+    {
+        p.setLeaders(l);
     }
 
     /**
@@ -115,11 +131,11 @@ public class Game {
                 }
             }
 
+            //where the increase happens
             if(i!=-1 && !p.getSurpassedcells()[i])
             {
                 p.getSurpassedcells()[i]=true;
                 p.increaseScore(scorePositions.get(i).getScore());
-
                 if(i>0)
                     p.decreaseScore(p.getLastadded());
                 p.setLastadded(scorePositions.get(i).getScore());
@@ -135,7 +151,7 @@ public class Game {
      */
     public LeaderCard[] get4leaders()
     {
-        LeaderCard[] lead = new  LeaderCard[4];
+        LeaderCard[] lead = new LeaderCard[4];
         for(int i=0; i<4; i++)
         {
             lead[i] = leaders[leaderCount];
@@ -144,5 +160,4 @@ public class Game {
         }
         return lead;
     }
-
 }
