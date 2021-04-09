@@ -7,7 +7,8 @@ import it.polimi.ingsw.model.resources.ResourceOperator;
 
 import java.util.List;
 
-public class LeaderCard extends Card{
+public class
+LeaderCard extends Card{
 
     private ResourceType type;
     private List<PrerequisiteCard> cardPrequisite;
@@ -24,6 +25,10 @@ public class LeaderCard extends Card{
         return this.type;
     }
 
+    public void setCardPrequisite(List<PrerequisiteCard> cardPrequisite) {
+        this.cardPrequisite = cardPrequisite;
+    }
+
     /**
      * check the prerequisite to activate a card and then activate it
      * @param p player who own the card
@@ -35,11 +40,17 @@ public class LeaderCard extends Card{
         boolean cardRequisite = true;
 
         //Check resource prerequisite if necessary
-        if(!this.getCost().isEmpty())
-            resourceRequisite = ResourceOperator.compare(p.getDashboard().getAllAvailableResource(),this.getCost());
+
+        if( this.getCost() != null ) {
+            if(!this.getCost().isEmpty()) {
+
+                resourceRequisite = ResourceOperator.compare(p.getDashboard().getAllAvailableResource(), this.getCost());
+            }
+        }
         //Check card prerequisite if necessary
         if(cardPrequisite !=null)
             cardRequisite     = p.getDashboard().checkCardPresence(cardPrequisite);
+
 
         boolean out = resourceRequisite && cardRequisite;
         if(out)

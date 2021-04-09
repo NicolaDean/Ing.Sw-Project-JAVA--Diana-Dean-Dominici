@@ -122,7 +122,10 @@ public class Game {
         //check for each player if they surpassed a new scoreposition, in that case the player score is increased accordingly
         for (Player p:players) {
 
+
+
             int position = p.getPosition();
+
             int i = -1;
             for (CellScore cell:scorePositions) {
                 if (position >= cell.getPosition()) {
@@ -131,17 +134,26 @@ public class Game {
             }
 
             //where the increase happens
+
             if(i!=-1 && !p.getSurpassedcells()[i])
             {
                 p.getSurpassedcells()[i]=true;
                 p.increaseScore(scorePositions.get(i).getScore());
-                if(i>0)
+                if(i>0) {
+
+
                     p.decreaseScore(p.getLastadded());
+                }
                 p.setLastadded(scorePositions.get(i).getScore());
             }
+
         }
 
         return players.get(currentPlayer);
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 
     /**
@@ -158,5 +170,9 @@ public class Game {
             leaderCount++;
         }
         return lead;
+    }
+
+    public Stack<ProductionCard>[][] getProductionDecks() {
+        return productionDecks;
     }
 }

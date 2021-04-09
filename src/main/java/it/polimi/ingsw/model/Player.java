@@ -39,6 +39,7 @@ public class Player {
 
     public Player(String nickname, int nofcells)
     {
+
         surpassedcells = new boolean[nofcells];
         for (boolean a:surpassedcells) {
             a=false;
@@ -50,6 +51,9 @@ public class Player {
         bonusball = new ArrayList<>();
     }
 
+    public int getScore() {
+        return score;
+    }
 
     public Player(String nickname)
     {
