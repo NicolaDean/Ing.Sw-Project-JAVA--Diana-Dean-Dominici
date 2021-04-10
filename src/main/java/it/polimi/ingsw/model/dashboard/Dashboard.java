@@ -87,8 +87,7 @@ public class Dashboard {
      * @param pos Position where i want to put the card
      * @return true if card correctly setted
      */
-    public boolean setProcuctionCard(ProductionCard card,int pos)
-    {
+    public boolean setProcuctionCard(ProductionCard card,int pos) throws Exception {
         if(pos > 2)return false;//invalid position
 
         boolean out = this.checkValidPosition(card,pos);
@@ -97,8 +96,10 @@ public class Dashboard {
         {
             this.producionCards[pos].add(card);
             this.pendingCost.addAll(card.getCost(this));//Add card cost to the pendingPayment
-
-
+        }
+        else
+        {
+            throw new Exception("Wrong card position");
         }
         return out;
     }
@@ -141,8 +142,7 @@ public class Dashboard {
      * @param obtain    Type i want
      * @return true if i can do a basicProduction
      */
-    public boolean basicProduction(ResourceType spendOne, ResourceType spendTwo, ResourceType obtain)
-    {
+    public void basicProduction(ResourceType spendOne, ResourceType spendTwo, ResourceType obtain) throws Exception {
         List<Resource> availableRes = this.getAllAvailableResource();
 
         //NEED TO ADD A COMPARE OVERLOADING (list<resource>,resource)
@@ -158,7 +158,10 @@ public class Dashboard {
             this.pendingCost.add(new Resource(spendOne,1));
             this.pendingCost.add(new Resource(spendTwo,1));
         }
-        return output;
+        else
+        {
+            throw new Exception("Not enough resources to do basic production");
+        }
     }
 
 
@@ -167,17 +170,17 @@ public class Dashboard {
      * @param pos stack of card to select
      * @return true if the activation goes well
      */
-    public boolean production(Player p, int pos)
-    {
+    public void production(Player p, int pos) throws Exception {
         ProductionCard card = this.producionCards[pos].peek();
-        boolean out = card.produce(p);
 
-        if(out)
+        try
         {
+            boolean out = card.produce(p);
             this.pendingCost.addAll(card.getCost(this));
+        } catch (Exception e) {
+            throw  new Exception(e.getMessage());
         }
 
-        return out;
     }
 
 

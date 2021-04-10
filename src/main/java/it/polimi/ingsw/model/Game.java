@@ -113,8 +113,9 @@ public class Game {
         {
             //Check if someone surpass a papal space and in case add the score of papalToken to the players
             boolean out = this.papalSpaces.get(this.currentPapalSpaceToReach).checkPapalSpaceActivation(this.players);
-            if(out){
+            while(out == true && this.currentPapalSpaceToReach+1 < this.papalSpaces.size()){
                 this.currentPapalSpaceToReach++;
+                out = this.papalSpaces.get(this.currentPapalSpaceToReach).checkPapalSpaceActivation(this.players);
             }
 
         }

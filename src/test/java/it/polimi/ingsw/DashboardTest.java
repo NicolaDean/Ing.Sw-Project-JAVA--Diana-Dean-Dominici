@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
@@ -16,8 +17,7 @@ public class DashboardTest {
 
 
     @Test
-    public void TestCardsInsertion()
-    {
+    public void TestCardsInsertion() throws Exception {
         List<Resource> res = new ArrayList<Resource>();
         Dashboard dash = new Dashboard();
 
@@ -28,29 +28,44 @@ public class DashboardTest {
         ProductionCard tmp3 = new ProductionCard(res,2,3);
 
         //Lv 1 impiled on 1
-        assertTrue(dash.setProcuctionCard(tmp,0));
-        assertFalse(dash.setProcuctionCard(tmp,0));
+        Assertions.assertDoesNotThrow(()-> {
+            dash.setProcuctionCard(tmp,0);
+        });
+        Assertions.assertThrows(Exception.class,()-> {
+            dash.setProcuctionCard(tmp,0);
+        });
 
         //Lv 2 impiled on 1
-        assertTrue(dash.setProcuctionCard(tmp2,0));
+        Assertions.assertDoesNotThrow(()-> {
+            dash.setProcuctionCard(tmp2,0);
+        });
 
         //Lv 2 on emply space
-        assertFalse(dash.setProcuctionCard(tmp2,1));
+        Assertions.assertThrows(Exception.class,()-> {
+            dash.setProcuctionCard(tmp2,1);
+        });
 
         //Lv3 on lv 1
-        assertTrue(dash.setProcuctionCard(tmp,2));
-        assertFalse(dash.setProcuctionCard(tmp3,2));
+        Assertions.assertDoesNotThrow(()-> {
+            dash.setProcuctionCard(tmp,2);
+        });
+        Assertions.assertThrows(Exception.class,()-> {
+            dash.setProcuctionCard(tmp3,2);
+        });
 
         //Lv3 on lv 2
-        assertTrue(dash.setProcuctionCard(tmp3,0));
+        Assertions.assertDoesNotThrow(()-> {
+            dash.setProcuctionCard(tmp3,0);
+        });
 
         //Lv 1 on lv 2/3
-        assertFalse(dash.setProcuctionCard(tmp,0));
+        Assertions.assertThrows(Exception.class,()-> {
+            dash.setProcuctionCard(tmp,0);
+        });
     }
 
     @Test
-    public void TestScoreCalculation()
-    {
+    public void TestScoreCalculation() throws Exception {
         List<Resource> res = new ArrayList<Resource>();
         Dashboard dash = new Dashboard();
 
@@ -89,8 +104,7 @@ public class DashboardTest {
         assertTrue(ResourceOperator.extractQuantityOf(ROCK,tmp) == 2);
     }
 
-    @Test void TestProduction()
-    {
+    @Test void TestProduction() throws Exception {
         Dashboard dash = new Dashboard();
 
         dash.storageInsertion(new Resource(COIN,1),0);
@@ -100,15 +114,17 @@ public class DashboardTest {
         List<Resource> tmp = dash.getAllAvailableResource();
 
         //production without raw material
-        assertFalse(dash.basicProduction(COIN, SHIELD,ROCK));
+        Assertions.assertThrows(Exception.class,()-> {
+            dash.basicProduction(COIN, SHIELD,ROCK);
+        });
 
-        //production with raw material
-        assertTrue(dash.basicProduction(COIN,SERVANT,ROCK));
+        assertDoesNotThrow(()-> {
+            dash.basicProduction(COIN, SERVANT,ROCK);
+        });
     }
 
     @Test
-    void TestPendingCost()
-    {
+    void TestPendingCost() throws Exception {
         List<Resource> res = new ArrayList<Resource>();
         Dashboard dash = new Dashboard();
 

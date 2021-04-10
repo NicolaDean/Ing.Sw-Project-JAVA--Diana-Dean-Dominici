@@ -26,8 +26,7 @@ public class ScoreTest {
      * test if the score is correctly increased when a player buys a prod. card
      */
     @RepeatedTest(15)
-    public void productionScoreTest()
-    {
+    public void productionScoreTest() throws Exception {
         //created a game with 4 players and added the current player to "currPlayer"
         Game game = new Game();
         try {
@@ -187,7 +186,7 @@ public class ScoreTest {
 
         currPlayer.incrementPosition(9);
         game.nextTurn();
-        assertEquals(currPlayer.getScore(), 25);
+        assertEquals(currPlayer.getScore(), 29);
 
     }
 

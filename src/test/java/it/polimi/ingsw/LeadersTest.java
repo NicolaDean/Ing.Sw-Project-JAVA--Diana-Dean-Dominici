@@ -83,8 +83,7 @@ public class LeadersTest {
     }
 
     @Test
-    public void checkPrerequisite()
-    {
+    public void checkPrerequisite() throws Exception {
         Game g = new Game();
         LeaderCard [] leaders = new LeaderCard[1];
         List<Resource> cost = new ResourceList();

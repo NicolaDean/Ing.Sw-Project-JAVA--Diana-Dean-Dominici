@@ -100,8 +100,7 @@ public class ProductionCard extends Card {
      * @param p Dashboard of the player
      * @return  true if the activation goes well
      */
-    public boolean produce(Player p)
-    {
+    public boolean produce(Player p) throws Exception {
 
         //Check if necesary resources are availabe
         List<Resource> resAvailable = p.getDashboard().getAllAvailableResource();
@@ -112,6 +111,10 @@ public class ProductionCard extends Card {
         {
             p.incrementPosition(this.obtainedFaith);
             p.chestInsertion(this.obtainedMaterials);
+        }
+        else
+        {
+            throw  new Exception("Not enough money to produce");
         }
 
 
@@ -125,20 +128,29 @@ public class ProductionCard extends Card {
      * @param pos positioning of the card inside the dashboard
      * @return true if all goes in the right way
      */
-    public boolean buy(Player p, int pos)
-    {
+    public void buy(Player p, int pos) throws Exception {
         //First Buy the card then ask player where chose resource in the controller
         boolean out = this.checkCost(p.getDashboard());
 
         if(out)
         {
-           out = p.getDashboard().setProcuctionCard(this,pos);
-           if (out)
-               p.increaseScore(this.getVictoryPoints());
+            try
+            {
+                out = p.getDashboard().setProcuctionCard(this,pos);
+                if (out)
+                    p.increaseScore(this.getVictoryPoints());
 
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new Exception("Wrong card Position");
+            }
+
+
+        }else
+        {
+            throw new Exception("Not enouth money");
         }
 
-        return out;
     }
 
     /**

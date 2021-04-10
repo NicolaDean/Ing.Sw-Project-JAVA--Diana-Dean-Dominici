@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.model.resources.ResourceOperator;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -54,11 +55,15 @@ public class ProductionTest {
 
         ProductionCard card = new ProductionCard(tmp,2,1);
 
-        assertFalse(card.buy(p,0));
-
+        Assertions.assertThrows(Exception.class,()-> {
+            card.buy(p,0);
+        });
 
         p.getDashboard().storageInsertion(new Resource(SHIELD,1),0);
-        assertTrue(card.buy(p,0));
+
+        Assertions.assertDoesNotThrow(()-> {
+            card.buy(p,0);
+        });
     }
 
     @Test
@@ -95,7 +100,9 @@ public class ProductionTest {
 
         //BUY A CARD
         ProductionCard card = new ProductionCard(cost,raw,obt,2,1);
-        assertTrue(card.buy( p,0));
+        Assertions.assertDoesNotThrow(()-> {
+            card.buy(p,0);
+        });
 
         //Apllying costs
         p.getDashboard().applyChestCosts(new Resource(COIN,1));
@@ -115,7 +122,11 @@ public class ProductionTest {
         p.getDashboard().storageInsertion(new Resource(COIN,2),1);
 
         //Production
-        p.getDashboard().production(p,0);
+        try {
+            p.getDashboard().production(p,0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //Cost Application
 
