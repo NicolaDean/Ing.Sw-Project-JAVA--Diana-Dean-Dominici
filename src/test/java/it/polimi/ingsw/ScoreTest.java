@@ -74,19 +74,17 @@ public class ScoreTest {
             currPlayer.getDashboard().chestInsertion(servants);
             currPlayer.getDashboard().chestInsertion(rocks);
 
-            game.getProductionDecks()[0][0].peek().buy(currPlayer, 0);
-            game.getProductionDecks()[1][0].peek().buy(currPlayer, 0);
-            game.getProductionDecks()[2][0].peek().buy(currPlayer, 0);
+            game.getProductionDecks()[0][i].peek().buy(currPlayer, 0);
+            game.getProductionDecks()[1][i].peek().buy(currPlayer, 0);
+            game.getProductionDecks()[2][i].peek().buy(currPlayer, 0);
 
-            int a = game.getProductionDecks()[0][0].peek().getScore() +
-                    game.getProductionDecks()[1][0].peek().getScore() +
-                    game.getProductionDecks()[2][0].peek().getScore();
+            int a = game.getProductionDecks()[0][i].pop().getScore() +
+                    game.getProductionDecks()[1][i].pop().getScore() +
+                    game.getProductionDecks()[2][i].pop().getScore();
 
             assertEquals(currPlayer.getScore(), a);
+            currPlayer = game.nextTurn();
         }
-
-
-
 
     }
 
@@ -143,7 +141,7 @@ public class ScoreTest {
     }
 
     /**
-     * test the correct increase of plays score when a scoreCell is reached
+     * test the correct increase of the player' s score when a scoreCell is reached
      */
     @Test
     public void scoreCellTest()
@@ -242,7 +240,6 @@ public class ScoreTest {
         currPlayer=game.nextTurn();
         currPlayer.incrementPosition(5);
         game.nextTurn();
-
         assertEquals(game.getPlayers().get(0).getScore(), 12);
         assertEquals(game.getPlayers().get(1).getScore(), 6);
         assertEquals(game.getPlayers().get(2).getScore(), 8);

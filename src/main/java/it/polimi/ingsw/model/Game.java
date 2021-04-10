@@ -139,16 +139,11 @@ public class Game {
             {
                 p.getSurpassedcells()[i]=true;
                 p.increaseScore(scorePositions.get(i).getScore());
-                if(i>0) {
-
-
+                if(i>0)
                     p.decreaseScore(p.getLastadded());
-                }
                 p.setLastadded(scorePositions.get(i).getScore());
             }
-
         }
-
         return players.get(currentPlayer);
     }
 
