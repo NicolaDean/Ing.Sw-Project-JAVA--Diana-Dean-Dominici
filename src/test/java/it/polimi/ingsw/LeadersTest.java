@@ -20,6 +20,8 @@ import java.util.List;
 
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class LeadersTest {
@@ -61,10 +63,15 @@ public class LeadersTest {
 
         p.chestInsertion(new Resource(COIN,1));
         //LEADER ACTIVATION
-        assertTrue(p.activateLeader(0));
+        //Lv3 on lv 3
+        Assertions.assertDoesNotThrow(()-> {
+            p.activateLeader(0);
+        });
 
         //TRADE BONUS TEST
-        assertTrue(p.bonusProduction(0,ROCK));
+        Assertions.assertDoesNotThrow(()-> {
+            p.bonusProduction(0,ROCK);
+        });
 
         //PAY ACTIVATION
         p.payChestResource(new Resource(COIN,1));
@@ -101,8 +108,9 @@ public class LeadersTest {
         card.buy(p,1);
 
 
-
-        assertTrue(c.activate(p));
+        Assertions.assertDoesNotThrow(()-> {
+            c.activate(p);
+        });
 
 
 

@@ -91,8 +91,7 @@ public class ScoreTest {
      * test the correnc score increas of players when a leader is activated
      */
     @RepeatedTest(15)
-    public void leaderScoreTest()
-    {
+    public void leaderScoreTest() throws Exception {
         Game game = new Game();
         Resource coins = new Resource(COIN, 999);
         Resource shields = new Resource(SHIELD, 999);

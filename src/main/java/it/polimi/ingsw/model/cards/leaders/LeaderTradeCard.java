@@ -21,16 +21,9 @@ public class LeaderTradeCard extends LeaderCard implements BonusProduction {
 
 
     @Override
-    public boolean activate(Player p)
-    {
-        boolean out = super.activate(p);
-        if(out)
-        {
-            p.addTradeBonus(this);
-        }
-
-        return out;
-
+    public void activate(Player p) throws Exception {
+        super.activate(p);
+        p.addTradeBonus(this);
     }
 
     //USER can select the card and call the method "changeRawMat()" or

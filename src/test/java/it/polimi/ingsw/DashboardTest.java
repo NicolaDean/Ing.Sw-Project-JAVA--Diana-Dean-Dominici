@@ -35,15 +35,20 @@ public class DashboardTest {
             dash.setProcuctionCard(tmp,0);
         });
 
+        //Lv 2 on null
+        Assertions.assertThrows(Exception.class,()-> {
+            dash.setProcuctionCard(tmp2,1);
+        });
+        //Lv 3 on null
+        Assertions.assertThrows(Exception.class,()-> {
+            dash.setProcuctionCard(tmp3,1);
+        });
+
         //Lv 2 impiled on 1
         Assertions.assertDoesNotThrow(()-> {
             dash.setProcuctionCard(tmp2,0);
         });
 
-        //Lv 2 on emply space
-        Assertions.assertThrows(Exception.class,()-> {
-            dash.setProcuctionCard(tmp2,1);
-        });
 
         //Lv3 on lv 1
         Assertions.assertDoesNotThrow(()-> {
@@ -58,10 +63,22 @@ public class DashboardTest {
             dash.setProcuctionCard(tmp3,0);
         });
 
+        //Lv3 on lv 3
+        Assertions.assertThrows(Exception.class,()-> {
+            dash.setProcuctionCard(tmp3,0);
+        });
+        //Lv2 on lv 3
+        Assertions.assertThrows(Exception.class,()-> {
+            dash.setProcuctionCard(tmp2,0);
+        });
+
+
         //Lv 1 on lv 2/3
         Assertions.assertThrows(Exception.class,()-> {
             dash.setProcuctionCard(tmp,0);
         });
+
+
     }
 
     @Test

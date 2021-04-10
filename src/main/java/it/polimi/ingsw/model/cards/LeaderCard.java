@@ -34,8 +34,7 @@ LeaderCard extends Card{
      * @param p player who own the card
      * @return true if activation goes well
      */
-    public boolean activate(Player p)
-    {
+    public void activate(Player p) throws Exception {
         boolean resourceRequisite = true;
         boolean cardRequisite = true;
 
@@ -55,7 +54,7 @@ LeaderCard extends Card{
         boolean out = resourceRequisite && cardRequisite;
         if(out)
             p.increaseScore(this.getVictoryPoints());
-
-        return  resourceRequisite && cardRequisite;
+        else
+            throw new Exception("Not soddisfied Prerequisite");
     }
 }

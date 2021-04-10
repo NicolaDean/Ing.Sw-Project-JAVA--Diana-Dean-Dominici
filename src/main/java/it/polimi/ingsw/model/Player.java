@@ -197,8 +197,8 @@ public class Player {
      * @param position position leader
      * @return true if it's active
      */
-    public boolean activateLeader(int position){
-        return this.leaders[position].activate(this);
+    public void activateLeader(int position) throws Exception {
+        this.leaders[position].activate(this);
     }
 
     /**

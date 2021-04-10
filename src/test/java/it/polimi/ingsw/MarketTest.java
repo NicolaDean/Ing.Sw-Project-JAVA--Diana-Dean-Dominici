@@ -337,7 +337,7 @@ public class MarketTest {
      * check activation ball (with white ball)
      */
     @Test
-    public void activityTest(){
+    public void activityTest() throws Exception {
         //activity test
         Player p=new Player("nick");
         LeaderCard l[]= new LeaderCard[]{

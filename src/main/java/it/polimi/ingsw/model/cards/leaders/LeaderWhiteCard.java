@@ -20,13 +20,12 @@ public class LeaderWhiteCard extends LeaderCard {
     }
 
     @Override
-    public boolean activate(Player p) {
-        boolean out = super.activate(p);
+    public void activate(Player p) throws Exception {
+        super.activate(p);
         ResourceBall r = new ResourceBall();
 
         r.setType(type);
         p.addBonusball(r);
 
-        return out;
     }
 }
