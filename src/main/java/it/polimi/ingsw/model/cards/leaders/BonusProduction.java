@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.resources.Resource;
 
 public interface BonusProduction {
 
-    public boolean produce(Player dashboard, ResourceType pay);
+    public void produce(Player dashboard, ResourceType pay) throws Exception;
 
     public Resource getProdCost();
 }

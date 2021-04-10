@@ -28,19 +28,17 @@ public class LeaderTradeCard extends LeaderCard implements BonusProduction {
 
     //USER can select the card and call the method "changeRawMat()" or
     @Override
-    public boolean produce(Player p, ResourceType obtain)
-    {
+    public void produce(Player p, ResourceType obtain) throws Exception {
         int possession = ResourceOperator.extractQuantityOf(this.getType(),p.getDashboard().getAllAvailableResource());
 
         if(possession >= 1)
         {
             p.chestInsertion(new Resource(obtain,1));
             p.incrementPosition(); //Get a faith point
-            return true;
         }
         else
         {
-            return false;
+            throw new Exception("not enough money");
         }
 
     }

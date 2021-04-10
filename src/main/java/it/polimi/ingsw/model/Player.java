@@ -321,14 +321,19 @@ public class Player {
      * @param resWanted the resource i want to obtain
      * @return true if the production is done false is something dosnt gone well
      */
-    public boolean bonusProduction(int pos, ResourceType resWanted)
-    {
-        BonusProduction card = this.bonusProductions.get(pos);
-        boolean out = card.produce(this,resWanted);
-        if(out)
+    public void bonusProduction(int pos, ResourceType resWanted) throws Exception {
+
+        if(pos < this.bonusProductions.size())
         {
+            BonusProduction card = this.bonusProductions.get(pos);
+            card.produce(this,resWanted);
+
             this.dashboard.setPendingCost(card.getProdCost()); //if goes well add the cost to the pending cost
         }
-        return out;
+        else
+        {
+            throw  new Exception("Not existing bonus card");
+        }
+
     }
 }
