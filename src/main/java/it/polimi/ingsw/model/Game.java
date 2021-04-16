@@ -109,6 +109,7 @@ public class Game {
         else
             currentPlayer++;
 
+        //PAPAL SPACE
         if(this.currentPapalSpaceToReach < this.papalSpaces.size())
         {
             //Check if someone surpass a papal space and in case add the score of papalToken to the players
@@ -128,6 +129,23 @@ public class Game {
             int position = p.getPosition();
 
             int i = -1;
+
+             /*
+            int gainedPoints = 0;
+            int scorePrecedente = 0;
+            for(int j=p.getLastadded()+1;j<scorePositions.size();j++)
+            {
+                int cellPos = scorePositions.get(i).getPosition();
+
+
+                if(p.getPosition() > cellPos)
+                    gainedPoints += scorePositions.get(i).getScore();
+                    gainedPoints -= scorePrecedente;
+                scorePrecedente = scorePositions.get(i).getScore();
+            }
+            gainedPoints -= scorePositions.get(p.getLastadded()).getScore();
+            */
+
             for (CellScore cell:scorePositions) {
                 if (position >= cell.getPosition()) {
                     i++;
