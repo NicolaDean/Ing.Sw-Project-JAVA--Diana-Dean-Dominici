@@ -1,20 +1,20 @@
 package it.polimi.ingsw.model.market.balls;
 
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.market.Market;
 
 import java.awt.*;
 
 public class RedBall extends BasicBall{
-    @Override
-    public void active(Player p, int pos) { }
 
     /**
-     * increment papal position
-     * @param P: player that get red ball
+     *  se true extracted red ball
+     * @param m market
      */
     @Override
-    public void active(Player P){
-        P.incrementPosition();
+    public void active(Market m,Player p){
+        p.incrementPosition();
     }
 
     /**
@@ -24,5 +24,14 @@ public class RedBall extends BasicBall{
     @Override
     public Color getColor() {
         return Color.red;
+    }
+
+    /**
+     *  throw exeption
+     * @return no one
+     */
+    @Override
+    public ResourceType getType() {
+        throw new RuntimeException("White and red ball dont have resource type");
     }
 }

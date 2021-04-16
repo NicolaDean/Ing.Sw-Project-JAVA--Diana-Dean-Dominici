@@ -1,23 +1,27 @@
 
 package it.polimi.ingsw.model.market.balls;
 
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.market.Market;
+import it.polimi.ingsw.model.resources.Resource;
 
 import java.awt.*;
 
 public class WhiteBall extends BasicBall{
 
+
     /**
-     * active ability
-     * @param p: player that get red ball
+     * if player had 2 leader activated increment white cout, if had just 1 leader add resource
+     * @param m market
+     * @param p player
      */
     @Override
-    public void active(Player p,int pos) {
-        int size= p.getBonusball().size();
-        if(size<=1)
-            p.getBonusball().get(0).active(p,pos);
-        if(size==2)
-            p.incrementPendingWhiteBall();
+    public void active(Market m,Player p) {
+        if(p.getBonusball().size()==1)
+            m.addResourceExtracted(p.getBonusball().get(0));
+        if(p.getBonusball().size()==2)
+            m.incrementWhiteCount();
     }
 
     /**
@@ -29,11 +33,12 @@ public class WhiteBall extends BasicBall{
         return Color.white;
     }
 
+    /**
+     *  throw exeption
+     * @return no one
+     */
+    @Override
+    public ResourceType getType() {
+        throw new RuntimeException("White and red ball dont have resource type");
+    }
 }
-
-
-/*
-    int num= Controller.Model.getPlayerWhiteBonus();
-
-
- */

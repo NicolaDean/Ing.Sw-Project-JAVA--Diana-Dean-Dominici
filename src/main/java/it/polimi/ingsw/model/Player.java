@@ -20,8 +20,7 @@ public class Player {
     private int score = 0;
     private List<BonusProduction> bonusProductions;
     private boolean inkwell;
-    private int pendingWhiteBall;
-    private ArrayList<BasicBall> bonusball;
+    private ArrayList<ResourceType> bonusball;
     private boolean[] surpassedcells;
     private int lastadded = 0;
 
@@ -69,7 +68,7 @@ public class Player {
         nickname = "Test";
     }
 
-    public ArrayList<BasicBall> getBonusball() {
+    public ArrayList<ResourceType> getBonusball() {
         return bonusball;
     }
 
@@ -98,23 +97,10 @@ public class Player {
      * Add Basic ball
      * @param b ball to adding
      */
-    public void addBonusball(BasicBall b){
+    public void addBonusball(ResourceType b){
         bonusball.add(b);
     }
 
-    /**
-     * Increment pendingWhiteBall
-     */
-    public void incrementPendingWhiteBall(){
-        pendingWhiteBall++;
-    }
-
-    /**
-     * set pendingwhiteBall = 0
-     */
-    public void solvePendingWhiteBall(){
-        pendingWhiteBall=0;
-    }
 
     /**
      * Increment player position by 1

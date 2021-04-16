@@ -1,22 +1,16 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.enumeration.*;
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.LeaderCard;
-import it.polimi.ingsw.model.cards.PrerequisiteCard;
-import it.polimi.ingsw.model.cards.leaders.LeaderDiscountCard;
-import it.polimi.ingsw.model.cards.leaders.LeaderWhiteCard;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
-import it.polimi.ingsw.model.resources.ResourceOperator;
 import static it.polimi.ingsw.enumeration.ResourceType.*;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.api.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -91,9 +85,7 @@ public class MarketTest {
      */
     @Test
     public void checkMarketShuffle(){
-        for(int i=0;i<10000;i++) {
-            checkMarketConsistency(new Market());
-        }
+        checkMarketConsistency(new Market());
     }
 
     /**
@@ -108,30 +100,31 @@ public class MarketTest {
         r.add(new Resource(SHIELD,3));
         r.add(new Resource(COIN,10));
         Market m=new Market();
-        BasicBall n[],f[],dis;
+        BasicBall n[],dis;
+        List f= new ResourceList();
         for(int i=0;i<3;i++) {
             try {
-                n=m.getResouces()[i].clone();
-                dis=m.getDiscardedResouce();
-                f=m.exstractRow(i+1, p);
+                n = m.getResouces()[i].clone();
+                dis = m.getDiscardedResouce();
+                m.exstractRow(i + 1, p);
+                f = m.getPendingResourceExtracted();
                 assertEquals(dis, m.getResouces()[i][0]);
                 assertEquals(n[0], m.getResouces()[i][1]);
                 assertEquals(n[1], m.getResouces()[i][2]);
                 assertEquals(n[2], m.getResouces()[i][3]);
                 assertEquals(n[3], m.getDiscardedResouce());
 
-                assertEquals(n[0], f[0]);
-                assertEquals(n[1], f[1]);
-                assertEquals(n[2], f[2]);
-                assertEquals(n[3], f[3]);
-
+                assertEquals(n[0].getType(), f.get(0));
+                assertEquals(n[1].getType(), f.get(1));
+                assertEquals(n[2], f.get(2));
+                assertEquals(n[3], f.get(3));
             }catch (Exception e){
-                fail();
+                if((i>2)||(i<0))
+                    fail();
             }
         }
         checkMarketConsistency(m);
     }
-
 
     /**
      * check exstraction column
@@ -146,386 +139,34 @@ public class MarketTest {
         r.add(new Resource(COIN,10));
 
         Market m=new Market();
-        Color n[] = new Color[3],dis;
-        BasicBall f[];
+        ResourceType n[] = new ResourceType[3],dis;
+        List f=new ResourceList();
         for(int i=0;i<4;i++) {
             try {
-                n[0]=m.getResouces()[0][i].getColor();
-                n[1]=m.getResouces()[1][i].getColor();
-                n[2]=m.getResouces()[2][i].getColor();
-                dis=m.getDiscardedResouce().getColor();
-                f=m.exstractColumn(i+1, p);
-
+                n[0]=m.getResouces()[0][i].getType();
+                n[1]=m.getResouces()[1][i].getType();
+                n[2]=m.getResouces()[2][i].getType();
+                dis=m.getDiscardedResouce().getType();
+                m.exstractColumn(i+1, p);
+                f=m.getPendingResourceExtracted();
                 assertEquals(dis, m.getResouces()[0][i].getColor());
                 assertEquals(n[0], m.getResouces()[1][i].getColor());
                 assertEquals(n[1], m.getResouces()[2][i].getColor());
                 assertEquals(n[2], m.getDiscardedResouce().getColor());
 
-                assertEquals(n[0], f[0].getColor());
-                assertEquals(n[1], f[1].getColor());
-                assertEquals(n[2], f[2].getColor());
+                assertEquals(n[0], f.get(0));
+                assertEquals(n[1], f.get(1));
+                assertEquals(n[2], f.get(2));
 
-            }catch (IllegalArgumentException e){
-                fail();
+            }catch (Exception e){
+                if((i>3)||(i<0))
+                    fail();
             }
 
         }
         checkMarketConsistency(m);
     }
 
-    /**
-     * check activation ball (no white ball)
-     */
-    @Test
-    public void activityTestNoWhite(){
-        ResourceList r = new ResourceList();
-        LeaderCard l[] = {new LeaderCard(r,new ArrayList<>(),1, COIN), new LeaderCard(r,new ArrayList<>(),1, SERVANT) };
-        Player p=new Player("nick");
-        BasicBall[] b;
-        int tmpShield=0,tmpCoin=0,tmpRock=0,tmpSeverant=0,tmpfaith=0;
-        Market m=new Market();
 
-
-
-        b=m.exstractColumn(1 , p );
-
-        for(BasicBall i:b){
-
-            if (i.getColor() == Color.yellow) {
-                tmpCoin++;
-            }
-
-            if (i.getColor() == Color.magenta) {
-                tmpSeverant++;
-            }
-
-            if (i.getColor() == Color.gray) {
-                tmpRock++;
-            }
-
-            if (i.getColor() == Color.blue) {
-                tmpShield++;
-            }
-
-            if (i.getColor() == Color.red){
-                tmpfaith++;
-            }
-
-        }
-
-        for(BasicBall i:b) {
-            if (i.getColor() == Color.yellow) {
-                try {
-                    if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(COIN).get(0) ) > tmpCoin)
-                        i.active(p,p.getDashboard().getStorage().findType(COIN).get(0));
-                } catch (Exception e) {
-                    tmpCoin=0;
-                }
-            }
-
-            if (i.getColor() == Color.magenta) {
-                try {
-                    if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(SERVANT).get(0) ) > tmpSeverant)
-                        i.active(p,p.getDashboard().getStorage().findType(SERVANT).get(0));
-                } catch (Exception e) {
-                    tmpSeverant=0;
-                }
-            }
-            if (i.getColor() == Color.gray) {
-                try {
-                    if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(ROCK).get(0) ) > tmpRock)
-                        i.active(p,p.getDashboard().getStorage().findType(ROCK).get(0));
-                } catch (Exception e) {
-                    tmpRock=0;
-                }
-            }
-            if (i.getColor() == Color.blue) {
-                try {
-                    if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(SHIELD).get(0) ) > tmpShield)
-                        i.active(p,p.getDashboard().getStorage().findType(SHIELD).get(0));
-                } catch (Exception e) {
-                    tmpShield=0;
-                }
-            }
-            if (i.getColor() == Color.red){
-                i.active(p);
-            }
-        }
-
-        assertEquals(tmpSeverant, ResourceOperator.extractQuantityOf(SERVANT, p.getDashboard().getAllAvailableResource()));
-        assertEquals(tmpCoin, ResourceOperator.extractQuantityOf(COIN, p.getDashboard().getAllAvailableResource()));
-        assertEquals(tmpRock, ResourceOperator.extractQuantityOf(ROCK, p.getDashboard().getAllAvailableResource()));
-        assertEquals(tmpShield, ResourceOperator.extractQuantityOf(SHIELD, p.getDashboard().getAllAvailableResource()));
-        assertEquals(tmpfaith, p.getPosition());
-
-
-        for(int cont=1;cont<5;cont++){
-            b=m.exstractColumn(cont , p );
-
-            for(BasicBall i:b){
-
-                if (i.getColor() == Color.yellow) {
-                    tmpCoin++;
-                }
-
-                if (i.getColor() == Color.magenta) {
-                    tmpSeverant++;
-                }
-
-                if (i.getColor() == Color.gray) {
-                    tmpRock++;
-                }
-
-                if (i.getColor() == Color.blue) {
-                    tmpShield++;
-                }
-
-                if (i.getColor() == Color.red){
-                    tmpfaith++;
-                }
-
-            }
-            for(BasicBall i:b) {
-                if (i.getColor() == Color.yellow) {
-                    try {
-                        if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(COIN).get(0) ) > tmpCoin)
-                            i.active(p,p.getDashboard().getStorage().findType(COIN).get(0));
-                    } catch (Exception e) {
-                        tmpCoin=0;
-                    }
-                }
-
-                if (i.getColor() == Color.magenta) {
-                    try {
-                        if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(SERVANT).get(0) ) > tmpSeverant)
-                            i.active(p,p.getDashboard().getStorage().findType(SERVANT).get(0));
-                    } catch (Exception e) {
-                        tmpSeverant=0;
-                    }
-                }
-                if (i.getColor() == Color.gray) {
-                    try {
-                        if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(ROCK).get(0) ) > tmpRock)
-                            i.active(p,p.getDashboard().getStorage().findType(ROCK).get(0));
-                    } catch (Exception e) {
-                        tmpRock=0;
-                    }
-                }
-                if (i.getColor() == Color.blue) {
-                    try {
-                        if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(SHIELD).get(0) ) > tmpShield)
-                            i.active(p,p.getDashboard().getStorage().findType(SHIELD).get(0));
-                    } catch (Exception e) {
-                        tmpShield=0;
-                    }
-                }
-                if (i.getColor() == Color.red){
-                    i.active(p);
-                }
-            }
-
-            assertEquals(tmpSeverant, ResourceOperator.extractQuantityOf(SERVANT, p.getDashboard().getAllAvailableResource()));
-            assertEquals(tmpCoin, ResourceOperator.extractQuantityOf(COIN, p.getDashboard().getAllAvailableResource()));
-            assertEquals(tmpRock, ResourceOperator.extractQuantityOf(ROCK, p.getDashboard().getAllAvailableResource()));
-            assertEquals(tmpShield, ResourceOperator.extractQuantityOf(SHIELD, p.getDashboard().getAllAvailableResource()));
-            assertEquals(tmpfaith, p.getPosition());
-
-        }
-    }
-
-    /**
-     * check activation ball (with white ball)
-     */
-    @Test
-    public void activityTest() throws Exception {
-        //activity test
-        Player p=new Player("nick");
-        LeaderCard l[]= new LeaderCard[]{
-                new LeaderWhiteCard(new ResourceList(), new ArrayList<PrerequisiteCard>() , 2, COIN),
-                new LeaderWhiteCard(new ResourceList(), new ArrayList<PrerequisiteCard>() , 2, SHIELD)};
-        p.setLeaders(l);
-        p.activateLeader(1);
-        BasicBall[] b;
-        int tmpShield=0,tmpCoin=0,tmpRock=0,tmpSeverant=0,tmpfaith=0,tmpWhite=0;
-        Market m=new Market();
-
-
-        b=m.exstractColumn(1 , p );
-
-        for(BasicBall i:b){
-
-            if (i.getColor() == Color.yellow)
-                tmpCoin++;
-
-            if (i.getColor() == Color.magenta)
-                tmpSeverant++;
-
-            if (i.getColor() == Color.gray)
-                tmpRock++;
-
-            if (i.getColor() == Color.blue)
-                tmpShield++;
-
-            if (i.getColor() == Color.red) {
-                tmpfaith++;
-            }
-
-            if(i.getColor() == Color.white) {
-                tmpWhite++;
-            }
-        }
-
-        for(BasicBall i:b) {
-            if(i.getColor() == Color.white){
-                try {
-                    if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(COIN).get(0) ) > tmpWhite)
-                        i.active(p,p.getDashboard().getStorage().findType(COIN).get(0));
-                } catch (Exception e) {
-                    tmpWhite=0;
-                }
-            }
-
-            if (i.getColor() == Color.yellow) {
-                try {
-                    if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(COIN).get(0) ) > tmpCoin) {
-                        i.active(p,p.getDashboard().getStorage().findType(COIN).get(0));
-                    }
-                } catch (Exception e) {
-                    tmpCoin=0;
-                }
-            }
-
-            if (i.getColor() == Color.magenta) {
-                try {
-                    if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(SERVANT).get(0) ) > tmpSeverant) {
-                        i.active(p,p.getDashboard().getStorage().findType(SERVANT).get(0));
-                    }
-                } catch (Exception e) {
-                    tmpSeverant=0;
-                }
-            }
-            if (i.getColor() == Color.gray) {
-                try {
-                    if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(ROCK).get(0) ) > tmpRock) {
-                        i.active(p,p.getDashboard().getStorage().findType(ROCK).get(0));
-                    }
-                } catch (Exception e) {
-                    tmpRock=0;
-                }
-            }
-            if (i.getColor() == Color.blue) {
-                try {
-                    if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(SHIELD).get(0) ) > tmpShield) {
-                        i.active(p,p.getDashboard().getStorage().findType(SHIELD).get(0));
-                    }
-                } catch (Exception e) {
-                    tmpShield=0;
-                }
-            }
-            if (i.getColor() == Color.red){
-                i.active(p);
-            }
-        }
-
-        assertEquals(tmpSeverant, ResourceOperator.extractQuantityOf(SERVANT, p.getDashboard().getAllAvailableResource()));
-        assertEquals(tmpCoin + tmpWhite, ResourceOperator.extractQuantityOf(COIN, p.getDashboard().getAllAvailableResource()));
-        assertEquals(tmpRock, ResourceOperator.extractQuantityOf(ROCK, p.getDashboard().getAllAvailableResource()));
-        assertEquals(tmpShield, ResourceOperator.extractQuantityOf(SHIELD, p.getDashboard().getAllAvailableResource()));
-        assertEquals(tmpfaith, p.getPosition());
-
-
-        for(int cont=1;cont<5;cont++){
-            p=new Player(""+cont);
-            p.setLeaders(l);
-            p.activateLeader(1);
-            tmpShield=0;
-            tmpCoin=0;
-            tmpRock=0;
-            tmpSeverant=0;
-            tmpfaith=0;
-            tmpWhite=0;
-            b=m.exstractColumn(cont , p );
-
-            for(BasicBall i:b){
-
-                if (i.getColor() == Color.yellow)
-                    tmpCoin++;
-
-                if (i.getColor() == Color.magenta)
-                    tmpSeverant++;
-
-                if (i.getColor() == Color.gray)
-                    tmpRock++;
-
-                if (i.getColor() == Color.blue)
-                    tmpShield++;
-
-                if (i.getColor() == Color.red)
-                    tmpfaith++;
-
-                if(i.getColor() == Color.white)
-                    tmpWhite++;
-            }
-
-            for(BasicBall i:b) {
-                if(i.getColor() == Color.white){
-                    try {
-                        if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(COIN).get(0) ) > tmpWhite)
-                            i.active(p,p.getDashboard().getStorage().findType(COIN).get(0));
-                    } catch (Exception e) {
-                        tmpWhite=0;
-                    }
-                }
-
-                if (i.getColor() == Color.yellow) {
-                    try {
-                        if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(COIN).get(0) ) > tmpCoin) {
-                            i.active(p,p.getDashboard().getStorage().findType(COIN).get(0));
-                        }
-                    } catch (Exception e) {
-                        tmpCoin=0;
-                    }
-                }
-
-                if (i.getColor() == Color.magenta) {
-                    try {
-                        if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(SERVANT).get(0) ) > tmpSeverant) {
-                            i.active(p,p.getDashboard().getStorage().findType(SERVANT).get(0));
-                        }
-                    } catch (Exception e) {
-                        tmpSeverant=0;
-                    }
-                }
-                if (i.getColor() == Color.gray) {
-                    try {
-                        if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(ROCK).get(0) ) > tmpRock) {
-                            i.active(p,p.getDashboard().getStorage().findType(ROCK).get(0));
-                        }
-                    } catch (Exception e) {
-                        tmpRock=0;
-                    }
-                }
-                if (i.getColor() == Color.blue) {
-                    try {
-                        if(p.getDashboard().getStorage().getFreeSpace( p.getDashboard().getStorage().findType(SHIELD).get(0) ) > tmpShield) {
-                            i.active(p,p.getDashboard().getStorage().findType(SHIELD).get(0));
-                        }
-                    } catch (Exception e) {
-                        tmpShield=0;
-                    }
-                }
-                if (i.getColor() == Color.red){
-                    i.active(p);
-                }
-            }
-
-            assertEquals(tmpSeverant, ResourceOperator.extractQuantityOf(SERVANT, p.getDashboard().getAllAvailableResource()));
-            assertEquals(tmpCoin + tmpWhite, ResourceOperator.extractQuantityOf(COIN, p.getDashboard().getAllAvailableResource()));
-            assertEquals(tmpRock, ResourceOperator.extractQuantityOf(ROCK, p.getDashboard().getAllAvailableResource()));
-            assertEquals(tmpShield, ResourceOperator.extractQuantityOf(SHIELD, p.getDashboard().getAllAvailableResource()));
-            assertEquals(tmpfaith, p.getPosition());
-
-        }
-    }
 
 }

@@ -1,14 +1,16 @@
 package it.polimi.ingsw.model.market.balls;
 
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.market.Market;
 
 import java.awt.*;
 
-public class BasicBall {
-    public void active(Player p, int pos){}
-    public void active(Player p){}
+public abstract class BasicBall {
 
-    public Color getColor(){
-        return Color.BLACK;
-    }
+    public abstract Color getColor();
+
+    public abstract void active(Market market, Player p);
+
+    public abstract ResourceType getType();
 }
