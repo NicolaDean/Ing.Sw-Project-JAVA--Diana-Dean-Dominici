@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.market;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.market.balls.*;
+import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 
 import java.awt.*;
@@ -149,7 +150,7 @@ public class Market {
      * @param type
      */
     public void addResourceExtracted(ResourceType type){
-        pendingResourceExtracted.add(type);
+        pendingResourceExtracted.add(new Resource(type,1));
     }
 
     /**
@@ -158,5 +159,9 @@ public class Market {
      */
     public List getPendingResourceExtracted() {
         return pendingResourceExtracted;
+    }
+
+    public int getWhiteCount() {
+        return whiteCount;
     }
 }

@@ -21,8 +21,14 @@ public class Player {
     private List<BonusProduction> bonusProductions;
     private boolean inkwell;
     private ArrayList<ResourceType> bonusball;
+    private int positionLeaderActive;
     private boolean[] surpassedcells;
     private int lastadded = 0;
+
+
+    public int getPositionLeaderActive() {
+        return positionLeaderActive;
+    }
 
     public void setLastadded(int lastadded) {
         this.lastadded = lastadded;
@@ -184,6 +190,7 @@ public class Player {
      * @return true if it's active
      */
     public void activateLeader(int position) throws Exception {
+        positionLeaderActive = position;
         this.leaders[position].activate(this);
     }
 

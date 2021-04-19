@@ -63,11 +63,11 @@ public class ResourceList implements List
      */
     @Override
     public boolean add(Object o) {
-        Resource r = (Resource) o;
 
         int pos=0;
 
-        if (r == null) return false;
+        if (o == null) return false;
+        Resource r = (Resource) o;
         if(this.resources.isEmpty())
         {
             this.resources.add(r);
