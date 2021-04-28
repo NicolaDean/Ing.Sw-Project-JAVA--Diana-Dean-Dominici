@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.modelTest;
 
 import static it.polimi.ingsw.enumeration.CardType.YELLOW;
 import static it.polimi.ingsw.enumeration.ResourceType.*;
