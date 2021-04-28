@@ -19,7 +19,7 @@ public class Login extends Packet implements PacketManager{
     }
 
     @Override
-    public void analyze(ServerController controller) {
-        controller.login(this.nickname);
+    public Packet analyze(ServerController controller) {
+        return controller.login(this.nickname);
     }
 }

@@ -14,12 +14,10 @@ public class ServerController extends Controller{
 
     //view
     Game game;
-    PacketManager response;
-    boolean responseAvailable;
+
 
     public ServerController()
     {
-        responseAvailable = false;
         game = new Game();
     }
 
@@ -35,21 +33,18 @@ public class ServerController extends Controller{
      */
     public boolean isRightPlayer(int playerIndex)
     {
-        if(!(this.game.getCurrentPlayerIndex() == playerIndex))
-        {
-            this.setResponse(new ACK(1));
-        }
-        return this.game.getCurrentPlayerIndex() == playerIndex;
+        return (this.game.getCurrentPlayerIndex() == playerIndex);
     }
 
     /**
      * Set a pending cost response
      * @param dashboard dashboard from wich extract the pending cost
      */
-    public void setPendingCost(Dashboard dashboard)
+    public Packet setPendingCost(Dashboard dashboard)
     {
-        this.setResponse(new PendingCost(dashboard.getPendingCost()));
+        return  new PendingCost(dashboard.getPendingCost());
     }
+
     /**
      * Player "player" buy the card in position x,y of the deks
      * @param x level
@@ -57,19 +52,19 @@ public class ServerController extends Controller{
      * @param pos where i want to put the card
      * @param player packet sender index
      */
-    public void buyCard(int x,int y,int pos,int player){
+    public Packet buyCard(int x,int y,int pos,int player){
         Player p = this.game.getCurrentPlayer();
-        if(!isRightPlayer(player)) return;
+
+        if(!isRightPlayer(player)) return new ACK(1);
 
         ProductionCard card = this.game.drawProductionCard(x,y);
         try
         {
             card.buy(p,pos);
-            setPendingCost(p.getDashboard());
+            return setPendingCost(p.getDashboard());
         } catch (Exception e) {
-            this.setResponse(new ACK(1));
+            return  new ACK(1);
         }
-
 
     }
 
@@ -78,18 +73,18 @@ public class ServerController extends Controller{
      * @param pos which card i wanna use
      * @param player player who wand to do an action
      */
-    public void production(int pos,int player)
+    public Packet production(int pos,int player)
     {
         Player p = this.game.getCurrentPlayer();
         Dashboard dashboard = p.getDashboard();
 
-        if(!isRightPlayer(player)) return;
+        if(!isRightPlayer(player)) return new ACK(1);
 
         try {
             dashboard.production(p,pos);
-            setPendingCost(dashboard);
+            return setPendingCost(dashboard);
         } catch (Exception e) {
-            this.setResponse(new ACK(1));
+            return new ACK(1);
         }
     }
 
@@ -100,59 +95,32 @@ public class ServerController extends Controller{
      * @param obt  wanted resource
      * @param player packet sender
      */
-    public void basicProduction(ResourceType res1,ResourceType res2, ResourceType obt, int player)
+    public Packet basicProduction(ResourceType res1,ResourceType res2, ResourceType obt, int player)
     {
         Player p = this.game.getCurrentPlayer();
         Dashboard dashboard = p.getDashboard();
 
-        if(!isRightPlayer(player)) {
-            return;
-        }
+        if(!isRightPlayer(player)) return new ACK(1);
 
         try {
             dashboard.basicProduction(res1,res2,obt);
-            //Add pending cost
+            return setPendingCost(dashboard);
         } catch (Exception e) {
-            this.setResponse(new ACK(1));
+            return new ACK(1);
         }
     }
 
-    public void login(String nickname)
+    public Packet login(String nickname)
     {
         try {
             this.game.addPlayer(nickname);
             System.out.println("Login di " + nickname);
-            this.setResponse(new ACK(0));
+            return new ACK(0);
         } catch (Exception e) {
             System.out.println("Login di " +nickname + " FALLITO");
-            this.setResponse(new ACK(1));
+            return new ACK(1);
         }
     }
-    /**
-     *
-     * @return true if is available a response
-     */
-    public boolean responseAvailable()
-    {
-        return this.responseAvailable;
-    }
 
-    /**
-     *
-     * @return get back the response available in json format
-     */
-    public String getResponse() {
-        this.responseAvailable = false;
-        return this.response.generateJson();
-    }
-
-    /**
-     * Set a response packet
-     * @param response packet to use as a response
-     */
-    public void setResponse(PacketManager response) {
-        this.responseAvailable = true;
-        this.response = response;
-    }
 
 }

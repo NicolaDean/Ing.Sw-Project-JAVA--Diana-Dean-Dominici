@@ -1,13 +1,14 @@
-package it.polimi.ingsw.controller;
+package it.polimi.ingsw.controller.interpreters;
 
 import com.google.gson.JsonObject;
-import it.polimi.ingsw.controller.BasicJsonInterpreter;
+import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.*;
 
 public class JsonInterpreterServer extends BasicJsonInterpreter {
 
     private ServerController controller;
     private int playerIndex;
+
 
     public JsonInterpreterServer(int playerIndex,ServerController serverController )
     {
@@ -23,14 +24,7 @@ public class JsonInterpreterServer extends BasicJsonInterpreter {
         return controller;
     }
 
-    public  void getResponse()
-    {
 
-        if(this.controller.responseAvailable())
-            System.out.println("SERVER RESPONSE: " + this.controller.getResponse());
-        else
-            System.out.println("No response");
-    }
     //TODO: Nota: il controller contiene la view quindi al suo interno c'è tutto ciò che serve per eseguire il pacchetto
     /**
      *  Dispatch the packet based on the "type" field
@@ -63,11 +57,14 @@ public class JsonInterpreterServer extends BasicJsonInterpreter {
             case "BasicProduction":
                 packet = BasicPacket.getPacket(type,content,BasicProduction.class);
                 break;
+            case "MarketExtraction":
+                packet = BasicPacket.getPacket(type,content,MarketExtraction.class);
+                break;
             default:
                 throw new IllegalStateException("Unknown  Packet type : " + type);
         }
 
-        packet.analyze(controller);
+        this.setResponse(packet.analyze(controller));
     }
 
 }

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.controller;
+package it.polimi.ingsw.controller.interpreters;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -10,9 +10,12 @@ import it.polimi.ingsw.controller.packets.UpdatePosition;
 public class BasicJsonInterpreter {
 
     JsonParser parser;
+    PacketManager response;
+    boolean responseAvailable;
 
     public BasicJsonInterpreter()
     {
+        this.responseAvailable = false;
         this.parser = new JsonParser();
 
     }
@@ -36,6 +39,40 @@ public class BasicJsonInterpreter {
 
     public void dispatchPacket(String type, JsonObject content)
     {
+
+    }
+
+    /**
+     *
+     * @return true if is available a response
+     */
+    public boolean responseAvailable()
+    {
+        return this.responseAvailable;
+    }
+
+    /**
+     *
+     * @return get back the response available in json format
+     */
+    public String getResponse() {
+        this.responseAvailable = false;
+
+        System.out.println("RESPONSE : -> " + this.response.generateJson());
+        return this.response.generateJson();
+    }
+
+    /**
+     * Set a response packet
+     * @param response packet to use as a response
+     */
+    public void setResponse(PacketManager response) {
+
+        if(response != null)
+        {
+            this.responseAvailable = true;
+            this.response = response;
+        }
 
     }
 

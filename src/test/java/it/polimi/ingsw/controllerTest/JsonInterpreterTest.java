@@ -1,11 +1,5 @@
 package it.polimi.ingsw.controllerTest;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
-import it.polimi.ingsw.controller.BasicJsonInterpreter;
-import it.polimi.ingsw.controller.JsonInterpreterServer;
+import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.model.Game;
@@ -15,7 +9,6 @@ import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
@@ -125,10 +118,18 @@ public class JsonInterpreterTest {
 
     }
     @Test
-    public void ResourceListTest()
+    public void AllPacketGeneration()
     {
+        List<Resource> resourceList = new ResourceList();
+        resourceList.add(new Resource(COIN,1));
+        resourceList.add(new Resource(ROCK,2));
 
-
-
+        JsonInterpreterServer interpreter = new JsonInterpreterServer(0,new ServerController());
+        System.out.println( new Login("Nicola").generateJson());
+        System.out.println( new UpdatePosition(1,1).generateJson());
+        System.out.println( new Production(1,0).generateJson());
+        System.out.println( new BuyCard(1,2,1,0).generateJson());
+        System.out.println( new PendingCost(resourceList).generateJson());
+        System.out.println( new MarketExtraction(false,1).generateJson());
     }
 }

@@ -7,8 +7,9 @@ public interface PacketManager {
     /**
      * It allow to read packet content and execute necesary operations
      * @param controller  the client or server controller
+     * @return
      */
-    public void   analyze(ServerController controller);
+    public Packet   analyze(ServerController controller);
 
     /**
      * Generate a string with the json corresponding to its packetType
