@@ -173,4 +173,9 @@ public class ProductionCard extends Card {
         return cost;
     }
 
+    public List<Resource> getRawMaterials()
+    {
+        return this.rawMaterials;
+    }
+
 }

@@ -37,6 +37,20 @@ public class Game {
         this.currentPapalSpaceToReach = 0;
     }
 
+    public ProductionCard drawProductionCard(int x,int y)
+    {
+        return this.getProductionDecks()[x][y].peek();
+    }
+    public int getCurrentPlayerIndex()
+    {
+        return this.currentPlayer;
+    }
+
+    public Player getCurrentPlayer()
+    {
+        return this.players.get(this.currentPlayer);
+    }
+
     /**
      * function to add a new player to the game
      * @param nickname the nickname of the player

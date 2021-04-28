@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.modelTest;
 
 import it.polimi.ingsw.model.cards.Card;
 import it.polimi.ingsw.model.factory.CardFactory;

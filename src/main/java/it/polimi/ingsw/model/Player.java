@@ -63,7 +63,6 @@ public class Player {
     public Player(String nickname)
     {
         this.dashboard = new Dashboard();
-        this.dashboard = new Dashboard();
         this.nickname = nickname;
         this.bonusProductions =null;
         bonusball = new ArrayList<>();
