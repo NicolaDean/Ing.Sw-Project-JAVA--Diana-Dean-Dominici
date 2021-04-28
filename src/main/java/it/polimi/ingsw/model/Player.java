@@ -2,9 +2,8 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
-import it.polimi.ingsw.model.cards.leaders.BonusProduction;
+import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 import it.polimi.ingsw.model.dashboard.Dashboard;
-import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ public class Player {
     private Dashboard dashboard;
     private int position;
     private int score = 0;
-    private List<BonusProduction> bonusProductions;
+    private List<BonusProductionInterface> bonusProductions;
     private boolean inkwell;
     private ArrayList<ResourceType> bonusball;
     private int positionLeaderActive;
@@ -291,7 +290,7 @@ public class Player {
      * Add the bonusProduction interface to the player so that he can activate bonus production
      * @param bonus the activated  Leader Card
      */
-    public void addTradeBonus(BonusProduction bonus)
+    public void addTradeBonus(BonusProductionInterface bonus)
     {
         if(this.bonusProductions == null) this.bonusProductions = new ArrayList<>();
 
@@ -317,7 +316,7 @@ public class Player {
 
         if(pos < this.bonusProductions.size())
         {
-            BonusProduction card = this.bonusProductions.get(pos);
+            BonusProductionInterface card = this.bonusProductions.get(pos);
             card.produce(this,resWanted);
 
             this.dashboard.setPendingCost(card.getProdCost()); //if goes well add the cost to the pending cost

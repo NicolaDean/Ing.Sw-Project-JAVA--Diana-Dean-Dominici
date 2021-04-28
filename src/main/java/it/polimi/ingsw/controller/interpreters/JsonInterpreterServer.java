@@ -3,6 +3,9 @@ package it.polimi.ingsw.controller.interpreters;
 import com.google.gson.JsonObject;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.*;
+import it.polimi.ingsw.controller.packets.bidirectionalpackets.ACK;
+import it.polimi.ingsw.controller.packets.clientpackets.UpdatePosition;
+import it.polimi.ingsw.controller.packets.serverpackets.*;
 
 public class JsonInterpreterServer extends BasicJsonInterpreter {
 
@@ -38,32 +41,45 @@ public class JsonInterpreterServer extends BasicJsonInterpreter {
         switch (type)
         {
             case "ACK":
-                packet = BasicPacket.getPacket(type,content,ACK.class);
-                //packet = new ACK(content);
+                packet = BasicPacketFactory.getPacket(type,content, ACK.class);
                 break;
             case "UpdatePosition":
-                packet = BasicPacket.getPacket(type,content,UpdatePosition.class);
-                //packet = new UpdatePosition(content);
+                packet = BasicPacketFactory.getPacket(type,content, UpdatePosition.class);
                 break;
             case "Login":
-                packet = BasicPacket.getPacket(type,content,Login.class);
-                //packet = new Login(content);
-                System.out.println("DEBUG: -> " + packet.generateJson());
+                packet = BasicPacketFactory.getPacket(type,content, Login.class);
                 break;
             case "Production":
-                packet = BasicPacket.getPacket(type,content,Production.class);
-                //packet = new Production(content,this.playerIndex);
+                packet = BasicPacketFactory.getPacket(type,content,Production.class);
                 break;
             case "BasicProduction":
-                packet = BasicPacket.getPacket(type,content,BasicProduction.class);
+                packet = BasicPacketFactory.getPacket(type,content, BasicProduction.class);
+                break;
+            case "BonusProduction":
+                packet = BasicPacketFactory.getPacket(type,content, BonusProduction.class);
                 break;
             case "MarketExtraction":
-                packet = BasicPacket.getPacket(type,content,MarketExtraction.class);
+                packet = BasicPacketFactory.getPacket(type,content,MarketExtraction.class);
+                break;
+            case "StorageMassExtraction":
+                packet = BasicPacketFactory.getPacket(type,content,StorageMassExtraction.class);
+                break;
+            case "SwapDeposit":
+                packet = BasicPacketFactory.getPacket(type,content,SwapDeposit.class);
+                break;
+            case "EndTurn":
+                packet = BasicPacketFactory.getPacket(type,content, EndTurn.class);
+                break;
+            case "SetTurnType":
+                packet = BasicPacketFactory.getPacket(type,content,SetTurnType.class);
+                break;
+            case "ActivateLeader":
+                packet = BasicPacketFactory.getPacket(type,content, ActivateLeader.class);
                 break;
             default:
                 throw new IllegalStateException("Unknown  Packet type : " + type);
         }
-
+        packet.setPlayerIndex(this.playerIndex);
         this.setResponse(packet.analyze(controller));
     }
 

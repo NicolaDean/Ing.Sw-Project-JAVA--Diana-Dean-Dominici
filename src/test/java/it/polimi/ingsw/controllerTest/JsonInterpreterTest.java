@@ -1,7 +1,12 @@
 package it.polimi.ingsw.controllerTest;
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
 import it.polimi.ingsw.controller.ServerController;
-import it.polimi.ingsw.controller.packets.*;
+import it.polimi.ingsw.controller.packets.bidirectionalpackets.ACK;
+import it.polimi.ingsw.controller.packets.clientpackets.MarketResult;
+import it.polimi.ingsw.controller.packets.clientpackets.PendingCost;
+import it.polimi.ingsw.controller.packets.clientpackets.UpdatePosition;
+import it.polimi.ingsw.controller.packets.serverpackets.*;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
@@ -9,6 +14,7 @@ import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
@@ -114,6 +120,8 @@ public class JsonInterpreterTest {
         interpreter.getResponse();
         System.out.println("----------------------------------");
 
+        ServerController s = new ServerController();
+        Controller c = new ServerController();
 
 
     }
@@ -124,12 +132,53 @@ public class JsonInterpreterTest {
         resourceList.add(new Resource(COIN,1));
         resourceList.add(new Resource(ROCK,2));
 
+        List<InsertionInstruction> ins = new ArrayList<>();
+        ins.add(new InsertionInstruction(false,new Resource(COIN,1)));
+        ins.add(new InsertionInstruction(false,new Resource(ROCK,1)));
+        ins.add(new InsertionInstruction(true,new Resource(SERVANT,1),1));
+
         JsonInterpreterServer interpreter = new JsonInterpreterServer(0,new ServerController());
+        System.out.println("----------------------------------");
+        System.out.println("Packets the server is able to handle:");
+        System.out.println("----------------------------------");
+
         System.out.println( new Login("Nicola").generateJson());
         System.out.println( new UpdatePosition(1,1).generateJson());
         System.out.println( new Production(1,0).generateJson());
+        System.out.println( new BasicProduction(COIN,SERVANT,ROCK).generateJson());
+        System.out.println( new BonusProduction(1,COIN,ROCK).generateJson());
         System.out.println( new BuyCard(1,2,1,0).generateJson());
         System.out.println( new PendingCost(resourceList).generateJson());
         System.out.println( new MarketExtraction(false,1).generateJson());
+        System.out.println( new StorageMassExtraction(ins).generateJson());
+        System.out.println( new ActivateLeader(1,false).generateJson());
+        System.out.println( new DiscardResource(1).generateJson());
+        System.out.println( new SwapDeposit(1,2).generateJson());
+        System.out.println( new SetTurnType(2).generateJson());
+        System.out.println( new EndTurn().generateJson());
+        System.out.println( new MarketResult(resourceList,2).generateJson());
+
+    }
+
+    //TODO il market restituisce solo 2 risorse, chiedere a riki (probabilmente il mischiaggio non avviene in maniera molto casuale)
+    @Test
+    public void marketTest()
+    {
+        System.out.println("----------------------------------");
+        Login log1   = new Login("Nicola");
+        Login log2  = new Login("Federico");
+        Login log3   = new Login("Riccardo");
+        Login log4  = new Login("Biagio");
+
+        JsonInterpreterServer interpreter = new JsonInterpreterServer(0,new ServerController());
+
+        interpreter.analyzePacket(log1.generateJson());
+        interpreter.analyzePacket(log2.generateJson());
+        interpreter.analyzePacket(log3.generateJson());
+        interpreter.analyzePacket(log4.generateJson());
+
+        interpreter.analyzePacket(new MarketExtraction(false,3).generateJson());
+        interpreter.getResponse();
+
     }
 }

@@ -51,6 +51,10 @@ public class Game {
         return this.players.get(this.currentPlayer);
     }
 
+    public Market getMarket()
+    {
+        return this.market;
+    }
     /**
      * function to add a new player to the game
      * @param nickname the nickname of the player

@@ -13,7 +13,7 @@ import static it.polimi.ingsw.enumeration.ResourceType.*;
 
 public class Market {
     private int whiteCount=0;
-    private List pendingResourceExtracted = new ResourceList();
+    private List<Resource> pendingResourceExtracted = new ResourceList();
     private BasicBall discardedResouce;
     private BasicBall resouces[][] = { { new WhiteBall(), new WhiteBall() , new WhiteBall() ,new WhiteBall() } ,
                                { new ResourceBall(Color.blue,SHIELD), new ResourceBall(Color.blue,SHIELD) , new ResourceBall(Color.gray,ROCK) ,new ResourceBall(Color.gray,ROCK) } ,
@@ -157,7 +157,7 @@ public class Market {
      * get pendingResourceExtracted
      * @return pendingResourceExtracted
      */
-    public List getPendingResourceExtracted() {
+    public List<Resource> getPendingResourceExtracted() {
         return pendingResourceExtracted;
     }
 

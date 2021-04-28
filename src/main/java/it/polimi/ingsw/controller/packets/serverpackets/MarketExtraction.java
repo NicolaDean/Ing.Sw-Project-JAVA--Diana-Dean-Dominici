@@ -1,8 +1,10 @@
-package it.polimi.ingsw.controller.packets;
+package it.polimi.ingsw.controller.packets.serverpackets;
 
 import it.polimi.ingsw.controller.ServerController;
+import it.polimi.ingsw.controller.packets.Packet;
+import it.polimi.ingsw.controller.packets.PacketManager;
 
-public class MarketExtraction extends Packet implements PacketManager{
+public class MarketExtraction extends Packet implements PacketManager {
 
     private boolean direction;
     private int pos;
@@ -16,6 +18,6 @@ public class MarketExtraction extends Packet implements PacketManager{
 
     @Override
     public Packet analyze(ServerController controller) {
-        return null;
+        return controller.marketExtraction(this.direction,this.pos,this.getPlayerIndex());
     }
 }

@@ -16,4 +16,9 @@ public interface PacketManager {
      * @return string with the json corresponding to its packetType
      */
     public String generateJson();
+
+    /**
+     * Set the owner of the packet
+     */
+    public void setPlayerIndex(int index);
 }

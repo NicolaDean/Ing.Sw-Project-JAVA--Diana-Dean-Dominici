@@ -1,6 +1,8 @@
-package it.polimi.ingsw.controller.packets;
+package it.polimi.ingsw.controller.packets.serverpackets;
 
 import it.polimi.ingsw.controller.ServerController;
+import it.polimi.ingsw.controller.packets.Packet;
+import it.polimi.ingsw.controller.packets.PacketManager;
 
 public class BuyCard extends Packet implements PacketManager {
 

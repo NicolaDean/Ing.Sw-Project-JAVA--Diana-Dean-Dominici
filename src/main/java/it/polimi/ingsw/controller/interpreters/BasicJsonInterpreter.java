@@ -2,10 +2,7 @@ package it.polimi.ingsw.controller.interpreters;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import it.polimi.ingsw.controller.packets.ACK;
-import it.polimi.ingsw.controller.packets.BasicPacket;
 import it.polimi.ingsw.controller.packets.PacketManager;
-import it.polimi.ingsw.controller.packets.UpdatePosition;
 
 public class BasicJsonInterpreter {
 

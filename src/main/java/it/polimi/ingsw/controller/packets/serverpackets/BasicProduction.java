@@ -1,11 +1,13 @@
-package it.polimi.ingsw.controller.packets;
+package it.polimi.ingsw.controller.packets.serverpackets;
 
 import it.polimi.ingsw.controller.ServerController;
+import it.polimi.ingsw.controller.packets.Packet;
+import it.polimi.ingsw.controller.packets.PacketManager;
 import it.polimi.ingsw.enumeration.ResourceType;
 
-public class BasicProduction extends Packet implements PacketManager{
 
-    transient int playerIndex;
+public class BasicProduction extends Packet implements PacketManager {
+
     private ResourceType res1;
     private ResourceType res2;
     private ResourceType obt;
@@ -20,6 +22,6 @@ public class BasicProduction extends Packet implements PacketManager{
     }
     @Override
     public Packet analyze(ServerController controller) {
-        return controller.basicProduction(res1,res2,obt,playerIndex);
+        return controller.basicProduction(res1,res2,obt,this.getPlayerIndex());
     }
 }

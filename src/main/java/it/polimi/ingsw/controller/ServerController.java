@@ -1,11 +1,15 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.packets.*;
+import it.polimi.ingsw.controller.packets.bidirectionalpackets.ACK;
+import it.polimi.ingsw.controller.packets.clientpackets.MarketResult;
+import it.polimi.ingsw.controller.packets.clientpackets.PendingCost;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Dashboard;
+import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.List;
@@ -110,6 +114,11 @@ public class ServerController extends Controller{
         }
     }
 
+    /**
+     * Try to login to the game
+     * @param nickname player name
+     * @return ack if of Nack if exception occurred
+     */
     public Packet login(String nickname)
     {
         try {
@@ -120,6 +129,128 @@ public class ServerController extends Controller{
             System.out.println("Login di " +nickname + " FALLITO");
             return new ACK(1);
         }
+    }
+
+    /**
+     * Extract resource from the storage
+     * @param resource resource to remove
+     * @param pos      deposit selected
+     * @param player   packet sender
+     * @return Ack or Nack
+     */
+    public Packet storageExtraction(Resource resource, int pos, int player)
+    {
+        if(!isRightPlayer(player)) return new ACK(1);
+
+        Player p = this.game.getCurrentPlayer();
+        p.payStorageResource(resource,pos);
+        return  null;
+    }
+    /**
+     * Extract resource from the chest
+     * @param resource resource to remove
+     * @param player   packet sender
+     * @return Ack or Nack
+     */
+    public Packet chestExtraction(Resource resource, int player)
+    {
+        if(!isRightPlayer(player)) return new ACK(1);
+
+        Player p = this.game.getCurrentPlayer();
+        p.payChestResource(resource);
+        return  null;
+    }
+
+    /**
+     *
+     * @param pos leader to activate/discard
+     * @param player
+     * @return
+     */
+    public Packet activateLeader(int pos,boolean action, int player)
+    {
+        if(!isRightPlayer(player)) return new ACK(1);
+
+        Player p = this.game.getCurrentPlayer();
+        try {
+            if(action)
+            {
+                p.activateLeader(pos);
+            }
+            else
+            {
+                p.discardLeader(pos);
+            }
+
+            return new ACK(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ACK(1);
+        }
+    }
+
+    /**
+     * bonus production
+     * @param pos   card to activate
+     * @param obt   wanted res
+     * @param player packet sender
+     * @return ack or nack
+     */
+    public Packet bonusProduction(int pos,ResourceType obt,int player)
+    {
+        if(!isRightPlayer(player)) return new ACK(1);
+
+        Player p = this.game.getCurrentPlayer();
+        try {
+            p.bonusProduction(pos,obt);
+            return new ACK(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ACK(1);
+        }
+    }
+
+    public Packet swapDeposit(int pos1,int pos2,int player)
+    {
+        if(!isRightPlayer(player)) return new ACK(1);
+
+        Player p = this.game.getCurrentPlayer();
+        try {
+            p.getDashboard().getStorage().swapDeposit(pos1,pos2);
+            return new ACK(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ACK(1);
+        }
+    }
+
+    /**
+     *
+     * @param direction row or column (row = false,col = true)
+     * @param pos    row/col position of the market
+     * @param player packet sender
+     * @return a packet containing the resources extracted and eventual "whiteballs" to ask the user
+     */
+    public Packet marketExtraction(boolean direction,int pos,int player)
+    {
+        if(!isRightPlayer(player)) return new ACK(1);
+
+        Player p = this.game.getCurrentPlayer();
+        Market m = this.game.getMarket();
+
+        if(direction)
+        {
+            m.exstractColumn(pos,p);
+        }
+        else
+        {
+            m.exstractRow(pos,p);
+        }
+
+        List <Resource> res = m.getPendingResourceExtracted();
+        int white           = m.getWhiteCount();
+
+        return  new MarketResult(res,white);
     }
 
 

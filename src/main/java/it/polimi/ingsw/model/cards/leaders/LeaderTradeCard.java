@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.resources.ResourceOperator;
 
 import java.util.List;
 
-public class LeaderTradeCard extends LeaderCard implements BonusProduction {
+public class LeaderTradeCard extends LeaderCard implements BonusProductionInterface {
 
     private ResourceType obtain;
 

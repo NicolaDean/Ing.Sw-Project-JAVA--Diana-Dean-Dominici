@@ -1,9 +1,11 @@
-package it.polimi.ingsw.controller.packets;
+package it.polimi.ingsw.controller.packets.serverpackets;
 
 import com.google.gson.JsonObject;
 import it.polimi.ingsw.controller.ServerController;
+import it.polimi.ingsw.controller.packets.Packet;
+import it.polimi.ingsw.controller.packets.PacketManager;
 
-public class Login extends Packet implements PacketManager{
+public class Login extends Packet implements PacketManager {
 
     String nickname;
 

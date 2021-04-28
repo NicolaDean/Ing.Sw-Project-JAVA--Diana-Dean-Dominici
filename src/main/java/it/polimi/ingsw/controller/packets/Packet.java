@@ -1,7 +1,5 @@
 package it.polimi.ingsw.controller.packets;
 
-import com.google.gson.Gson;
-
 public abstract class  Packet implements PacketManager
 {
     private transient  String type;
@@ -27,7 +25,7 @@ public abstract class  Packet implements PacketManager
 
     public String generateJson()
     {
-        BasicPacket packet = new BasicPacket(this.getType(), this);
+        BasicPacketFactory packet = new BasicPacketFactory(this.getType(), this);
 
         return packet.toJson();
     }
@@ -35,6 +33,7 @@ public abstract class  Packet implements PacketManager
     public int getPlayerIndex() {
         return playerIndex;
     }
+
     public void setPlayerIndex(int playerIndex)
     {
         this.playerIndex = playerIndex;
