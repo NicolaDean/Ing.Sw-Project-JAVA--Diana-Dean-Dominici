@@ -9,11 +9,6 @@ public class Login extends Packet implements PacketManager {
 
     String nickname;
 
-    public Login(JsonObject content) {
-        super("Login");
-
-        this.nickname = content.get("nickname").getAsString();
-    }
 
     public Login(String nickname) {
         super("Login");
