@@ -26,16 +26,17 @@ class SlideClientHandler implements Runnable {
                 if (line.equals("quit")) {
                     break;
                 } else {
-                    System.out.println("COMMAND: -> " + line);
+
                     try
                     {
                         interpreter.analyzePacket(line);
+                        System.out.println("COMMAND: -> " + line);
                         out.println(interpreter.getResponse());
                         out.flush();
                     }
                     catch (Exception e)
                     {
-                        e.printStackTrace();
+                        System.out.println("NOT JSON MESSAGE: " + line);
                     }
                 }
             }
