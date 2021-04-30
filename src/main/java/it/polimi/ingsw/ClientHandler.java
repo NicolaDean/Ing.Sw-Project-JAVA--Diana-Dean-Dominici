@@ -59,7 +59,6 @@ public class ClientHandler implements Runnable {
                     break;
                 } else {
                     readMessage(message);
-                    respondToClient();
                 }
             }
         } catch (Exception e) {
@@ -71,9 +70,11 @@ public class ClientHandler implements Runnable {
     {
         try {
             interpreter.analyzePacket(message);
+            respondToClient();
+
             System.out.println("COMMAND: -> " + message);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Not JSON MESSAGE: " + message);
         }
     }
 
