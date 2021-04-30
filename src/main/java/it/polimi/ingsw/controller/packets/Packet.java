@@ -1,6 +1,8 @@
 package it.polimi.ingsw.controller.packets;
 
-public abstract class  Packet implements PacketManager
+import it.polimi.ingsw.controller.ServerController;
+
+public class  Packet implements PacketManager
 {
     private transient  String type;
     private transient int playerIndex;
@@ -21,6 +23,11 @@ public abstract class  Packet implements PacketManager
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public Packet analyze(ServerController controller) {
+        return null;
     }
 
     public String generateJson()

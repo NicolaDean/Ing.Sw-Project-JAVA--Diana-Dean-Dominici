@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.interpreters;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.*;
@@ -36,6 +37,7 @@ public class JsonInterpreterServer extends BasicJsonInterpreter {
      */
     public void dispatchPacket(String type,JsonObject content)
     {
+
         PacketManager packet;
 
         switch (type)

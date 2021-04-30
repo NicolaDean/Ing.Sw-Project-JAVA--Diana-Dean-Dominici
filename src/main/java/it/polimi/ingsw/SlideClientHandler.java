@@ -45,6 +45,7 @@ class SlideClientHandler implements Runnable {
             out.close();
             socket.close();
         } catch (IOException e) {
+            System.out.println("Connection Closed");
             System.err.println(e.getMessage());
         }
     }

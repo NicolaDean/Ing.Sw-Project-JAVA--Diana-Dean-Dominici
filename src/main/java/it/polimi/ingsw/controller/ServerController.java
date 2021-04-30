@@ -14,7 +14,7 @@ import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.List;
 
-public class ServerController extends Controller{
+public class ServerController{
 
     //view
     Game game;

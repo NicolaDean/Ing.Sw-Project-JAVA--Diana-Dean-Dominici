@@ -2,7 +2,7 @@ package it.polimi.ingsw.controller.packets;
 
 import it.polimi.ingsw.controller.ServerController;
 
-public interface PacketManager {
+public interface PacketManager{
 
     /**
      * It allow to read packet content and execute necesary operations

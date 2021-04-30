@@ -1,7 +1,9 @@
 package it.polimi.ingsw.controllerTest;
+import com.google.gson.Gson;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
 import it.polimi.ingsw.controller.ServerController;
+import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.bidirectionalpackets.ACK;
 import it.polimi.ingsw.controller.packets.clientpackets.MarketResult;
 import it.polimi.ingsw.controller.packets.clientpackets.PendingCost;
@@ -54,6 +56,12 @@ public class JsonInterpreterTest {
         System.out.println("JSON3: -> " +prod.generateJson());
 
         System.out.println("----------------------------------");
+
+        Gson gson = new Gson();
+
+
+
+
     }
 
     @Test
@@ -121,7 +129,7 @@ public class JsonInterpreterTest {
         System.out.println("----------------------------------");
 
         ServerController s = new ServerController();
-        Controller c = new ServerController();
+        //Controller c = new ServerController();
 
 
     }
