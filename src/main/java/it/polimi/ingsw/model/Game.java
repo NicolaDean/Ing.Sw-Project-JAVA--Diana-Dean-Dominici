@@ -55,6 +55,11 @@ public class Game {
     {
         return this.market;
     }
+
+    public boolean isFull() {
+        return this.nofplayers==4;
+    }
+
     /**
      * function to add a new player to the game
      * @param nickname the nickname of the player
@@ -72,6 +77,22 @@ public class Game {
         }
         else
             throw new Exception("There are already 4 players");
+    }
+
+    /**
+     * Return the player index position from the player
+     * @param nickname
+     * @return
+     */
+    public int getPlayerIndexFromNickname(String nickname)
+    {
+        int i=0;
+        for(Player p:players)
+        {
+            if(p.getNickname().equals(nickname)) return i;
+            i++;
+        }
+        return -1;
     }
 
     /**

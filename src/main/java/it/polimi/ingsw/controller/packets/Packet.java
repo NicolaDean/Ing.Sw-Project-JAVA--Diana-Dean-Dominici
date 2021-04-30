@@ -2,16 +2,21 @@ package it.polimi.ingsw.controller.packets;
 
 import it.polimi.ingsw.controller.ServerController;
 
-public class  Packet implements PacketManager
+public abstract class   Packet implements PacketManager
 {
-    private transient  String type;
-    private transient int playerIndex;
+    private transient  String   type;
+    private transient int       playerIndex;
+    private transient boolean   isBroadcast;
 
     public Packet(String type) {
         this.type = type;
     }
 
-    public  Packet(String type,int playerIndex)
+    public void setBroadcast(boolean broadcast) {
+        isBroadcast = broadcast;
+    }
+
+    public  Packet(String type, int playerIndex)
     {
         this.type = type;
         this.playerIndex = playerIndex;

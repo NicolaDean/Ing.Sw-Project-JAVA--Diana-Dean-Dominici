@@ -29,7 +29,7 @@ public class JsonInterpreterTest {
         String updatePos    = "{\"type\":\"UpdatePosition\",\"content\":{\"position\" : 2,\"player\" : 1 }}";
 
 
-        JsonInterpreterServer interpreter = new JsonInterpreterServer(1,new ServerController());
+        JsonInterpreterServer interpreter = new JsonInterpreterServer(1,new ServerController(true));
 
 
         System.out.println("----------------------------------");
@@ -65,7 +65,7 @@ public class JsonInterpreterTest {
         Login log4  = new Login("Biagio");
         Login log5  = new Login("Marco");
 
-        JsonInterpreterServer interpreter = new JsonInterpreterServer(1,new ServerController());
+        JsonInterpreterServer interpreter = new JsonInterpreterServer(1,new ServerController(true));
 
         interpreter.analyzePacket(log1.generateJson());
         interpreter.analyzePacket(log2.generateJson());
@@ -85,7 +85,7 @@ public class JsonInterpreterTest {
         Login log3   = new Login("Riccardo");
         Login log4  = new Login("Biagio");
 
-        JsonInterpreterServer interpreter = new JsonInterpreterServer(0,new ServerController());
+        JsonInterpreterServer interpreter = new JsonInterpreterServer(0,new ServerController(true));
 
         interpreter.analyzePacket(log1.generateJson());
         interpreter.analyzePacket(log2.generateJson());
@@ -120,7 +120,7 @@ public class JsonInterpreterTest {
         interpreter.getResponse();
         System.out.println("----------------------------------");
 
-        ServerController s = new ServerController();
+        ServerController s = new ServerController(true);
 
 
     }
@@ -136,7 +136,7 @@ public class JsonInterpreterTest {
         ins.add(new InsertionInstruction(false,new Resource(ROCK,1)));
         ins.add(new InsertionInstruction(true,new Resource(SERVANT,1),1));
 
-        JsonInterpreterServer interpreter = new JsonInterpreterServer(0,new ServerController());
+        JsonInterpreterServer interpreter = new JsonInterpreterServer(0,new ServerController(true));
         System.out.println("----------------------------------");
         System.out.println("Packets the server is able to handle:");
         System.out.println("----------------------------------");
@@ -169,7 +169,7 @@ public class JsonInterpreterTest {
         Login log3   = new Login("Riccardo");
         Login log4  = new Login("Biagio");
 
-        JsonInterpreterServer interpreter = new JsonInterpreterServer(0,new ServerController());
+        JsonInterpreterServer interpreter = new JsonInterpreterServer(0,new ServerController(true));
 
         interpreter.analyzePacket(log1.generateJson());
         interpreter.analyzePacket(log2.generateJson());

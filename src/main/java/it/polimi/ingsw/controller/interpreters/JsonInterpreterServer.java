@@ -10,12 +10,13 @@ public class JsonInterpreterServer extends BasicJsonInterpreter {
 
     private ServerController controller;
     private int playerIndex;
-
+    private String nickname;
 
     public JsonInterpreterServer(int playerIndex,ServerController serverController )
     {
         this.playerIndex = playerIndex;
-        this.controller = serverController;
+        this.controller  = serverController;
+        this.nickname    = null;
     }
 
     public int getPlayerIndex() {
@@ -35,7 +36,22 @@ public class JsonInterpreterServer extends BasicJsonInterpreter {
      */
     public void dispatchPacket(String type,JsonObject content)
     {
-        PacketManager packet = null;
+        Packet packet = null;
+
+
+        try {
+            packet = BasicPacketFactory.getPacket(type,content, Class.forName("it.polimi.ingsw.controller.packets." + type));
+
+            packet.setPlayerIndex(this.playerIndex);
+            this.setResponse(packet.analyze(controller));
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+}
 
         /*switch (type)
         {
@@ -79,17 +95,3 @@ public class JsonInterpreterServer extends BasicJsonInterpreter {
                 throw new IllegalStateException("Unknown  Packet type : " + type);
         }*/
 
-        try {
-            packet = BasicPacketFactory.getPacket(type,content, Class.forName("it.polimi.ingsw.controller.packets." + type));
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        packet.setPlayerIndex(this.playerIndex);
-        this.setResponse(packet.analyze(controller));
-
-
-
-    }
-
-}

@@ -27,6 +27,14 @@ public class ClientHandler implements Runnable {
 
     }
 
+    public JsonInterpreterServer getInterpreter() {
+        return interpreter;
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
     @Override
     public void run() {
         waitClientMassages();
@@ -49,21 +57,27 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    public boolean exitCondition()
+    {
+        return  true;
+    }
+
     public void waitClientMassages()
     {
-        try {
-            while (true) {
+        boolean flag = true;
+            while (flag) {
+                System.out.println("wait command");
                 String message = this.input.nextLine();
                 if (message.equals("quit")) {
                     System.out.println("Client " + socket.getInetAddress() + "Exit the server");
                     break;
                 } else {
                     readMessage(message);
+                    flag = exitCondition();
                 }
+
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        System.out.println("Exit loop");
     }
 
     public void readMessage(String message)

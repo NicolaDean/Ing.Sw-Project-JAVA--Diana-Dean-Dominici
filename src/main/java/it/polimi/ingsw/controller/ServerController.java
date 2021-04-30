@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.ClientHandler;
 import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.controller.packets.ACK;
 import it.polimi.ingsw.controller.packets.MarketResult;
@@ -12,17 +13,36 @@ import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServerController{
 
     //view
     Game game;
+    List<ClientHandler> clients;
 
-
-    public ServerController()
+    /**
+     *
+     * @param real if true create a real controller(with clientHandlers) if false an emptyController for accept Login in waitingRoom
+     */
+    public ServerController(boolean real)
     {
         game = new Game();
+
+        if(real)  clients = new ArrayList<>();//If is a real controller create also ClientHandlers
+
+    }
+
+
+
+    public void addClient(ClientHandler client) {
+        this.clients.add(client);
+    }
+
+    public boolean isFull()
+    {
+        return this.game.isFull();
     }
 
     public Game getGame() {
@@ -123,10 +143,10 @@ public class ServerController{
     {
         try {
             this.game.addPlayer(nickname);
-            System.out.println("Login di " + nickname);
+            //System.out.println("Login di " + nickname);
             return new ACK(0);
         } catch (Exception e) {
-            System.out.println("Login di " +nickname + " FALLITO");
+            //System.out.println("Login di " +nickname + " FALLITO");
             return new ACK(1);
         }
     }
