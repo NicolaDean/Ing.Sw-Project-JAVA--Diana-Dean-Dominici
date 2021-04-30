@@ -1,14 +1,12 @@
 package it.polimi.ingsw.controllerTest;
-import com.google.gson.Gson;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
 import it.polimi.ingsw.controller.ServerController;
-import it.polimi.ingsw.controller.packets.Packet;
-import it.polimi.ingsw.controller.packets.bidirectionalpackets.ACK;
-import it.polimi.ingsw.controller.packets.clientpackets.MarketResult;
-import it.polimi.ingsw.controller.packets.clientpackets.PendingCost;
-import it.polimi.ingsw.controller.packets.clientpackets.UpdatePosition;
-import it.polimi.ingsw.controller.packets.serverpackets.*;
+import it.polimi.ingsw.controller.packets.*;
+import it.polimi.ingsw.controller.packets.ACK;
+import it.polimi.ingsw.controller.packets.MarketResult;
+import it.polimi.ingsw.controller.packets.PendingCost;
+import it.polimi.ingsw.controller.packets.UpdatePosition;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
@@ -56,12 +54,6 @@ public class JsonInterpreterTest {
         System.out.println("JSON3: -> " +prod.generateJson());
 
         System.out.println("----------------------------------");
-
-        Gson gson = new Gson();
-
-
-
-
     }
 
     @Test
@@ -129,7 +121,7 @@ public class JsonInterpreterTest {
         System.out.println("----------------------------------");
 
         ServerController s = new ServerController();
-        //Controller c = new ServerController();
+        Controller c = new ServerController();
 
 
     }

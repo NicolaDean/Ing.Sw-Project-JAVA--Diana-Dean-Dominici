@@ -1,9 +1,6 @@
-package it.polimi.ingsw.controller.packets.serverpackets;
+package it.polimi.ingsw.controller.packets;
 
 import it.polimi.ingsw.controller.ServerController;
-import it.polimi.ingsw.controller.packets.Packet;
-import it.polimi.ingsw.controller.packets.PacketManager;
-import it.polimi.ingsw.controller.packets.bidirectionalpackets.ACK;
 
 import java.util.List;
 

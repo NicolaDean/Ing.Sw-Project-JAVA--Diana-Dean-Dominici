@@ -1,9 +1,9 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.packets.*;
-import it.polimi.ingsw.controller.packets.bidirectionalpackets.ACK;
-import it.polimi.ingsw.controller.packets.clientpackets.MarketResult;
-import it.polimi.ingsw.controller.packets.clientpackets.PendingCost;
+import it.polimi.ingsw.controller.packets.ACK;
+import it.polimi.ingsw.controller.packets.MarketResult;
+import it.polimi.ingsw.controller.packets.PendingCost;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;

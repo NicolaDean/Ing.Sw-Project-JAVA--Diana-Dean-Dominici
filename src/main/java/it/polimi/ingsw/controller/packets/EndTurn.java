@@ -1,17 +1,14 @@
-package it.polimi.ingsw.controller.packets.serverpackets;
+package it.polimi.ingsw.controller.packets;
 
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 
-public class SetTurnType  extends Packet implements PacketManager {
+public class EndTurn  extends Packet implements PacketManager {
 
-    int turnType;
-
-    public SetTurnType(int turnType)
+    public EndTurn()
     {
-        super("SetTurnType");
-        this.turnType = turnType;
+        super("EndTurn");
     }
     @Override
     public Packet analyze(ServerController controller) {

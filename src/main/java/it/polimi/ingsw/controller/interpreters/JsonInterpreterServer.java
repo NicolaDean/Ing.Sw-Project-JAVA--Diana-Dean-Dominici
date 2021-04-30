@@ -1,12 +1,10 @@
 package it.polimi.ingsw.controller.interpreters;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.*;
-import it.polimi.ingsw.controller.packets.bidirectionalpackets.ACK;
-import it.polimi.ingsw.controller.packets.clientpackets.UpdatePosition;
-import it.polimi.ingsw.controller.packets.serverpackets.*;
+import it.polimi.ingsw.controller.packets.ACK;
+import it.polimi.ingsw.controller.packets.UpdatePosition;
 
 public class JsonInterpreterServer extends BasicJsonInterpreter {
 
@@ -37,10 +35,9 @@ public class JsonInterpreterServer extends BasicJsonInterpreter {
      */
     public void dispatchPacket(String type,JsonObject content)
     {
+        PacketManager packet = null;
 
-        PacketManager packet;
-
-        switch (type)
+        /*switch (type)
         {
             case "ACK":
                 packet = BasicPacketFactory.getPacket(type,content, ACK.class);
@@ -80,9 +77,18 @@ public class JsonInterpreterServer extends BasicJsonInterpreter {
                 break;
             default:
                 throw new IllegalStateException("Unknown  Packet type : " + type);
+        }*/
+
+        try {
+            packet = BasicPacketFactory.getPacket(type,content, Class.forName("it.polimi.ingsw.controller.packets." + type));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
+
         packet.setPlayerIndex(this.playerIndex);
         this.setResponse(packet.analyze(controller));
+
+
 
     }
 
