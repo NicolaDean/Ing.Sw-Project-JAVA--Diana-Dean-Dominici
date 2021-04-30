@@ -121,7 +121,6 @@ public class JsonInterpreterTest {
         System.out.println("----------------------------------");
 
         ServerController s = new ServerController();
-        Controller c = new ServerController();
 
 
     }
