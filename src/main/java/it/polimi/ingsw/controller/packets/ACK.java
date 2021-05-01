@@ -21,23 +21,25 @@ public class ACK extends Packet<ClientController> implements PacketManager<Clien
     {
         //TODO we can have a "error Msg" class with a (array of error) that load from JSON and when i need one i do "getErrorCode( int )"
         //TODO Controller contains the view so i can do "view.printError" or something similar
+        //TODO ERROR MESSAGES ARE AUTOMATICLY GENERATED FROM EXEPTION, SWITCH WILL DISAPPEAR
         switch (this.errorMSG)
         {
             case 0:
-                System.out.println("OK");
+                controller.exampleACK("OK");
                 break;
             case 1:
-                System.out.println("NotEnoughPlayers");
+                controller.exampleACK("MatchFull");
                 break;
             case 2:
-                System.out.println("PlayerListFull");
+                controller.exampleACK("NicknameAlreadyTaken");
                 break;
             case 3:
-                System.out.println("NickameAlreadyTaken");
+                controller.exampleACK("Wrong position");
                 break;
             default:
-                System.out.println("Generic error");
+                controller.exampleACK("Generic");
         }
+
         return null;
 
     }
