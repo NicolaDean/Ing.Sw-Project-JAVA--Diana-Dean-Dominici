@@ -1,5 +1,8 @@
 package it.polimi.ingsw.modelTest;
 
+import it.polimi.ingsw.exceptions.FullDepositException;
+import it.polimi.ingsw.exceptions.NoBonusDepositOwned;
+import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.resources.Resource;
@@ -29,53 +32,53 @@ public class DashboardTest {
 
         //Lv 1 impiled on 1
         Assertions.assertDoesNotThrow(()-> {
-            dash.setProcuctionCard(tmp,0);
+            dash.setProductionCard(tmp,0);
         });
         Assertions.assertThrows(Exception.class,()-> {
-            dash.setProcuctionCard(tmp,0);
+            dash.setProductionCard(tmp,0);
         });
 
         //Lv 2 on null
         Assertions.assertThrows(Exception.class,()-> {
-            dash.setProcuctionCard(tmp2,1);
+            dash.setProductionCard(tmp2,1);
         });
         //Lv 3 on null
         Assertions.assertThrows(Exception.class,()-> {
-            dash.setProcuctionCard(tmp3,1);
+            dash.setProductionCard(tmp3,1);
         });
 
         //Lv 2 impiled on 1
         Assertions.assertDoesNotThrow(()-> {
-            dash.setProcuctionCard(tmp2,0);
+            dash.setProductionCard(tmp2,0);
         });
 
 
         //Lv3 on lv 1
         Assertions.assertDoesNotThrow(()-> {
-            dash.setProcuctionCard(tmp,2);
+            dash.setProductionCard(tmp,2);
         });
         Assertions.assertThrows(Exception.class,()-> {
-            dash.setProcuctionCard(tmp3,2);
+            dash.setProductionCard(tmp3,2);
         });
 
         //Lv3 on lv 2
         Assertions.assertDoesNotThrow(()-> {
-            dash.setProcuctionCard(tmp3,0);
+            dash.setProductionCard(tmp3,0);
         });
 
         //Lv3 on lv 3
         Assertions.assertThrows(Exception.class,()-> {
-            dash.setProcuctionCard(tmp3,0);
+            dash.setProductionCard(tmp3,0);
         });
         //Lv2 on lv 3
         Assertions.assertThrows(Exception.class,()-> {
-            dash.setProcuctionCard(tmp2,0);
+            dash.setProductionCard(tmp2,0);
         });
 
 
         //Lv 1 on lv 2/3
         Assertions.assertThrows(Exception.class,()-> {
-            dash.setProcuctionCard(tmp,0);
+            dash.setProductionCard(tmp,0);
         });
 
 
@@ -92,18 +95,17 @@ public class DashboardTest {
         ProductionCard tmp2 = new ProductionCard(res,2,2);
         ProductionCard tmp3 = new ProductionCard(res,2,3);
 
-        dash.setProcuctionCard(tmp,0);
-        dash.setProcuctionCard(tmp2,0);
-        dash.setProcuctionCard(tmp3,0);
-        dash.setProcuctionCard(tmp,1);
+        dash.setProductionCard(tmp,0);
+        dash.setProductionCard(tmp2,0);
+        dash.setProductionCard(tmp3,0);
+        dash.setProductionCard(tmp,1);
 
         assertTrue(dash.getCardScores() == 10);
 
     }
 
     @Test
-    void TestGetAllResources()
-    {
+    void TestGetAllResources() throws FullDepositException, NoBonusDepositOwned, WrongPosition {
         Dashboard dash = new Dashboard();
 
         dash.chestInsertion(new Resource(COIN,1));
@@ -149,7 +151,7 @@ public class DashboardTest {
 
         ProductionCard tmp = new ProductionCard(res,3,1);
 
-        dash.setProcuctionCard(tmp,1);
+        dash.setProductionCard(tmp,1);
 
         assertTrue(ResourceOperator.extractQuantityOf(COIN,dash.getPendingCost())==2);
         assertTrue(ResourceOperator.extractQuantityOf(ROCK,dash.getPendingCost())==0);

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.dashboard;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 
@@ -26,7 +27,7 @@ public class Deposit {
      * @param in
      * @throws Exception if the insertion exceeds SizeMax
      */
-    public void safeInsertion(Resource in) throws Exception
+    public void safeInsertion(Resource in) throws FullDepositException,WrongPosition
     {
         if(resource ==null)
             setNewDeposit(in.getType(), in.getQuantity());
@@ -39,11 +40,11 @@ public class Deposit {
                     resource = result;
 
 
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+            } catch (IncompatibleTypesComparison e) {
+                throw new WrongPosition("");
             }
             if (result.getQuantity() > sizeMax)
-                throw new Exception("the capacity has been exceeded, operation failed");
+                throw new FullDepositException();
         }
 
     }
@@ -53,11 +54,11 @@ public class Deposit {
      * @param in
      * @throws Exception is the amount of resources is not sufficient to apply the subtraction
      */
-    public void safeSubtraction(Resource in) throws Exception
+    public void safeSubtraction(Resource in) throws WrongPosition,EmptyDeposit
     {
 
         if(resource == null)
-            throw new Exception("The deposit is empty");
+            throw new EmptyDeposit("");
 
 
         int a = resource.getQuantity();
@@ -65,18 +66,19 @@ public class Deposit {
                 Resource result;
                 result = ResourceOperator.sub(resource, in);
                 if (resource.getQuantity() >= in.getQuantity())
-                {   a = -1;
+                {
+                        a = -1;
                         resource = result;
                 }
 
 
-            } catch (Exception e) {
+            } catch (IncompatibleTypesComparison e) {
                 a = -1;
-                System.out.println(e.getMessage());
+                throw new WrongPosition("");
             }
 
             if(resource != null && a == resource.getQuantity())
-                throw new Exception("not enough resources, operation failed");
+                throw new EmptyDeposit(" , extraction operation failed");
 
     }
 

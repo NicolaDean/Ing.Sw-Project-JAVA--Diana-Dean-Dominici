@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.resources;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.exceptions.IncompatibleTypesComparison;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class ResourceOperator {
      * @return
      * @throws Exception
      */
-    public static Resource sum(Resource a,Resource b) throws Exception
+    public static Resource sum(Resource a,Resource b) throws IncompatibleTypesComparison
     {
         if(a.getType() == b.getType())
         {
@@ -31,7 +32,7 @@ public class ResourceOperator {
         }
         else
         {
-             throw new Exception("Resource Type is different");
+             throw new IncompatibleTypesComparison();
         }
     }
 
@@ -42,7 +43,7 @@ public class ResourceOperator {
      * @return
      * @throws Exception
      */
-    public static Resource sub(Resource a,Resource b) throws Exception
+    public static Resource sub(Resource a,Resource b) throws IncompatibleTypesComparison
     {
         if(a.getType() == b.getType())
         {
@@ -50,7 +51,7 @@ public class ResourceOperator {
         }
         else
         {
-            throw new Exception("Resource Type is different");
+            throw new IncompatibleTypesComparison();
         }
     }
 

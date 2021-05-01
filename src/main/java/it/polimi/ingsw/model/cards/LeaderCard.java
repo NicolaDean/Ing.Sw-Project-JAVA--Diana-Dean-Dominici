@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.exceptions.NotSoddisfedPrerequisite;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
@@ -34,7 +35,7 @@ LeaderCard extends Card{
      * @param p player who own the card
      * @return true if activation goes well
      */
-    public void activate(Player p) throws Exception {
+    public void activate(Player p) throws NotSoddisfedPrerequisite {
         boolean resourceRequisite = true;
         boolean cardRequisite = true;
 
@@ -55,6 +56,6 @@ LeaderCard extends Card{
         if(out)
             p.increaseScore(this.getVictoryPoints());
         else
-            throw new Exception("Not soddisfied Prerequisite");
+            throw new NotSoddisfedPrerequisite("");
     }
 }

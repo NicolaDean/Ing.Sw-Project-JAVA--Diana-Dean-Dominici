@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.dashboard;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 
@@ -29,17 +30,22 @@ public class Storage {
      * @param pos2 position of the second deposit
      * @throws Exception if the swap is not possibile because of space limits of the deposits
      */
-    public void swapDeposit(int pos1, int pos2) throws Exception {
+    public void swapDeposit(int pos1, int pos2) throws IllegalSwap {
         if(pos1>2 || pos2>2)
-            throw new Exception("you can't swap bonus deposits");
-        else {
+            throw new IllegalSwap("you can't swap bonus deposits");
+        else if (pos1>5 || pos2 > 5)
+        {
+            throw new IllegalSwap("");
+        }
+        else
+        {
             if (storage[pos1].getResource().getQuantity() <= storage[pos2].getSizeMax() && storage[pos2].getResource().getQuantity() <= storage[pos1].getSizeMax()) {
                 Resource tmp = storage[pos1].getResource();
                 storage[pos1].setNewDeposit(storage[pos2].getResource().getType(), storage[pos2].getResource().getQuantity());
                 storage[pos2].setNewDeposit(tmp.getType(), tmp.getQuantity());
 
             } else
-                throw new Exception("the swap is not possible");
+                throw new IllegalSwap("");
         }
     }
 
@@ -49,12 +55,11 @@ public class Storage {
      * @param pos the deposit position
      * @throws Exception if the insertion can't be done because of space
      */
-    public void safeInsertion(Resource in, int pos) throws Exception
-    {
+    public void safeInsertion(Resource in, int pos) throws NoBonusDepositOwned, WrongPosition, FullDepositException {
         if(pos==4 && storage[4] == null)
-            throw new Exception("you don't have a bonus deposit!");
+            throw new NoBonusDepositOwned();
         if(pos==5 && storage[5] == null)
-            throw new Exception("you don't have a bonus deposit!");
+            throw new NoBonusDepositOwned();
 
         boolean tmp = false;
         if(storage[pos].getResource() == null && pos <3){
@@ -67,7 +72,7 @@ public class Storage {
             if(!tmp)
                 storage[pos].setNewDeposit(in.getType(), in.getQuantity());
             else {
-                throw new Exception("there is already a slot with this type of resource");
+                throw new WrongPosition("there is already a slot with this type of resource");
             }
         }
         else
@@ -118,8 +123,7 @@ public class Storage {
      * @param pos the deposit position
      * @throws Exception if the subraction can't be done because of space
      */
-    public void safeSubtraction(Resource in, int pos) throws Exception
-    {
+    public void safeSubtraction(Resource in, int pos) throws EmptyDeposit, WrongPosition {
         storage[pos].safeSubtraction(in);
         if (storage[pos].getResource().getQuantity()==0 && pos<3)
 

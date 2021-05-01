@@ -1,11 +1,10 @@
 package it.polimi.ingsw.model.cards;
 
-import com.google.gson.JsonObject;
 import it.polimi.ingsw.enumeration.CardType;
+import it.polimi.ingsw.exceptions.NotEnoughResource;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.resources.Resource;
-import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 
 import java.util.List;
@@ -100,7 +99,7 @@ public class ProductionCard extends Card {
      * @param p Dashboard of the player
      * @return  true if the activation goes well
      */
-    public boolean produce(Player p) throws Exception {
+    public boolean produce(Player p) throws NotEnoughResource {
 
         //Check if necesary resources are availabe
         List<Resource> resAvailable = p.getDashboard().getAllAvailableResource();
@@ -114,7 +113,7 @@ public class ProductionCard extends Card {
         }
         else
         {
-            throw  new Exception("Not enough money to produce");
+            throw  new NotEnoughResource("");
         }
 
 
@@ -136,7 +135,7 @@ public class ProductionCard extends Card {
         {
             try
             {
-                out = p.getDashboard().setProcuctionCard(this,pos);
+                out = p.getDashboard().setProductionCard(this,pos);
                 if (out)
                     p.increaseScore(this.getVictoryPoints());
 

@@ -6,6 +6,8 @@ import it.polimi.ingsw.controller.packets.ACK;
 import it.polimi.ingsw.controller.packets.MarketResult;
 import it.polimi.ingsw.controller.packets.PendingCost;
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.exceptions.EmptyDeposit;
+import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
@@ -163,7 +165,13 @@ public class ServerController{
         if(!isRightPlayer(player)) return new ACK(1);
 
         Player p = this.game.getCurrentPlayer();
-        p.payStorageResource(resource,pos);
+        try {
+            p.payStorageResource(resource,pos);
+        } catch (EmptyDeposit emptyDeposit) {
+            return new ACK(1);
+        } catch (WrongPosition wrongPosition) {
+            return new ACK(2);
+        }
         return  null;
     }
     /**

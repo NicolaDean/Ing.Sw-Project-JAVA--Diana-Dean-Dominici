@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.cards.leaders;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.exceptions.NotEnoughResource;
+import it.polimi.ingsw.exceptions.NotSoddisfedPrerequisite;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.PrerequisiteCard;
@@ -21,14 +23,14 @@ public class LeaderTradeCard extends LeaderCard implements BonusProductionInterf
 
 
     @Override
-    public void activate(Player p) throws Exception {
+    public void activate(Player p) throws NotSoddisfedPrerequisite {
         super.activate(p);
         p.addTradeBonus(this);
     }
 
     //USER can select the card and call the method "changeRawMat()" or
     @Override
-    public void produce(Player p, ResourceType obtain) throws Exception {
+    public void produce(Player p, ResourceType obtain) throws NotEnoughResource {
         int possession = ResourceOperator.extractQuantityOf(this.getType(),p.getDashboard().getAllAvailableResource());
 
         if(possession >= 1)
@@ -38,7 +40,7 @@ public class LeaderTradeCard extends LeaderCard implements BonusProductionInterf
         }
         else
         {
-            throw new Exception("not enough money");
+            throw new NotEnoughResource("");
         }
 
     }

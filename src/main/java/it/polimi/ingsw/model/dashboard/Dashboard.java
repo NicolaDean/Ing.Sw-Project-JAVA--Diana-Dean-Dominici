@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.dashboard;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.PrerequisiteCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
@@ -54,14 +55,8 @@ public class Dashboard {
      * @param res resource to insert
      * @param pos deposit to select
      */
-    public void storageInsertion(Resource res, int pos)
-    {
-        try {
-            this.storage.safeInsertion(res,pos);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    public void storageInsertion(Resource res, int pos) throws FullDepositException, NoBonusDepositOwned, WrongPosition {
+        this.storage.safeInsertion(res,pos);
     }
 
     /**
@@ -87,7 +82,7 @@ public class Dashboard {
      * @param pos Position where i want to put the card
      * @return true if card correctly setted
      */
-    public boolean setProcuctionCard(ProductionCard card,int pos) throws Exception {
+    public boolean setProductionCard(ProductionCard card, int pos) throws WrongPosition {
         if(pos > 2)return false;//invalid position
 
         boolean out = this.checkValidPosition(card,pos);
@@ -99,7 +94,7 @@ public class Dashboard {
         }
         else
         {
-            throw new Exception("Wrong card position");
+            throw new WrongPosition("");
         }
         return out;
     }
@@ -142,7 +137,7 @@ public class Dashboard {
      * @param obtain    Type i want
      * @return true if i can do a basicProduction
      */
-    public void basicProduction(ResourceType spendOne, ResourceType spendTwo, ResourceType obtain) throws Exception {
+    public void basicProduction(ResourceType spendOne, ResourceType spendTwo, ResourceType obtain) throws NotEnoughResource {
         List<Resource> availableRes = this.getAllAvailableResource();
 
         //NEED TO ADD A COMPARE OVERLOADING (list<resource>,resource)
@@ -160,7 +155,7 @@ public class Dashboard {
         }
         else
         {
-            throw new Exception("Not enough resources to do basic production");
+            throw new NotEnoughResource(" do basic production");
         }
     }
 
@@ -170,15 +165,16 @@ public class Dashboard {
      * @param pos stack of card to select
      * @return true if the activation goes well
      */
-    public void production(Player p, int pos) throws Exception {
+    public void production(Player p, int pos) throws NotEnoughResource {
         ProductionCard card = this.producionCards[pos].peek();
 
         try
         {
             boolean out = card.produce(p);
             this.pendingCost.addAll(card.getCost(this));
-        } catch (Exception e) {
-            throw  new Exception(e.getMessage());
+
+        } catch (NotEnoughResource notEnoughResource) {
+            throw new NotEnoughResource("");
         }
 
     }
@@ -206,14 +202,9 @@ public class Dashboard {
      * @param res resource to pay
      * @param pos deposit to select
      */
-    public void applyStorageCosts(Resource res,int pos)
-    {
-            try {
+    public void applyStorageCosts(Resource res,int pos) throws EmptyDeposit, WrongPosition {
                 this.storage.safeSubtraction(res,pos);
                 this.pendingCost.remove(res);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
     }
 
     /**
@@ -255,11 +246,13 @@ public class Dashboard {
     }
     public void setPendingCost(List<Resource> pending)
     {
-        this.pendingCost.addAll(pending);}
+        this.pendingCost.addAll(pending);
+    }
 
     public void setPendingCost(Resource pending)
     {
-        this.pendingCost.add(pending);}
+        this.pendingCost.add(pending);
+    }
     public void setDiscount(Resource res)
     {
         if(this.bonusResources == null)

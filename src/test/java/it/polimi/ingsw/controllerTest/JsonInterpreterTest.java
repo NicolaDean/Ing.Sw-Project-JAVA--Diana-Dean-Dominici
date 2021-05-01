@@ -36,17 +36,17 @@ public class JsonInterpreterTest {
 
         //Generate an ACK
         ACK a = new ACK(2);
-        interpreter.analyzePacket(ack);
+        //interpreter.analyzePacket(ack);
 
         //Generate an update Pos packet
         UpdatePosition pos = new UpdatePosition(1,2);
-        interpreter.analyzePacket(updatePos);
+        //interpreter.analyzePacket(updatePos);
 
         //Try to generate json from the packet created above
         System.out.println("JSON1: -> " +a.generateJson());
-        interpreter.analyzePacket( a.generateJson());
+        //interpreter.analyzePacket( a.generateJson());
         System.out.println("JSON2: -> " +pos.generateJson());
-        interpreter.analyzePacket( pos.generateJson());
+        //interpreter.analyzePacket( pos.generateJson());
 
 
         Production prod = new Production(2,1);

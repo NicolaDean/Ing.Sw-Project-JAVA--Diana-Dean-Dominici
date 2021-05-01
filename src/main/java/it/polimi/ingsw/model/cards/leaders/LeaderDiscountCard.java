@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards.leaders;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.exceptions.NotSoddisfedPrerequisite;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.PrerequisiteCard;
@@ -16,7 +17,7 @@ public class LeaderDiscountCard extends LeaderCard {
     }
 
     @Override
-    public void activate(Player p) throws Exception {
+    public void activate(Player p) throws NotSoddisfedPrerequisite {
         super.activate(p);
         p.addDiscount(new Resource(this.getType(), 1));
 

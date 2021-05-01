@@ -1,5 +1,6 @@
 package it.polimi.ingsw.modelTest;
 
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.PrerequisiteCard;
 import it.polimi.ingsw.model.cards.leaders.DepositBonus;
@@ -158,7 +159,7 @@ public class StorageTest {
      * @throws Exception
      */
     @Test
-    public void TestBonusStorageSub() throws Exception {
+    public void TestBonusStorageSub() throws FullDepositException, NoBonusDepositOwned, WrongPosition, EmptyDeposit, NotSoddisfedPrerequisite {
 
         Player player = new Player();
         Resource a = new Resource(SHIELD, 1);
@@ -176,11 +177,11 @@ public class StorageTest {
         bonus2.activate(player);
         player.getDashboard().getStorage().safeInsertion(a, 4);
         player.getDashboard().getStorage().safeSubtraction(a, 4);
-        player.getDashboard().getStorage().safeInsertion(b, 4);
+        //player.getDashboard().getStorage().safeInsertion(b, 4);
         player.getDashboard().getStorage().safeSubtraction(b, 3);
         player.getDashboard().getStorage().safeSubtraction(a, 1);
         player.getDashboard().getStorage().safeInsertion(b, 1);
-        player.getDashboard().getStorage().safeInsertion(a, 3);
+        //player.getDashboard().getStorage().safeInsertion(a, 3);
     }
 
     /**

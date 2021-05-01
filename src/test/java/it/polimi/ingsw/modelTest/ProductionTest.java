@@ -1,4 +1,8 @@
 package it.polimi.ingsw.modelTest;
+import it.polimi.ingsw.exceptions.EmptyDeposit;
+import it.polimi.ingsw.exceptions.FullDepositException;
+import it.polimi.ingsw.exceptions.NoBonusDepositOwned;
+import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Dashboard;
@@ -16,8 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ProductionTest {
 
     @Test
-    public void CheckCost()
-    {
+    public void CheckCost() throws FullDepositException, NoBonusDepositOwned, WrongPosition {
         Player p = new Player();
 
         p.getDashboard().chestInsertion(new Resource(COIN,1));
@@ -38,8 +41,7 @@ public class ProductionTest {
     }
 
     @Test
-    public void BuyTest()
-    {
+    public void BuyTest() throws FullDepositException, NoBonusDepositOwned, WrongPosition {
         Player p = new Player();
 
 
@@ -67,8 +69,7 @@ public class ProductionTest {
     }
 
     @Test
-    public void ProductionTest()
-    {
+    public void ProductionTest() throws FullDepositException, NoBonusDepositOwned, WrongPosition, EmptyDeposit {
         Player p = new Player();
 
         p.getDashboard().chestInsertion(new Resource(COIN,1));

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.modelTest;
 
+import it.polimi.ingsw.exceptions.EmptyDeposit;
+import it.polimi.ingsw.exceptions.FullDepositException;
+import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.resources.Resource;
 import org.junit.jupiter.api.Assertions;
@@ -36,12 +39,17 @@ public class DepositTest {
      * @throws Exception
      */
     @Test
-    public void TestInvalidDepositInsertion() throws Exception
+    public void TestInvalidDepositInsertion()
     {
         Deposit testdeposit = new Deposit(3);
         testdeposit.setNewDeposit(COIN, 2);
         Resource r = new Resource(SHIELD, 1);
-        testdeposit.safeInsertion(r);
+        try {
+            testdeposit.safeInsertion(r);
+        } catch (FullDepositException e) {
+        } catch (WrongPosition wrongPosition) {
+        }
+
         assertTrue(testdeposit.getResource().getQuantity()==2 && testdeposit.getResource().getType()==COIN);
 
     }
@@ -66,12 +74,20 @@ public class DepositTest {
      * @throws Exception
      */
     @Test
-    public void TestInvalidDepositSub() throws Exception
-    {
+    public void TestInvalidDepositSub() throws EmptyDeposit, WrongPosition {
         Deposit testdeposit = new Deposit(3);
         testdeposit.setNewDeposit(COIN, 2);
         Resource r = new Resource(SHIELD, 1);
-        testdeposit.safeSubtraction(r);
+
+        try {
+            testdeposit.safeSubtraction(r);
+        }
+        catch (WrongPosition p)
+        {
+
+        }
+
+
         assertTrue(testdeposit.getResource().getQuantity()==2 && testdeposit.getResource().getType()==COIN);
 
     }

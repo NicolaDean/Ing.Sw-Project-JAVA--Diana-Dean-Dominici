@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 import it.polimi.ingsw.model.dashboard.Dashboard;
@@ -133,15 +134,6 @@ public class Player {
     }
 
     /**
-     *  Adding resourcing
-     * @param r resource
-     * @param p position
-     */
-    public void addResource(Resource r, int p){
-        dashboard.storageInsertion(new Resource(r.getType(),r.getQuantity()),p);
-    }
-
-    /**
      * Calculate the score from the Production Cards, Player position and ...
      * @return
      */
@@ -214,9 +206,9 @@ public class Player {
      * @param resource resource to put in storage
      * @param position deposit to select
      */
-    public void storageInsertion(Resource resource,int position)
-    {
+    public void storageInsertion(Resource resource,int position) throws FullDepositException, NoBonusDepositOwned, WrongPosition {
         this.dashboard.storageInsertion(resource,position);
+
     }
 
     /**Remove the resourced payed from the pendingCost and remove resources from storage
@@ -224,7 +216,7 @@ public class Player {
      * @param resource resource to pay
      * @param position deposit to select
      */
-    public void payStorageResource(Resource resource,int position) {
+    public void payStorageResource(Resource resource,int position) throws EmptyDeposit, WrongPosition {
         this.dashboard.applyStorageCosts(resource,position);
     }
 
@@ -312,7 +304,7 @@ public class Player {
      * @param resWanted the resource i want to obtain
      * @return true if the production is done false is something dosnt gone well
      */
-    public void bonusProduction(int pos, ResourceType resWanted) throws Exception {
+    public void bonusProduction(int pos, ResourceType resWanted) throws WrongPosition, NotEnoughResource {
 
         if(pos < this.bonusProductions.size())
         {
@@ -323,7 +315,7 @@ public class Player {
         }
         else
         {
-            throw  new Exception("Not existing bonus card");
+            throw  new WrongPosition("Not existing bonus card");
         }
 
     }
