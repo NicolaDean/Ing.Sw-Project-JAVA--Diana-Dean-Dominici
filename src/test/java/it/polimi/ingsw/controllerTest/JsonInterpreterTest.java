@@ -1,5 +1,4 @@
 package it.polimi.ingsw.controllerTest;
-import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.*;
