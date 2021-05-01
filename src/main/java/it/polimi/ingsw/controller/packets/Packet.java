@@ -2,7 +2,7 @@ package it.polimi.ingsw.controller.packets;
 
 import it.polimi.ingsw.controller.ServerController;
 
-public abstract class   Packet implements PacketManager
+public abstract class   Packet<T> implements PacketManager<T>
 {
     private transient  String   type;
     private transient int       playerIndex;
@@ -31,7 +31,7 @@ public abstract class   Packet implements PacketManager
     }
 
     @Override
-    public Packet analyze(ServerController controller) {
+    public Packet analyze(T controller) {
         return null;
     }
 

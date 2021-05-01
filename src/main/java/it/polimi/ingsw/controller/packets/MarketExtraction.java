@@ -4,7 +4,7 @@ import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 
-public class MarketExtraction extends Packet implements PacketManager {
+public class MarketExtraction  extends Packet<ServerController> implements PacketManager<ServerController> {
 
     private boolean direction;
     private int pos;

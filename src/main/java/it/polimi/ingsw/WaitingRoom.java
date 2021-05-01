@@ -13,6 +13,7 @@ public class WaitingRoom extends ClientHandler{
     List<ServerController> controllers;
     ServerController fakeController;
     private final ExecutorService executor;
+
     public WaitingRoom(Socket socket,List<ServerController> controllers,ServerController fakeController,ExecutorService executor)
     {
         super(socket,fakeController);
@@ -26,7 +27,6 @@ public class WaitingRoom extends ClientHandler{
     @Override
     public void run() {
         waitClientMassages();
-
     }
 
     /**

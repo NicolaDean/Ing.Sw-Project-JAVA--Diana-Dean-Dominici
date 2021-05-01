@@ -1,10 +1,11 @@
 package it.polimi.ingsw.controller.packets;
 
+import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 
-public class Production extends Packet implements PacketManager {
+public class Production extends Packet<ServerController> implements PacketManager<ServerController> {
 
     int position;
 

@@ -4,7 +4,7 @@ import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 
-public class SwapDeposit  extends Packet implements PacketManager {
+public class SwapDeposit  extends Packet<ServerController> implements PacketManager<ServerController> {
 
     int pos1;
     int pos2;

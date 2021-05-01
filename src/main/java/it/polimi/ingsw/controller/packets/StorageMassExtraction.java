@@ -4,7 +4,7 @@ import it.polimi.ingsw.controller.ServerController;
 
 import java.util.List;
 
-public class StorageMassExtraction extends Packet implements PacketManager {
+public class StorageMassExtraction extends Packet<ServerController> implements PacketManager<ServerController> {
 
     List<InsertionInstruction> insertions;
 

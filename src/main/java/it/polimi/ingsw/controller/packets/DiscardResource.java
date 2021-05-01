@@ -4,7 +4,7 @@ import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 
-public class DiscardResource extends Packet implements PacketManager {
+public class DiscardResource extends Packet<ServerController> implements PacketManager<ServerController>{
     int quantity;
 
     public DiscardResource(int quantity) {

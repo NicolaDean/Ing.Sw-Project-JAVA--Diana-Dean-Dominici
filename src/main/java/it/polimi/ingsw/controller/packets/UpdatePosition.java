@@ -1,10 +1,11 @@
 package it.polimi.ingsw.controller.packets;
 
+import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 
-public class UpdatePosition extends Packet implements PacketManager {
+public class UpdatePosition extends Packet<ClientController> implements PacketManager<ClientController>{
 
     int position;
     int player;
@@ -17,8 +18,8 @@ public class UpdatePosition extends Packet implements PacketManager {
     }
 
     @Override
-    public Packet analyze(ServerController controller) {
-
+    public Packet analyze(ClientController controller)
+    {
         System.out.println("Increment player "+ this.player+ " Position of : " + this.position);
         //Increment player position
         return null;

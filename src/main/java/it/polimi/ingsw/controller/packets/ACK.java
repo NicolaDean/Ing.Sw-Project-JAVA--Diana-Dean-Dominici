@@ -4,7 +4,7 @@ import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 
-public class ACK extends Packet implements PacketManager {
+public class ACK extends Packet<ServerController> implements PacketManager<ServerController>{
 
     int errorMSG;
 
