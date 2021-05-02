@@ -41,6 +41,7 @@ public class Game {
     {
         return this.getProductionDecks()[x][y].peek();
     }
+
     public int getCurrentPlayerIndex()
     {
         return this.currentPlayer;
