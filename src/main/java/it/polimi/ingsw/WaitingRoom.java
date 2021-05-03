@@ -13,6 +13,7 @@ public class WaitingRoom extends ClientHandler{
     List<ServerController> controllers;
     ServerController fakeController;
     private final ExecutorService executor;
+    int count = 0;
 
     public WaitingRoom(Socket socket,List<ServerController> controllers,ServerController fakeController,ExecutorService executor)
     {
@@ -81,6 +82,10 @@ public class WaitingRoom extends ClientHandler{
 
             //Add Handler to Real Controller
             c.addClient(handler);
+            handler.setIndex(count);
+            count++;
+            if (count>4)
+                count = count -4;
 
             //Create Thread
             this.createRealClientThread(handler);

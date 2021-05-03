@@ -1,7 +1,8 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.ServerController;
-import it.polimi.ingsw.controller.packets.Packet;
+import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
+import it.polimi.ingsw.controller.packets.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,6 @@ public class ServerApp {
     private final ExecutorService   executor;
     private final int               port;
     private ServerSocket            serverSocket;
-    private ServerController        controller;
     List<ServerController>          availableControllers;
 
     //Potrei mantenere il client in una "waitingRoom" finche non arriva un messaggio di login
@@ -25,7 +25,6 @@ public class ServerApp {
     {
         this.executor= Executors.newCachedThreadPool();
         this.port = port;
-        this.controller = new ServerController(true);
         this.availableControllers = new ArrayList<>();
     }
 
@@ -73,16 +72,19 @@ public class ServerApp {
         try {
             Socket socket = serverSocket.accept();
             //executor.submit(new ClientHandler(socket,this.controller));
-
             executor.submit(new WaitingRoom(socket,availableControllers, new ServerController(false),executor));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
+
         ServerApp serverApp = new ServerApp(1234);
         serverApp.start();
+
+
 
     }
 

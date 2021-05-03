@@ -4,7 +4,8 @@ import it.polimi.ingsw.controller.ServerController;
 
 public abstract class   Packet<T> implements PacketManager<T>
 {
-    private transient  String   type;
+
+    private String type;
     private transient int       playerIndex;
     private transient boolean   isBroadcast;
 

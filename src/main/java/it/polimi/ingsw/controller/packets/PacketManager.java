@@ -4,8 +4,9 @@ import it.polimi.ingsw.controller.ServerController;
 
 public interface PacketManager<T>{
 
+
     /**
-     * It allow to read packet content and execute necesary operations
+     * It allow to read packet content and execute necessary operations
      * @param controller  the client or server controller
      * @return
      */

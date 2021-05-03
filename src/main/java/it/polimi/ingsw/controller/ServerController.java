@@ -6,16 +6,16 @@ import it.polimi.ingsw.controller.packets.ACK;
 import it.polimi.ingsw.controller.packets.MarketResult;
 import it.polimi.ingsw.controller.packets.PendingCost;
 import it.polimi.ingsw.enumeration.ResourceType;
-import it.polimi.ingsw.exceptions.AckManager;
-import it.polimi.ingsw.exceptions.EmptyDeposit;
-import it.polimi.ingsw.exceptions.WrongPosition;
-import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.exceptions.*;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 
+import java.io.IOException;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,12 +32,12 @@ public class ServerController{
     public ServerController(boolean real)
     {
         game = new Game();
-
         if(real)  clients = new ArrayList<>();//If is a real controller create also ClientHandlers
-
     }
 
-
+    public List<ClientHandler> getClients() {
+        return clients;
+    }
 
     public void addClient(ClientHandler client) {
         this.clients.add(client);
@@ -50,6 +50,47 @@ public class ServerController{
 
     public Game getGame() {
         return game;
+    }
+
+    public Player startGame() throws Exception {
+        System.out.println("-----------Game avviato---------- \n");
+
+        for (ClientHandler c: clients)
+        {
+            Thread t = new Thread(() -> {
+                while(true)
+                {
+                synchronized (c) {
+
+                    Packet a = new Ping(c.getIndex());
+                    c.sendToClient(a);
+                    try {
+                        wait(30000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if (!c.isPing()) {
+                        //TODO client che non risponde, va disconnesso???
+                    } else {
+                        c.setPing();
+                    }
+                }
+                }
+
+
+
+            });
+            t.start();
+        }
+
+        /*new Thread(() -> {
+            for (ClientHandler c: clients)
+            {
+                boolean isAlive = false;
+            }
+
+        });*/
+        return game.startGame();
     }
 
 
@@ -251,6 +292,8 @@ public class ServerController{
         }
     }
 
+
+
     /**
      *
      * @param direction row or column (row = false,col = true)
@@ -276,8 +319,8 @@ public class ServerController{
 
         List <Resource> res = m.getPendingResourceExtracted();
         int white           = m.getWhiteCount();
-
         return  new MarketResult(res,white);
+
     }
 
 
