@@ -10,10 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LorenzoTest {
 
+
     /**
      * test the correct increase of the player' s score when a scoreCell is reached
      */
-    @Test
+    /*@Test
     public void scoreCellTest() {
         LorenzoGame game = new LorenzoGame();
 
@@ -34,12 +35,12 @@ public class LorenzoTest {
         game.nextTurn();
         assertEquals(currPlayer.getScore(), 29);
 
-    }
+    }*/
 
     /**
      * test the correct incresing of players score when a papalspace is reached
      */
-    @Test
+   /* @Test
     public void scorePapalSpaceTest()
     {
         LorenzoGame game = new LorenzoGame();
@@ -73,6 +74,8 @@ public class LorenzoTest {
         assertEquals(game.getPlayers().get(3).getScore(), 8);
 
     }
+
+    */
 
     @Test
     public void checkLorenzoGame(){
