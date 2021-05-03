@@ -40,6 +40,10 @@ public class ClientHandler implements Runnable {
         waitClientMassages();
     }
 
+    /**
+     * Initialize the Input stream of the socket
+     * @param s
+     */
     public void initializeReader(Socket s)
     {
         try {
@@ -48,6 +52,11 @@ public class ClientHandler implements Runnable {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Initialize the Output stream of the socket
+     * @param s
+     */
     public void initializeWriter(Socket s)
     {
         try {
@@ -57,11 +66,18 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    /**
+     * Exit condition of the waiting room
+     * @return
+     */
     public boolean exitCondition()
     {
         return  true;
     }
 
+    /**
+     * Wait message from the client
+     */
     public void waitClientMassages()
     {
         boolean flag = true;
@@ -80,6 +96,10 @@ public class ClientHandler implements Runnable {
         System.out.println("Exit loop");
     }
 
+    /**
+     * Read a message and analyze it, then get a response if available and send it back
+     * @param message
+     */
     public void readMessage(String message)
     {
         try {
@@ -91,6 +111,10 @@ public class ClientHandler implements Runnable {
             System.out.println("Not JSON MESSAGE: " + message);
         }
     }
+
+    /**
+     * Get response if available and send it back
+     */
 
     public void respondToClient()
     {

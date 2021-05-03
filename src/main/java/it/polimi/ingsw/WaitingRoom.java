@@ -20,12 +20,12 @@ public class WaitingRoom extends ClientHandler{
         this.fakeController = fakeController;
         this.controllers = controllers;
         this.executor = executor;
-        System.out.println("Waiting room...");
     }
 
 
     @Override
     public void run() {
+        System.out.println("Waiting room...");
         waitClientMassages();
     }
 
@@ -76,6 +76,8 @@ public class WaitingRoom extends ClientHandler{
             //Create new ClientHandler with this controller
             ClientHandler handler = new ClientHandler(this.getSocket(),c);
             handler.interpreter.analyzePacket(message); //Login,  this time on a real controller
+            handler.respondToClient();
+
 
             //Add Handler to Real Controller
             c.addClient(handler);
@@ -85,6 +87,10 @@ public class WaitingRoom extends ClientHandler{
         }
     }
 
+    /**
+     * Create a new Thread to handle the client connection
+     * @param clientHandler
+     */
     public void createRealClientThread(ClientHandler clientHandler)
     {
         System.out.println("CREATE NEW  THREAD FOR CLIENT");
@@ -92,6 +98,10 @@ public class WaitingRoom extends ClientHandler{
         this.executor.submit(clientHandler);
         System.out.println("------------------------------------------");
     }
+
+    /**
+     * Find a non full match if available, else ccreate new one
+     */
 
     public ServerController findFreeController()
     {
