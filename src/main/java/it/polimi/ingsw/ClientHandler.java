@@ -2,6 +2,10 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
+import it.polimi.ingsw.controller.packets.BasicPacketFactory;
+import it.polimi.ingsw.controller.packets.Packet;
+import it.polimi.ingsw.controller.packets.PacketManager;
+import it.polimi.ingsw.controller.packets.Ping;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,10 +14,12 @@ import java.util.Scanner;
 
 public class ClientHandler implements Runnable {
 
-    private Socket          socket;
+    private final Socket    socket;
     private Scanner         input;
     private PrintWriter     output;
     JsonInterpreterServer   interpreter;
+    private int index;
+    private boolean ping = false;
 
 
     public ClientHandler(Socket client,ServerController controller)
@@ -25,6 +31,22 @@ public class ClientHandler implements Runnable {
         this.initializeReader(client);
         this.initializeWriter(client);
 
+    }
+
+    public boolean isPing() {
+        return ping;
+    }
+
+    public boolean setPing() {
+        return ping = false;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     public JsonInterpreterServer getInterpreter() {
@@ -85,7 +107,7 @@ public class ClientHandler implements Runnable {
                 System.out.println("wait command");
                 String message = this.input.nextLine();
                 if (message.equals("quit")) {
-                    System.out.println("Client " + socket.getInetAddress() + "Exit the server");
+                    System.out.println("Client " + socket.getInetAddress() + " Exited the server");
                     break;
                 } else {
                     readMessage(message);
@@ -125,6 +147,16 @@ public class ClientHandler implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    public void sendToClient(Packet p)
+    {
+        System.out.println("----ecco---- /n");
+
+        System.out.println(p.generateJson());
+        output.println(p.generateJson());
+        output.flush();
     }
 
 

@@ -64,6 +64,8 @@ public class JsonInterpreterTest {
         Login log4  = new Login("Biagio");
         Login log5  = new Login("Marco");
 
+        System.out.println(log1.generateJson());
+
         JsonInterpreterServer interpreter = new JsonInterpreterServer(1,new ServerController(true));
 
         interpreter.analyzePacket(log1.generateJson());
