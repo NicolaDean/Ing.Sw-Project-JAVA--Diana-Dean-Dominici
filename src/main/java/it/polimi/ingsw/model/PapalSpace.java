@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
 
+import it.polimi.ingsw.model.lorenzo.Lorenzo;
+
 import java.util.List;
 
 public class PapalSpace {
@@ -61,6 +63,25 @@ public class PapalSpace {
     public boolean checkPapalSpaceActivation(List<Player> players)
     {
         boolean out = checkPlayersPositions(players);
+
+        if(out)
+        {
+            for(Player p:players)
+            {
+                if(this.checkPlayerInsidePapalSpace(p))
+                {
+                    p.increaseScore(this.score);
+                }
+            }
+        }
+
+        return out;
+
+    }
+
+    public boolean checkPapalSpaceActivation(List<Player> players, Lorenzo l)
+    {
+        boolean out = (players.get(0).getPosition() >= this.finalPosition) || (l.getPosition()>= this.finalPosition);
 
         if(out)
         {
