@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.lorenzo.token;
 
+import it.polimi.ingsw.enumeration.CardType;
 import it.polimi.ingsw.model.lorenzo.LorenzoGame;
 
 public class SpecialBlackCrossToken extends BlackCrossToken{
@@ -13,5 +14,10 @@ public class SpecialBlackCrossToken extends BlackCrossToken{
     @Override
     public boolean isSpecial() {
         return true;
+    }
+
+    @Override
+    public CardType getType() {
+        return null;
     }
 }

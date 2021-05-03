@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.lorenzo.token;
 
+import it.polimi.ingsw.enumeration.CardType;
 import it.polimi.ingsw.model.lorenzo.LorenzoGame;
 
 public interface ActionToken {
@@ -11,5 +12,7 @@ public interface ActionToken {
 
 
     public boolean isSpecial();
+
+    public CardType getType();
 
 }

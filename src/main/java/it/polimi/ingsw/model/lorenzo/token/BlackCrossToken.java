@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.lorenzo.token;
 
+import it.polimi.ingsw.enumeration.CardType;
 import it.polimi.ingsw.model.lorenzo.LorenzoGame;
 
 public class BlackCrossToken implements ActionToken{
@@ -13,5 +14,10 @@ public class BlackCrossToken implements ActionToken{
     @Override
     public boolean isSpecial() {
         return false;
+    }
+
+    @Override
+    public CardType getType() {
+        return null;
     }
 }

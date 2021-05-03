@@ -99,8 +99,6 @@ public class LorenzoGame extends Game {
      */
     public Player nextTurn(){
         currentPlayer=0;
-        if(currentPlayer==-1)
-
 
         //PAPAL SPACE
         if(this.currentPapalSpaceToReach < this.papalSpaces.size())
@@ -152,7 +150,6 @@ public class LorenzoGame extends Game {
     }
 
     public void lorenzoTurn() {
-        currentPlayer=-1;
         tokenDrawn=drawTocken();
         lorenzo.activateToken(this,tokenDrawn);
     }
