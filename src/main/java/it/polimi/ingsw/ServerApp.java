@@ -78,7 +78,6 @@ public class ServerApp {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public static void main(String[] args) {

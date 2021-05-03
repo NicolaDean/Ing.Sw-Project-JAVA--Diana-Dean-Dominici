@@ -24,7 +24,6 @@ public class ClientHandler implements Runnable {
 
         this.initializeReader(client);
         this.initializeWriter(client);
-
     }
 
     public JsonInterpreterServer getInterpreter() {
@@ -126,6 +125,7 @@ public class ClientHandler implements Runnable {
             e.printStackTrace();
         }
     }
+
 
 
 }
