@@ -7,7 +7,7 @@ public class BlackCrossToken implements ActionToken{
 
     @Override
     public void activateToken(LorenzoGame l) {
-        //TODO
+        l.getLorenzo().incresePosition(bonus);
     }
 
     @Override

@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -26,16 +27,22 @@ public class LorenzoGame extends Game {
     int currentPlayer=0;
     int nofplayers=0;
     private int leaderCount=0;
-    Lorenzo lorenzo=new Lorenzo();
+    Lorenzo lorenzo;
 
     public LorenzoGame()
     {
+        this.lorenzo=new Lorenzo();
         this.market = new Market();
         this.productionDecks = CardFactory.loadProductionCardsFromJsonFile();
         this.leaders         = CardFactory.loadLeaderCardsFromJsonFile();
         this.papalSpaces     = MapFactory.loadPapalSpacesFromJsonFile();
         this.scorePositions  = MapFactory.loadCellScoresFromJsonFile();
         this.currentPapalSpaceToReach = 0;
+        this.players = new ArrayList<>();
+    }
+
+    public Lorenzo getLorenzo() {
+        return lorenzo;
     }
 
     public int getCurrentPlayerIndex()
@@ -54,13 +61,13 @@ public class LorenzoGame extends Game {
      */
     public void addPlayer(String nickname) throws Exception
     {
-        if(nofplayers==1) {
+        if(nofplayers<1) {
             for (Player p: players) {
                 if(p.getNickname().equals(nickname))
                     throw new Exception("Nickname already taken, please choose another nickname");
             }
             players.add(new Player(nickname, scorePositions.size()));
-            nofplayers++;
+            this.nofplayers++;
         }
         else
             throw new Exception("There are already 1 players");
@@ -84,7 +91,7 @@ public class LorenzoGame extends Game {
     public Player nextTurn() {
         currentPlayer=0;
 
-        //PAPAL SPACE
+        //TODO PAPAL SPACE
 
         if(this.currentPapalSpaceToReach < this.papalSpaces.size())
         {
@@ -98,7 +105,8 @@ public class LorenzoGame extends Game {
 
         }
 
-        int position = lorenzo.getPosition();
+        //increment score for current player
+        int position = players.get(currentPlayer).getPosition();
         int i=-1;
 
         for (CellScore cell:scorePositions) {
@@ -107,7 +115,6 @@ public class LorenzoGame extends Game {
             }
         }
 
-        // TODO FIX ⬇⬇⬇
         if(i!=-1 && !players.get(currentPlayer).getSurpassedcells()[i])
         {
             players.get(currentPlayer).getSurpassedcells()[i]=true;
@@ -121,6 +128,15 @@ public class LorenzoGame extends Game {
         return players.get(currentPlayer);
     }
 
+    public Player startGame() throws Exception {
+        if(nofplayers==0)
+            throw new Exception("There are no players");
+        Collections.shuffle(players);
+        players.get(0).setInkwell();
+        currentPlayer = 0;
+        return players.get(currentPlayer);
+    }
+
     public void lorenzoTurn() {
         //TODO
         currentPlayer=-1;
@@ -129,7 +145,11 @@ public class LorenzoGame extends Game {
     /**
      * shuffle all token together
      */
-    public void resetStockTocken(){
+    public void resetStockToken(){
+        //TODO
+    }
+
+    public void discardProductionDeck(int x,int y){
         //TODO
     }
 

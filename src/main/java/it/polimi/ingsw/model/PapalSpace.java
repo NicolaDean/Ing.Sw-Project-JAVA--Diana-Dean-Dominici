@@ -81,13 +81,21 @@ public class PapalSpace {
 
     public boolean checkPapalSpaceActivation(List<Player> players, Lorenzo l)
     {
-        boolean out= this.checkPlayerSurpassPapalSpace(players.get(0))? true && (l.getPosition() >= this.finalPosition) : false;
+        boolean out = (players.get(0).getPosition() >= this.finalPosition) || (l.getPosition()>= this.finalPosition);
 
         if(out)
-                if(this.checkPlayerInsidePapalSpace(players.get(0)))
-                    players.get(0).increaseScore(this.score);
+        {
+            for(Player p:players)
+            {
+                if(this.checkPlayerInsidePapalSpace(p))
+                {
+                    p.increaseScore(this.score);
+                }
+            }
+        }
 
         return out;
+
     }
 
 }
