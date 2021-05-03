@@ -6,6 +6,7 @@ import it.polimi.ingsw.controller.packets.ACK;
 import it.polimi.ingsw.controller.packets.MarketResult;
 import it.polimi.ingsw.controller.packets.PendingCost;
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.exceptions.AckManager;
 import it.polimi.ingsw.exceptions.EmptyDeposit;
 import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.Game;
@@ -88,8 +89,8 @@ public class ServerController{
         {
             card.buy(p,pos);
             return setPendingCost(p.getDashboard());
-        } catch (Exception e) {
-            return  new ACK(1);
+        } catch (AckManager err) {
+            return err.getAck();
         }
 
     }
@@ -109,8 +110,8 @@ public class ServerController{
         try {
             dashboard.production(p,pos);
             return setPendingCost(dashboard);
-        } catch (Exception e) {
-            return new ACK(1);
+        } catch (AckManager err) {
+            return err.getAck();
         }
     }
 
@@ -131,8 +132,8 @@ public class ServerController{
         try {
             dashboard.basicProduction(res1,res2,obt);
             return setPendingCost(dashboard);
-        } catch (Exception e) {
-            return new ACK(1);
+        } catch (AckManager err) {
+            return err.getAck();
         }
     }
 
@@ -167,10 +168,8 @@ public class ServerController{
         Player p = this.game.getCurrentPlayer();
         try {
             p.payStorageResource(resource,pos);
-        } catch (EmptyDeposit emptyDeposit) {
-            return new ACK(1);
-        } catch (WrongPosition wrongPosition) {
-            return new ACK(2);
+        } catch (AckManager err) {
+            return err.getAck();
         }
         return  null;
     }

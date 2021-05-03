@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.enumeration.CardType;
 import it.polimi.ingsw.exceptions.NotEnoughResource;
+import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.resources.Resource;
@@ -127,7 +128,7 @@ public class ProductionCard extends Card {
      * @param pos positioning of the card inside the dashboard
      * @return true if all goes in the right way
      */
-    public void buy(Player p, int pos) throws Exception {
+    public void buy(Player p, int pos) throws WrongPosition, NotEnoughResource {
         //First Buy the card then ask player where chose resource in the controller
         boolean out = this.checkCost(p.getDashboard());
 
@@ -139,15 +140,14 @@ public class ProductionCard extends Card {
                 if (out)
                     p.increaseScore(this.getVictoryPoints());
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new Exception("Wrong card Position");
+            } catch (WrongPosition wrongPosition) {
+                throw new WrongPosition("");
             }
 
 
         }else
         {
-            throw new Exception("Not enouth money");
+            throw new NotEnoughResource("");
         }
 
     }
