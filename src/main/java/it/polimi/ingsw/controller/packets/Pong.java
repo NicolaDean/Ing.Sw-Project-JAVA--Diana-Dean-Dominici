@@ -13,7 +13,17 @@ public class Pong extends Packet<ServerController> implements PacketManager<Serv
 
     @Override
     public Packet analyze(ServerController controller) {
-        controller.getClients().get(index).notify();
+
+        try
+        {
+            System.out.println("PONG of "+index );
+            controller.getClients().get(index).notify();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
         return null;
     }
 }

@@ -56,10 +56,17 @@ public class BasicJsonInterpreter {
      * @return get back the response available in json format
      */
     public String getResponse() {
-        this.responseAvailable = false;
+        if(this.responseAvailable ==true)
+        {
+            this.responseAvailable = false;
 
-        System.out.println("RESPONSE : -> " + this.response.generateJson());
-        return this.response.generateJson();
+            System.out.println("RESPONSE : -> " + this.response.generateJson());
+            return this.response.generateJson();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     /**

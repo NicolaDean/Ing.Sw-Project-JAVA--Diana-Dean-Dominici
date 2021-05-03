@@ -157,7 +157,8 @@ public class JsonInterpreterTest {
         System.out.println( new SetTurnType(2).generateJson());
         System.out.println( new EndTurn().generateJson());
         System.out.println( new MarketResult(resourceList,2).generateJson());
-
+        System.out.println( new Pong(1).generateJson());
+        System.out.println( new StartGame().generateJson());
     }
 
     //TODO il market restituisce solo 2 risorse, chiedere a riki (probabilmente il mischiaggio non avviene in maniera molto casuale)

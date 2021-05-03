@@ -24,7 +24,7 @@ public class ServerController{
     //view
     Game game;
     List<ClientHandler> clients;
-
+    int currentClient = 0;
     /**
      *
      * @param real if true create a real controller(with clientHandlers) if false an emptyController for accept Login in waitingRoom
@@ -41,6 +41,11 @@ public class ServerController{
 
     public void addClient(ClientHandler client) {
         this.clients.add(client);
+
+        client.setIndex(currentClient);
+        currentClient++;
+        if (currentClient>4)
+            currentClient = currentClient -4;
     }
 
     public boolean isFull()
@@ -57,30 +62,33 @@ public class ServerController{
 
         for (ClientHandler c: clients)
         {
-            Thread t = new Thread(() -> {
+            Runnable runnable = () -> {
                 while(true)
                 {
-                synchronized (c) {
+                synchronized (this) {
+                    synchronized (c)
+                    {
+                        Packet a = new Ping(c.getIndex());
+                        c.sendToClient(a);
+                        try {
+                            wait(30000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        if (!c.isPing()) {
+                            //TODO client che non risponde, va disconnesso???
+                        } else {
+                            c.setPing();
+                        }
+                    }
 
-                    Packet a = new Ping(c.getIndex());
-                    c.sendToClient(a);
-                    try {
-                        wait(30000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (!c.isPing()) {
-                        //TODO client che non risponde, va disconnesso???
-                    } else {
-                        c.setPing();
-                    }
                 }
                 }
 
 
 
-            });
-            t.start();
+            };
+            new Thread(runnable).start();
         }
 
         /*new Thread(() -> {

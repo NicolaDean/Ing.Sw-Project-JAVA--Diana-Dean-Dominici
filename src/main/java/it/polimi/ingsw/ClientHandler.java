@@ -21,7 +21,7 @@ public class ClientHandler implements Runnable {
     private int index;
     private boolean ping = false;
 
-
+//TODO aggiungere una funzione nel game "getIndexFromIndex" che viene chiamata quando mischio i giocatori
     public ClientHandler(Socket client,ServerController controller)
     {
 
@@ -42,6 +42,7 @@ public class ClientHandler implements Runnable {
     }
 
     public void setIndex(int index) {
+        this.interpreter.setPlayerIndex(index);
         this.index = index;
     }
 
@@ -141,9 +142,12 @@ public class ClientHandler implements Runnable {
     public void respondToClient()
     {
         try {
-            interpreter.getResponse();
-            output.println(interpreter.getResponse());
-            output.flush();
+            String response = interpreter.getResponse();
+            if(response!=null)
+            {
+                output.println();
+                output.flush();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

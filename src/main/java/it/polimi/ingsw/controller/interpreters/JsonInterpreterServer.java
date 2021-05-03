@@ -27,6 +27,9 @@ public class JsonInterpreterServer extends BasicJsonInterpreter {
         return controller;
     }
 
+    public void setPlayerIndex(int playerIndex) {
+        this.playerIndex = playerIndex;
+    }
 
     //TODO: Nota: il controller contiene la view quindi al suo interno c'è tutto ciò che serve per eseguire il pacchetto
     /**
