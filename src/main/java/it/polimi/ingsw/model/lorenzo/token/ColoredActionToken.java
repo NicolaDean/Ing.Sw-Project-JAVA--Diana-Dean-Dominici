@@ -8,6 +8,10 @@ public class ColoredActionToken implements ActionToken {
     CardType type;
     int bonus=-2;
 
+    public ColoredActionToken(CardType type) {
+        this.type = type;
+    }
+
     @Override
     public void activateToken(LorenzoGame l) {
         //TODO

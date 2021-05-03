@@ -11,4 +11,5 @@ public interface ActionToken {
 
 
     public boolean isSpecial();
+
 }

@@ -8,6 +8,10 @@ import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.factory.CardFactory;
 import it.polimi.ingsw.model.factory.MapFactory;
+import it.polimi.ingsw.model.lorenzo.token.ActionToken;
+import it.polimi.ingsw.model.lorenzo.token.BlackCrossToken;
+import it.polimi.ingsw.model.lorenzo.token.ColoredActionToken;
+import it.polimi.ingsw.model.lorenzo.token.SpecialBlackCrossToken;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 
@@ -15,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
+
+import static it.polimi.ingsw.enumeration.CardType.*;
 
 public class LorenzoGame extends Game {
     List<Player> players;
@@ -27,10 +33,13 @@ public class LorenzoGame extends Game {
     int currentPlayer=0;
     int nofplayers=0;
     private int leaderCount=0;
+    ActionToken tokenDrawn;
     Lorenzo lorenzo;
+    Stack<ActionToken> tokenDeck = new Stack<>();
 
     public LorenzoGame()
     {
+        resetDeckToken();
         this.lorenzo=new Lorenzo();
         this.market = new Market();
         this.productionDecks = CardFactory.loadProductionCardsFromJsonFile();
@@ -45,8 +54,7 @@ public class LorenzoGame extends Game {
         return lorenzo;
     }
 
-    public int getCurrentPlayerIndex()
-    {
+    public int getCurrentPlayerIndex() {
         return 0;
     }
 
@@ -81,18 +89,20 @@ public class LorenzoGame extends Game {
      * @throws Exception wrong deposit
      */
     public void discardResource(Player p, Resource res, int pos) throws Exception {
-        //TODO
+        p.getDashboard().getStorage().safeSubtraction(res,pos);
+        lorenzo.incresePosition(res.getQuantity());
     }
 
     /**
      * this function changes the turn and so the current player who is supposed to play
      * @return the new player that is supposed to play
      */
-    public Player nextTurn() {
+    public Player nextTurn(){
         currentPlayer=0;
+        if(currentPlayer==-1)
 
-        //TODO PAPAL SPACE
 
+        //PAPAL SPACE
         if(this.currentPapalSpaceToReach < this.papalSpaces.size())
         {
             //Check if someone surpass a papal space and in case add the score of papalToken to the players
@@ -124,7 +134,7 @@ public class LorenzoGame extends Game {
             players.get(currentPlayer).setLastadded(scorePositions.get(i).getScore());
         }
 
-
+        lorenzoTurn();
         return players.get(currentPlayer);
     }
 
@@ -137,20 +147,65 @@ public class LorenzoGame extends Game {
         return players.get(currentPlayer);
     }
 
+    public ActionToken getTokenDrawn() {
+        return tokenDrawn;
+    }
+
     public void lorenzoTurn() {
-        //TODO
         currentPlayer=-1;
+        tokenDrawn=drawTocken();
+        lorenzo.activateToken(this,tokenDrawn);
     }
 
     /**
      * shuffle all token together
      */
-    public void resetStockToken(){
-        //TODO
+    public void resetDeckToken(){
+        int nofcrosstoken=3,
+                nofspecialcrosstoken=1,
+                nofytoken=1,
+                nofbtoken=1,
+                nofgtoken=1,
+                nofvtoken=1,
+                ntotal=nofbtoken+nofvtoken+nofgtoken+nofytoken+nofspecialcrosstoken+nofcrosstoken;
+
+        tokenDeck=new Stack<>();
+
+        for(int i=0;i<ntotal;i++) {
+            if (nofbtoken > 0) {
+                tokenDeck.add(new ColoredActionToken(BLUE));
+                nofbtoken--;
+            }
+            if(nofytoken>0) {
+                tokenDeck.add(new ColoredActionToken(YELLOW));
+                nofytoken--;
+            }
+            if(nofgtoken>0){
+                tokenDeck.add(new ColoredActionToken(GREEN));
+                nofgtoken--;
+            }
+            if(nofvtoken>0) {
+                tokenDeck.add(new ColoredActionToken(PURPLE));
+                nofvtoken--;
+            }
+            if(nofcrosstoken>0) {
+                tokenDeck.add(new BlackCrossToken());
+                nofcrosstoken--;
+            }
+            if(nofspecialcrosstoken>0) {
+                tokenDeck.add(new SpecialBlackCrossToken());
+                nofspecialcrosstoken--;
+            }
+        }
+        Collections.shuffle(tokenDeck);
     }
 
-    public void discardProductionDeck(int x,int y){
-        //TODO
+    public ActionToken drawTocken(){
+        return tokenDeck.pop();
+    }
+
+    public void discardProductionDeck(int x,int y) {
+        productionDecks[x][y].pop();
     }
 
 }

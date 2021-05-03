@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.lorenzo;
 
 import it.polimi.ingsw.model.lorenzo.token.ActionToken;
 
-public class Lorenzo { //TODO all Lorenzo
+public class Lorenzo {
 
 
     public Lorenzo() {
@@ -22,7 +22,7 @@ public class Lorenzo { //TODO all Lorenzo
     public void activateToken(LorenzoGame l,ActionToken a){
         a.activateToken(l);
         if(a.isSpecial())
-            l.resetStockToken();
+            l.resetDeckToken();
     }
 
     public void incresePosition(int n){

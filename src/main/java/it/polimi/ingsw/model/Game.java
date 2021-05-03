@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.factory.CardFactory;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
@@ -142,8 +141,7 @@ public class Game {
      * this function changes the turn and so the current player who is supposed to play
      * @return the new player that is supposed to play
      */
-    public Player nextTurn()
-    {
+    public Player nextTurn(){
         if(currentPlayer == nofplayers -1)
             currentPlayer = 0;
         else
