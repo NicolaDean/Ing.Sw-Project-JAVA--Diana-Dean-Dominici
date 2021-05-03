@@ -1,8 +1,9 @@
 package it.polimi.ingsw.controller.packets;
 
+import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.ServerController;
 
-public class Ping extends Packet<ServerController> implements PacketManager<ServerController>{
+public class Ping extends Packet<ClientController> implements PacketManager<ClientController> {
 
     int index;
 
@@ -11,7 +12,7 @@ public class Ping extends Packet<ServerController> implements PacketManager<Serv
         this.index = index;
     }
     @Override
-    public Packet analyze(ServerController controller) {
+    public Packet analyze(ClientController controller) {
         return new Pong(index);
     }
 }
