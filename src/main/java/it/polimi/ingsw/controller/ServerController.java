@@ -62,46 +62,9 @@ public class ServerController{
 
         for (ClientHandler c: clients)
         {
-            /*Runnable runnable = () -> {
-                while(true)
-                {
-                synchronized (this) {
-                    synchronized (c)
-                    {
-                        Packet a = new Ping(c.getIndex());
-                        c.sendToClient(a);
-                        try {
-                            wait(30000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        if (!c.isPing()) {
-                            //TODO client che non risponde, va disconnesso???
-                        } else {
-                            c.setPing();
-                        }
-                    }
-
-                }
-                }
-
-
-
-            };new Thread(runnable).start();*/
-
             new Thread(c.initializePingController()).start();
-
-
-
         }
 
-        /*new Thread(() -> {
-            for (ClientHandler c: clients)
-            {
-                boolean isAlive = false;
-            }
-
-        });*/
         return game.startGame();
     }
 
