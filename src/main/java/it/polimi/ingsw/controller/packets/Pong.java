@@ -17,7 +17,14 @@ public class Pong extends Packet<ServerController> implements PacketManager<Serv
         try
         {
             System.out.println("PONG of "+index );
-            controller.getClients().get(index).notify();
+
+            controller.getClients().get(index).getPingController().setPinged();
+            /*synchronized (controller.getClients().get(index).getPingController())
+            {
+                controller.getClients().get(index).getPingController().notify();
+            }*/
+
+            //controller.getClients().get(index).notify();
         }
         catch (Exception e)
         {

@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.controller.PingController;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
 import it.polimi.ingsw.controller.packets.BasicPacketFactory;
@@ -20,8 +21,10 @@ public class ClientHandler implements Runnable {
     JsonInterpreterServer   interpreter;
     private int index;
     private boolean ping = false;
+    private PingController pingController;
 
-//TODO aggiungere una funzione nel game "getIndexFromIndex" che viene chiamata quando mischio i giocatori
+
+    //TODO aggiungere una funzione nel game "getIndexFromIndex" che viene chiamata quando mischio i giocatori
     public ClientHandler(Socket client,ServerController controller)
     {
 
@@ -31,6 +34,17 @@ public class ClientHandler implements Runnable {
         this.initializeReader(client);
         this.initializeWriter(client);
 
+    }
+
+    public PingController getPingController()
+    {
+        return this.pingController;
+    }
+
+    public PingController initializePingController()
+    {
+        this.pingController = new PingController(index,output);
+        return this.pingController;
     }
 
     public boolean isPing() {

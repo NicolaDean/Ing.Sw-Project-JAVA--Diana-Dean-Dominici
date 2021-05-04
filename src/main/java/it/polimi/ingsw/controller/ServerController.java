@@ -62,7 +62,7 @@ public class ServerController{
 
         for (ClientHandler c: clients)
         {
-            Runnable runnable = () -> {
+            /*Runnable runnable = () -> {
                 while(true)
                 {
                 synchronized (this) {
@@ -87,8 +87,12 @@ public class ServerController{
 
 
 
-            };
-            new Thread(runnable).start();
+            };new Thread(runnable).start();*/
+
+            new Thread(c.initializePingController()).start();
+
+
+
         }
 
         /*new Thread(() -> {
