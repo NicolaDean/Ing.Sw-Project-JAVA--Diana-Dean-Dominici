@@ -1,6 +1,4 @@
 package it.polimi.ingsw.controller;
-
-
 import it.polimi.ingsw.controller.packets.Ping;
 
 import java.io.PrintWriter;

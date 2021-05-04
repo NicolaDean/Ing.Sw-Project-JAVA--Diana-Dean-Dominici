@@ -18,13 +18,12 @@ public class Pong extends Packet<ServerController> implements PacketManager<Serv
         {
             System.out.println("PONG of "+index );
 
-            controller.getClients().get(index).getPingController().setPinged();
-            /*synchronized (controller.getClients().get(index).getPingController())
+            try
             {
-                controller.getClients().get(index).getPingController().notify();
-            }*/
-
-            //controller.getClients().get(index).notify();
+                controller.getClients().get(index).getPingController().setPinged();
+            } catch (Exception e) {
+                System.out.println("Game not already starded");
+            }
         }
         catch (Exception e)
         {

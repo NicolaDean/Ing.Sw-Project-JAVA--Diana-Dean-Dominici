@@ -1,6 +1,6 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.controller.PingController;
+import it.polimi.ingsw.controller.*;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
 import it.polimi.ingsw.controller.packets.BasicPacketFactory;
@@ -146,7 +146,7 @@ public class ClientHandler implements Runnable {
             System.out.println("COMMAND: -> " + message);
         } catch (Exception e) {
             System.out.println("Not JSON MESSAGE: " + message);
-            e.printStackTrace();
+           // e.printStackTrace();
         }
     }
 
