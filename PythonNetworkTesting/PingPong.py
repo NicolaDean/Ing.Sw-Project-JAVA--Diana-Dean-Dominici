@@ -42,12 +42,13 @@ def pong(socket,signal):
     print("Pong thread created")
     while signal:
         try:
-            print("Pong sended")
+            #print("Pong sended")
             p =  '{"type":"Pong","content":{"index":0}}\n'
             socket.sendall(str.encode(p))
             time.sleep(3)
         except:
-            print("Pong failed")  
+            time.sleep(5)
+            #print("Pong failed")  
 
 
 #Start pong thread
