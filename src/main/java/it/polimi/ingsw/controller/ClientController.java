@@ -1,9 +1,15 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.exceptions.ErrorManager;
+
 public class ClientController {
 
-    public void exampleACK(String msg)
+    ErrorManager errorManager;
+
+    public void exampleACK(int code)
     {
-        System.out.println(msg);
+        errorManager.getErrorMessageFromCode(code);//TODO magari oltre al numero passo la view che chiamera "showError"
     }
+
+
 }

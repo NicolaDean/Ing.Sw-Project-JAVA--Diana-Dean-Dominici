@@ -64,9 +64,10 @@ def parser(command):
         setLogged()
         return '{"type":"StartGame","content":{}}'
     if command == '3':
-        return buy()
+        #return buy()
+        return '{"type":"BuyCard","content":{"x":1,"y":2,"position":1}}'
     if command == '4':
-        return production()
+        return '{"type":"Production","content":{"position":1}}'
 
 #ACTUAL CODE:
 
