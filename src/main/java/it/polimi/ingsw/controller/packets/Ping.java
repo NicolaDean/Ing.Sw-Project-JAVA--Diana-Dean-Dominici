@@ -14,8 +14,10 @@ public class Ping extends Packet<ClientController> implements PacketManager<Clie
     @Override
     public Packet analyze(ClientController controller)
     {
+        if(controller.isConnected())
+            controller.getPongController().setPonged();
         controller.setIndex(this.index);
-        controller.getPongController().notify();
-        return null;
+
+        return new Pong(index);
     }
 }

@@ -2,6 +2,8 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
+import it.polimi.ingsw.controller.packets.Login;
+import it.polimi.ingsw.controller.packets.StartGame;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 
 public class ClientApp {
@@ -32,21 +35,50 @@ public class ClientApp {
     /**
      * Show welcome page
      */
-    public void start()
-    {
+    public void start() throws IOException {
+
+
+        String address = "0";
+        while (address.equals("0"))
+            address=iprequest();
+        int port = portrequest();
+        String nickname = nicknamerequest();
+        this.controller.selectServer(address,port);
         this.controller.startGame();
+        this.controller.sendMessage(new Login("Fede"));
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        this.controller.sendMessage(new StartGame());
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        this.controller.starttolisten();
+
+    }
+
+    public String nicknamerequest() throws IOException {
+        System.out.println("\ninserisci il tuo nickname");
+        BufferedReader reader =
+                new BufferedReader(new InputStreamReader(System.in));
+        return  reader.readLine();
+
     }
 
     public static void main(String[] args) throws IOException {
         ClientApp app = new ClientApp();
         app.setViewType(true);//CLI poi il bool verra caricato da args
 
-        String address = "0";
-        while (address.equals("0"))
-            address=iprequest();
 
         app.start();
+
     }
+
+
 
     public static String iprequest() throws IOException {
         System.out.println("inserisci l'indirizzo del server a cui vuoi collegarti (\"0\" per localhost)");
@@ -56,13 +88,6 @@ public class ClientApp {
         if(address.equals("0"))
             address = "127.0.0.1";
 
-
-        /*System.out.println("\ninserisci la porta a cui vuoi collegarti (\"0\" per 1234)");
-
-        String port = reader.readLine();
-        if(port.equals("0"))
-            port = "1234";*/
-
         if (isValidInet4Address(address))
             return address;
         else {
@@ -71,6 +96,19 @@ public class ClientApp {
         }
 
 
+
+    }
+
+    public static int portrequest() throws IOException {
+        System.out.println("\ninserisci la porta a cui vuoi collegarti (\"0\" per 1234)");
+        BufferedReader reader =
+                new BufferedReader(new InputStreamReader(System.in));
+
+        String port123 = reader.readLine();
+        if(port123.equals("0"))
+            port123 = "1234";
+        int port = Integer.parseInt(port123);
+        return port;
 
     }
 

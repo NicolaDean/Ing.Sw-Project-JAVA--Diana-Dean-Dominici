@@ -160,7 +160,7 @@ public class ClientHandler implements Runnable {
             String response = interpreter.getResponse();
             if(response!=null)
             {
-                output.println();
+                output.println(response);
                 output.flush();
             }
         } catch (Exception e) {

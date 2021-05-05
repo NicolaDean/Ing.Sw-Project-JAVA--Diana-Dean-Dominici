@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
+import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
 import it.polimi.ingsw.controller.packets.Login;
 import it.polimi.ingsw.controller.packets.LoginSinglePlayer;
 import it.polimi.ingsw.controller.packets.Packet;
@@ -18,8 +19,9 @@ public class ClientController implements Runnable{
     private Socket socket;
     private Scanner input;
     private PrintWriter output;
-
     private JsonInterpreterClient interpreter;
+
+
     private PongController        pongController;
     private int                   index;
     private boolean               connected;
@@ -33,7 +35,13 @@ public class ClientController implements Runnable{
     {
         this.connected = false;
         if(type)view = new CLI();
+        this.interpreter= new JsonInterpreterClient(this);
+        errorManager = new ErrorManager();
         //else view = new GUI()
+
+    }
+
+    public ClientController() {
 
     }
 
@@ -58,6 +66,17 @@ public class ClientController implements Runnable{
         }
     }
 
+    public void starttolisten(){
+
+        Thread t = new Thread(this);
+        System.out.println("\nmi metto in ascolto \n");
+        t.start();
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
     public PongController getPongController() {
         return pongController;
     }
@@ -78,8 +97,11 @@ public class ClientController implements Runnable{
             initializeReader(server);
             initializeWriter(server);
             new Thread(this);//create input messages manager thread
+            setConnected(true);
+            this.pongController = new PongController(index, output);
 
         } catch (IOException e) {
+            setConnected(false);
             e.printStackTrace();
         }
     }
@@ -122,7 +144,7 @@ public class ClientController implements Runnable{
 
     public void sendMessage(Packet p)
     {
-        this.output.println(p.generateJson());
+        this.output.println(p.generateJson()); ;   //(p.generateJson());
         this.output.flush();
     }
     /**
@@ -134,14 +156,32 @@ public class ClientController implements Runnable{
 
         try
         {
+
             this.interpreter.analyzePacket(message);
+            this.respondToClient();
             System.out.println("Recived command:" + message);
         }catch (Exception e)
         {
-            System.out.println("Not a json Message: "+ message);
+            e.printStackTrace();
+            //System.out.println("Not a json Message: "+ message);
         }
 
     }
+
+    public void respondToClient()
+    {
+        try {
+            String response = interpreter.getResponse();
+            if(response!=null)
+            {
+                output.println(response);
+                output.flush();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run() {
         //Thread con server
