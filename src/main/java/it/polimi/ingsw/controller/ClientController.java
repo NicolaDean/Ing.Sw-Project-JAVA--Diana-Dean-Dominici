@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class ClientController implements Runnable{
 
-    private Socket socket;
+    private Socket server;
     private Scanner input;
     private PrintWriter output;
     private JsonInterpreterClient interpreter;
@@ -93,7 +93,8 @@ public class ClientController implements Runnable{
      */
     public void selectServer(String ip,int port) {
         try {
-            Socket server = new Socket(ip,port);
+            this.interpreter = new JsonInterpreterClient(this);
+            this.server = new Socket(ip,port);
             initializeReader(server);
             initializeWriter(server);
             new Thread(this);//create input messages manager thread
@@ -185,7 +186,7 @@ public class ClientController implements Runnable{
     @Override
     public void run() {
         //Thread con server
-
+        System.out.println("Waiting message thread chreated");
         while(this.connected)
         {
             this.waitMessage();
