@@ -39,7 +39,7 @@ public class JsonInterpreterServer extends BasicJsonInterpreter {
      */
     public void dispatchPacket(String type,JsonObject content)
     {
-        Packet packet = null;
+        Packet<ServerController> packet = null;
 
 
         try {
