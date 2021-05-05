@@ -80,7 +80,7 @@ public class PapalSpace {
     }
 
     public boolean checkPapalSpaceActivation(List<Player> players, Lorenzo l) {
-        boolean out = l.getPosition()>=this.finalPosition;
+        boolean out = ((l.getPosition()>=this.finalPosition) || (players.get(0).getPosition() >=this.finalPosition));
 
         if(out)
         {
