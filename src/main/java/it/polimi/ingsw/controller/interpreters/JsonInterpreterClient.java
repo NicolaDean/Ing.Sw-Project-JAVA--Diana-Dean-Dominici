@@ -9,17 +9,17 @@ import it.polimi.ingsw.controller.packets.Packet;
 
 public class JsonInterpreterClient extends BasicJsonInterpreter{
 
-    private ClientApp controller;
+    private ClientController controller;
 
 
-    public JsonInterpreterClient(ClientApp clientController)
+    public JsonInterpreterClient(ClientController clientController)
     {
         this.controller = clientController;
     }
 
     public void dispatchPacket(String type, JsonObject content)
     {
-        Packet<ClientApp> packet = null;
+        Packet<ClientController> packet = null;
 
         try {
             packet = BasicPacketFactory.getPacket(type,content, Class.forName("it.polimi.ingsw.controller.packets." + type));
