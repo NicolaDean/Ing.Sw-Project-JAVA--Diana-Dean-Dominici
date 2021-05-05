@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.lorenzo;
 
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.CellScore;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.PapalSpace;
@@ -67,18 +68,17 @@ public class LorenzoGame extends Game {
      * @param nickname the nickname of the player
      * @throws Exception
      */
-    public void addPlayer(String nickname) throws Exception
-    {
+    public void addPlayer(String nickname) throws NicknameAlreadyTaken, MatchFull {
         if(nofplayers<1) {
             for (Player p: players) {
                 if(p.getNickname().equals(nickname))
-                    throw new Exception("Nickname already taken, please choose another nickname");
+                    throw new NicknameAlreadyTaken(nickname);
             }
             players.add(new Player(nickname, scorePositions.size()));
             this.nofplayers++;
         }
         else
-            throw new Exception("There are already 1 players");
+            throw new MatchFull("There are already 1 players");
     }
 
     /**
@@ -88,7 +88,7 @@ public class LorenzoGame extends Game {
      * @param pos deposit pos
      * @throws Exception wrong deposit
      */
-    public void discardResource(Player p, Resource res, int pos) throws Exception {
+    public void discardResource(Player p, Resource res, int pos) throws EmptyDeposit, WrongPosition {
         p.getDashboard().getStorage().safeSubtraction(res,pos);
         lorenzo.incresePosition(res.getQuantity());
     }
@@ -136,9 +136,9 @@ public class LorenzoGame extends Game {
         return players.get(currentPlayer);
     }
 
-    public Player startGame() throws Exception {
+    public Player startGame() throws NotEnoughPlayers {
         if(nofplayers==0)
-            throw new Exception("There are no players");
+            throw new NotEnoughPlayers("");
         Collections.shuffle(players);
         players.get(0).setInkwell();
         currentPlayer = 0;

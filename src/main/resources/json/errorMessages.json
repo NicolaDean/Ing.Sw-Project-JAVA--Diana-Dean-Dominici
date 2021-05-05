@@ -1,0 +1,11 @@
+
+  [
+    "Not enough player to start the match, please wait other players",
+    "Match is full, please select another one or join a random public match",
+    "Nickname already taken, please chose another one",
+    "You dont have enough resources to do this action, please select another one or wait next turn",
+    "This swap is not possible, you are probably trying to swap deposit with incompatible dimension or a Bonus deposit",
+    "You are tying to select a deposit bonus but you dont own one",
+    "This deposit is already full, insertion failed",
+    "You cant activate the leader due to not soddisfed prerequisite"
+  ]

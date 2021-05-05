@@ -305,7 +305,6 @@ public class Player {
      * @return true if the production is done false is something dosnt gone well
      */
     public void bonusProduction(int pos, ResourceType resWanted) throws WrongPosition, NotEnoughResource {
-
         if(pos < this.bonusProductions.size())
         {
             BonusProductionInterface card = this.bonusProductions.get(pos);
@@ -317,6 +316,5 @@ public class Player {
         {
             throw  new WrongPosition("Not existing bonus card");
         }
-
     }
 }

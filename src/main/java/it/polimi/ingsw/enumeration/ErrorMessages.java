@@ -4,8 +4,12 @@ public enum ErrorMessages {
     Ok,
     NotYourTurn,
     MatchFull,
+    NotEnoughPlayer,
     NicknameAlreadyTaken,
     NotEnoughResources,
+    NotSoddisfedPrerequisite,
     WrongPosition,
-
+    IllegalSwap,
+    InsertionFailed,
+    ExtractionFailed
 }

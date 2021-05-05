@@ -5,8 +5,10 @@ import it.polimi.ingsw.controller.packets.ACK;
 import it.polimi.ingsw.controller.packets.MarketResult;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PendingCost;
+import it.polimi.ingsw.enumeration.ErrorMessages;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.exceptions.AckManager;
+import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
@@ -86,6 +88,10 @@ public class ServerController{
         return  new PendingCost(dashboard.getPendingCost());
     }
 
+    public Packet notYourTurn()
+    {
+        return new ACK(ErrorMessages.NotYourTurn.ordinal());
+    }
     /**
      * Player "player" buy the card in position x,y of the deks
      * @param x level
@@ -96,7 +102,7 @@ public class ServerController{
     public Packet buyCard(int x,int y,int pos,int player){
         Player p = this.game.getCurrentPlayer();
 
-        if(!isRightPlayer(player)) return new ACK(1);
+        if(!isRightPlayer(player)) return this.notYourTurn();
 
         ProductionCard card = this.game.drawProductionCard(x,y);
         try
@@ -119,7 +125,7 @@ public class ServerController{
         Player p = this.game.getCurrentPlayer();
         Dashboard dashboard = p.getDashboard();
 
-        if(!isRightPlayer(player)) return new ACK(1);
+        if(!isRightPlayer(player)) return this.notYourTurn();
 
         try {
             dashboard.production(p,pos);
@@ -141,7 +147,7 @@ public class ServerController{
         Player p = this.game.getCurrentPlayer();
         Dashboard dashboard = p.getDashboard();
 
-        if(!isRightPlayer(player)) return new ACK(1);
+        if(!isRightPlayer(player)) return this.notYourTurn();
 
         try {
             dashboard.basicProduction(res1,res2,obt);
@@ -177,7 +183,7 @@ public class ServerController{
      */
     public Packet storageExtraction(Resource resource, int pos, int player)
     {
-        if(!isRightPlayer(player)) return new ACK(1);
+        if(!isRightPlayer(player)) return this.notYourTurn();
 
         Player p = this.game.getCurrentPlayer();
         try {
@@ -195,7 +201,7 @@ public class ServerController{
      */
     public Packet chestExtraction(Resource resource, int player)
     {
-        if(!isRightPlayer(player)) return new ACK(1);
+        if(!isRightPlayer(player)) return this.notYourTurn();
 
         Player p = this.game.getCurrentPlayer();
         p.payChestResource(resource);
@@ -210,7 +216,7 @@ public class ServerController{
      */
     public Packet activateLeader(int pos,boolean action, int player)
     {
-        if(!isRightPlayer(player)) return new ACK(1);
+        if(!isRightPlayer(player)) return this.notYourTurn();
 
         Player p = this.game.getCurrentPlayer();
         try {
@@ -239,7 +245,7 @@ public class ServerController{
      */
     public Packet bonusProduction(int pos,ResourceType obt,int player)
     {
-        if(!isRightPlayer(player)) return new ACK(1);
+        if(!isRightPlayer(player)) return this.notYourTurn();
 
         Player p = this.game.getCurrentPlayer();
         try {
@@ -253,7 +259,7 @@ public class ServerController{
 
     public Packet swapDeposit(int pos1,int pos2,int player)
     {
-        if(!isRightPlayer(player)) return new ACK(1);
+        if(!isRightPlayer(player)) return this.notYourTurn();
 
         Player p = this.game.getCurrentPlayer();
         try {
@@ -276,19 +282,25 @@ public class ServerController{
      */
     public Packet marketExtraction(boolean direction,int pos,int player)
     {
-        if(!isRightPlayer(player)) return new ACK(1);
+        if(!isRightPlayer(player)) return this.notYourTurn();
 
         Player p = this.game.getCurrentPlayer();
         Market m = this.game.getMarket();
 
-        if(direction)
+        try
         {
-            m.exstractColumn(pos,p);
+            if(direction)
+            {
+                m.exstractColumn(pos,p);
+            }
+            else
+            {
+                m.exstractRow(pos,p);
+            }
+        }catch (AckManager err) {
+            return err.getAck();
         }
-        else
-        {
-            m.exstractRow(pos,p);
-        }
+
 
         List <Resource> res = m.getPendingResourceExtracted();
         int white           = m.getWhiteCount();

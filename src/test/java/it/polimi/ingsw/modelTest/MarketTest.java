@@ -1,6 +1,7 @@
 package it.polimi.ingsw.modelTest;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.PrerequisiteCard;
@@ -169,7 +170,7 @@ public class MarketTest {
      * check activation ball (no white ball)
      */
     @Test
-    public void activityTestNoWhite(){
+    public void activityTestNoWhite() throws WrongPosition {
         ResourceList r = new ResourceList();
         LeaderCard l[] = {new LeaderCard(r,new ArrayList<>(),1, COIN), new LeaderCard(r,new ArrayList<>(),1, SERVANT) };
         Player p=new Player("nick");
@@ -247,7 +248,7 @@ public class MarketTest {
      * check activation white ball
      */
     @Test
-    public void activityTestOneWhite(){
+    public void activityTestOneWhite() throws WrongPosition {
         List b;
         Market m= new Market();
         Player p=new Player("nick");
@@ -272,7 +273,7 @@ public class MarketTest {
     }
 
     @Test
-    public void activityTestTwoWhite(){
+    public void activityTestTwoWhite() throws WrongPosition {
         List b;
         Market m= new Market();
         Player p=new Player("nick");

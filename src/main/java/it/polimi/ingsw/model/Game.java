@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.factory.CardFactory;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
@@ -70,13 +71,13 @@ public class Game {
         if(nofplayers<4) {
             for (Player p: players) {
                 if(p.getNickname().equals(nickname))
-                    throw new Exception("Nickname already taken, please choose another nickname");
+                    throw new NicknameAlreadyTaken(nickname);
             }
             players.add(new Player(nickname, scorePositions.size()));
             nofplayers++;
         }
         else
-            throw new Exception("There are already 4 players");
+            throw new MatchFull("There are already 4 players");
     }
 
     /**
@@ -109,10 +110,10 @@ public class Game {
      * this method starts the game by shuffling the players and setting the currentPlayer (the one with the Inkwell)
      * @throws Exception if the are no players to start the game
      */
-    public Player startGame() throws Exception
+    public Player startGame() throws NotEnoughPlayers
     {
         if(nofplayers==0)
-            throw new Exception("There are no players");
+            throw new NotEnoughPlayers("");
         Collections.shuffle(players);
         players.get(0).setInkwell();
         currentPlayer = 0;
@@ -127,7 +128,7 @@ public class Game {
      * @param pos deposit pos
      * @throws Exception wrong deposit
      */
-    public void discardResource(Player p, Resource res,int pos) throws Exception {
+    public void discardResource(Player p, Resource res,int pos) throws EmptyDeposit, WrongPosition {
         p.getDashboard().getStorage().safeSubtraction(res,pos);
 
         for(Player x:this.players)

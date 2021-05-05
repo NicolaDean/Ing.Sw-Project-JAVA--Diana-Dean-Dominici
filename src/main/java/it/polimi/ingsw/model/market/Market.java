@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.market;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.market.balls.*;
 import it.polimi.ingsw.model.resources.Resource;
@@ -77,13 +78,13 @@ public class Market {
      * @param pos row position, it must be between 1 and 3
      * @param p player
      */
-    public void exstractRow(int pos, Player p) {
+    public void exstractRow(int pos, Player p) throws WrongPosition {
         BasicBall tmp;
         BasicBall out[] = new BasicBall[4];
         whiteCount=0;
         pendingResourceExtracted = new ResourceList();
         if ((pos > 3) || (pos < 1)) {
-            throw new IllegalArgumentException("invalid position");
+            throw new WrongPosition("invalid position");
         } else {
             pos--;
 
@@ -110,13 +111,13 @@ public class Market {
      * @param pos column position, it must be between 1 and 4
      * @param p player
      */
-    public void exstractColumn(int pos,Player p) {
+    public void exstractColumn(int pos,Player p) throws WrongPosition {
         BasicBall tmp;
         BasicBall out[] = new BasicBall[3];
         whiteCount=0;
         pendingResourceExtracted = new ResourceList();
         if ((pos > 4) || (pos < 1)) {
-            throw new IllegalArgumentException("invalid position");
+            throw new WrongPosition("invalid position");
         } else {
             pos--;
             for (int i = 0; i < 3; i++)
