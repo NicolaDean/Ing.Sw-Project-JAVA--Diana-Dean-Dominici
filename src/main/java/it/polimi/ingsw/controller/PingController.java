@@ -25,7 +25,7 @@ public class PingController implements Runnable{
 
                 this.sendPing();
                 try {
-                    wait(10000);
+                    wait(15000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -37,7 +37,7 @@ public class PingController implements Runnable{
                 dead = true;
             }
         }
-        System.out.println("Il client "+ index + "Si  è disconnesso, nessun pong ricevuto");
+        System.out.println("Il client "+ index + " Si  è disconnesso, nessun pong ricevuto");
 
 
     }
