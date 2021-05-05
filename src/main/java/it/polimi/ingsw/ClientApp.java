@@ -5,12 +5,31 @@ import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
 
 public class ClientApp {
 
-    JsonInterpreterClient interpreter;
-    ClientController      controller;
+    ClientController controller;
+
 
     public ClientApp()
     {
-        this.controller = new ClientController();
-        this.interpreter = new JsonInterpreterClient(this.controller);
+
+    }
+
+    public void setViewType(boolean type)
+    {
+        this.controller = new ClientController(type);
+    }
+
+    /**
+     * Show welcome page
+     */
+    public void start()
+    {
+        this.controller.startGame();
+    }
+
+    public static void main(String[] args)
+    {
+        ClientApp app = new ClientApp();
+        app.setViewType(true);//CLI poi il bool verra caricato da args
+        app.start();
     }
 }
