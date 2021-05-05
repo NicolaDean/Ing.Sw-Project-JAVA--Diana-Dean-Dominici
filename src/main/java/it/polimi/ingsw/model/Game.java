@@ -14,16 +14,16 @@ import java.util.List;
 import java.util.Stack;
 
 public class Game {
-    List<Player> players;
-    LeaderCard[] leaders;
-    Stack<ProductionCard>[][] productionDecks;
-    Market market;
-    List<CellScore> scorePositions ;
-    List<PapalSpace> papalSpaces;
-    int currentPapalSpaceToReach;
-    int currentPlayer;
-    int nofplayers=0;
-    private int leaderCount=0;
+    protected List<Player> players;
+    protected LeaderCard[] leaders;
+    protected Stack<ProductionCard>[][] productionDecks;
+    protected Market market;
+    protected List<CellScore> scorePositions ;
+    protected List<PapalSpace> papalSpaces;
+    protected int currentPapalSpaceToReach;
+    protected int currentPlayer;
+    protected int nofplayers=0;
+    protected int leaderCount=0;
 
     public Game()
     {
