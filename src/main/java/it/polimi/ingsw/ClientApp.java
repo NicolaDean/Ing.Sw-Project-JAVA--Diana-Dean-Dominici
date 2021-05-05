@@ -43,6 +43,7 @@ public class ClientApp {
             System.in.read();
             app.getController().selectServer("localhost",1234);
             app.getController().setNickname("Nicola",false);
+            System.in.read();
         } catch (IOException e) {
             e.printStackTrace();
         }
