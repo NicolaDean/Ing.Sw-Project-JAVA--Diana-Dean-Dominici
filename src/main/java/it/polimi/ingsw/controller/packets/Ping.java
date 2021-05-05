@@ -12,7 +12,10 @@ public class Ping extends Packet<ClientController> implements PacketManager<Clie
         this.index = index;
     }
     @Override
-    public Packet analyze(ClientController controller) {
-        return new Pong(index);
+    public Packet analyze(ClientController controller)
+    {
+        controller.setIndex(this.index);
+        controller.getPongController().notify();
+        return null;
     }
 }
