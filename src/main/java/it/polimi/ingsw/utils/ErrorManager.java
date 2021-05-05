@@ -1,14 +1,9 @@
-package it.polimi.ingsw.exceptions;
+package it.polimi.ingsw.utils;
 
 import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
-import it.polimi.ingsw.enumeration.ErrorMessages;
-import it.polimi.ingsw.model.factory.CardFactory;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 public class ErrorManager {

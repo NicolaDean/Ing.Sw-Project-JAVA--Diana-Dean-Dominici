@@ -72,13 +72,22 @@ public class WaitingRoom extends ClientHandler{
         boolean out = exitCondition();
         if(!out)
         {
-            //Find a free controller
-            ServerController c = findFreeController();
+            ServerController c;
+            if(this.interpreter.getController().isSinglePlayer())
+            {
+                //Create single player
+                c = new ServerController();
+            }
+            else
+            {
+                //Find a free controller
+                c = findFreeController();
+            }
+
             //Create new ClientHandler with this controller
             ClientHandler handler = new ClientHandler(this.getSocket(),c);
             handler.interpreter.analyzePacket(message); //Login,  this time on a real controller
             handler.respondToClient();
-
 
             //Add Handler to Real Controller
             c.addClient(handler);

@@ -13,6 +13,7 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Dashboard;
+import it.polimi.ingsw.model.lorenzo.LorenzoGame;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 
@@ -25,6 +26,8 @@ public class ServerController{
     Game game;
     List<ClientHandler> clients;
     int currentClient = 0;
+    boolean isSinglePlayer;
+
     /**
      *
      * @param real if true create a real controller(with clientHandlers) if false an emptyController for accept Login in waitingRoom
@@ -35,6 +38,22 @@ public class ServerController{
         if(real)  clients = new ArrayList<>();//If is a real controller create also ClientHandlers
     }
 
+    public ServerController()
+    {
+        this.setSinglePlayer();
+        game = new LorenzoGame();
+        clients = new ArrayList<>();//If is a real controller create also ClientHandlers
+    }
+
+
+    public void setSinglePlayer() {
+        isSinglePlayer = true;
+    }
+
+    public boolean isSinglePlayer()
+    {
+        return this.isSinglePlayer;
+    }
     public List<ClientHandler> getClients() {
         return clients;
     }

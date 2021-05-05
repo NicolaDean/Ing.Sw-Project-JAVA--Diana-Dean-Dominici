@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.exceptions.ErrorManager;
+import it.polimi.ingsw.utils.ErrorManager;
 
 public class ClientController {
 

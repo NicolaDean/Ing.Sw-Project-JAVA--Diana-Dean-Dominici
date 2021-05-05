@@ -1,13 +1,9 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.ServerController;
-import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
-import it.polimi.ingsw.controller.packets.*;
-import it.polimi.ingsw.exceptions.ErrorManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
