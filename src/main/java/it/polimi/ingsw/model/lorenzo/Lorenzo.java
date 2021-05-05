@@ -25,7 +25,7 @@ public class Lorenzo {
             l.resetDeckToken();
     }
 
-    public void incresePosition(int n){
+    public void incrementPosition(int n){
         positionBlackCross += n;
     }
 

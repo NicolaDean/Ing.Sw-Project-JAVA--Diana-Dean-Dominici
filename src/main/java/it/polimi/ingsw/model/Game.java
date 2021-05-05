@@ -228,4 +228,36 @@ public class Game {
     public Stack<ProductionCard>[][] getProductionDecks() {
         return productionDecks;
     }
+
+    public void setCurrentPapalSpaceToReach(int currentPapalSpaceToReach) {
+        this.currentPapalSpaceToReach = currentPapalSpaceToReach;
+    }
+
+    public void setCurrentPlayer(int currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public void setNofplayers(int nofplayers) {
+        this.nofplayers = nofplayers;
+    }
+
+    public LeaderCard[] getLeaders() {
+        return leaders;
+    }
+
+    public List<CellScore> getScorePositions() {
+        return scorePositions;
+    }
+
+    public List<PapalSpace> getPapalSpaces() {
+        return papalSpaces;
+    }
+
+    public int getCurrentPapalSpaceToReach() {
+        return currentPapalSpaceToReach;
+    }
+
+    public int getNofplayers() {
+        return nofplayers;
+    }
 }

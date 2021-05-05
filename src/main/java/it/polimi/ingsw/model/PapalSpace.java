@@ -79,9 +79,8 @@ public class PapalSpace {
 
     }
 
-    public boolean checkPapalSpaceActivation(List<Player> players, Lorenzo l)
-    {
-        boolean out = (players.get(0).getPosition() >= this.finalPosition) || (l.getPosition()>= this.finalPosition);
+    public boolean checkPapalSpaceActivation(List<Player> players, Lorenzo l) {
+        boolean out = l.getPosition()>=this.finalPosition;
 
         if(out)
         {
@@ -95,7 +94,5 @@ public class PapalSpace {
         }
 
         return out;
-
     }
-
 }

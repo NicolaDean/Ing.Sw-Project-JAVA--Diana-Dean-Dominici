@@ -3,27 +3,20 @@ package it.polimi.ingsw.model.lorenzo;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.CellScore;
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.PapalSpace;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.cards.LeaderCard;
-import it.polimi.ingsw.model.cards.ProductionCard;
-import it.polimi.ingsw.model.factory.CardFactory;
-import it.polimi.ingsw.model.factory.MapFactory;
 import it.polimi.ingsw.model.lorenzo.token.ActionToken;
 import it.polimi.ingsw.model.lorenzo.token.BlackCrossToken;
 import it.polimi.ingsw.model.lorenzo.token.ColoredActionToken;
 import it.polimi.ingsw.model.lorenzo.token.SpecialBlackCrossToken;
-import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Stack;
 
 import static it.polimi.ingsw.enumeration.CardType.*;
 
 public class LorenzoGame extends Game {
+    /*
     List<Player> players;
     LeaderCard[] leaders;
     Stack<ProductionCard>[][] productionDecks;
@@ -34,14 +27,16 @@ public class LorenzoGame extends Game {
     int currentPlayer=0;
     int nofplayers=0;
     private int leaderCount=0;
+    */
     ActionToken tokenDrawn;
     Lorenzo lorenzo;
     Stack<ActionToken> tokenDeck = new Stack<>();
 
-    public LorenzoGame()
-    {
+    public LorenzoGame() {
+        super();
         resetDeckToken();
         this.lorenzo=new Lorenzo();
+        /*
         this.market = new Market();
         this.productionDecks = CardFactory.loadProductionCardsFromJsonFile();
         this.leaders         = CardFactory.loadLeaderCardsFromJsonFile();
@@ -49,6 +44,7 @@ public class LorenzoGame extends Game {
         this.scorePositions  = MapFactory.loadCellScoresFromJsonFile();
         this.currentPapalSpaceToReach = 0;
         this.players = new ArrayList<>();
+         */
     }
 
     public Lorenzo getLorenzo() {
@@ -60,7 +56,7 @@ public class LorenzoGame extends Game {
     }
 
     public boolean isFull() {
-        return this.nofplayers==1;
+        return getNofplayers()==1;
     }
 
     /**
@@ -69,13 +65,13 @@ public class LorenzoGame extends Game {
      * @throws Exception
      */
     public void addPlayer(String nickname) throws NicknameAlreadyTaken, MatchFull {
-        if(nofplayers<1) {
-            for (Player p: players) {
+        if(getNofplayers()<1) {
+            for (Player p: getPlayers()) {
                 if(p.getNickname().equals(nickname))
                     throw new NicknameAlreadyTaken(nickname);
             }
-            players.add(new Player(nickname, scorePositions.size()));
-            this.nofplayers++;
+            getPlayers().add(new Player(nickname, getScorePositions().size()));
+            setNofplayers(getNofplayers()+1);
         }
         else
             throw new MatchFull("There are already 1 players");
@@ -90,7 +86,7 @@ public class LorenzoGame extends Game {
      */
     public void discardResource(Player p, Resource res, int pos) throws EmptyDeposit, WrongPosition {
         p.getDashboard().getStorage().safeSubtraction(res,pos);
-        lorenzo.incresePosition(res.getQuantity());
+        lorenzo.incrementPosition(res.getQuantity());
     }
 
     /**
@@ -98,51 +94,41 @@ public class LorenzoGame extends Game {
      * @return the new player that is supposed to play
      */
     public Player nextTurn(){
-        currentPlayer=0;
+        setCurrentPlayer(0);
 
         //PAPAL SPACE
-        if(this.currentPapalSpaceToReach < this.papalSpaces.size())
+        if(getCurrentPapalSpaceToReach() < getPapalSpaces().size())
         {
             //Check if someone surpass a papal space and in case add the score of papalToken to the players
-            boolean out = this.papalSpaces.get(this.currentPapalSpaceToReach).checkPapalSpaceActivation(this.players,lorenzo);
-
-            while(out == true && this.currentPapalSpaceToReach+1 < this.papalSpaces.size()){
-                this.currentPapalSpaceToReach++;
-                out = this.papalSpaces.get(this.currentPapalSpaceToReach).checkPapalSpaceActivation(this.players);
+            boolean out = getPapalSpaces().get(getCurrentPapalSpaceToReach()).checkPapalSpaceActivation(getPlayers(),lorenzo);
+            while(out == true && getCurrentPapalSpaceToReach()+1 < getPapalSpaces().size()){
+                setCurrentPapalSpaceToReach(getCurrentPapalSpaceToReach()+1);
+                out = getPapalSpaces().get(getCurrentPapalSpaceToReach()).checkPapalSpaceActivation(getPlayers(),lorenzo);
             }
 
         }
 
         //increment score for current player
-        int position = players.get(currentPlayer).getPosition();
+        int position = getCurrentPlayer().getPosition();
         int i=-1;
 
-        for (CellScore cell:scorePositions) {
+        for (CellScore cell:getScorePositions()) {
             if (position >= cell.getPosition()) {
                 i++;
             }
         }
 
-        if(i!=-1 && !players.get(currentPlayer).getSurpassedcells()[i])
+        if(i!=-1 && !getCurrentPlayer().getSurpassedcells()[i])
         {
-            players.get(currentPlayer).getSurpassedcells()[i]=true;
-            players.get(currentPlayer).increaseScore(scorePositions.get(i).getScore());
+            getCurrentPlayer().getSurpassedcells()[i]=true;
+            getCurrentPlayer().increaseScore(getScorePositions().get(i).getScore());
             if(i>0)
-                players.get(currentPlayer).decreaseScore(players.get(currentPlayer).getLastadded());
-            players.get(currentPlayer).setLastadded(scorePositions.get(i).getScore());
+                getCurrentPlayer().decreaseScore(getCurrentPlayer().getLastadded());
+            getCurrentPlayer().setLastadded(getScorePositions().get(i).getScore());
         }
 
         lorenzoTurn();
-        return players.get(currentPlayer);
-    }
-
-    public Player startGame() throws NotEnoughPlayers {
-        if(nofplayers==0)
-            throw new NotEnoughPlayers("");
-        Collections.shuffle(players);
-        players.get(0).setInkwell();
-        currentPlayer = 0;
-        return players.get(currentPlayer);
+        return getCurrentPlayer();
     }
 
     public ActionToken getTokenDrawn() {
@@ -202,7 +188,7 @@ public class LorenzoGame extends Game {
     }
 
     public void discardProductionDeck(int x,int y) {
-        productionDecks[x][y].pop();
+        getProductionDecks()[x][y].pop();
     }
 
 }
