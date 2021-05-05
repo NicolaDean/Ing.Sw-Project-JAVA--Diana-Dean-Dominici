@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.controller.packets.Ping;
 
 import java.io.PrintWriter;
+import java.util.concurrent.TimeUnit;
 
 public class PingController implements Runnable{
 
@@ -25,7 +26,7 @@ public class PingController implements Runnable{
 
                 this.sendPing();
                 try {
-                    wait(10000);
+                    wait(15000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -36,8 +37,13 @@ public class PingController implements Runnable{
 
                 dead = true;
             }
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        System.out.println("Il client "+ index + "Si  è disconnesso, nessun pong ricevuto");
+        System.out.println("Il client "+ index + " Si  è disconnesso, nessun pong ricevuto");
 
 
     }
