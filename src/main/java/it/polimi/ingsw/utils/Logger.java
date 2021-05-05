@@ -5,8 +5,18 @@ import java.io.PrintWriter;
 
 public class Logger {
 
-    PrintStream output = System.out;
+    CliColors out;
 
+    public Logger()
+    {
+        out = new CliColors(System.out);
+    }
+
+
+    public void Welcome()
+    {
+        out.printColored("WELCOMEE TO LORENZO IL MAGNIFICO", CliColors.WHITE_BACKGROUND, CliColors.RED_TEXT);
+    }
     public void printLogo()
     {
 

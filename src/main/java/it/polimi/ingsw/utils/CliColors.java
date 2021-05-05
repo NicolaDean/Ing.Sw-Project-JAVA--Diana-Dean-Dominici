@@ -1,6 +1,9 @@
 package it.polimi.ingsw.utils;
 
-public class CliColors
+import java.io.OutputStream;
+import java.io.PrintStream;
+
+public class CliColors extends PrintStream
 {
     public static String CLI_RESET          = "\u001b[0m";
     public static String BLACK_BACKGROUND   = "\u001b[40m";
@@ -13,17 +16,21 @@ public class CliColors
     public static String WHITE_BACKGROUND   = "\u001b[47m";
 
     public static String BLACK_TEXT         = "\u001b[30m";
-    public static String RED_TEXT         = "\u001b[31m";
+    public static String RED_TEXT           = "\u001b[31m";
     public static String GREEN_TEXT         = "\u001b[32m";
-    public static String YELLOW_TEXT         = "\u001b[33m";
-    public static String BLUE_TEXT         = "\u001b[34m";
-    public static String MAGENTA_TEXT         = "\u001b[35m";
-    public static String CYAN_TEXT         = "\u001b[36m";
+    public static String YELLOW_TEXT        = "\u001b[33m";
+    public static String BLUE_TEXT          = "\u001b[34m";
+    public static String MAGENTA_TEXT       = "\u001b[35m";
+    public static String CYAN_TEXT          = "\u001b[36m";
     public static String WHITE_TEXT         = "\u001b[37m";
+
+    public CliColors(OutputStream out) {
+        super(out);
+    }
 
     public void reset()
     {
-        System.out.println(CLI_RESET);
+        this.println(CLI_RESET);
     }
 
     public void printColored(String content,String backgroundStyle,String textStyle)
