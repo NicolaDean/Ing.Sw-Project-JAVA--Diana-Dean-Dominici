@@ -17,20 +17,12 @@ public class PongController extends PingController {
     {
         synchronized (this)
         {
-            System.out.println("PONG SETTATO A TRUE");
+            //System.out.println("PONG SETTATO A TRUE");
             this.isPinged = true;
             this.notify();
         }
     }
 
-    @Override
-    public void sendPing()
-    {
-        out.println(new Pong(this.index).generateJson());
-        out.flush();
-        this.isPinged = false;
-        System.out.println("Ping sended");
-    }
 
     public void setIndex(int index)
     {

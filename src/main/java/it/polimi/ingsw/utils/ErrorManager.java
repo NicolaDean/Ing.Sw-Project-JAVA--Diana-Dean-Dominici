@@ -21,6 +21,9 @@ public class ErrorManager {
 
     public void getErrorMessageFromCode(int code)
     {
-        System.out.println("Error code: " + errors.get(code));
+        if(code != 0)
+            System.out.println("Error code: " + errors.get(code));
+        else
+            System.out.println("ack received");
     }
 }
