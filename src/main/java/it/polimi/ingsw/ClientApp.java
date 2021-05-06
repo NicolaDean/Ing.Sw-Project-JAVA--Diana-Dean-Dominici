@@ -39,13 +39,14 @@ public class ClientApp {
 
 
         String address = "0";
-        while (address.equals("0"))
+        /*while (address.equals("0"))
             address=iprequest();
-        int port = portrequest();
-        String nickname = nicknamerequest();
-        this.controller.selectServer(address,port);
+        int port = portrequest();*/
+        //String nickname = nicknamerequest();
+        //this.controller.connectToServer(address,port);
+
         this.controller.startGame();
-        this.controller.sendMessage(new Login("Fede"));
+        //this.controller.sendMessage(new Login("Fede"));
         try {
             TimeUnit.SECONDS.sleep(2);
         } catch (InterruptedException e) {

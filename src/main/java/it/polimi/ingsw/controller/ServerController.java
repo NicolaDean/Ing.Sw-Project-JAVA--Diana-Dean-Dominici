@@ -34,6 +34,7 @@ public class ServerController{
      */
     public ServerController(boolean real)
     {
+        currentClient = 0;
         game = new Game();
         if(real)  clients = new ArrayList<>();//If is a real controller create also ClientHandlers
     }
@@ -63,7 +64,7 @@ public class ServerController{
 
         client.setIndex(currentClient);
         currentClient++;
-        if (currentClient>4)
+        if (currentClient>=4)
             currentClient = currentClient -4;
     }
 

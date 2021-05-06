@@ -31,17 +31,21 @@ public class PingController implements Runnable{
                     e.printStackTrace();
                 }
             }
-            System.out.println(this.index + " IS PINGED? : " + this.isPinged);
+            //System.out.println(this.index + " IS PINGED? : " + this.isPinged);
             if (!this.isPinged) {
                 //TODO client che non risponde, va disconnesso???
 
                 dead = true;
             }
-            try {
-                TimeUnit.SECONDS.sleep(2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            else
+            {
+                try {
+                    TimeUnit.SECONDS.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+
         }
         System.out.println("Il client "+ index + " Si  è disconnesso, nessun pong ricevuto");
 
@@ -53,14 +57,14 @@ public class PingController implements Runnable{
         out.println(new Ping(this.index).generateJson());
         out.flush();
         this.isPinged = false;
-        System.out.println("Ping sended");
+        //System.out.println("Ping sended");
     }
 
     public void setPinged()
     {
         synchronized (this)
         {
-            System.out.println("PING SETTATO A TRUE per "+ this.index);
+            //System.out.println("PING SETTATO A TRUE per "+ this.index);
             this.isPinged = true;
             this.notify();
         }

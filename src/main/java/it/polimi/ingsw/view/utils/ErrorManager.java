@@ -1,4 +1,4 @@
-package it.polimi.ingsw.utils;
+package it.polimi.ingsw.view.utils;
 
 import com.google.gson.Gson;
 
@@ -19,6 +19,10 @@ public class ErrorManager {
         errors = Arrays.asList(tmp);
     }
 
+    /**
+     * Get error messages from ack code
+     * @param code
+     */
     public void getErrorMessageFromCode(int code)
     {
         System.out.println("Error code: " + errors.get(code));

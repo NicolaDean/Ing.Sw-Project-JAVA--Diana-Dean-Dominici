@@ -1,11 +1,10 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
-import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
 import it.polimi.ingsw.controller.packets.Login;
 import it.polimi.ingsw.controller.packets.LoginSinglePlayer;
 import it.polimi.ingsw.controller.packets.Packet;
-import it.polimi.ingsw.utils.ErrorManager;
+import it.polimi.ingsw.view.utils.ErrorManager;
 import it.polimi.ingsw.view.CLI;
 import it.polimi.ingsw.view.View;
 
@@ -35,9 +34,13 @@ public class ClientController implements Runnable{
     {
         this.connected = false;
         if(type)view = new CLI();
+        else view = new CLI();//GUI()
+
+        view.setObserver(this);
+
         this.interpreter= new JsonInterpreterClient(this);
         errorManager = new ErrorManager();
-        //else view = new GUI()
+
 
     }
 
@@ -83,15 +86,18 @@ public class ClientController implements Runnable{
 
     public void startGame()
     {
-        //View.HomePage()
-        System.out.println("Start Game");
+
+        //0System.out.println("Start Game");
+        view.printWelcomeScreen();
+        view.askServerData();
+        view.askNickname();
     }
     /**
      * Open a connection with this server
      * @param ip server ip
      * @param port server port
      */
-    public void selectServer(String ip,int port) {
+    public void connectToServer(String ip,int port) {
         try {
             this.interpreter = new JsonInterpreterClient(this);
             this.server = new Socket(ip,port);
@@ -103,7 +109,7 @@ public class ClientController implements Runnable{
 
         } catch (IOException e) {
             setConnected(false);
-            e.printStackTrace();
+            view.askServerData("Connection failed, try insert new server data:");
         }
     }
 
