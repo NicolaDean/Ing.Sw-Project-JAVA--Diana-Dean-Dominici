@@ -59,8 +59,8 @@ public class ClientController implements Runnable{
     {
         this.connected = conn;
     }
-    public void setIndex(int index) {
-
+    public void setIndex(int index)
+    {
         if(!connected)
         {
             this.index = index;

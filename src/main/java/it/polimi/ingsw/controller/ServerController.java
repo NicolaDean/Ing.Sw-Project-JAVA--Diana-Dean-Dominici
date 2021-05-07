@@ -28,6 +28,7 @@ public class ServerController{
     List<ClientHandler> clients;
     int currentClient = 0;
     boolean isSinglePlayer;
+    boolean isStarted;
 
     /**
      *
@@ -36,6 +37,7 @@ public class ServerController{
     public ServerController(boolean real)
     {
         currentClient = 0;
+        isStarted = false;
         game = new Game();
         if(real)  clients = new ArrayList<>();//If is a real controller create also ClientHandlers
     }
@@ -103,12 +105,18 @@ public class ServerController{
     public Player startGame() throws Exception {
         System.out.println("-----------Game avviato---------- \n");
 
-        for (ClientHandler c: clients)
+        if(!this.isStarted)
         {
-            new Thread(c.initializePingController(this)).start();
-        }
+            for (ClientHandler c: clients)
+            {
+                new Thread(c.initializePingController(this)).start();
+            }
 
-        return game.startGame();
+            this.isStarted = true;
+            return game.startGame();
+        }
+        return  null;
+
     }
 
 
