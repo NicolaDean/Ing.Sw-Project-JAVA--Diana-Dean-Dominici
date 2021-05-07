@@ -38,27 +38,21 @@ public class ClientApp {
     public void start() throws IOException {
 
 
-        String address = "0";
-        /*while (address.equals("0"))
-            address=iprequest();
-        int port = portrequest();*/
-        //String nickname = nicknamerequest();
-        //this.controller.connectToServer(address,port);
 
         this.controller.startGame();
-        //this.controller.sendMessage(new Login("Fede"));
-        try {
-            TimeUnit.SECONDS.sleep(2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        this.controller.sendMessage(new StartGame());
-        try {
-            TimeUnit.SECONDS.sleep(2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         this.controller.starttolisten();
+
+        System.out.println("Click enter to start");
+        System.in.read();
+        this.controller.sendStartCommand();
+
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

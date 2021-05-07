@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
 import it.polimi.ingsw.controller.packets.Login;
 import it.polimi.ingsw.controller.packets.LoginSinglePlayer;
 import it.polimi.ingsw.controller.packets.Packet;
+import it.polimi.ingsw.controller.packets.StartGame;
 import it.polimi.ingsw.view.utils.ErrorManager;
 import it.polimi.ingsw.view.CLI;
 import it.polimi.ingsw.view.View;
@@ -91,6 +92,12 @@ public class ClientController implements Runnable{
         view.printWelcomeScreen();
         view.askServerData();
         view.askNickname();
+    }
+
+
+    public void sendStartCommand()
+    {
+        this.sendMessage(new StartGame());
     }
     /**
      * Open a connection with this server

@@ -61,6 +61,12 @@ public class Game {
         return this.nofplayers==4;
     }
 
+
+    public void removePlayer(int index)
+    {
+        this.players.remove(index);
+    }
+
     /**
      * function to add a new player to the game
      * @param nickname the nickname of the player

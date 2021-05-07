@@ -41,9 +41,10 @@ public class ClientHandler implements Runnable {
         return this.pingController;
     }
 
-    public PingController initializePingController()
+    public PingController initializePingController(ServerController controller)
     {
         this.pingController = new PingController(index,output);
+        this.pingController.setObserver(controller);
         return this.pingController;
     }
 
@@ -57,6 +58,7 @@ public class ClientHandler implements Runnable {
 
     public void setIndex(int index) {
         this.interpreter.setPlayerIndex(index);
+        if(this.pingController!=null) this.pingController.setIndex(index);
         this.index = index;
     }
 

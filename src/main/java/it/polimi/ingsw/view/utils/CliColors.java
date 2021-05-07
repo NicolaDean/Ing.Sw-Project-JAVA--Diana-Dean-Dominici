@@ -43,9 +43,12 @@ public class CliColors extends PrintStream
         this.println(CLI_RESET);
     }
 
-    public void clear(){ this.println(CLEAR_FULL);}
+    public void clear(){
+        this.println(CLEAR_FULL);
+        this.flush();
+    }
 
-    public void setBold()
+    public  void setBold()
     {
         this.print(BOLD);
     }

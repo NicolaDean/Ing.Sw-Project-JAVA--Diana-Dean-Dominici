@@ -16,6 +16,7 @@ import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.lorenzo.LorenzoGame;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.view.utils.CliColors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,28 @@ public class ServerController{
         this.setSinglePlayer();
         game = new LorenzoGame();
         clients = new ArrayList<>();//If is a real controller create also ClientHandlers
+    }
+
+    public void warning(String msg)
+    {
+        CliColors c = new CliColors(System.out);
+        c.printColored(msg,CliColors.YELLOW_TEXT);
+    }
+    public void removeClient(int index)
+    {
+        this.warning("Client "+ index + " removed from server Controller");
+        this.clients.remove(index);
+        currentClient = currentClient -1;
+
+        //Change other client index
+        int i=0;
+        for(ClientHandler c : clients)
+        {
+            this.warning("Now Client "+  c.getIndex() + " is -> " + i);
+
+            c.setIndex(i);
+            i++;
+        }
     }
 
 
@@ -82,7 +105,7 @@ public class ServerController{
 
         for (ClientHandler c: clients)
         {
-            new Thread(c.initializePingController()).start();
+            new Thread(c.initializePingController(this)).start();
         }
 
         return game.startGame();

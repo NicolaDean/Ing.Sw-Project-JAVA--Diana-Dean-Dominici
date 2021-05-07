@@ -4,16 +4,16 @@ import it.polimi.ingsw.controller.ClientController;
 
 import java.util.function.Consumer;
 
-public abstract class Observable {
+public abstract class Observable<T> {
 
-    ClientController controller;
+    T controller;
 
-    public void setObserver(ClientController controller)
+    public void setObserver(T controller)
     {
         this.controller = controller;
     }
 
-    public void notifyObserver(Consumer<ClientController> action)
+    public void notifyObserver(Consumer<T> action)
     {
         action.accept(this.controller);
     }

@@ -6,7 +6,7 @@ import it.polimi.ingsw.controller.packets.Pong;
 
 import java.io.PrintWriter;
 
-public class PongController extends PingController {
+public class PongController extends GenericPing<ClientController> {
 
 
     public PongController(int index, PrintWriter out) {
@@ -27,5 +27,11 @@ public class PongController extends PingController {
     public void setIndex(int index)
     {
         this.index = index;
+    }
+
+    @Override
+    public void customOnDisconnect()
+    {
+        System.out.println("Il server  si  è disconnesso, nessun pong ricevuto");
     }
 }

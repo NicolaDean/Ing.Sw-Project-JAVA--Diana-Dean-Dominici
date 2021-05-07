@@ -9,7 +9,7 @@ import it.polimi.ingsw.view.utils.Logger;
 import java.io.IOException;
 import java.util.function.Consumer;
 
-public class CLI extends Observable implements View {
+public class CLI extends Observable<ClientController> implements View {
 
     Logger                  terminal; //print formatted and colored text on the cli
     InputReaderValidation   input;
@@ -30,6 +30,8 @@ public class CLI extends Observable implements View {
     public void clickEnter() {
         this.terminal.out.printColored("Click enter to continue",CliColors.RED_TEXT,CliColors.BLACK_BACKGROUND);
         this.input.enter();
+        this.terminal.out.clear();
+        this.terminal.out.print("\033[H\033[2J");
     }
 
     @Override
