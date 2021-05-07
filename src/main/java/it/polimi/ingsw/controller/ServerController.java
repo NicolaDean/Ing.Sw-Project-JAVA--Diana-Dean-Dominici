@@ -91,6 +91,7 @@ public class ServerController{
         currentClient++;
         if (currentClient>=4)
             currentClient = currentClient -4;
+        new Thread(client.initializePingController(this)).start();
     }
 
     public boolean isFull()
@@ -105,18 +106,12 @@ public class ServerController{
     public Player startGame() throws Exception {
         System.out.println("-----------Game avviato---------- \n");
 
-        if(!this.isStarted)
+        /*for (ClientHandler c: clients)
         {
-            for (ClientHandler c: clients)
-            {
-                new Thread(c.initializePingController(this)).start();
-            }
+            new Thread(c.initializePingController(this)).start();
+        }*/
 
-            this.isStarted = true;
-            return game.startGame();
-        }
-        return  null;
-
+        return game.startGame();
     }
 
 
