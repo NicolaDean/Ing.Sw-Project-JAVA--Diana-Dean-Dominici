@@ -57,6 +57,7 @@ public class LorenzoGame extends Game {
 
     public boolean isFull() {
         return getNofplayers()==1;
+
     }
 
     /**

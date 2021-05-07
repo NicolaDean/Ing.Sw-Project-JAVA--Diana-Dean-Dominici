@@ -126,7 +126,7 @@ public class ClientHandler implements Runnable {
     {
         boolean flag = true;
             while (flag) {
-                System.out.println("wait command");
+                //System.out.println("wait command");
                 String message = this.input.nextLine();
                 if (message.equals("quit")) {
                     System.out.println("Client " + socket.getInetAddress() + " Exited the server");
@@ -137,7 +137,7 @@ public class ClientHandler implements Runnable {
                 }
 
             }
-        System.out.println("Exit loop");
+       // System.out.println("Exit loop");
     }
 
     /**

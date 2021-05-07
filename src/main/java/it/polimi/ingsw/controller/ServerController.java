@@ -234,7 +234,7 @@ public class ServerController{
             return new ACK(0);
         } catch (Exception e) {
             //System.out.println("Login di " +nickname + " FALLITO");
-            return new ACK(1);
+            return new ACK(4);
         }
     }
 
