@@ -29,6 +29,7 @@ public class ServerController{
     int currentClient = 0;
     boolean isSinglePlayer;
     boolean isStarted;
+    private int idpartita;
 
     /**
      *
@@ -47,6 +48,14 @@ public class ServerController{
         this.setSinglePlayer();
         game = new LorenzoGame();
         clients = new ArrayList<>();//If is a real controller create also ClientHandlers
+    }
+
+    public void setIdpartita(int idpartita) {
+        this.idpartita = idpartita;
+    }
+
+    public int getIdpartita() {
+        return idpartita;
     }
 
     public void warning(String msg)
@@ -69,7 +78,7 @@ public class ServerController{
 
     public void removeClient(int index)
     {
-        this.warning("Client "+ index + " removed from server Controller");
+        this.warning("Client "+ index + " removed from game number "+ this.getIdpartita());
         this.clients.remove(index);
         currentClient = currentClient -1;
 

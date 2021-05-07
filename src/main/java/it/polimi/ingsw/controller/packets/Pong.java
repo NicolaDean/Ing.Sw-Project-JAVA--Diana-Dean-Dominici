@@ -16,7 +16,7 @@ public class Pong extends Packet<ServerController> implements PacketManager<Serv
 
         try
         {
-            System.out.println("PONG of "+index );
+            System.out.println("PONG from client "+index +" on game number "+controller.getIdpartita() );
 
             try
             {
