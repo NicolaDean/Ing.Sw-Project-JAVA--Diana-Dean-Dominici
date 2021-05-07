@@ -90,5 +90,10 @@ public class CLI extends Observable<ClientController> implements View {
         askServerData();
     }
 
+    @Override
+    public void playerLogged(String nickname) {
+        this.terminal.printGoodMessages(nickname + " joined the game");
+    }
+
 
 }

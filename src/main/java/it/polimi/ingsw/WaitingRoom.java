@@ -86,11 +86,12 @@ public class WaitingRoom extends ClientHandler{
 
             //Create new ClientHandler with this controller
             ClientHandler handler = new ClientHandler(this.getSocket(),c);
-            handler.interpreter.analyzePacket(message); //Login,  this time on a real controller
-            handler.respondToClient();
 
             //Add Handler to Real Controller
             c.addClient(handler);
+
+            handler.interpreter.analyzePacket(message); //Login,  this time on a real controller
+            handler.respondToClient();
 
             //Create Thread
             this.createRealClientThread(handler);
@@ -103,10 +104,10 @@ public class WaitingRoom extends ClientHandler{
      */
     public void createRealClientThread(ClientHandler clientHandler)
     {
-        System.out.println("CREATE NEW  THREAD FOR CLIENT");
-        System.out.println("redirecting login packet to the match");
+        this.warning("CREATE NEW  THREAD FOR CLIENT");
+        this.warning("redirecting login packet to the match");
         this.executor.submit(clientHandler);
-        System.out.println("------------------------------------------");
+        this.warning("------------------------------------------");
     }
 
     /**
@@ -115,19 +116,19 @@ public class WaitingRoom extends ClientHandler{
 
     public ServerController findFreeController()
     {
-        System.out.println("---------------FIND MATCH-------------------");
+        this.warning("---------------FIND MATCH-------------------");
         int i=0;
         for(ServerController controller:controllers)
         {
             if(!controller.isFull())
             {
-                System.out.println("Player logged to the "+ i + "^ Match");
+                this.warning("Player logged to the "+ i + "^ Match");
                 return controller;
             }
             i++;
         }
-        System.out.println("All match Full, new one created");
-        System.out.println("Player logged to the "+ i + "^ Match");
+        this.warning("All match Full, new one created");
+        this.warning("Player logged to the "+ i + "^ Match");
 
 
         ServerController c = new ServerController(true);

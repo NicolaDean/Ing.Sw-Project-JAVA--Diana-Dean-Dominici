@@ -54,6 +54,19 @@ public class ServerController{
         CliColors c = new CliColors(System.out);
         c.printColored(msg,CliColors.YELLOW_TEXT);
     }
+
+
+    public void broadcastMessage(int except,Packet message)
+    {
+        if(clients == null) return;
+
+        this.warning("Broadcast sending: "+ message.generateJson());
+        for(ClientHandler c: clients)
+        {
+            if(c.getIndex()!=except) c.sendToClient(message);
+        }
+    }
+
     public void removeClient(int index)
     {
         this.warning("Client "+ index + " removed from server Controller");
@@ -104,14 +117,19 @@ public class ServerController{
     }
 
     public Player startGame() throws Exception {
-        System.out.println("-----------Game avviato---------- \n");
 
-        /*for (ClientHandler c: clients)
+        if(!this.isStarted)
         {
-            new Thread(c.initializePingController(this)).start();
-        }*/
+            this.isStarted = true;
+            this.warning("-----------Game avviato---------- \n");
+            return game.startGame();
+        }
+        else
+        {
+            this.warning("Game already started");
+            return null;
+        }
 
-        return game.startGame();
     }
 
 

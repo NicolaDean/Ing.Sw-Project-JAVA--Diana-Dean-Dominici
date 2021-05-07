@@ -5,6 +5,7 @@ import it.polimi.ingsw.controller.packets.Login;
 import it.polimi.ingsw.controller.packets.LoginSinglePlayer;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.StartGame;
+import it.polimi.ingsw.model.MiniModel;
 import it.polimi.ingsw.view.utils.ErrorManager;
 import it.polimi.ingsw.view.CLI;
 import it.polimi.ingsw.view.View;
@@ -28,7 +29,7 @@ public class ClientController implements Runnable{
 
     private ErrorManager          errorManager;
     private View                  view;   //Interface with all view methods
-
+    private MiniModel             model;
 
 
     public ClientController(boolean type)
@@ -37,12 +38,24 @@ public class ClientController implements Runnable{
         if(type)view = new CLI();
         else view = new CLI();//GUI()
 
-        view.setObserver(this);
+        this.view.setObserver(this);
 
         this.interpreter= new JsonInterpreterClient(this);
-        errorManager = new ErrorManager();
+        this.errorManager = new ErrorManager();
 
 
+        this.model = new MiniModel();
+    }
+
+    public MiniModel getMiniModel()
+    {
+        return this.model;
+    }
+
+    public void addPlayer(int index,String nickname)
+    {
+        this.view.playerLogged(nickname);
+        this.model.addPlayer(nickname,index);
     }
 
     public ClientController() {

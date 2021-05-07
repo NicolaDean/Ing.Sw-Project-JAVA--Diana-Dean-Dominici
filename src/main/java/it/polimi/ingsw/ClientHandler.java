@@ -7,6 +7,7 @@ import it.polimi.ingsw.controller.packets.BasicPacketFactory;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 import it.polimi.ingsw.controller.packets.Ping;
+import it.polimi.ingsw.view.utils.CliColors;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -47,7 +48,11 @@ public class ClientHandler implements Runnable {
         this.pingController.setObserver(controller);
         return this.pingController;
     }
-
+    public void warning(String msg)
+    {
+        CliColors c = new CliColors(System.out);
+        c.printColored(msg,CliColors.YELLOW_TEXT);
+    }
     public boolean isPing() {
         return ping;
     }
@@ -173,7 +178,6 @@ public class ClientHandler implements Runnable {
 
     public void sendToClient(Packet p)
     {
-        System.out.println("----ecco---- /n");
 
         System.out.println(p.generateJson());
         output.println(p.generateJson());

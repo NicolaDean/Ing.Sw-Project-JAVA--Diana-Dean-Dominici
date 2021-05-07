@@ -6,7 +6,6 @@ public class StartGame extends Packet<ServerController> implements PacketManager
 
     public StartGame() {
         super("StartGame");
-
     }
 
     @Override

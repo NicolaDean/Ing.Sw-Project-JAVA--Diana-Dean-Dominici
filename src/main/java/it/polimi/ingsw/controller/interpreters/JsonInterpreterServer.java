@@ -41,7 +41,6 @@ public class JsonInterpreterServer extends BasicJsonInterpreter {
     {
         Packet<ServerController> packet = null;
 
-
         try {
             packet = BasicPacketFactory.getPacket(type,content, Class.forName("it.polimi.ingsw.controller.packets." + type));
 
