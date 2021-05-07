@@ -61,6 +61,7 @@ public class ScoreTest {
         Resource shields = new Resource(SHIELD, 999);
         Resource servants = new Resource(SERVANT, 999);
         Resource rocks = new Resource(ROCK, 999);
+        assert currPlayer != null;
         currPlayer.getDashboard().chestInsertion(coins);
         currPlayer.getDashboard().chestInsertion(shields);
         currPlayer.getDashboard().chestInsertion(servants);
