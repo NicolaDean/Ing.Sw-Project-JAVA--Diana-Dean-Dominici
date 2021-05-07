@@ -28,6 +28,7 @@ public class ServerController{
     List<ClientHandler> clients;
     int currentClient = 0;
     boolean isSinglePlayer;
+    private int idpartita;
 
     /**
      *
@@ -47,6 +48,14 @@ public class ServerController{
         clients = new ArrayList<>();//If is a real controller create also ClientHandlers
     }
 
+    public void setIdpartita(int idpartita) {
+        this.idpartita = idpartita;
+    }
+
+    public int getIdpartita() {
+        return idpartita;
+    }
+
     public void warning(String msg)
     {
         CliColors c = new CliColors(System.out);
@@ -54,7 +63,7 @@ public class ServerController{
     }
     public void removeClient(int index)
     {
-        this.warning("Client "+ index + " removed from server Controller");
+        this.warning("Client "+ index + " removed from game number "+ this.getIdpartita());
         this.clients.remove(index);
         currentClient = currentClient -1;
 

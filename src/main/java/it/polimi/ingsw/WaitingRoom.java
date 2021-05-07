@@ -125,7 +125,6 @@ public class WaitingRoom extends ClientHandler{
             if(!controller.isFull())
             {
                 terminal.out.printColored("Player logged to the "+ i + "^ Match", CliColors.GREEN_TEXT,CliColors.BLACK_BACKGROUND);
-
                 return controller;
             }
             i++;
@@ -136,6 +135,7 @@ public class WaitingRoom extends ClientHandler{
 
 
         ServerController c = new ServerController(true);
+        c.setIdpartita(i);
         controllers.add(c);
         return c;
     }
