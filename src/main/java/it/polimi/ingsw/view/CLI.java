@@ -78,7 +78,7 @@ public class CLI extends Observable<ClientController> implements View {
         String validIp = ip;
         int validPort = port;
 
-        this.terminal.printGoodMessages("Trying to connect to "+ ip + " : "+ port);
+        this.terminal.printGoodMessages("Trying to connect to "+ ip + " : "+ port +"\n");
         this.notifyObserver(controller -> controller.connectToServer(validIp, validPort));
     }
 

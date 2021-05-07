@@ -2,6 +2,8 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
+import it.polimi.ingsw.view.utils.CliColors;
+import it.polimi.ingsw.view.utils.Logger;
 
 import java.net.Socket;
 import java.util.List;
@@ -103,8 +105,8 @@ public class WaitingRoom extends ClientHandler{
      */
     public void createRealClientThread(ClientHandler clientHandler)
     {
-        System.out.println("CREATE NEW  THREAD FOR CLIENT");
-        System.out.println("redirecting login packet to the match");
+        //System.out.println("CREATE NEW  THREAD FOR CLIENT");
+        //System.out.println("redirecting login packet to the match");
         this.executor.submit(clientHandler);
         System.out.println("------------------------------------------");
     }
@@ -115,19 +117,22 @@ public class WaitingRoom extends ClientHandler{
 
     public ServerController findFreeController()
     {
+        Logger terminal = new Logger();
         System.out.println("---------------FIND MATCH-------------------");
         int i=0;
         for(ServerController controller:controllers)
         {
             if(!controller.isFull())
             {
-                System.out.println("Player logged to the "+ i + "^ Match");
+                terminal.out.printColored("Player logged to the "+ i + "^ Match", CliColors.GREEN_TEXT,CliColors.BLACK_BACKGROUND);
+
                 return controller;
             }
             i++;
         }
-        System.out.println("All match Full, new one created");
-        System.out.println("Player logged to the "+ i + "^ Match");
+        if(i>0)
+            System.out.println("All match Full, new one created");
+        terminal.out.printColored("Player logged to the "+ i + "^ Match", CliColors.GREEN_TEXT,CliColors.BLACK_BACKGROUND);
 
 
         ServerController c = new ServerController(true);

@@ -24,6 +24,7 @@ public class Game {
     protected int currentPlayer;
     protected int nofplayers=0;
     protected int leaderCount=0;
+    protected boolean gamestarted=false;
 
     public Game()
     {
@@ -58,8 +59,11 @@ public class Game {
     }
 
     public boolean isFull() {
-        return this.nofplayers==4;
+        return (this.nofplayers==4 || gamestarted);
+
     }
+
+
 
 
     public void removePlayer(int index)
@@ -123,7 +127,9 @@ public class Game {
         Collections.shuffle(players);
         players.get(0).setInkwell();
         currentPlayer = 0;
+        gamestarted=true;
         return players.get(currentPlayer);
+
     }
 
 
