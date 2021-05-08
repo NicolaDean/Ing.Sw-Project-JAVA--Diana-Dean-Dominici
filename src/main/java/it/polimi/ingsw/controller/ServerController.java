@@ -130,7 +130,10 @@ public class ServerController{
         if(!this.isStarted)
         {
             this.isStarted = true;
-            this.warning("-----------Game avviato---------- \n");
+            for (ClientHandler c:clients) {
+                c.getPingController().setGameStarted();
+            }
+            this.warning("\n-----------Game "+ this.getIdpartita() + " avviato---------- \n");
             return game.startGame();
         }
         else
