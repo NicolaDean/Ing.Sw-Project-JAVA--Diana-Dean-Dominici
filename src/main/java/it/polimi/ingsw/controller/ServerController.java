@@ -111,7 +111,7 @@ public class ServerController{
     }
 
     public Player startGame() throws Exception {
-        System.out.println("-----------Game avviato---------- \n");
+        this.warning("\n-----------Game "+ idpartita + " avviato---------- \n");
 
         /*for (ClientHandler c: clients)
         {
@@ -219,6 +219,7 @@ public class ServerController{
     {
         try {
             this.game.addPlayer(nickname);
+
             //System.out.println("Login di " + nickname);
             return new ACK(0);
         } catch (Exception e) {

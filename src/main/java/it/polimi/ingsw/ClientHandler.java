@@ -7,6 +7,7 @@ import it.polimi.ingsw.controller.packets.BasicPacketFactory;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 import it.polimi.ingsw.controller.packets.Ping;
+import it.polimi.ingsw.model.Player;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -144,6 +145,7 @@ public class ClientHandler implements Runnable {
         try {
             interpreter.analyzePacket(message);
             respondToClient();
+
 
             System.out.println("COMMAND: -> " + message);
         } catch (Exception e) {
