@@ -168,7 +168,7 @@ public class ClientHandler implements Runnable {
             String response = interpreter.getResponse();
             if(response!=null)
             {
-                DebugMessages.printNetwork("RESPONSE : -> " + response);
+                System.out.println("RESPONSE : -> " + response);
                 output.println(response);
                 output.flush();
             }

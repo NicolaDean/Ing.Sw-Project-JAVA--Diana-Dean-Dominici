@@ -88,11 +88,13 @@ public class WaitingRoom extends ClientHandler{
 
             //Create new ClientHandler with this controller
             ClientHandler handler = new ClientHandler(this.getSocket(),c);
+            //Add Handler to Real Controller
+            c.addClient(handler);
+
             handler.interpreter.analyzePacket(message); //Login,  this time on a real controller
             handler.respondToClient();
 
-            //Add Handler to Real Controller
-            c.addClient(handler);
+
 
             //Create Thread
             this.createRealClientThread(handler);
