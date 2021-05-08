@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import it.polimi.ingsw.controller.packets.BasicPacketFactory;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
+import it.polimi.ingsw.view.utils.DebugMessages;
 
 public class BasicJsonInterpreter {
 
@@ -60,7 +61,7 @@ public class BasicJsonInterpreter {
         {
             this.responseAvailable = false;
 
-            System.out.println("RESPONSE : -> " + this.response.generateJson());
+
             return this.response.generateJson();
         }
         else

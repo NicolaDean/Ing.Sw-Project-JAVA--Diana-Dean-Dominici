@@ -7,7 +7,8 @@ import it.polimi.ingsw.controller.packets.BasicPacketFactory;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 import it.polimi.ingsw.controller.packets.Ping;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.view.utils.CliColors;
+import it.polimi.ingsw.view.utils.DebugMessages;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -48,7 +49,11 @@ public class ClientHandler implements Runnable {
         this.pingController.setObserver(controller);
         return this.pingController;
     }
-
+    public void warning(String msg)
+    {
+        CliColors c = new CliColors(System.out);
+        c.printColored(msg,CliColors.YELLOW_TEXT);
+    }
     public boolean isPing() {
         return ping;
     }
@@ -146,7 +151,6 @@ public class ClientHandler implements Runnable {
             interpreter.analyzePacket(message);
             respondToClient();
 
-
             System.out.println("COMMAND: -> " + message);
         } catch (Exception e) {
             System.out.println("Not JSON MESSAGE: " + message);
@@ -164,6 +168,7 @@ public class ClientHandler implements Runnable {
             String response = interpreter.getResponse();
             if(response!=null)
             {
+                DebugMessages.printNetwork("RESPONSE : -> " + response);
                 output.println(response);
                 output.flush();
             }
@@ -175,7 +180,6 @@ public class ClientHandler implements Runnable {
 
     public void sendToClient(Packet p)
     {
-        System.out.println("----ecco---- /n");
 
         System.out.println(p.generateJson());
         output.println(p.generateJson());

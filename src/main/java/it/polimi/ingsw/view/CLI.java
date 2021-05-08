@@ -6,9 +6,6 @@ import it.polimi.ingsw.view.utils.CliColors;
 import it.polimi.ingsw.view.utils.InputReaderValidation;
 import it.polimi.ingsw.view.utils.Logger;
 
-import java.io.IOException;
-import java.util.function.Consumer;
-
 public class CLI extends Observable<ClientController> implements View {
 
     Logger                  terminal; //print formatted and colored text on the cli
@@ -42,7 +39,7 @@ public class CLI extends Observable<ClientController> implements View {
         String nickname = ".";
         do {
             nickname = input.readLine(3);
-            if(nickname.length() == 0) terminal.printError("Nickname too short, minimum 3 letters");
+            if(nickname.length() == 0) terminal.printWarning("Nickname too short, minimum 3 letters");
         }while(nickname.length() == 0);
 
 
@@ -62,7 +59,7 @@ public class CLI extends Observable<ClientController> implements View {
         do {
             ip= this.input.readLine();
             if(ip.length()==0) ip = "localhost";
-            if(ip.equals(".")) terminal.printError("please, insert a valid IP address");
+            if(ip.equals(".")) terminal.printWarning("please, insert a valid IP address");
         }
         while(!this.input.validateIP(ip));
 
@@ -71,7 +68,7 @@ public class CLI extends Observable<ClientController> implements View {
         do {
             port = this.input.readInt();
             if(port == 0) port = 1234;
-            if(!this.input.validatePortNumber(port)) terminal.printError(port + " is not valid a valid port number, insert a value between 1 and 65535");
+            if(!this.input.validatePortNumber(port)) terminal.printWarning(port + " is not valid a valid port number, insert a value between 1 and 65535");
         }
         while (!this.input.validatePortNumber(port));
 
@@ -84,10 +81,15 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askServerData(String error) {
-        this.terminal.printError(error);
+        this.terminal.printWarning(error);
         this.input.console.nextLine();
         this.clickEnter();
         askServerData();
+    }
+
+    @Override
+    public void playerLogged(String nickname) {
+        this.terminal.printGoodMessages(nickname + " joined the game");
     }
 
 

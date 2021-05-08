@@ -23,5 +23,6 @@ public interface View {
      */
     public void askServerData(String errore);
 
+    public void playerLogged(String nickname);
     public void setObserver(ClientController controller);
 }

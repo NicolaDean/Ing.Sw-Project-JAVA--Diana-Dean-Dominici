@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.controller.PingController;
 import it.polimi.ingsw.controller.packets.Ping;
 import it.polimi.ingsw.controller.packets.Pong;
+import it.polimi.ingsw.view.utils.DebugMessages;
 
 import java.io.PrintWriter;
 
@@ -32,6 +33,6 @@ public class PongController extends GenericPing<ClientController> {
     @Override
     public void customOnDisconnect()
     {
-        System.out.println("Il server  si  è disconnesso, nessun pong ricevuto");
+        DebugMessages.printError("Il server  si  è disconnesso, nessun pong ricevuto");
     }
 }

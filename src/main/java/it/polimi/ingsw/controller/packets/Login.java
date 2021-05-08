@@ -17,6 +17,8 @@ public class Login  extends Packet<ServerController> implements PacketManager<Se
 
     @Override
     public Packet analyze(ServerController controller) {
+
+        controller.broadcastMessage(this.getPlayerIndex(),new UserEnterGame(this.getPlayerIndex(),this.nickname));
         return controller.login(this.nickname);
     }
 }

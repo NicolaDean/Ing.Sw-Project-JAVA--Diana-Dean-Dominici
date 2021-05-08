@@ -5,6 +5,8 @@ import it.polimi.ingsw.controller.packets.Login;
 import it.polimi.ingsw.controller.packets.LoginSinglePlayer;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.StartGame;
+import it.polimi.ingsw.model.MiniModel;
+import it.polimi.ingsw.view.utils.DebugMessages;
 import it.polimi.ingsw.view.utils.ErrorManager;
 import it.polimi.ingsw.view.CLI;
 import it.polimi.ingsw.view.View;
@@ -28,7 +30,7 @@ public class ClientController implements Runnable{
 
     private ErrorManager          errorManager;
     private View                  view;   //Interface with all view methods
-
+    private MiniModel             model;
 
 
     public ClientController(boolean type)
@@ -37,12 +39,24 @@ public class ClientController implements Runnable{
         if(type)view = new CLI();
         else view = new CLI();//GUI()
 
-        view.setObserver(this);
+        this.view.setObserver(this);
 
         this.interpreter= new JsonInterpreterClient(this);
-        errorManager = new ErrorManager();
+        this.errorManager = new ErrorManager();
 
 
+        this.model = new MiniModel();
+    }
+
+    public MiniModel getMiniModel()
+    {
+        return this.model;
+    }
+
+    public void addPlayer(int index,String nickname)
+    {
+        this.view.playerLogged(nickname);
+        this.model.addPlayer(nickname,index);
     }
 
     public ClientController() {
@@ -59,8 +73,8 @@ public class ClientController implements Runnable{
     {
         this.connected = conn;
     }
-    public void setIndex(int index) {
-
+    public void setIndex(int index)
+    {
         if(!connected)
         {
             this.index = index;
@@ -73,7 +87,7 @@ public class ClientController implements Runnable{
     public void starttolisten(){
 
         Thread t = new Thread(this);
-        System.out.println("\nmi metto in ascolto \n");
+        DebugMessages.printNetwork("\nmi metto in ascolto \n");
         t.start();
     }
 
@@ -173,11 +187,11 @@ public class ClientController implements Runnable{
 
             this.interpreter.analyzePacket(message);
             this.respondToClient();
-            System.out.println("Recived command:" + message);
+            DebugMessages.printNetwork("Recived command:" + message);
         }catch (Exception e)
         {
             e.printStackTrace();
-            //System.out.println("Not a json Message: "+ message);
+            DebugMessages.printError("Not a json Message: "+ message);
         }
 
     }
@@ -199,7 +213,7 @@ public class ClientController implements Runnable{
     @Override
     public void run() {
         //Thread con server
-        System.out.println("Waiting message thread chreated");
+        DebugMessages.printNetwork("Waiting message thread chreated");
         while(this.connected)
         {
             this.waitMessage();
