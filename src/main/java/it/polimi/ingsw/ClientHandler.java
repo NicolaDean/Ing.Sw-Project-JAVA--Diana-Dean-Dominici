@@ -8,6 +8,7 @@ import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 import it.polimi.ingsw.controller.packets.Ping;
 import it.polimi.ingsw.view.utils.CliColors;
+import it.polimi.ingsw.view.utils.DebugMessages;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -167,6 +168,7 @@ public class ClientHandler implements Runnable {
             String response = interpreter.getResponse();
             if(response!=null)
             {
+                DebugMessages.printNetwork("RESPONSE : -> " + response);
                 output.println(response);
                 output.flush();
             }

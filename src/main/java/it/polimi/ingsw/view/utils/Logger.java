@@ -24,12 +24,16 @@ public class Logger {
         out.printColored(content,this.istructionText,this.istructionBackground);
     }
 
+    public void printError(String content)
+    {
+        out.printColored(content,CliColors.RED_TEXT,this.istructionBackground);
+    }
     /**
-     * Print a colored message corresponding to "errors"
+     * Print a colored message corresponding to "warnings"
      * @param content message
      */
 
-    public void printError(String content)
+    public void printWarning(String content)
     {
         out.printColored(content,this.warningColor,this.istructionBackground);
     }
