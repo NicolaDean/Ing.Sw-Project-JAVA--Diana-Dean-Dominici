@@ -1,10 +1,13 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.utils.CliColors;
 import it.polimi.ingsw.view.utils.InputReaderValidation;
 import it.polimi.ingsw.view.utils.Logger;
+
+import java.util.List;
 
 public class CLI extends Observable<ClientController> implements View {
 
@@ -85,6 +88,61 @@ public class CLI extends Observable<ClientController> implements View {
         this.input.console.nextLine();
         this.clickEnter();
         askServerData();
+    }
+
+    @Override
+    public void askBuy() {
+
+    }
+
+    @Override
+    public void askProduction() {
+
+    }
+
+    @Override
+    public void askBonusProduction() {
+
+    }
+
+    @Override
+    public void askBasicProduction() {
+
+    }
+
+    @Override
+    public void askMarketExtraction() {
+
+    }
+
+    @Override
+    public void askDiscardResource(List<Resource> resourceList) {
+
+    }
+
+    @Override
+    public void askResourceInsertion(List<Resource> resourceList) {
+
+    }
+
+    @Override
+    public void askResourceExtraction(List<Resource> resourceList) {
+
+    }
+
+    @Override
+    public void askSwapDeposit() {
+
+    }
+
+    @Override
+    public void askTurnType() {
+
+    }
+
+    @Override
+    public void askCommand() {
+
     }
 
     @Override

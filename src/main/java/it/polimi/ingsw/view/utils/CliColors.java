@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.utils;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 
 public class CliColors extends PrintStream
 {
@@ -35,7 +36,7 @@ public class CliColors extends PrintStream
 
 
     public CliColors(OutputStream out) {
-        super(out);
+        super(out,true);
     }
 
     public void reset()
