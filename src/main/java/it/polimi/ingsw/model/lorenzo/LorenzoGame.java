@@ -132,6 +132,11 @@ public class LorenzoGame extends Game {
         return getCurrentPlayer();
     }
 
+    public boolean checkEndGame(){
+        //TODO checkEndGame di lorenzo
+        return false;
+    }
+
     public ActionToken getTokenDrawn() {
         return tokenDrawn;
     }

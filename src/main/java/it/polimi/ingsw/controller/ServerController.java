@@ -168,6 +168,7 @@ public class ServerController{
     {
         return new ACK(ErrorMessages.NotYourTurn.ordinal());
     }
+
     /**
      * Player "player" buy the card in position x,y of the deks
      * @param x level
@@ -384,5 +385,14 @@ public class ServerController{
 
     }
 
+    public Packet nextTurn(){ //TODO next turn in ServerController
+        //chiamerà checkEndGame() di game
+        //se risulterà positivo invierà in broadcast EndTurn e chiudera la connessione in maniera safe
+        return null;
+    }
 
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
 }

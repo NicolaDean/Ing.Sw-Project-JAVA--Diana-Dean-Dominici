@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.controller.LorenzoServerController;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
 import it.polimi.ingsw.view.utils.CliColors;
@@ -78,7 +79,7 @@ public class WaitingRoom extends ClientHandler{
             if(this.interpreter.getController().isSinglePlayer())
             {
                 //Create single player
-                c = new ServerController();
+                c = new LorenzoServerController();
             }
             else
             {

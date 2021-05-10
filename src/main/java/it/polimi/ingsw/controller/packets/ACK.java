@@ -25,7 +25,6 @@ public class ACK extends Packet<ClientController> implements PacketManager<Clien
         controller.exampleACK(this.errorMSG);
 
         return null;
-
     }
 
 

@@ -10,8 +10,9 @@ public class EndTurn   extends Packet<ServerController> implements PacketManager
     {
         super("EndTurn");
     }
+
     @Override
     public Packet analyze(ServerController controller) {
-        return null;
+        return controller.nextTurn();
     }
 }

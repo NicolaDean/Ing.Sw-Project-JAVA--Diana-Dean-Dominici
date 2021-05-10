@@ -241,6 +241,11 @@ public class Game {
         return lead;
     }
 
+    public boolean checkEndGame(){
+        //TODO checkEndGame
+        return false;
+    }
+
     public Stack<ProductionCard>[][] getProductionDecks() {
         return productionDecks;
     }
