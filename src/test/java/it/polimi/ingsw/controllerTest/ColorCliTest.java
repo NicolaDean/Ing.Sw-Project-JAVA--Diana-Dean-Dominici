@@ -4,6 +4,7 @@ import it.polimi.ingsw.view.utils.CliColors;
 import it.polimi.ingsw.view.utils.Logger;
 import it.polimi.ingsw.view.CLI;
 import it.polimi.ingsw.view.View;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class ColorCliTest {
@@ -25,7 +26,7 @@ public class ColorCliTest {
         logger.Welcome();
     }
 
-    @Test
+    @Disabled
     public void printLogo()
     {
         View view = new CLI();
@@ -33,4 +34,5 @@ public class ColorCliTest {
         view.printWelcomeScreen();
         view.askNickname();
     }
+
 }
