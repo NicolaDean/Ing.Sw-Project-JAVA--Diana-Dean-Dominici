@@ -1,8 +1,6 @@
-package it.polimi.ingsw.controller;
+package it.polimi.ingsw.controller.pingManager;
 
-import it.polimi.ingsw.controller.PingController;
-import it.polimi.ingsw.controller.packets.Ping;
-import it.polimi.ingsw.controller.packets.Pong;
+import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.view.utils.DebugMessages;
 
 import java.io.PrintWriter;

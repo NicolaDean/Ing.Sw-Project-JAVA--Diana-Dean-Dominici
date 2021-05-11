@@ -1,9 +1,8 @@
-package it.polimi.ingsw.controller;
+package it.polimi.ingsw.controller.pingManager;
+import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Ping;
-import it.polimi.ingsw.view.observer.Observable;
 
 import java.io.PrintWriter;
-import java.util.concurrent.TimeUnit;
 
 public class PingController extends GenericPing<ServerController>{
 

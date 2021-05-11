@@ -8,6 +8,7 @@ import it.polimi.ingsw.view.utils.InputReaderValidation;
 import it.polimi.ingsw.view.utils.Logger;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class CLI extends Observable<ClientController> implements View {
 
@@ -25,6 +26,11 @@ public class CLI extends Observable<ClientController> implements View {
         this.terminal.printLogo();
         this.terminal.out.setBackgroundColor(CliColors.BLACK_BACKGROUND);
         this.clickEnter();
+    }
+
+    @Override
+    public void showError() {
+
     }
 
     public void clickEnter() {
@@ -49,6 +55,8 @@ public class CLI extends Observable<ClientController> implements View {
         String validNickname = nickname;
         this.notifyObserver(controller -> controller.setNickname(validNickname,true));
 
+        //Example set action to do in case of NACK on Login command
+        //this.notifyObserver(controller -> controller.setAckManagmentAction(View::askNickname));
     }
 
     @Override
@@ -92,7 +100,10 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askBuy() {
+        //this.notifyObserver(controller -> controller.setAckManagmentAction(View::askBuy));
 
+        //per evitare loop bisognera inserire nell'input reader un comando
+        // che verifichi se lutente ha scritto cancel o qualcosa del genere per tprnare al menu con i comandi
     }
 
     @Override

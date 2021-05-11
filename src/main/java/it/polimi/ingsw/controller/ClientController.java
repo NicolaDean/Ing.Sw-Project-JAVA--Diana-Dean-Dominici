@@ -5,7 +5,9 @@ import it.polimi.ingsw.controller.packets.Login;
 import it.polimi.ingsw.controller.packets.LoginSinglePlayer;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.StartGame;
+import it.polimi.ingsw.controller.pingManager.PongController;
 import it.polimi.ingsw.model.MiniModel;
+import it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.view.utils.DebugMessages;
 import it.polimi.ingsw.view.utils.ErrorManager;
 import it.polimi.ingsw.view.CLI;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 public class ClientController implements Runnable{
 
@@ -24,28 +27,33 @@ public class ClientController implements Runnable{
     private JsonInterpreterClient interpreter;
 
 
-    private PongController        pongController;
+    private PongController pongController;
     private int                   index;
     private boolean               connected;
 
     private ErrorManager          errorManager;
     private View                  view;   //Interface with all view methods
     private MiniModel             model;
-
+    private AckExample            resolver;
 
     public ClientController(boolean type)
     {
         this.connected = false;
         if(type)view = new CLI();
-        else view = new CLI();//GUI()
+        else view = new GUI();//GUI()
 
         this.view.setObserver(this);
 
         this.interpreter= new JsonInterpreterClient(this);
         this.errorManager = new ErrorManager();
-
+        this.resolver = new AckExample();
 
         this.model = new MiniModel();
+    }
+
+    public void setAckManagmentAction(Consumer <View> action)
+    {
+        this.resolver.setAction(action);
     }
 
     public MiniModel getMiniModel()

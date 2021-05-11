@@ -1,4 +1,4 @@
-package it.polimi.ingsw.controller;
+package it.polimi.ingsw.controller.pingManager;
 
 import it.polimi.ingsw.view.observer.Observable;
 

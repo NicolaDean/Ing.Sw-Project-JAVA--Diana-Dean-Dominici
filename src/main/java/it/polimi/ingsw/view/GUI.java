@@ -14,6 +14,11 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
+    public void showError() {
+
+    }
+
+    @Override
     public void askNickname() {
 
     }

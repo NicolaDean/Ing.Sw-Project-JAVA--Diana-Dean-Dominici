@@ -9,6 +9,7 @@ public interface View {
 
     public void printWelcomeScreen();
 
+    public void showError();
     /**
      * ask user a valid nickname
      */

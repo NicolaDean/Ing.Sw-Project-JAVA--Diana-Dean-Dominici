@@ -72,7 +72,7 @@ public class ServerController{
         this.warning("Broadcast sending: "+ message.generateJson());
         for(ClientHandler c: clients)
         {
-            if(c.getIndex()!=except) c.sendToClient(message);
+            if(c.getIndex()!=except || except == -1) c.sendToClient(message);
         }
     }
 

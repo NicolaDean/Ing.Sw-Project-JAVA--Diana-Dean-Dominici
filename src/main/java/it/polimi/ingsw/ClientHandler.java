@@ -1,14 +1,10 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.controller.*;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
-import it.polimi.ingsw.controller.packets.BasicPacketFactory;
 import it.polimi.ingsw.controller.packets.Packet;
-import it.polimi.ingsw.controller.packets.PacketManager;
-import it.polimi.ingsw.controller.packets.Ping;
+import it.polimi.ingsw.controller.pingManager.PingController;
 import it.polimi.ingsw.view.utils.CliColors;
-import it.polimi.ingsw.view.utils.DebugMessages;
 
 import java.io.IOException;
 import java.io.PrintWriter;
