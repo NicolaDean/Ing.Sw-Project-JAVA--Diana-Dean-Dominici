@@ -16,7 +16,7 @@ public class LorenzoServerController extends ServerController{
     @Override
     public Packet nextTurn(){ //TODO nexturn di lorenzo
         setGame(game);
-        game.nextTurn();
+        ((LorenzoGame)game).nextTurn();
         //chiamerà checkEndGame() di game
         //se risulterà positivo chiudera anche la connessione in maniera safe
         return new LorenzoTurn(game.getTokenDrawn());

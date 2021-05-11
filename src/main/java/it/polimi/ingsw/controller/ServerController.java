@@ -1,10 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.ClientHandler;
-import it.polimi.ingsw.controller.packets.ACK;
-import it.polimi.ingsw.controller.packets.MarketResult;
-import it.polimi.ingsw.controller.packets.Packet;
-import it.polimi.ingsw.controller.packets.PendingCost;
+import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.enumeration.ErrorMessages;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.exceptions.AckManager;
@@ -43,12 +40,6 @@ public class ServerController{
         if(real)  clients = new ArrayList<>();//If is a real controller create also ClientHandlers
     }
 
-    public ServerController()
-    {
-        this.setSinglePlayer();
-        game = new LorenzoGame();
-        clients = new ArrayList<>();//If is a real controller create also ClientHandlers
-    }
 
     public void setIdpartita(int idpartita) {
         this.idpartita = idpartita;
@@ -385,10 +376,40 @@ public class ServerController{
 
     }
 
-    public Packet nextTurn(){ //TODO next turn in ServerController
-        //chiamerà checkEndGame() di game
+    /**
+     * if end condition are true send to all a "last Turn" packet
+     * if the current player is 4 and the match is ended then send an "end game" packet to all
+     * if nor of prewious is true then send a message "typeTurn" to the next player
+     * @return null
+     */
+    public Packet nextTurn(){
         //se risulterà positivo invierà in broadcast EndTurn e chiudera la connessione in maniera safe
+
+        if(game.checkEndGame()) lastTurn();
+        if(game.IsEnded())
+        {
+            endGame();
+            return null;
+        }
+
+        //TODO Send message to next player client
         return null;
+    }
+
+    /**
+     * Broadcast endgame packet
+     */
+    public void endGame()
+    {
+        this.broadcastMessage(-1, new EndGame());
+    }
+
+    /**
+     * Broadcast lastTurn packet
+     */
+    public void lastTurn()
+    {
+        this.broadcastMessage(-1, new EndGame());
     }
 
 

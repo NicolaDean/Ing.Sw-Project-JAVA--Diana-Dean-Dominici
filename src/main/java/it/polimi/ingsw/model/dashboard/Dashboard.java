@@ -301,4 +301,19 @@ public class Dashboard {
         this.storage.initializeBonusDeposit(typeBonus);
     }
 
+    /**
+     *
+     * @return the number of production card in this dashboard
+     */
+    public int countCard()
+    {
+        int cardCount = 0;
+        for(int i=0;i<3;i++)
+        {
+            cardCount +=this.producionCards[i].size();
+        }
+
+        return cardCount;
+    }
+
     }

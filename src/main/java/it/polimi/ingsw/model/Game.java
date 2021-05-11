@@ -13,6 +13,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
+
+
 public class Game {
     protected List<Player> players;
     protected LeaderCard[] leaders;
@@ -25,7 +27,8 @@ public class Game {
     protected int nofplayers=0;
     protected int leaderCount=0;
     protected boolean gamestarted=false;
-
+    protected boolean isEnded = false;
+    public static int GameMaxCell = 24;
 
     public Game()
     {
@@ -154,20 +157,16 @@ public class Game {
         }
     }
 
-    /**
-     * this function changes the turn and so the current player who is supposed to play
-     * @return the new player that is supposed to play
-     */
-    public Player nextTurn(){
-        if(currentPlayer == nofplayers -1)
-            currentPlayer = 0;
-        else
-            currentPlayer++;
 
+    /**
+     * //Check if someone surpass a papal space and in case add the score of papalToken to the players
+     */
+    public void papalSpaceCheck()
+    {
         //PAPAL SPACE
         if(this.currentPapalSpaceToReach < this.papalSpaces.size())
         {
-            //Check if someone surpass a papal space and in case add the score of papalToken to the players
+
             boolean out = this.papalSpaces.get(this.currentPapalSpaceToReach).checkPapalSpaceActivation(this.players);
             while(out == true && this.currentPapalSpaceToReach+1 < this.papalSpaces.size()){
                 this.currentPapalSpaceToReach++;
@@ -175,11 +174,14 @@ public class Game {
             }
 
         }
+    }
 
-        //check for each player if they surpassed a new scoreposition, in that case the player score is increased accordingly
+    /**
+     * check for each player if they surpassed a new scoreposition, in that case the player score is increased accordingly
+     */
+    public void checkFaithTrackScoreGain()
+    {
         for (Player p:players) {
-
-
 
             int position = p.getPosition();
 
@@ -218,6 +220,23 @@ public class Game {
                 p.setLastadded(scorePositions.get(i).getScore());
             }
         }
+    }
+    /**
+     * this function changes the turn and so the current player who is supposed to play
+     * @return the new player that is supposed to play
+     */
+    public Player nextTurn(){
+        if(currentPlayer == nofplayers -1)
+            currentPlayer = 0;
+        else
+            currentPlayer++;
+
+        //Papal space activation check
+        papalSpaceCheck();
+
+        //Real time faith points calculation
+        checkFaithTrackScoreGain();
+
         return players.get(currentPlayer);
     }
 
@@ -241,15 +260,52 @@ public class Game {
         return lead;
     }
 
-    public boolean checkEndGame(){
-        //TODO checkEndGame
+    /**
+     *
+     * @return true if the current player bought the 7th card
+     */
+    public boolean checkCardCondition()
+    {
+        Player p = this.players.get(currentPlayer);
+        return p.getDashboard().countCard() >= 7;
+    }
+
+    /**
+     *
+     * @return true if someone reached the last position
+     */
+    public boolean checkLastCellReached()
+    {
+        for(Player p : this.players)
+        {
+            if(p.getPosition() == GameMaxCell ) return true;
+        }
         return false;
     }
 
+    /**
+     *
+     * @return true if one of the ending condition is reached
+     */
+    public boolean checkEndGame()
+    {
+        boolean out =checkCardCondition() || checkLastCellReached();
+        if(out) this.isEnded = true;
+        return  out;
+    }
+
+    /**
+     *
+     * @return get the productin decks with available production card
+     */
     public Stack<ProductionCard>[][] getProductionDecks() {
         return productionDecks;
     }
 
+    /**
+     *
+     * @param currentPapalSpaceToReach set the next papal space to reach
+     */
     public void setCurrentPapalSpaceToReach(int currentPapalSpaceToReach) {
         this.currentPapalSpaceToReach = currentPapalSpaceToReach;
     }
@@ -281,4 +337,14 @@ public class Game {
     public int getNofplayers() {
         return nofplayers;
     }
+
+    /**
+     *
+     * @return true if the last turn is activated and we reached the last player before inkweel
+     */
+    public boolean IsEnded()
+    {
+        return this.isEnded && this.currentPlayer == 4;
+    }
+
 }
