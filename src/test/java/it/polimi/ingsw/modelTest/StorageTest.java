@@ -34,10 +34,43 @@ public class StorageTest {
         testStorage.safeInsertion(c, 2);
         testStorage.swapDeposit(0, 1);
         testStorage.swapDeposit(1, 2);
+
         assertTrue(ResourceOperator.Compare(testStorage.getStorage()[0].getResource(), b) &&
                 ResourceOperator.Compare(testStorage.getStorage()[1].getResource(), c) &&
                 ResourceOperator.Compare(testStorage.getStorage()[2].getResource(), a)
         );
+        testStorage = new Storage();
+        testStorage.safeInsertion(b, 1);
+        testStorage.safeInsertion(c, 2);
+        testStorage.swapDeposit(0, 1);
+        testStorage.swapDeposit(1, 2);
+
+        assertTrue(ResourceOperator.Compare(testStorage.getStorage()[0].getResource(), b) &&
+                ResourceOperator.Compare(testStorage.getStorage()[1].getResource(), c) &&
+                testStorage.getStorage()[2].getResource()==null);
+
+    }
+
+    @Test
+    public void TestCorrectBonusDepositSwap() throws Exception {
+        Player player = new Player();
+        Resource a = new Resource(SHIELD, 1);
+        Resource b = new Resource(COIN, 1);
+        Resource c = new Resource(ROCK, 2);
+        Resource d = new Resource(ROCK, 1);
+        player.getDashboard().getStorage().safeInsertion(a, 0);
+        player.getDashboard().getStorage().safeInsertion(b, 1);
+        player.getDashboard().getStorage().safeInsertion(c, 2);
+        Storage testStorage = player.getDashboard().getStorage();
+
+        List<Resource> list = player.getDashboard().getStorage().getStorageAsList();
+        DepositBonus bonus = new DepositBonus(list,new ArrayList<PrerequisiteCard>(), 3, ROCK);
+        bonus.activate(player);
+        player.getDashboard().getStorage().safeInsertion(d, 3);
+        testStorage.swapDeposit(2,3);
+
+        assertTrue(ResourceOperator.Compare(testStorage.getStorage()[2].getResource(), d) &&
+                ResourceOperator.Compare(testStorage.getStorage()[3].getResource(), c) );
 
 
     }
@@ -187,27 +220,8 @@ public class StorageTest {
     /**
      * test the swap between bonus deposit
      */
-    @Test
-    public void TestBonusSwap() {
-        Assertions.assertThrows(Exception.class, () -> {
-            Player player = new Player();
-            Resource a = new Resource(SHIELD, 1);
-            Resource b = new Resource(ROCK, 1);
-            Resource c = new Resource(COIN, 2);
-            player.getDashboard().getStorage().safeInsertion(a, 0);
-            player.getDashboard().getStorage().safeInsertion(b, 1);
-            player.getDashboard().getStorage().safeInsertion(c, 2);
-            List<Resource> list = player.getDashboard().getStorage().getStorageAsList();
-            DepositBonus bonus = new DepositBonus(list,new ArrayList<PrerequisiteCard>(), 3, ROCK);
-            DepositBonus bonus2 = new DepositBonus(list,new ArrayList<PrerequisiteCard>(), 3, SHIELD);
-            bonus.activate(player);
-            player.getDashboard().getStorage().safeInsertion(b, 3);
-            bonus2.activate(player);
-            player.getDashboard().getStorage().safeInsertion(a, 4);
-            player.getDashboard().getStorage().swapDeposit(3, 1);
-        });
 
-    }
+
 }
 
 

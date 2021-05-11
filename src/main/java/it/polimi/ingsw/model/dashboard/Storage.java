@@ -31,23 +31,134 @@ public class Storage {
      * @throws Exception if the swap is not possibile because of space limits of the deposits
      */
     public void swapDeposit(int pos1, int pos2) throws IllegalSwap {
-        if(pos1>2 || pos2>2)
-            throw new IllegalSwap("you can't swap bonus deposits");
-        else if (pos1>5 || pos2 > 5)
-        {
+        /*if((pos1>2 || pos2>2) &&
+                ((storage[pos1].getResource() != null || storage[pos2].getResource() != null) ||
+                (storage[pos1].getResource().getType() != storage[pos2].getResource().getType() ||
+                storage[pos1].getResource().getQuantity()>storage[pos2].getSizeMax() ||
+                        storage[pos2].getResource().getQuantity()>storage[pos1].getSizeMax())))*/
+
+
+
+        if (pos1>5 || pos2 > 5)
             throw new IllegalSwap("");
+
+        if(pos1>2 || pos2>2) {
+            this.swapbonusDeposit(pos1, pos2);
+            return;
         }
-        else
+
+        if (storage[pos1].getResource() == null && storage[pos2].getResource() == null)
+            throw new IllegalSwap("");
+
+        if (storage[pos1].getResource() == null)
         {
-            if (storage[pos1].getResource().getQuantity() <= storage[pos2].getSizeMax() && storage[pos2].getResource().getQuantity() <= storage[pos1].getSizeMax()) {
-                Resource tmp = storage[pos1].getResource();
+            if (storage[pos2].getResource().getQuantity() <= storage[pos1].getSizeMax()) {
+                Resource tmp = storage[pos2].getResource();
                 storage[pos1].setNewDeposit(storage[pos2].getResource().getType(), storage[pos2].getResource().getQuantity());
-                storage[pos2].setNewDeposit(tmp.getType(), tmp.getQuantity());
+                storage[pos2].setNewDeposit(SHIELD, 0);
 
             } else
                 throw new IllegalSwap("");
         }
+
+        else
+        {
+            if (storage[pos2].getResource() == null)
+            {
+                if (storage[pos1].getResource().getQuantity() <= storage[pos2].getSizeMax()) {
+                    Resource tmp = storage[pos1].getResource();
+                    storage[pos1].setNewDeposit(SHIELD, 0);
+                    storage[pos2].setNewDeposit(tmp.getType(), tmp.getQuantity());
+
+                } else
+                    throw new IllegalSwap("");
+            }
+            else
+            {
+                if (storage[pos1].getResource().getQuantity() <= storage[pos2].getSizeMax() && storage[pos2].getResource().getQuantity() <= storage[pos1].getSizeMax()) {
+                    Resource tmp = storage[pos1].getResource();
+                    storage[pos1].setNewDeposit(storage[pos2].getResource().getType(), storage[pos2].getResource().getQuantity());
+                    storage[pos2].setNewDeposit(tmp.getType(), tmp.getQuantity());
+
+                } else
+                    throw new IllegalSwap("");
+            }
+        }
+
+
+
     }
+
+    public void swapbonusDeposit(int pos1, int pos2) throws IllegalSwap
+    {
+        int tmp;
+
+        if(pos1>pos2)
+        {
+            tmp = pos1;
+            pos1 = pos2;
+            pos2 = tmp;
+        }
+
+        //caso in cui entrambi sono bonus
+        if(pos1 > 2)
+        {
+
+            if(storage[pos1].getResource().getType() == storage[pos2].getResource().getType()) {
+                tmp = storage[pos1].getResource().getQuantity();
+                storage[pos1].getResource().setQuantity(storage[pos2].getResource().getQuantity());
+                storage[pos1].getResource().setQuantity(tmp);
+            }
+            else
+            {
+                throw new IllegalSwap("");
+            }
+        }
+
+
+        //caso in cui uno è normale ed è vuoto
+        if (storage[pos1].getResource() == null)
+        {
+            if (storage[pos2].getResource().getQuantity() <= storage[pos1].getSizeMax()) {
+                if(storage[pos2].getResource().getQuantity() == 0)
+                {
+                    storage[pos1].setNewDeposit(SHIELD,0);
+                }
+                else {
+                    Resource tmp2 = storage[pos1].getResource();
+                    if(storage[pos2].getResource().getQuantity() >0)
+                        storage[pos1].setNewDeposit(storage[pos2].getResource().getType(), storage[pos2].getResource().getQuantity());
+                    storage[pos2].getResource().setQuantity(0);
+                }
+
+            } else
+                throw new IllegalSwap("");
+        }
+        //caso in cui uno è normale e non è vuoto
+        else {
+
+            if (storage[pos2].getResource().getQuantity() <= storage[pos1].getSizeMax() && storage[pos2].getResource().getQuantity() <= storage[pos1].getSizeMax()) {
+                if(storage[pos2].getResource().getType() == storage[pos1].getResource().getType())
+                {
+
+                    Resource tmp2 = storage[pos1].getResource();
+
+                    storage[pos1].setNewDeposit(storage[pos2].getResource().getType(), storage[pos2].getResource().getQuantity());
+
+                    storage[pos2].setNewDeposit(tmp2.getType(), tmp2.getQuantity());
+                }else
+                    throw new IllegalSwap("");
+
+            } else
+                throw new IllegalSwap("");
+        }
+
+
+
+    }
+
+
+
 
     /**
      * inserts new resources in a deposit
@@ -56,9 +167,9 @@ public class Storage {
      * @throws Exception if the insertion can't be done because of space
      */
     public void safeInsertion(Resource in, int pos) throws NoBonusDepositOwned, WrongPosition, FullDepositException {
-        if(pos==4 && storage[4] == null)
+        if(pos==3 && storage[3] == null)
             throw new NoBonusDepositOwned();
-        if(pos==5 && storage[5] == null)
+        if(pos==4 && storage[4] == null)
             throw new NoBonusDepositOwned();
 
         boolean tmp = false;
@@ -70,7 +181,7 @@ public class Storage {
                 }
             }
             if(!tmp)
-                storage[pos].setNewDeposit(in.getType(), in.getQuantity());
+                storage[pos].safeInsertion(in);
             else {
                 throw new WrongPosition("there is already a slot with this type of resource");
             }

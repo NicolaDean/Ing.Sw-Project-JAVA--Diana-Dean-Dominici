@@ -10,9 +10,10 @@ public class LorenzoServerController extends ServerController{
     LorenzoGame game;
 
     public LorenzoServerController() {
-        super();
-        game=new LorenzoGame();
+        super(true);
+        game = new LorenzoGame();
     }
+
     @Override
     public Packet nextTurn(){ //TODO nexturn di lorenzo
         setGame(game);
