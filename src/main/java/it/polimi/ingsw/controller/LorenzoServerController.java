@@ -7,19 +7,16 @@ import it.polimi.ingsw.model.lorenzo.Lorenzo;
 import it.polimi.ingsw.model.lorenzo.LorenzoGame;
 
 public class LorenzoServerController extends ServerController{
-    LorenzoGame game;
 
     public LorenzoServerController() {
-        super();
+        super(true);
         game=new LorenzoGame();
     }
     @Override
     public Packet nextTurn(){ //TODO nexturn di lorenzo
-        setGame(game);
-        ((LorenzoGame)game).nextTurn();
+        game.nextTurn();
         //chiamerà checkEndGame() di game
         //se risulterà positivo chiudera anche la connessione in maniera safe
-        return new LorenzoTurn(game.getTokenDrawn());
+        return new LorenzoTurn(((LorenzoGame)game).getTokenDrawn());
     }
-
 }
