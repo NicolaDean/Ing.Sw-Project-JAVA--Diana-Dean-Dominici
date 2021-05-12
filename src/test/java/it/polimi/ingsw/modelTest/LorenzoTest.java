@@ -43,8 +43,7 @@ public class LorenzoTest {
      * test the correct working of Lorenzo turn
      */
     @Test
-    public void lorenzoTurn()
-    {
+    public void lorenzoTurn() {
         LorenzoGame game = new LorenzoGame();
         ActionToken at;
         Lorenzo l = game.getLorenzo();
@@ -101,11 +100,17 @@ public class LorenzoTest {
         assertEquals(l.getPosition(),tmpPos);
     }
 
+    /**
+     * just check lorenzo costructor
+     */
     @Test
     public void checkLorenzoGame(){
         LorenzoGame l=new LorenzoGame();
     }
 
+    /**
+     * check test the correct increase of the player' s score when a papaò cell is reached
+     */
     @Test
     public void checkScorePapal(){
         Player currPlayer = null;
@@ -123,6 +128,25 @@ public class LorenzoTest {
 
         assertEquals(game.getCurrentPlayer().getScore(), 20);
 
+    }
+
+    /**
+     * check end condition
+     */
+    @Test
+    public void checkEndGameCondition(){
+        Player currPlayer = null;
+        LorenzoGame game = null;
+
+
+        game = new LorenzoGame();
+        try { game.addPlayer("Richi"); } catch (Exception e) {}
+        try { currPlayer = game.startGame(); } catch (Exception e) {}
+
+        game.getLorenzo().incrementPosition(24);
+        game.nextTurn();
+
+        assertTrue(game.checkEndGame());
     }
 
 }
