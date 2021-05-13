@@ -77,7 +77,6 @@ public class JsonInterpreterTest {
         interpreter.getResponse();
     }
 
-    @Test
     public void ProductionTest()
     {
         System.out.println("----------------------------------");
@@ -125,7 +124,6 @@ public class JsonInterpreterTest {
 
 
     }
-    @Test
     public void AllPacketGeneration()
     {
         List<Resource> resourceList = new ResourceList();
@@ -162,7 +160,6 @@ public class JsonInterpreterTest {
     }
 
     //TODO il market restituisce solo 2 risorse, chiedere a riki (probabilmente il mischiaggio non avviene in maniera molto casuale)
-    @Test
     public void marketTest()
     {
         System.out.println("----------------------------------");
@@ -183,7 +180,6 @@ public class JsonInterpreterTest {
 
     }
 
-    @Test
     public void lorenzoTest(){ //TODO da finire test del pacchetto
         System.out.println("----------------------------------");
         LoginSinglePlayer log   = new LoginSinglePlayer("SuperRichi99XDXDXD");

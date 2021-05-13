@@ -147,7 +147,10 @@ public class LorenzoTest {
 
         game = new LorenzoGame();
         try { game.addPlayer("Richi"); } catch (Exception e) {}
-        try { currPlayer = game.startGame(); } catch (Exception e) {}
+        try {
+            game.startGame();
+            currPlayer = game.getPlayer(0);
+        } catch (Exception e) {}
 
         game.getLorenzo().incrementPosition(24);
         game.nextTurn();
