@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller.pingManager;
 
 import it.polimi.ingsw.controller.ClientController;
-import it.polimi.ingsw.view.utils.DebugMessages;
+import it.polimi.ingsw.utils.DebugMessages;
 
 import java.io.PrintWriter;
 

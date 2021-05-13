@@ -1,4 +1,6 @@
-package it.polimi.ingsw.view.utils;
+package it.polimi.ingsw.utils;
+
+import it.polimi.ingsw.view.utils.Logger;
 
 public  class DebugMessages {
 

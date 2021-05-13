@@ -8,7 +8,7 @@ import it.polimi.ingsw.controller.packets.StartGame;
 import it.polimi.ingsw.controller.pingManager.PongController;
 import it.polimi.ingsw.model.MiniModel;
 import it.polimi.ingsw.view.GUI;
-import it.polimi.ingsw.view.utils.DebugMessages;
+import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.utils.ErrorManager;
 import it.polimi.ingsw.view.CLI;
 import it.polimi.ingsw.view.View;

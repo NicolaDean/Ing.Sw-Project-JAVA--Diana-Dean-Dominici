@@ -2,13 +2,13 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.utils.CliColors;
 import it.polimi.ingsw.view.utils.InputReaderValidation;
 import it.polimi.ingsw.view.utils.Logger;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 public class CLI extends Observable<ClientController> implements View {
 
@@ -69,7 +69,7 @@ public class CLI extends Observable<ClientController> implements View {
 
         do {
             ip= this.input.readLine();
-            if(ip.length()==0) ip = "localhost";
+            if(ip.length()==0) ip = ConstantValues.defaultIP;
             if(ip.equals(".")) terminal.printWarning("please, insert a valid IP address");
         }
         while(!this.input.validateIP(ip));

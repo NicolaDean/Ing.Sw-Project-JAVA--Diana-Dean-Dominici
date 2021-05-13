@@ -1,6 +1,8 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.ServerController;
+import it.polimi.ingsw.utils.DebugMessages;
+import it.polimi.ingsw.utils.ConstantValues;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +81,24 @@ public class ServerApp {
 
     public static void main(String[] args) {
 
-        ServerApp serverApp = new ServerApp(1234);
+        int port;
+
+        if(args.length != 0 && (args[0].equals("-port") || args[0].equals("-p")))
+        {
+            try {
+                port = Integer.parseInt(args[1]);
+            } catch (NumberFormatException e) {
+                DebugMessages.printError("Invalid argument,default port setted");
+                port = ConstantValues.defaultServerPort;
+            }
+        }
+        else
+        {
+            port = ConstantValues.defaultServerPort;
+        }
+
+        System.out.println("Port "+ port);
+        ServerApp serverApp = new ServerApp(port);
         serverApp.start();
 
     }
