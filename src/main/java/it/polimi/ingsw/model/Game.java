@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.factory.MapFactory;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.utils.ConstantValues;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -298,8 +299,8 @@ public class Game {
      */
     public LeaderCard[] get4leaders()
     {
-        LeaderCard[] lead = new LeaderCard[4];
-        for(int i=0; i<4; i++)
+        LeaderCard[] lead = new LeaderCard[ConstantValues.leaderCardsToDraw];
+        for(int i = 0; i<ConstantValues.leaderCardsToDraw; i++)
         {
             lead[i] = leaders[leaderCount];
             leaders[leaderCount]=null;
@@ -315,7 +316,7 @@ public class Game {
     public boolean checkCardCondition()
     {
         Player p = this.players.get(currentPlayer);
-        return p.getDashboard().countCard() >= 7;
+        return p.getDashboard().countCard() >= ConstantValues.cardsWinningCondition;
     }
 
     /**
@@ -392,7 +393,7 @@ public class Game {
      */
     public boolean IsEnded()
     {
-        return this.isEnded && this.currentPlayer == 4;
+        return this.isEnded && this.currentPlayer == ConstantValues.numberOfPlayer;
     }
 
 }

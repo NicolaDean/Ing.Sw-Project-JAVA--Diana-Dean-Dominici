@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.model.resources.ResourceOperator;
+import it.polimi.ingsw.utils.ConstantValues;
 
 import java.util.*;
 
@@ -31,17 +32,16 @@ public class Dashboard {
 
         chest = new ResourceList();
 
-        this.producionCards = new Stack[3];
-
-        this.producionCards[0] = new Stack<ProductionCard>();
-        this.producionCards[1] = new Stack<ProductionCard>();
-        this.producionCards[2] = new Stack<ProductionCard>();
-
+        this.producionCards = new Stack[ConstantValues.productionSpaces];
         papalToken = new boolean[3];
-        for(int i=0;i<3;i++)
+
+        for(int i=0;i<ConstantValues.productionSpaces;i++)
         {
+            this.producionCards[i] = new Stack<ProductionCard>();
             papalToken[i]=false;
         }
+
+
         bonusResources = null;
         pendingCost = new ResourceList();
     }
@@ -83,7 +83,7 @@ public class Dashboard {
      * @return true if card correctly setted
      */
     public boolean setProductionCard(ProductionCard card, int pos) throws WrongPosition {
-        if(pos > 2)return false;//invalid position
+        if(pos > (ConstantValues.productionSpaces-1))return false;//invalid position
 
         boolean out = this.checkValidPosition(card,pos);
 
@@ -308,7 +308,7 @@ public class Dashboard {
     public int countCard()
     {
         int cardCount = 0;
-        for(int i=0;i<3;i++)
+        for(int i=0;i<ConstantValues.productionSpaces;i++)
         {
             cardCount +=this.producionCards[i].size();
         }

@@ -4,6 +4,7 @@ import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.utils.ConstantValues;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
 
@@ -11,16 +12,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Storage {
-    private Deposit[] storage = new Deposit[5];
+    private Deposit[] storage = new Deposit[ConstantValues.maxDepositsNumber];
 
 
     /**
      * constructor of Storage, it initializes the 3 storages with 1, 2, and 3 respectively as maxSize
      */
     public Storage() {
-        storage[0] = new Deposit(1);
-        storage[1] = new Deposit(2);
-        storage[2] = new Deposit(3);
+
+        int size = 1;
+        for(int i=0;i<ConstantValues.normalDepositNumber;i++)
+        {
+            //Create a "linear" piramid with ConstantValues.normalDepositNumber height
+            storage[i] = new Deposit(size);
+            size++;
+        }
 
     }
 
@@ -101,7 +107,7 @@ public class Storage {
         }
 
         //caso in cui entrambi sono bonus
-        if(pos1 > 2)
+        if(pos1 >= ConstantValues.normalDepositNumber)
         {
 
             if(storage[pos1].getResource().getType() == storage[pos2].getResource().getType()) {
@@ -174,7 +180,7 @@ public class Storage {
 
         boolean tmp = false;
         if(storage[pos].getResource() == null && pos <3){
-            for(int i=0; i<3; i++) {
+            for(int i=0; i<ConstantValues.normalDepositNumber; i++) {
                 if (i != pos && storage[i].getResource() != null && in.getType() == storage[i].getResource().getType()) {
                     tmp = true;
                     break;
@@ -200,7 +206,7 @@ public class Storage {
     {
         List<Integer> indexes = new ArrayList<Integer>();
         boolean a = false;
-        for(int i = 0; i<5; i++)
+        for(int i = 0; i<ConstantValues.maxDepositsNumber; i++)
         {
             if (storage[i] != null && storage[i].getResource().getType() == type) {
                 indexes.add(i);
@@ -236,7 +242,7 @@ public class Storage {
      */
     public void safeSubtraction(Resource in, int pos) throws EmptyDeposit, WrongPosition {
         storage[pos].safeSubtraction(in);
-        if (storage[pos].getResource().getQuantity()==0 && pos<3)
+        if (storage[pos].getResource().getQuantity()==0 && pos<ConstantValues.normalDepositNumber)
 
             storage[pos].setNewDeposit(ROCK, 0);
 
@@ -257,7 +263,7 @@ public class Storage {
      */
     public ResourceList getStorageAsList() {
         ResourceList resourcelist = new ResourceList();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < ConstantValues.maxDepositsNumber; i++) {
             if (storage[i] != null)
                 resourcelist.add(storage[i].getResource());
         }
@@ -276,7 +282,7 @@ public class Storage {
             else
                 i = 4;
 
-            storage[i] = new Deposit(2);
+            storage[i] = new Deposit(ConstantValues.bonusDepositSize);
             storage[i].setNewDeposit(type, 0);
 
         }

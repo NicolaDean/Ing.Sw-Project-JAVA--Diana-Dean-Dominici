@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.utils.ConstantValues;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -269,7 +270,7 @@ public class Player {
      */
     public void chooseLeader(LeaderCard l[],int discard1,int discard2){
         int pos=0;
-        for(int i=0; i<4; i++)
+        for(int i = 0; i< ConstantValues.leaderCardsToDraw; i++)
             if((i!=discard1)&&(i!=discard2)){
                 leaders[pos]=l[i];
                 pos++;

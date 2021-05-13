@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.market.balls.*;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.utils.ConstantValues;
 
 import java.awt.*;
 import java.util.List;
@@ -52,8 +53,8 @@ public class Market {
         int r,c,n=2;
 
         for(int p=0;p<n;p++) {
-            for (int i = 0; i < 3; i++) {
-                for(int j = 0; j < 4; j++){
+            for (int i = 0; i < ConstantValues.marketRow; i++) {
+                for(int j = 0; j < ConstantValues.marketCol; j++){
                     r=(int)(Math.random()*10)%3;
                     c=(int)(Math.random()*10)%4;
                     Tmp = resouces[i][j];
@@ -80,7 +81,7 @@ public class Market {
      */
     public void exstractRow(int pos, Player p) throws WrongPosition {
         BasicBall tmp;
-        BasicBall out[] = new BasicBall[4];
+        BasicBall out[] = new BasicBall[ConstantValues.marketCol];
         whiteCount=0;
         pendingResourceExtracted = new ResourceList();
         if ((pos > 3) || (pos < 1)) {
@@ -88,10 +89,10 @@ public class Market {
         } else {
             pos--;
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < ConstantValues.marketCol; i++)
                 out[i] = resouces[pos][i];
 
-            for (int i = 1; i < 4; i++) {
+            for (int i = 1; i < ConstantValues.marketCol; i++) {
                 tmp = resouces[pos][i];
                 resouces[pos][i] = resouces[pos][0];
                 resouces[pos][0] = tmp;
@@ -113,17 +114,17 @@ public class Market {
      */
     public void exstractColumn(int pos,Player p) throws WrongPosition {
         BasicBall tmp;
-        BasicBall out[] = new BasicBall[3];
+        BasicBall out[] = new BasicBall[ConstantValues.marketRow];
         whiteCount=0;
         pendingResourceExtracted = new ResourceList();
         if ((pos > 4) || (pos < 1)) {
             throw new WrongPosition("invalid position");
         } else {
             pos--;
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < ConstantValues.marketRow; i++)
                     out[i] = resouces[i][pos];
 
-            for (int i = 1; i < 3; i++) {
+            for (int i = 1; i < ConstantValues.marketRow; i++) {
                 tmp = resouces[i][pos];
                 resouces[i][pos] = resouces[0][pos];
                 resouces[0][pos] = tmp;
