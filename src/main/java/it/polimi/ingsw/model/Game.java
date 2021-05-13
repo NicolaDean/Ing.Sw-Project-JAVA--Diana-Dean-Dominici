@@ -141,6 +141,12 @@ public class Game {
     {
         return players.get(index);
     }
+
+    public int getRealPlayerHandlerIndex()
+    {
+        return this.getCurrentPlayer().getControllerIndex();
+    }
+
     public int[] startGame() throws NotEnoughPlayers
     {
 
@@ -167,6 +173,7 @@ public class Game {
                 if(p.getNickname().equals(str))
                 {
                     outIndexes[currIndex] = i;
+                    p.setControllerIndex(i);
                 }
                 i++;
             }

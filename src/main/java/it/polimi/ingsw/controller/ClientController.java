@@ -61,6 +61,11 @@ public class ClientController implements Runnable{
         return this.model;
     }
 
+    /**
+     * Add new logged player to the minimodel
+     * @param index
+     * @param nickname
+     */
     public void addPlayer(int index,String nickname)
     {
         this.view.playerLogged(nickname);
@@ -69,6 +74,11 @@ public class ClientController implements Runnable{
 
     public ClientController() {
 
+    }
+
+    public void printGameStarted()
+    {
+        this.view.showGameStarted();
     }
 
     public void exampleACK(int code)
@@ -119,7 +129,13 @@ public class ClientController implements Runnable{
 
     public void sendStartCommand()
     {
+
         this.sendMessage(new StartGame());
+    }
+
+    public void printHelp()
+    {
+        view.askCommand();
     }
     /**
      * Open a connection with this server
@@ -169,6 +185,11 @@ public class ClientController implements Runnable{
     }
 
 
+    /**
+     * Set his own nickname to minimodel
+     * @param nickname his nickname
+     * @param singlePlayer if hes singleplayer
+     */
     public void setNickname(String nickname,boolean singlePlayer)
     {
         if(singlePlayer)
@@ -177,7 +198,10 @@ public class ClientController implements Runnable{
             sendMessage(new Login(nickname));
     }
 
-
+    /**
+     * send packet to server
+     * @param p
+     */
     public void sendMessage(Packet p)
     {
         this.output.println(p.generateJson()); ;   //(p.generateJson());
@@ -204,6 +228,10 @@ public class ClientController implements Runnable{
 
     }
 
+    /**
+     * //TODO Obsolete function, client almost never respond to server message immediatly but use directly "sendMessage"
+     * Send respond to server
+     */
     public void respondToClient()
     {
         try {
@@ -218,6 +246,9 @@ public class ClientController implements Runnable{
         }
     }
 
+    /**
+     * This thread listen to the server packet and analyze them
+     */
     @Override
     public void run() {
         //Thread con server

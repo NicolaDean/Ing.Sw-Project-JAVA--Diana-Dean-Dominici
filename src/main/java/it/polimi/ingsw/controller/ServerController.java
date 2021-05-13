@@ -57,6 +57,11 @@ public class ServerController{
     }
 
 
+    /**
+     * Send a broadcast to all clients (except sender)
+     * @param except if -1 send message also to itself
+     * @param message packet to broadcast
+     */
     public void broadcastMessage(int except,Packet message)
     {
         if(clients == null) return;
@@ -68,6 +73,10 @@ public class ServerController{
         }
     }
 
+    /**
+     * Remove client logged but disconnected before start (change also  index of others clinetHandlers to match pings packet)
+     * @param index index of this client in the client handler list
+     */
     public void removeClient(int index)
     {
         this.warning("Client "+ index + " removed from game number "+ this.getIdpartita());
@@ -86,18 +95,36 @@ public class ServerController{
     }
 
 
+    /**
+     * "fake" controller need this function to "notify" waiting room that user logged as single player
+     * method used by "LoginSinglePlayer"
+     */
     public void setSinglePlayer() {
         isSinglePlayer = true;
     }
+
+    /**
+     *  method used by waiting room to check if user logged as single player to "fake controler"
+     * @return return true if user logged as single player
+     */
 
     public boolean isSinglePlayer()
     {
         return this.isSinglePlayer;
     }
+
+    /**
+     *
+     * @return the list of clients connected to this match
+     */
     public List<ClientHandler> getClients() {
         return clients;
     }
 
+    /**
+     * add a player to the match
+     * @param client client to add
+     */
     public void addClient(ClientHandler client) {
         this.clients.add(client);
 
@@ -114,7 +141,13 @@ public class ServerController{
         return game;
     }
 
-    public void startGame() throws Exception {
+    /**
+     * Start the game (called from StartGame packet)
+     * //TODO Send a broadcast to all player with "GAME STARTED" packet (and remove from clientApp the line with automatic start sender)
+     * @throws Exception (if game cant start)
+     */
+    public void startGame() throws Exception
+    {
 
         if(!this.isStarted)
         {
@@ -130,13 +163,22 @@ public class ServerController{
                 c.setRealPlayerIndex(realIndex[i]);
                 i++;
             }
-            //return game.startGame();
+
+            int firstPlayer = this.game.getRealPlayerHandlerIndex();
+
+            //Send broadcast with game started packet
+            this.broadcastMessage(-1,new GameStarted());
+
+            //notify first player the is its turn
+            this.clients.get(firstPlayer).sendToClient(new TurnNotify());
         }
         else
         {
             this.warning("Game already started");
             //return null;
         }
+
+        System.out.println("");
 
     }
 
@@ -160,9 +202,13 @@ public class ServerController{
         return  new PendingCost(dashboard.getPendingCost());
     }
 
+    /**
+     *
+     * @return a NACK packet indicating that is not your turn
+     */
     public Packet notYourTurn()
     {
-        return new ACK(ErrorMessages.NotYourTurn.ordinal());
+        return new ACK(ErrorMessages.NotYourTurn);
     }
 
     /**

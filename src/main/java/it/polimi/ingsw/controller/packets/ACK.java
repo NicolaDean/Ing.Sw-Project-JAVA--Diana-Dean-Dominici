@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
+import it.polimi.ingsw.enumeration.ErrorMessages;
 
 public class ACK extends Packet<ClientController> implements PacketManager<ClientController>{
 
@@ -13,6 +14,12 @@ public class ACK extends Packet<ClientController> implements PacketManager<Clien
     {
         super("ACK");
         this.errorMSG = code;
+    }
+
+    public ACK(ErrorMessages code)
+    {
+        super("ACK");
+        this.errorMSG = code.ordinal();
     }
 
 

@@ -6,6 +6,6 @@ public class NotEnoughPlayers extends AckManager{
 
     public NotEnoughPlayers(String message) {
         super("Not enough player to start" + message);
-        this.setErrorCode(ErrorMessages.NotEnoughPlayer.ordinal());
+        this.setErrorCode(ErrorMessages.NotEnoughPlayer);
     }
 }

@@ -7,6 +7,6 @@ public class NoBonusDepositOwned extends AckManager{
     public NoBonusDepositOwned()
     {
         super("No Deposit Bonus Owned");
-        this.setErrorCode(ErrorMessages.WrongPosition.ordinal());
+        this.setErrorCode(ErrorMessages.WrongPosition);
     }
 }
