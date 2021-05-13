@@ -79,7 +79,7 @@ public class ServerApp {
 
     public static void main(String[] args) {
 
-        ServerApp serverApp = new ServerApp(1235);
+        ServerApp serverApp = new ServerApp(1234);
         serverApp.start();
 
     }

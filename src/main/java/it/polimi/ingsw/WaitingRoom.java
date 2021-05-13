@@ -95,8 +95,6 @@ public class WaitingRoom extends ClientHandler{
             handler.interpreter.analyzePacket(message); //Login,  this time on a real controller
             handler.respondToClient();
 
-
-
             //Create Thread
             this.createRealClientThread(handler);
         }

@@ -41,6 +41,7 @@ public class ServerController{
     }
 
 
+
     public void setIdpartita(int idpartita) {
         this.idpartita = idpartita;
     }
@@ -116,21 +117,28 @@ public class ServerController{
         return game;
     }
 
-    public Player startGame() throws Exception {
+    public void startGame() throws Exception {
 
         if(!this.isStarted)
         {
             this.isStarted = true;
+
+            this.warning("\n-----------Game "+ this.getIdpartita() + " avviato---------- \n");
+
+            int[] realIndex = game.startGame();
+
+            int i=0;
             for (ClientHandler c:clients) {
                 c.getPingController().setGameStarted();
+                c.setRealPlayerIndex(realIndex[i]);
+                i++;
             }
-            this.warning("\n-----------Game "+ this.getIdpartita() + " avviato---------- \n");
-            return game.startGame();
+            //return game.startGame();
         }
         else
         {
             this.warning("Game already started");
-            return null;
+            //return null;
         }
 
     }
@@ -143,7 +151,7 @@ public class ServerController{
      */
     public boolean isRightPlayer(int playerIndex)
     {
-        return (this.game.getCurrentPlayerIndex() == playerIndex);
+        return (this.game.getCurrentPlayerIndex() == this.clients.get(playerIndex).getRealPlayerIndex());
     }
 
     /**

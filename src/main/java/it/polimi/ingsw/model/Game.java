@@ -127,16 +127,48 @@ public class Game {
      * this method starts the game by shuffling the players and setting the currentPlayer (the one with the Inkwell)
      * @throws Exception if the are no players to start the game
      */
-    public Player startGame() throws NotEnoughPlayers
+
+    public Player getPlayer(int index)
     {
+        return players.get(index);
+    }
+    public int[] startGame() throws NotEnoughPlayers
+    {
+
         if(nofplayers==0)
             throw new NotEnoughPlayers("");
+
+        String [] initialOrder = new String[4];
+        int    [] outIndexes   = new int[4];
+        int i=0;
+        for(Player p : players)
+        {
+            initialOrder[i] = p.getNickname();
+            i++;
+        }
+
         Collections.shuffle(players);
+
+        int currIndex = 0;
+        for(Player p : players)
+        {
+            i=0;
+            for(String str : initialOrder)
+            {
+                if(p.getNickname().equals(str))
+                {
+                    outIndexes[currIndex] = i;
+                }
+                i++;
+            }
+            currIndex++;
+        }
+
         players.get(0).setInkwell();
         currentPlayer = 0;
         gamestarted=true;
-        return players.get(currentPlayer);
-
+        //return players.get(currentPlayer);
+        return outIndexes;
     }
 
 

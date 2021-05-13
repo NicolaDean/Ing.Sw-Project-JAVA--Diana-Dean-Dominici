@@ -23,7 +23,10 @@ public class LorenzoTest {
         try { game.addPlayer("Richi"); } catch (Exception e) { e.printStackTrace(); }
 
         Player currPlayer = null;
-        try { currPlayer = game.startGame(); } catch (Exception e) { e.printStackTrace(); }
+        try {
+            game.startGame();
+            currPlayer = game.getPlayer(0);
+        } catch (Exception e) { e.printStackTrace(); }
 
         currPlayer.incrementPosition(3);
         game.nextTurn();
@@ -114,7 +117,10 @@ public class LorenzoTest {
 
         game = new LorenzoGame();
         try { game.addPlayer("Richi"); } catch (Exception e) {}
-        try { currPlayer = game.startGame(); } catch (Exception e) {}
+        try {
+            game.startGame();
+            currPlayer = game.getPlayer(0);
+        } catch (Exception e) {}
 
         game.getLorenzo().incrementPosition(24);
         game.nextTurn();
