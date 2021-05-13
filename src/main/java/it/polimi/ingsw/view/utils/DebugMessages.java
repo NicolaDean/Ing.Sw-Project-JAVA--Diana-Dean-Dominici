@@ -4,7 +4,7 @@ public  class DebugMessages {
 
     public static boolean enableError = true;
     public static boolean enableWarning = true;
-    public static boolean enableNetwork= true;
+    public static boolean enableNetwork= false;
     public static boolean enableGeneric = true;
     public static Logger log = new Logger();
 

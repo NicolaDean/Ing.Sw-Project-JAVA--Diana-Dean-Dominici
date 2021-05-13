@@ -7,7 +7,7 @@ public class NotEnoughResource extends AckManager
     public NotEnoughResource(String message)
     {
         super("NotEnoughResource to :" + message);
-        this.setErrorCode(ErrorMessages.NotEnoughResources.ordinal());
+        this.setErrorCode(ErrorMessages.NotEnoughResources);
     }
 
 }

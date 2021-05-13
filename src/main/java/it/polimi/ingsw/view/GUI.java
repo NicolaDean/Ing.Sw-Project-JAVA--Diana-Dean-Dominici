@@ -89,6 +89,11 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
+    public void showGameStarted() {
+
+    }
+
+    @Override
     public void playerLogged(String nickname) {
 
     }

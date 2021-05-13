@@ -51,7 +51,8 @@ public class ScoreTest {
         }
         Player currPlayer = null;
         try {
-            currPlayer = game.startGame();
+            game.startGame();
+            currPlayer = game.getPlayer(0);
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -120,7 +121,8 @@ public class ScoreTest {
         }
         Player currPlayer = null;
         try {
-            currPlayer = game.startGame();
+            game.startGame();
+            currPlayer = game.getPlayer(0);
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -168,7 +170,8 @@ public class ScoreTest {
         }
         Player currPlayer = null;
         try {
-            currPlayer = game.startGame();
+            game.startGame();
+            currPlayer = game.getPlayer(0);
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -217,7 +220,8 @@ public class ScoreTest {
         }
         Player currPlayer = null;
         try {
-            currPlayer = game.startGame();
+            game.startGame();
+            currPlayer = game.getPlayer(0);
         } catch (Exception e) {
             e.printStackTrace();
 

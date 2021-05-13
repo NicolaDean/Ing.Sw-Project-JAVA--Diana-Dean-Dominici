@@ -7,6 +7,6 @@ public class WrongPosition extends AckManager
     public WrongPosition(String message)
     {
         super("Card setted in Not valid position" +message);
-        this.setErrorCode(ErrorMessages.WrongPosition.ordinal());
+        this.setErrorCode(ErrorMessages.WrongPosition);
     }
 }

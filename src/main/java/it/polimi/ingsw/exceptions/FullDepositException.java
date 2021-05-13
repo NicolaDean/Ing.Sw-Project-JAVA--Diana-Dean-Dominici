@@ -7,6 +7,6 @@ public class FullDepositException extends AckManager{
     public FullDepositException()
     {
         super("Deposit is full, Quantity exced available space");
-        this.setErrorCode(ErrorMessages.InsertionFailed.ordinal());
+        this.setErrorCode(ErrorMessages.InsertionFailed);
     }
 }

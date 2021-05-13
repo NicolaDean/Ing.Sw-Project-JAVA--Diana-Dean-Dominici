@@ -153,12 +153,49 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askCommand() {
+        this.terminal.printHelp();
+        String cmd = this.input.readLine();
 
+        commandInterpreter(cmd);
+    }
+
+    @Override
+    public void showGameStarted() {
+        this.terminal.printGoodMessages("GAME HAS STARTED");
+        this.terminal.printRequest("Click enter to continue");
     }
 
     @Override
     public void playerLogged(String nickname) {
         this.terminal.printGoodMessages(nickname + " joined the game");
+    }
+
+
+    public void commandInterpreter(String cmd)
+    {
+        switch (cmd)
+        {
+            case "q":
+                break;
+            case "0":
+                //Do nothing
+                break;
+            case "1":
+                this.notifyObserver(ClientController::sendStartCommand);
+                break;
+            case "2":
+                //Show dashboard
+                break;
+            case "3":
+                //SwapDeposit
+                break;
+            case "4":
+                //SpyPlayer
+                break;
+            default:
+                break;
+
+        }
     }
 
 

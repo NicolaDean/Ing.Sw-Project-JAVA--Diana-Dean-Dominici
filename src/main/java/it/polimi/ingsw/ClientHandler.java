@@ -18,6 +18,7 @@ public class ClientHandler implements Runnable {
     private PrintWriter     output;
     JsonInterpreterServer   interpreter;
     private int index;
+    private int realPlayerIndex;
     private boolean ping = false;
     private PingController pingController;
 
@@ -37,6 +38,14 @@ public class ClientHandler implements Runnable {
     public PingController getPingController()
     {
         return this.pingController;
+    }
+
+    public void setRealPlayerIndex(int index)
+    {
+        this.realPlayerIndex = index;
+    }
+    public int getRealPlayerIndex() {
+        return realPlayerIndex;
     }
 
     public PingController initializePingController(ServerController controller)

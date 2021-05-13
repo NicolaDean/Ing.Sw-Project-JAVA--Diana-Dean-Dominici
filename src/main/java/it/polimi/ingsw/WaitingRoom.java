@@ -3,6 +3,9 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.controller.LorenzoServerController;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
+import it.polimi.ingsw.controller.packets.BasicPacketFactory;
+import it.polimi.ingsw.controller.packets.BasicProduction;
+import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.view.utils.CliColors;
 import it.polimi.ingsw.view.utils.Logger;
 
@@ -75,6 +78,8 @@ public class WaitingRoom extends ClientHandler{
         boolean out = exitCondition();
         if(!out)
         {
+            String nickname = fakeController.getGame().getPlayer(0).getNickname();
+
             ServerController c;
             if(this.interpreter.getController().isSinglePlayer())
             {
@@ -84,7 +89,7 @@ public class WaitingRoom extends ClientHandler{
             else
             {
                 //Find a free controller
-                c = findFreeController();
+                c = findFreeController(nickname);
             }
 
             //Create new ClientHandler with this controller
@@ -94,8 +99,6 @@ public class WaitingRoom extends ClientHandler{
 
             handler.interpreter.analyzePacket(message); //Login,  this time on a real controller
             handler.respondToClient();
-
-
 
             //Create Thread
             this.createRealClientThread(handler);
@@ -118,14 +121,14 @@ public class WaitingRoom extends ClientHandler{
      * Find a non full match if available, else ccreate new one
      */
 
-    public ServerController findFreeController()
+    public ServerController findFreeController(String nickname)
     {
         Logger terminal = new Logger();
         System.out.println("---------------FIND MATCH-------------------");
         int i=0;
         for(ServerController controller:controllers)
         {
-            if(!controller.isFull())
+            if(!controller.isFull(nickname))
             {
                 terminal.out.printColored("Player logged to the "+ i + "^ Match", CliColors.GREEN_TEXT,CliColors.BLACK_BACKGROUND);
                 return controller;

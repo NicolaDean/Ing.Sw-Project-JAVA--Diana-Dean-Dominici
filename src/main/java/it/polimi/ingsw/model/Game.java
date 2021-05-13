@@ -65,8 +65,17 @@ public class Game {
         return this.market;
     }
 
-    public boolean isFull() {
-        return (this.nofplayers==4 || gamestarted);
+    public boolean checkNickname(String nickname)
+    {
+        for(Player p : this.players)
+        {
+            if(nickname.equals(p.getNickname())) return true;
+        }
+        return false;
+    }
+
+    public boolean isFull(String nickname) {
+        return (this.nofplayers==4 || gamestarted || checkNickname(nickname));
 
     }
 
@@ -127,16 +136,55 @@ public class Game {
      * this method starts the game by shuffling the players and setting the currentPlayer (the one with the Inkwell)
      * @throws Exception if the are no players to start the game
      */
-    public Player startGame() throws NotEnoughPlayers
+
+    public Player getPlayer(int index)
     {
+        return players.get(index);
+    }
+
+    public int getRealPlayerHandlerIndex()
+    {
+        return this.getCurrentPlayer().getControllerIndex();
+    }
+
+    public int[] startGame() throws NotEnoughPlayers
+    {
+
         if(nofplayers==0)
             throw new NotEnoughPlayers("");
+
+        String [] initialOrder = new String[4];
+        int    [] outIndexes   = new int[4];
+        int i=0;
+        for(Player p : players)
+        {
+            initialOrder[i] = p.getNickname();
+            i++;
+        }
+
         Collections.shuffle(players);
+
+        int currIndex = 0;
+        for(Player p : players)
+        {
+            i=0;
+            for(String str : initialOrder)
+            {
+                if(p.getNickname().equals(str))
+                {
+                    outIndexes[currIndex] = i;
+                    p.setControllerIndex(i);
+                }
+                i++;
+            }
+            currIndex++;
+        }
+
         players.get(0).setInkwell();
         currentPlayer = 0;
         gamestarted=true;
-        return players.get(currentPlayer);
-
+        //return players.get(currentPlayer);
+        return outIndexes;
     }
 
 

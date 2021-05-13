@@ -45,7 +45,7 @@ public class ClientApp {
 
         System.out.println("Click enter to start");
         System.in.read();
-        this.controller.sendStartCommand();
+        this.controller.printHelp();
 
         try {
             TimeUnit.SECONDS.sleep(2);

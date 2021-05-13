@@ -89,4 +89,24 @@ public class Logger {
        this.out.printColored(logo2,CliColors.RED_TEXT,CliColors.BLACK_BACKGROUND);
        this.out.reset();
     }
+
+    /**
+     * if user write help this menu will be shown
+     */
+    public void printHelp()
+    {
+        this.out.println("------------------------------------------");
+        this.printWarning(" This list of commands is usable only during others turn");
+        this.printWarning(" Whenever you need you can type h or help tho show this print again");
+        this.out.println("------------------------------------------");
+        this.out.println(" default = cancel");
+        this.out.println(" q-quit/disconnect");
+        this.out.println(" 0-cancel");
+        this.out.println(" 1-startGame");
+        this.out.println(" 2-showDashboard");
+        this.out.println(" 3-swapDeposit");
+        this.out.println(" 4-spyPlayer");
+        this.out.println("------------------------------------------");
+    }
+
 }

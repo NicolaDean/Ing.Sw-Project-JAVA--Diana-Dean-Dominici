@@ -2,6 +2,7 @@ package it.polimi.ingsw.exceptions;
 
 import it.polimi.ingsw.controller.packets.ACK;
 import it.polimi.ingsw.controller.packets.Packet;
+import it.polimi.ingsw.enumeration.ErrorMessages;
 
 public class AckManager extends Exception{
 
@@ -18,5 +19,8 @@ public class AckManager extends Exception{
 
     public void setErrorCode(int errorCode) {
         this.errorCode = errorCode;
+    }
+    public void setErrorCode(ErrorMessages errorCode) {
+        this.errorCode = errorCode.ordinal();
     }
 }

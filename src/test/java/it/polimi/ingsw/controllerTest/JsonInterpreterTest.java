@@ -6,11 +6,9 @@ import it.polimi.ingsw.controller.packets.ACK;
 import it.polimi.ingsw.controller.packets.MarketResult;
 import it.polimi.ingsw.controller.packets.PendingCost;
 import it.polimi.ingsw.controller.packets.UpdatePosition;
-import it.polimi.ingsw.enumeration.CardType;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
-import it.polimi.ingsw.model.lorenzo.token.ColoredActionToken;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import org.junit.jupiter.api.Test;
@@ -79,7 +77,6 @@ public class JsonInterpreterTest {
         interpreter.getResponse();
     }
 
-    @Test
     public void ProductionTest()
     {
         System.out.println("----------------------------------");
@@ -127,7 +124,6 @@ public class JsonInterpreterTest {
 
 
     }
-    @Test
     public void AllPacketGeneration()
     {
         List<Resource> resourceList = new ResourceList();
@@ -164,7 +160,6 @@ public class JsonInterpreterTest {
     }
 
     //TODO il market restituisce solo 2 risorse, chiedere a riki (probabilmente il mischiaggio non avviene in maniera molto casuale)
-    @Test
     public void marketTest()
     {
         System.out.println("----------------------------------");
@@ -185,7 +180,6 @@ public class JsonInterpreterTest {
 
     }
 
-    @Test
     public void lorenzoTest(){ //TODO da finire test del pacchetto
         System.out.println("----------------------------------");
         LoginSinglePlayer log   = new LoginSinglePlayer("SuperRichi99XDXDXD");

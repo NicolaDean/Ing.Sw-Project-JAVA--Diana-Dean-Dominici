@@ -93,6 +93,7 @@ public interface View {
      */
     public void askCommand();
 
+    public void showGameStarted();
     //Other methods
 
     /**

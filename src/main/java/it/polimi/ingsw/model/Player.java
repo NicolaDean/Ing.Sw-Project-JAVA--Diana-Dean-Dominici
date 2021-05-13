@@ -24,6 +24,7 @@ public class Player {
     private int positionLeaderActive;
     private boolean[] surpassedcells;
     private int lastadded = 0;
+    private int controllerIndex=0;
 
 
     public int getPositionLeaderActive() {
@@ -316,5 +317,14 @@ public class Player {
         {
             throw  new WrongPosition("Not existing bonus card");
         }
+    }
+
+    public void setControllerIndex(int controllerIndex) {
+        this.controllerIndex = controllerIndex;
+    }
+
+    public int getControllerIndex()
+    {
+        return this.controllerIndex;
     }
 }
