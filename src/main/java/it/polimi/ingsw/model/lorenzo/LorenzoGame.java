@@ -16,18 +16,6 @@ import java.util.Stack;
 import static it.polimi.ingsw.enumeration.CardType.*;
 
 public class LorenzoGame extends Game {
-    /*
-    List<Player> players;
-    LeaderCard[] leaders;
-    Stack<ProductionCard>[][] productionDecks;
-    Market market;
-    List<CellScore> scorePositions ;
-    List<PapalSpace> papalSpaces;
-    int currentPapalSpaceToReach;
-    int currentPlayer=0;
-    int nofplayers=0;
-    private int leaderCount=0;
-    */
     ActionToken tokenDrawn;
     Lorenzo lorenzo;
     Stack<ActionToken> tokenDeck = new Stack<>();
@@ -36,15 +24,6 @@ public class LorenzoGame extends Game {
         super();
         resetDeckToken();
         this.lorenzo=new Lorenzo();
-        /*
-        this.market = new Market();
-        this.productionDecks = CardFactory.loadProductionCardsFromJsonFile();
-        this.leaders         = CardFactory.loadLeaderCardsFromJsonFile();
-        this.papalSpaces     = MapFactory.loadPapalSpacesFromJsonFile();
-        this.scorePositions  = MapFactory.loadCellScoresFromJsonFile();
-        this.currentPapalSpaceToReach = 0;
-        this.players = new ArrayList<>();
-         */
     }
 
     public Lorenzo getLorenzo() {
@@ -91,13 +70,9 @@ public class LorenzoGame extends Game {
     }
 
     /**
-     * this function changes the turn and so the current player who is supposed to play
-     * @return the new player that is supposed to play
+     * //Check if someone surpass a papal space and in case add the score of papalToken to the players
      */
-    public Player nextTurn(){
-        setCurrentPlayer(0);
-
-        //PAPAL SPACE
+    public void papalSpaceCheck() {
         if(getCurrentPapalSpaceToReach() < getPapalSpaces().size())
         {
             //Check if someone surpass a papal space and in case add the score of papalToken to the players
@@ -108,7 +83,26 @@ public class LorenzoGame extends Game {
             }
 
         }
+    }
 
+
+    /**
+     * this function changes the turn and so the current player who is supposed to play
+     * @return the new player that is supposed to play
+     */
+    public Player nextTurn(){
+        setCurrentPlayer(0);
+
+        papalSpaceCheck();
+        checkFaithTrackScoreGain();
+        lorenzoTurn();
+        return getCurrentPlayer();
+    }
+
+    /**
+     * check for each player if they surpassed a new scoreposition, in that case the player score is increased accordingly
+     */
+    public void checkFaithTrackScoreGain() {
         //increment score for current player
         int position = getCurrentPlayer().getPosition();
         int i=-1;
@@ -127,21 +121,27 @@ public class LorenzoGame extends Game {
                 getCurrentPlayer().decreaseScore(getCurrentPlayer().getLastadded());
             getCurrentPlayer().setLastadded(getScorePositions().get(i).getScore());
         }
-
-        lorenzoTurn();
-        return getCurrentPlayer();
     }
 
+    /**
+     *
+     * @return true if one of the ending condition is reached
+     */
     public boolean checkEndGame(){
-        //TODO checkEndGame di lorenzo
-        return false;
+        boolean out = checkCardCondition() || checkLastCellReached() || (lorenzo.getPosition() >= GameMaxCell) || productionDeckIsEmty();
+        if(out) this.isEnded = true;
+        return  out;
+    }
+
+    private boolean productionDeckIsEmty() {
+        return ((productionDecks[3][0].size()==0)||(productionDecks[3][1].size()==0)||(productionDecks[3][2].size()==0)||(productionDecks[3][3].size()==0));
     }
 
     public ActionToken getTokenDrawn() {
         return tokenDrawn;
     }
 
-    public void lorenzoTurn() {
+    private void lorenzoTurn() {
         tokenDrawn=drawTocken();
         lorenzo.activateToken(this,tokenDrawn);
     }
@@ -189,12 +189,29 @@ public class LorenzoGame extends Game {
         Collections.shuffle(tokenDeck);
     }
 
+    /**
+     * get action token drawed by lorenzo
+     * @return action token drawed
+     */
     public ActionToken drawTocken(){
         return tokenDeck.pop();
     }
 
+    /**
+     * discard one card by production deck
+     * @param x x position
+     * @param y y position
+     */
     public void discardProductionDeck(int x,int y) {
         getProductionDecks()[x][y].pop();
     }
 
+    /**
+     *
+     * @return true if the last turn is activated and we reached the last player before inkweel
+     */
+    public boolean IsEnded()
+    {
+        return this.isEnded;
+    }
 }

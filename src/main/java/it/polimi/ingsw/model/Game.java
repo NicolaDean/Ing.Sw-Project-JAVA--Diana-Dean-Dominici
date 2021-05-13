@@ -310,7 +310,7 @@ public class Game {
     {
         for(Player p : this.players)
         {
-            if(p.getPosition() == GameMaxCell ) return true;
+            if(p.getPosition() >= GameMaxCell ) return true;
         }
         return false;
     }

@@ -29,13 +29,22 @@ public class Deposit {
      */
     public void safeInsertion(Resource in) throws FullDepositException,WrongPosition
     {
-        if(resource ==null)
-            setNewDeposit(in.getType(), in.getQuantity());
+        //System.out.println(resource);
+        if(resource == null) {
+            //System.out.println(in.getQuantity());
+            if(in.getQuantity() > sizeMax) {
+                throw new FullDepositException();
+            }
+            else
+                setNewDeposit(in.getType(), in.getQuantity());
+        }
         else {
             Resource result = resource;
             try {
 
+
                 result = ResourceOperator.sum(in, resource);
+
                 if (result.getQuantity() <= sizeMax)
                     resource = result;
 
@@ -43,9 +52,12 @@ public class Deposit {
             } catch (IncompatibleTypesComparison e) {
                 throw new WrongPosition("");
             }
-            if (result.getQuantity() > sizeMax)
+            if (result.getQuantity() > sizeMax) {
+
                 throw new FullDepositException();
+            }
         }
+
 
     }
 
