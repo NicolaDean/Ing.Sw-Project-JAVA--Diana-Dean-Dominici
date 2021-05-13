@@ -14,13 +14,19 @@ public class LorenzoServerController extends ServerController{
         game = new LorenzoGame();
     }
 
+    /**
+     *
+     * @return Packet to send at client with
+     */
     @Override
     public Packet nextTurn(){ //TODO nexturn di lorenzo
-        setGame(game);
         ((LorenzoGame)game).nextTurn();
-        //chiamerà checkEndGame() di game
-        //se risulterà positivo chiudera anche la connessione in maniera safe
-        return new LorenzoTurn(game.getTokenDrawn());
+        if(game.checkEndGame()) lastTurn();
+        if(game.IsEnded()) {
+            endGame();
+            return null;
+        }
+        return new LorenzoTurn(((LorenzoGame)game).getTokenDrawn());
     }
 
 }

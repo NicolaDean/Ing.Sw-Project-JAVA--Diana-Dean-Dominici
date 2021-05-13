@@ -438,8 +438,9 @@ public class ServerController{
      * @return null
      */
     public Packet nextTurn(){
-        //se risulterà positivo invierà in broadcast EndTurn e chiudera la connessione in maniera safe
+        Player player = game.nextTurn();
 
+        //se risulterà positivo invierà in broadcast EndTurn e chiudera la connessione in maniera safe
         if(game.checkEndGame()) lastTurn();
         if(game.IsEnded())
         {
@@ -468,7 +469,4 @@ public class ServerController{
     }
 
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
 }
