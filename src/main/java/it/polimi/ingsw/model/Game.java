@@ -65,8 +65,17 @@ public class Game {
         return this.market;
     }
 
-    public boolean isFull() {
-        return (this.nofplayers==4 || gamestarted);
+    public boolean checkNickname(String nickname)
+    {
+        for(Player p : this.players)
+        {
+            if(nickname.equals(p.getNickname())) return true;
+        }
+        return false;
+    }
+
+    public boolean isFull(String nickname) {
+        return (this.nofplayers==4 || gamestarted || checkNickname(nickname));
 
     }
 

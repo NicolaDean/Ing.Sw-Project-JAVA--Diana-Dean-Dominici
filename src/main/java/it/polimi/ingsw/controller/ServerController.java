@@ -108,10 +108,7 @@ public class ServerController{
         new Thread(client.initializePingController(this)).start();
     }
 
-    public boolean isFull()
-    {
-        return this.game.isFull();
-    }
+
 
     public Game getGame() {
         return game;
@@ -211,6 +208,10 @@ public class ServerController{
         }
     }
 
+    public boolean isFull(String nickname)
+    {
+        return this.game.isFull(nickname);
+    }
     /**
      * basic production from player
      * @param res1 first spended resource
