@@ -1,12 +1,10 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
-import it.polimi.ingsw.controller.packets.Login;
-import it.polimi.ingsw.controller.packets.LoginSinglePlayer;
-import it.polimi.ingsw.controller.packets.Packet;
-import it.polimi.ingsw.controller.packets.StartGame;
+import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.controller.pingManager.PongController;
 import it.polimi.ingsw.model.MiniModel;
+import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.utils.ErrorManager;
@@ -16,6 +14,7 @@ import it.polimi.ingsw.view.View;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
@@ -246,6 +245,20 @@ public class ClientController implements Runnable{
         }
     }
 
+    public void showMarketResult(List<Resource>res,int whiteBalls)
+    {
+        this.view.showMarketExtraction(res,whiteBalls);
+    }
+
+    public void excecuteTurn()
+    {
+        this.view.askTurnType();
+    }
+
+    public void sendMarketExtraction(boolean dir,int pos)
+    {
+        this.sendMessage(new MarketExtraction(dir,pos));
+    }
     /**
      * This thread listen to the server packet and analyze them
      */

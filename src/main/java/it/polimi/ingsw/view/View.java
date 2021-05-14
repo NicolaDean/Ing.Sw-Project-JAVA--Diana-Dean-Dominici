@@ -94,6 +94,9 @@ public interface View {
     public void askCommand();
 
     public void showGameStarted();
+
+    public void showMarketExtraction(List<Resource> resourceList,int whiteballs);
+
     //Other methods
 
     /**

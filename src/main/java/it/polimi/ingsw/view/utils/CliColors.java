@@ -32,7 +32,7 @@ public class CliColors extends PrintStream
     public static String UNDERLINE          = "\u001b[4m";
     public static String REVERSED           = "\u001b[7m";
 
-    public static String CLEAR_FULL         = "\033[2J";
+    public static String CLEAR_FULL         = "\033[H\033[2J";
     public static String CLEAR_UP           = "\u001b[1J";
     public static String CLEAR_DOWN         = "\u001b[0J";//dal cursore in giu
 

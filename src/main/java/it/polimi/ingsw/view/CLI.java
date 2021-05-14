@@ -123,7 +123,9 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askMarketExtraction() {
-
+        this.notifyObserver(controller -> {
+            controller.sendMarketExtraction(false, 1);
+        });
     }
 
     @Override
@@ -149,6 +151,9 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void askTurnType() {
 
+        this.terminal.printTurnTypesHelp();
+        String cmd = this.input.readLine();
+        turnTypeInterpreter(cmd);
     }
 
     @Override
@@ -166,11 +171,40 @@ public class CLI extends Observable<ClientController> implements View {
     }
 
     @Override
+    public void showMarketExtraction(List<Resource> resourceList, int whiteballs) {
+        terminal.printGoodMessages("You extracted the following resources from market");
+        for(Resource r : resourceList)
+        {
+            if(r.getQuantity()!=0)
+            {
+                terminal.printWarning(r.getQuantity() + " " +r.getType().toString() );
+            }
+        }
+        //TODO CHIEDERE DOVE INSERIRE LE RISORSE O SE NE VUOLE SCARTARE
+        //TODO(eg insert -c -cancel to discard this resource else the deposit to select)
+    }
+
+    @Override
     public void playerLogged(String nickname) {
         this.terminal.printGoodMessages(nickname + " joined the game");
     }
 
 
+
+    public void turnTypeInterpreter(String cmd)
+    {
+        switch (cmd) {
+            case "2":
+                this.askMarketExtraction();
+                break;
+            case "3":
+                this.askProduction();
+                break;
+            default:
+                this.askBuy();
+                break;
+        }
+    }
     public void commandInterpreter(String cmd)
     {
         switch (cmd)
@@ -185,6 +219,7 @@ public class CLI extends Observable<ClientController> implements View {
                 break;
             case "2":
                 //Show dashboard
+                this.notifyObserver(controller -> {controller.sendMarketExtraction(false,1);});
                 break;
             case "3":
                 //SwapDeposit

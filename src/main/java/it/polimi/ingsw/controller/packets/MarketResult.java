@@ -19,8 +19,10 @@ public class MarketResult   extends Packet<ClientController> implements PacketMa
         this.gainedResources = gainedResources;
         this.whiteBalls      = white;
     }
+
     @Override
     public Packet analyze(ClientController controller) {
+        controller.showMarketResult(this.gainedResources,this.whiteBalls);
         return null;
     }
 }

@@ -21,12 +21,13 @@ import java.util.List;
 public class ServerController{
 
     //view
-    Game game;
+    Game                game;
     List<ClientHandler> clients;
-    int currentClient = 0;
-    boolean isSinglePlayer;
-    boolean isStarted;
-    private int idpartita;
+    Object              lock;
+    int                 currentClient = 0;
+    boolean             isSinglePlayer;
+    boolean             isStarted;
+    private int         idpartita;
 
     /**
      *
@@ -34,9 +35,10 @@ public class ServerController{
      */
     public ServerController(boolean real)
     {
-        currentClient = 0;
-        isStarted = false;
-        game = new Game();
+        this.currentClient = 0;
+        this.isStarted = false;
+        this.game = new Game();
+        this.lock = new Object();
         if(real)  clients = new ArrayList<>();//If is a real controller create also ClientHandlers
     }
 
@@ -79,19 +81,24 @@ public class ServerController{
      */
     public void removeClient(int index)
     {
-        this.warning("Client "+ index + " removed from game number "+ this.getIdpartita());
-        this.clients.remove(index);
-        currentClient = currentClient -1;
-
-        //Change other client index
-        int i=0;
-        for(ClientHandler c : clients)
+        synchronized (this.lock)
         {
-            this.warning("Now Client "+  c.getIndex() + " is -> " + i);
+            this.warning("Client "+ index + " removed from game number "+ this.getIdpartita());
+            this.clients.remove(index);
+            currentClient = currentClient -1;
 
-            c.setIndex(i);
-            i++;
+            //Change other client index
+            int i=0;
+            for(ClientHandler c : clients)
+            {
+                this.warning("Now Client "+  c.getIndex() + " is -> " + i);
+
+                c.setIndex(i);
+                i++;
+            }
+            this.lock.notify();
         }
+
     }
 
 
@@ -149,38 +156,39 @@ public class ServerController{
     public void startGame() throws Exception
     {
         //TODO RARE EXCEPTION:
+        //TODO USO SYNCRONIZED per lockasre la lista di client ed evitare che un client venga rimosso mentre inizio il game,
+        // o inizi il game prima che un giocatore venga rimosso
+        //Se game non ha abbastanza giocatori lancia eccezione e manda NACK
         //TODO IF A PLAYER DISCONNECT IN THE EXACT MOMENT OF "startGame" thers a 25% possibility of exception
+        synchronized (this.lock) {
+            if (!this.isStarted) {
+                this.isStarted = true;
 
-        if(!this.isStarted)
-        {
-            this.isStarted = true;
+                this.warning("\n-----------Game " + this.getIdpartita() + " avviato---------- \n");
 
-            this.warning("\n-----------Game "+ this.getIdpartita() + " avviato---------- \n");
+                int[] realIndex = game.startGame();
 
-            int[] realIndex = game.startGame();
+                int i = 0;
+                for (ClientHandler c : clients) {
+                    c.getPingController().setGameStarted();
+                    c.setRealPlayerIndex(realIndex[i]);
+                    i++;
+                }
 
-            int i=0;
-            for (ClientHandler c:clients) {
-                c.getPingController().setGameStarted();
-                c.setRealPlayerIndex(realIndex[i]);
-                i++;
+                int firstPlayer = this.game.getRealPlayerHandlerIndex();
+
+                //Send broadcast with game started packet
+                this.broadcastMessage(-1, new GameStarted());
+
+                //notify first player the is its turn
+                this.clients.get(firstPlayer).sendToClient(new TurnNotify());
+            } else {
+                this.warning("Game already started");
+                //return null;
             }
 
-            int firstPlayer = this.game.getRealPlayerHandlerIndex();
-
-            //Send broadcast with game started packet
-            this.broadcastMessage(-1,new GameStarted());
-
-            //notify first player the is its turn
-            this.clients.get(firstPlayer).sendToClient(new TurnNotify());
+            this.lock.notify();
         }
-        else
-        {
-            this.warning("Game already started");
-            //return null;
-        }
-
-        System.out.println("");
 
     }
 
@@ -192,7 +200,9 @@ public class ServerController{
      */
     public boolean isRightPlayer(int playerIndex)
     {
-        return (this.game.getCurrentPlayerIndex() == this.clients.get(playerIndex).getRealPlayerIndex());
+        //TODO CHECK BETTER THE BOOLEAN EXPRESSION
+        return true;
+        //return (this.game.getCurrentPlayerIndex() == this.clients.get(playerIndex).getRealPlayerIndex());
     }
 
     /**

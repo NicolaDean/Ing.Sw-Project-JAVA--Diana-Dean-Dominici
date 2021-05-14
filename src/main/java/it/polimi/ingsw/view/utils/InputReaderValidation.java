@@ -26,7 +26,7 @@ public class InputReaderValidation {
      */
     public String readLine()
     {
-        return readLine(0);
+        return this.console.nextLine();
     }
 
     public int readInt()

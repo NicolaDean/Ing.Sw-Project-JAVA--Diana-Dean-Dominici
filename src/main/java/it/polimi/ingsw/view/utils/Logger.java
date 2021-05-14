@@ -95,6 +95,7 @@ public class Logger {
      */
     public void printHelp()
     {
+        this.out.clear();
         this.out.println("------------------------------------------");
         this.printWarning(" This list of commands is usable only during others turn");
         this.printWarning(" Whenever you need you can type h or help tho show this print again");
@@ -107,6 +108,56 @@ public class Logger {
         this.out.println(" 3-swapDeposit");
         this.out.println(" 4-spyPlayer");
         this.out.println("------------------------------------------");
+    }
+
+    public void printSeparator()
+    {
+        this.out.println("------------------------------------------");
+    }
+    public void printTurnTypesHelp()
+    {
+        this.out.clear();
+        this.printSeparator();
+        this.printRequest("Chose one of the following Turn type");
+        this.printRequest("If you want to cancel the turn you can by typing -exit (only if you havent done any action)");
+        this.printSeparator();
+        this.out.println(" default = 1");
+        this.out.println(" 1 - Buy a Card");
+        this.out.println(" 2 - Extract from market");
+        this.out.println(" 3 - Activate a production");
+        this.printSeparator();
+    }
+
+    /**
+     * Display all cards currently visible (buyable)
+     */
+    public void displayDecks()
+    {
+
+    }
+
+    /**
+     * Print the storage/deposits owned by this user
+     */
+    public void displayStorage()
+    {
+
+    }
+
+    /**
+     * Print a "summary" of others player resources/position
+     */
+    public void printOthersPlayer()
+    {
+
+    }
+
+    /**
+     * Print the productionCards visible
+     */
+    public void printProductions()
+    {
+
     }
 
 }
