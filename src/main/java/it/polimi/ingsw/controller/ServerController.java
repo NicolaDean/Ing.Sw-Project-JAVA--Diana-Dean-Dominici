@@ -148,6 +148,8 @@ public class ServerController{
      */
     public void startGame() throws Exception
     {
+        //TODO RARE EXCEPTION:
+        //TODO IF A PLAYER DISCONNECT IN THE EXACT MOMENT OF "startGame" thers a 25% possibility of exception
 
         if(!this.isStarted)
         {
