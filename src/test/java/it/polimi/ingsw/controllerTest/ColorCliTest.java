@@ -20,8 +20,8 @@ public class ColorCliTest {
     {
         CliColors test = new CliColors(System.out);
 
-        test.printlnColored("Ciao",CliColors.CYAN_TEXT,CliColors.YELLOW_BACKGROUND);
-        test.printlnColored("Come",CliColors.YELLOW_TEXT,CliColors.CYAN_BACKGROUND);
+        test.printColored("Ciao",CliColors.CYAN_TEXT,CliColors.YELLOW_BACKGROUND);
+        test.printColored("Come",CliColors.YELLOW_TEXT,CliColors.CYAN_BACKGROUND);
     }
 
     @Test
@@ -39,6 +39,13 @@ public class ColorCliTest {
 
         view.printWelcomeScreen();
         view.askNickname();
+    }
+
+    @Test
+    public void fedetest()
+    {
+        View view = new CLI();
+
     }
 
     @Test
