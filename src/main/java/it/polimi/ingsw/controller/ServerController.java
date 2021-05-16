@@ -134,10 +134,7 @@ public class ServerController{
     public void addClient(ClientHandler client) {
         this.clients.add(client);
 
-        client.setIndex(currentClient);
-        currentClient++;
-        if (currentClient>=4)
-            currentClient = currentClient -4;
+        client.setIndex(this.clients.size()-1);
         new Thread(client.initializePingController(this)).start();
     }
 
@@ -473,10 +470,10 @@ public class ServerController{
             return null;
         }
 
-        if(currentClient == clients.size()-1)
-            currentClient=0;
-        else
-            currentClient++;
+        currentClient ++;
+
+        if(currentClient>=this.clients.size()) currentClient = 0;
+
         clients.get(currentClient).sendToClient(new TurnNotify());
         return null;
     }
