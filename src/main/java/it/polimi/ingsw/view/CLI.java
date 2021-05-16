@@ -325,6 +325,8 @@ public class CLI extends Observable<ClientController> implements View {
        //
 
         this.notifyObserver(controller -> {controller.sendResourceInsertion(insertions);});
+        this.notifyObserver(controller -> {controller.sendMessage(new EndTurn());});
+
     }
 
     @Override
