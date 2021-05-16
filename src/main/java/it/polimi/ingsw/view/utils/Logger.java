@@ -152,6 +152,7 @@ public class Logger {
         {
             if(res.getQuantity() != 0) this.printResource(res);
         }
+        this.out.println("");
     }
 
 

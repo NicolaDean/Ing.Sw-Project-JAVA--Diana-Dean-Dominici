@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.controller.packets.ExtractionInstruction;
 import it.polimi.ingsw.controller.packets.InsertionInstruction;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
@@ -212,18 +213,19 @@ public class CLI extends Observable<ClientController> implements View {
                             pos = -1;
                         }
 
-                        if(input.validateInt(pos,1,5)) this.terminal.printWarning("Pos not valid");
+                        if(!input.validateInt(pos,1,5)) this.terminal.printWarning("Pos not valid");
 
                     }while(!input.validateInt(pos,1,5));
+                    pos = pos-1;
+                    insertions.add(new InsertionInstruction(res,pos));
+                    removed.add(res);
                 }
-
-                pos = pos-1;
-                insertions.add(new InsertionInstruction(res,pos));
-                removed.add(res);
             }
             resourceList.removeAll(removed);
         }while(resourceList.isEmpty() && flag);
-        System.out.println("OOOYT");
+       //
+
+        this.notifyObserver(controller -> {controller.sendResourceInsertion(insertions);});
     }
 
     @Override
@@ -261,10 +263,10 @@ public class CLI extends Observable<ClientController> implements View {
         terminal.printGoodMessages("You extracted the following resources from market");
         terminal.printResourceList(resourceList);
 
-        String in;
+        //TODO CHIEDERE PRIMA COME CONVERTIRE LE PALLINE BIANCHE, AGGIUNGERE LE NUOVE PALLINE ALLA RESOURCE LIST
+        //this.askWhiteBalls();
         this.askResourceInsertion(resourceList);
-        //TODO CHIEDERE DOVE INSERIRE LE RISORSE O SE NE VUOLE SCARTARE
-        //TODO(eg insert -c -cancel to discard this resource else the deposit to select)
+
     }
 
     @Override

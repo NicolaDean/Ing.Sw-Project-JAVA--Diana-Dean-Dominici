@@ -10,14 +10,24 @@ import java.util.List;
 
 public class MarketResult   extends Packet<ClientController> implements PacketManager<ClientController> {
 
-    List<Resource> gainedResources;
-    int whiteBalls;
+    List<Resource>  gainedResources;
+    int             whiteBalls;
+    boolean         resended;
 
     public MarketResult(List<Resource> gainedResources,int white)
     {
         super("MarketResult");
+        resended = false;
         this.gainedResources = gainedResources;
         this.whiteBalls      = white;
+    }
+
+    public MarketResult(List<Resource> gainedResources)
+    {
+        super("MarketResult");
+        resended             = true;
+        this.gainedResources = gainedResources;
+        this.whiteBalls      = 0;
     }
 
     @Override

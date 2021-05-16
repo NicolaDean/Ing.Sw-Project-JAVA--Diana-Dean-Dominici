@@ -257,6 +257,15 @@ public class ClientController implements Runnable{
         this.view.askTurnType();
     }
 
+    public void sendResourceInsertion(List<InsertionInstruction> instructions)
+    {
+        this.sendMessage(new StorageMassInsertion(instructions));
+    }
+    /**
+     * Send a packet of market exrtrction
+     * @param dir col = true row = false
+     * @param pos col,row to select
+     */
     public void sendMarketExtraction(boolean dir,int pos)
     {
         this.sendMessage(new MarketExtraction(dir,pos));

@@ -35,7 +35,7 @@ public class InputReaderValidation {
     }
     public boolean validateInt(int num,int min,int max)
     {
-        return num>min && num<max;
+        return num>=min && num<=max;
     }
 
     /**

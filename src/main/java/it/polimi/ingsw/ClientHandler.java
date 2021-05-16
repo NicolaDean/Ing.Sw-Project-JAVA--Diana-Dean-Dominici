@@ -42,6 +42,7 @@ public class ClientHandler implements Runnable {
 
     public void setRealPlayerIndex(int index)
     {
+        this.interpreter.setPlayerIndex(index);
         this.realPlayerIndex = index;
     }
     public int getRealPlayerIndex() {

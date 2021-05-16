@@ -130,10 +130,10 @@ public class JsonInterpreterTest {
         resourceList.add(new Resource(COIN,1));
         resourceList.add(new Resource(ROCK,2));
 
-        List<InsertionInstruction> ins = new ArrayList<>();
-        ins.add(new InsertionInstruction(new Resource(COIN,1)));
-        ins.add(new InsertionInstruction(new Resource(ROCK,1)));
-        ins.add(new InsertionInstruction(new Resource(SERVANT,1),1));
+        List<ExtractionInstruction> ins = new ArrayList<>();
+        ins.add(new ExtractionInstruction(new Resource(COIN,1)));
+        ins.add(new ExtractionInstruction(new Resource(ROCK,1)));
+        ins.add(new ExtractionInstruction(new Resource(SERVANT,1),1));
 
         JsonInterpreterServer interpreter = new JsonInterpreterServer(0,new ServerController(true));
         System.out.println("----------------------------------");

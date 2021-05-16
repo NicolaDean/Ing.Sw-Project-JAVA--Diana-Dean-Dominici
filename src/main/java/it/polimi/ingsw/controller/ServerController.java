@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.utils.CliColors;
 
 import java.util.ArrayList;
@@ -306,6 +307,21 @@ public class ServerController{
         }
     }
 
+
+    public Packet storageInsertion(Resource resource,int pos, int player)
+    {
+        if(!isRightPlayer(player)) return this.notYourTurn();
+
+        Player p = this.game.getCurrentPlayer();
+
+        try {
+            p.storageInsertion(resource,pos);
+        } catch (AckManager err) {
+            DebugMessages.printError("Un errore di inserimento");
+            return err.getAck();
+        }
+        return  null;
+    }
     /**
      * Extract resource from the storage
      * @param resource resource to remove
@@ -475,6 +491,14 @@ public class ServerController{
     public void lastTurn()
     {
         this.broadcastMessage(-1, new EndGame());
+    }
+
+    public void sendMessage(Packet p,int index)
+    {
+        for(ClientHandler c: clients )
+        {
+            if(c.getRealPlayerIndex() == index) c.sendToClient(p);
+        }
     }
 
 

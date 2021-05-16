@@ -6,9 +6,9 @@ import java.util.List;
 
 public class StorageMassExtraction extends Packet<ServerController> implements PacketManager<ServerController> {
 
-    List<InsertionInstruction> insertions;
+    List<ExtractionInstruction> insertions;
 
-    public StorageMassExtraction( List<InsertionInstruction> insertions)
+    public StorageMassExtraction( List<ExtractionInstruction> insertions)
     {
         super("StorageMassExtraction");
         this.insertions = insertions;
@@ -17,7 +17,7 @@ public class StorageMassExtraction extends Packet<ServerController> implements P
     @Override
     public Packet analyze(ServerController controller) {
 
-        for(InsertionInstruction instruction: insertions)
+        for(ExtractionInstruction instruction: insertions)
         {
             Packet packet = instruction.apply(controller,this.getPlayerIndex());
             if(packet!=null) return packet;
