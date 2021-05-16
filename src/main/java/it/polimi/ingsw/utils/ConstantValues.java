@@ -16,5 +16,9 @@ public class ConstantValues {
     public static int                       cardsWinningCondition   = 7;
     public static int                       productionSpaces        = 3;
     public static ResourceRappresentation   resourceRappresentation = new ResourceRappresentation();
-
+    public static int       numWhiteBall          = 4;
+    public static int       numBlueBall           = 2;
+    public static int       numYellowBall         = 2;
+    public static int       numGrayBall           = 2;
+    public static int       numVioletBall         = 2;
 }
