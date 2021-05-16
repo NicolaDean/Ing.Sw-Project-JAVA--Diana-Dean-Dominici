@@ -57,7 +57,7 @@ public class ClientHandler implements Runnable {
     public void warning(String msg)
     {
         CliColors c = new CliColors(System.out);
-        c.printColored(msg,CliColors.YELLOW_TEXT);
+        c.printlnColored(msg,CliColors.YELLOW_TEXT);
     }
     public boolean isPing() {
         return ping;

@@ -2,10 +2,6 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.LorenzoServerController;
 import it.polimi.ingsw.controller.ServerController;
-import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
-import it.polimi.ingsw.controller.packets.BasicPacketFactory;
-import it.polimi.ingsw.controller.packets.BasicProduction;
-import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.view.utils.CliColors;
 import it.polimi.ingsw.view.utils.Logger;
 
@@ -130,14 +126,14 @@ public class WaitingRoom extends ClientHandler{
         {
             if(!controller.isFull(nickname))
             {
-                terminal.out.printColored("Player logged to the "+ i + "^ Match", CliColors.GREEN_TEXT,CliColors.BLACK_BACKGROUND);
+                terminal.out.printlnColored("Player logged to the "+ i + "^ Match", CliColors.GREEN_TEXT,CliColors.BLACK_BACKGROUND);
                 return controller;
             }
             i++;
         }
         if(i>0)
             System.out.println("All match Full, new one created");
-        terminal.out.printColored("Player logged to the "+ i + "^ Match", CliColors.GREEN_TEXT,CliColors.BLACK_BACKGROUND);
+        terminal.out.printlnColored("Player logged to the "+ i + "^ Match", CliColors.GREEN_TEXT,CliColors.BLACK_BACKGROUND);
 
 
         ServerController c = new ServerController(true);

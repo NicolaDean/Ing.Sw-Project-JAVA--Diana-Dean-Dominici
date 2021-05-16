@@ -1,9 +1,7 @@
 package it.polimi.ingsw.view.utils;
 
-import java.awt.*;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 
 public class CliColors extends PrintStream
 {
@@ -43,7 +41,7 @@ public class CliColors extends PrintStream
 
     public void reset()
     {
-        this.println(CLI_RESET);
+        this.print(CLI_RESET);
     }
 
     public void clear(){
@@ -76,38 +74,36 @@ public class CliColors extends PrintStream
         this.print(textColor);
     }
 
-    public void printColored(String content,String textColor)
+    public void printlnColored(String content, String textColor)
+    {
+        this.printColored(content,textColor);
+        System.out.println();
+    }
+
+
+    public void printlnColored(String content, String textColor, String backgroundStyle)
+    {
+        this.setBackgroundColor(backgroundStyle);
+        this.printlnColored(content,textColor);
+    }
+
+    public void printColored(String content, String textColor)
     {
         this.setTextColor(textColor);
         this.print(content);
         reset();
     }
 
-    public void printColored(String content,String textColor,String backgroundStyle)
+    public void printColored(String content, String textColor, String backgroundStyle)
     {
         this.setBackgroundColor(backgroundStyle);
         this.printColored(content,textColor);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public void printlnColored(String content,String backgroundStyle,String textStyle)
+    public void newLine()
     {
-        printColored(content,backgroundStyle,textStyle);
         this.println("");
+        this.reset();
     }
+
 }

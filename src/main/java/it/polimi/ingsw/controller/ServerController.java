@@ -5,12 +5,10 @@ import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.enumeration.ErrorMessages;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.exceptions.AckManager;
-import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Dashboard;
-import it.polimi.ingsw.model.lorenzo.LorenzoGame;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.utils.CliColors;
@@ -23,7 +21,7 @@ public class ServerController{
     //view
     Game                game;
     List<ClientHandler> clients;
-    Object              lock;
+    final Object              lock;
     int                 currentClient = 0;
     boolean             isSinglePlayer;
     boolean             isStarted;
@@ -55,7 +53,7 @@ public class ServerController{
     public void warning(String msg)
     {
         CliColors c = new CliColors(System.out);
-        c.printColored(msg,CliColors.YELLOW_TEXT);
+        c.printlnColored(msg,CliColors.YELLOW_TEXT);
     }
 
 
@@ -159,7 +157,6 @@ public class ServerController{
         //TODO USO SYNCRONIZED per lockasre la lista di client ed evitare che un client venga rimosso mentre inizio il game,
         // o inizi il game prima che un giocatore venga rimosso
         //Se game non ha abbastanza giocatori lancia eccezione e manda NACK
-        //TODO IF A PLAYER DISCONNECT IN THE EXACT MOMENT OF "startGame" thers a 25% possibility of exception
         synchronized (this.lock) {
             if (!this.isStarted) {
                 this.isStarted = true;

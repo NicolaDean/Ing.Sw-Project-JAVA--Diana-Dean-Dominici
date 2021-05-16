@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.controller.packets.InsertionInstruction;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.view.observer.Observable;
@@ -34,7 +35,7 @@ public class CLI extends Observable<ClientController> implements View {
     }
 
     public void clickEnter() {
-        this.terminal.out.printColored("Click enter to continue",CliColors.RED_TEXT,CliColors.BLACK_BACKGROUND);
+        this.terminal.out.printlnColored("Click enter to continue",CliColors.RED_TEXT,CliColors.BLACK_BACKGROUND);
         this.input.enter();
         this.terminal.out.clear();
         this.terminal.out.print("\033[H\033[2J");
@@ -136,6 +137,21 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void askResourceInsertion(List<Resource> resourceList) {
 
+        boolean flag = true;
+
+        List<InsertionInstruction> insertions;
+        do
+        {
+            for(Resource res:resourceList)
+            {
+                this.terminal.printSeparator();
+                this.terminal.printRequest("If you want to discard this resource type \"-d\" or \"-discard\"");
+                this.terminal.printRequest("If you want to keep it type the deposit number (1-3) for normale (4-5) to bonus");
+                this.terminal.printSeparator();
+
+
+            }
+        }while(resourceList.isEmpty() && flag);
     }
 
     @Override
@@ -173,13 +189,10 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void showMarketExtraction(List<Resource> resourceList, int whiteballs) {
         terminal.printGoodMessages("You extracted the following resources from market");
-        for(Resource r : resourceList)
-        {
-            if(r.getQuantity()!=0)
-            {
-                terminal.printWarning(r.getQuantity() + " " +r.getType().toString() );
-            }
-        }
+        terminal.printResourceList(resourceList);
+
+        String in;
+        this.askResourceInsertion(resourceList);
         //TODO CHIEDERE DOVE INSERIRE LE RISORSE O SE NE VUOLE SCARTARE
         //TODO(eg insert -c -cancel to discard this resource else the deposit to select)
     }

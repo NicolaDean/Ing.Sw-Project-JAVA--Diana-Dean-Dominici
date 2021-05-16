@@ -17,7 +17,7 @@ public class ResourceRappresentation {
         colorRappresentation.put(COIN   , CliColors.YELLOW_BACKGROUND);
         colorRappresentation.put(SERVANT, CliColors.MAGENTA_BACKGROUND);
         colorRappresentation.put(SHIELD , CliColors.BLUE_BACKGROUND);
-        colorRappresentation.put(ROCK   , CliColors.BLACK_BACKGROUND);
+        colorRappresentation.put(ROCK   , CliColors.WHITE_BACKGROUND);
 
 
         noColorRappresentation.put(COIN   , "-CO-");

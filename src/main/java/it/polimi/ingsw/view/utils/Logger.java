@@ -4,6 +4,8 @@ import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.ConstantValues;
 
+import java.util.List;
+
 public class Logger {
 
     public CliColors out;
@@ -25,12 +27,12 @@ public class Logger {
      */
     public void printRequest(String content)
     {
-        out.printColored(content,this.istructionText,this.istructionBackground);
+        out.printlnColored(content,this.istructionText,this.istructionBackground);
     }
 
     public void printError(String content)
     {
-        out.printColored(content,CliColors.RED_TEXT,this.istructionBackground);
+        out.printlnColored(content,CliColors.RED_TEXT,this.istructionBackground);
     }
     /**
      * Print a colored message corresponding to "warnings"
@@ -39,7 +41,7 @@ public class Logger {
 
     public void printWarning(String content)
     {
-        out.printColored(content,this.warningColor,this.istructionBackground);
+        out.printlnColored(content,this.warningColor,this.istructionBackground);
     }
 
     /**
@@ -48,12 +50,12 @@ public class Logger {
      */
     public void printGoodMessages(String content)
     {
-        out.printColored(content,this.goodMessage,this.istructionBackground);
+        out.printlnColored(content,this.goodMessage,this.istructionBackground);
     }
 
     public void Welcome()
     {
-        out.printColored("WELCOMEE TO LORENZO IL MAGNIFICO", CliColors.RED_TEXT,CliColors.WHITE_BACKGROUND);
+        out.printlnColored("WELCOMEE TO LORENZO IL MAGNIFICO", CliColors.RED_TEXT,CliColors.WHITE_BACKGROUND);
     }
 
     /**
@@ -90,7 +92,7 @@ public class Logger {
 
        //this.out.printColored(logo,CliColors.RED_TEXT,CliColors.BLACK_BACKGROUND);
        this.out.reset();
-       this.out.printColored(logo2,CliColors.RED_TEXT,CliColors.BLACK_BACKGROUND);
+       this.out.printlnColored(logo2,CliColors.RED_TEXT,CliColors.BLACK_BACKGROUND);
        this.out.reset();
     }
 
@@ -135,15 +137,27 @@ public class Logger {
 
     public void printResource(Resource res)
     {
-        int qty           = res.getQuantity();
-        ResourceType type = res.getType();
+        int          qty    = res.getQuantity();
+        ResourceType type   = res.getType();
+        String       color  = ConstantValues.resourceRappresentation.getColorRappresentation(type);
 
-        ConstantValues.resourceRappresentation.getColorRappresentation(type);
+        this.out.printColored(" " + qty + " ",CliColors.BLACK_TEXT,color);
+        this.out.setBold();
+        this.reset();
     }
 
-    public void printResourceType(Resource res)
+    public void printResourceList(List<Resource> resourceList)
     {
+        for(Resource res : resourceList)
+        {
+            if(res.getQuantity() != 0) this.printResource(res);
+        }
+    }
 
+
+    public void reset()
+    {
+        this.out.reset();
     }
 
     /**
