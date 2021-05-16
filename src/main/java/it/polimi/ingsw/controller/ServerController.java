@@ -473,7 +473,11 @@ public class ServerController{
             return null;
         }
 
-        //TODO Send message to next player client
+        if(currentClient == clients.size()-1)
+            currentClient=0;
+        else
+            currentClient++;
+        clients.get(currentClient).sendToClient(new TurnNotify());
         return null;
     }
 

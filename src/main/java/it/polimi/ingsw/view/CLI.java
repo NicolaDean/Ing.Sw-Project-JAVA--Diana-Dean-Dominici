@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.controller.packets.EndTurn;
 import it.polimi.ingsw.controller.packets.ExtractionInstruction;
 import it.polimi.ingsw.controller.packets.InsertionInstruction;
 import it.polimi.ingsw.model.resources.Resource;
@@ -234,6 +235,7 @@ public class CLI extends Observable<ClientController> implements View {
                     pos = pos-1;
                     insertions.add(new InsertionInstruction(res,pos));
                     removed.add(res);
+
                 }
             }
             resourceList.removeAll(removed);
@@ -241,6 +243,8 @@ public class CLI extends Observable<ClientController> implements View {
        //
 
         this.notifyObserver(controller -> {controller.sendResourceInsertion(insertions);});
+        this.notifyObserver(controller -> {controller.sendMessage(new EndTurn());});
+
     }
 
     @Override

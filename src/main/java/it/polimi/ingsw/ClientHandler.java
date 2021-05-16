@@ -159,6 +159,7 @@ public class ClientHandler implements Runnable {
 
             System.out.println("COMMAND: -> " + message);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Not JSON MESSAGE: " + message);
            // e.printStackTrace();
         }
