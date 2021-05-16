@@ -12,6 +12,7 @@ import java.awt.*;
 import java.util.List;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
+import static it.polimi.ingsw.utils.ConstantValues.*;
 
 public class Market {
     private int whiteCount=0;
@@ -25,7 +26,33 @@ public class Market {
      * build e shuffle balls
      */
     public Market() {
+        int     nw=numWhiteBall,
+                nb=numBlueBall,
+                ng=numGrayBall,
+                ny=numYellowBall,
+                nv=numVioletBall;
         discardedResouce = new RedBall();
+        for(int i=0;i<marketRow;i++)
+            for(int j=0;j<marketCol;j++){
+                if(nw>0){
+                    nw--;
+                    resouces[i][j]=new WhiteBall();
+                }else if(nb>0){
+                    nb--;
+                    resouces[i][j]= new ResourceBall(Color.blue,SHIELD);
+                }else if(ng>0){
+                    ng--;
+                    resouces[i][j]= new ResourceBall(Color.gray,ROCK);
+                }else if(ny>0){
+                    ny--;
+                    resouces[i][j]= new ResourceBall(Color.yellow,COIN);
+                }else if(nv>0){
+                    nv--;
+                    resouces[i][j]= new ResourceBall(Color.magenta,SERVANT);
+                }
+
+            }
+
         randomized();
     }
 
@@ -53,7 +80,7 @@ public class Market {
         int r,c,n=2;
 
         for(int p=0;p<n;p++) {
-            for (int i = 0; i < ConstantValues.marketRow; i++) {
+            for (int i = 0; i < marketRow; i++) {
                 for(int j = 0; j < ConstantValues.marketCol; j++){
                     r=(int)(Math.random()*10)%3;
                     c=(int)(Math.random()*10)%4;
@@ -84,7 +111,7 @@ public class Market {
         BasicBall out[] = new BasicBall[ConstantValues.marketCol];
         whiteCount=0;
         pendingResourceExtracted = new ResourceList();
-        if ((pos > 3) || (pos < 1)) {
+        if ((pos > marketRow) || (pos < 1)) {
             throw new WrongPosition("invalid position");
         } else {
             pos--;
@@ -114,17 +141,17 @@ public class Market {
      */
     public void exstractColumn(int pos,Player p) throws WrongPosition {
         BasicBall tmp;
-        BasicBall out[] = new BasicBall[ConstantValues.marketRow];
+        BasicBall out[] = new BasicBall[marketRow];
         whiteCount=0;
         pendingResourceExtracted = new ResourceList();
-        if ((pos > 4) || (pos < 1)) {
+        if ((pos > marketCol) || (pos < 1)) {
             throw new WrongPosition("invalid position");
         } else {
             pos--;
-            for (int i = 0; i < ConstantValues.marketRow; i++)
+            for (int i = 0; i < marketRow; i++)
                     out[i] = resouces[i][pos];
 
-            for (int i = 1; i < ConstantValues.marketRow; i++) {
+            for (int i = 1; i < marketRow; i++) {
                 tmp = resouces[i][pos];
                 resouces[i][pos] = resouces[0][pos];
                 resouces[0][pos] = tmp;

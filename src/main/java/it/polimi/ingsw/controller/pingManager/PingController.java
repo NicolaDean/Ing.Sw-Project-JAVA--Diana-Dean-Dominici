@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller.pingManager;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Ping;
+import it.polimi.ingsw.utils.DebugMessages;
 
 import java.io.PrintWriter;
 
@@ -48,7 +49,7 @@ public class PingController extends GenericPing<ServerController>{
     @Override
     public void customOnDisconnect()
     {
-        System.out.println("Il client "+ index + " Si  è disconnesso, nessun pong ricevuto");
+        DebugMessages.printWarning("\nIl client "+ index + " Si  è disconnesso, nessun pong ricevuto\n");
 
         if(!gameStarted) notifyObserver(controller -> {controller.removeClient(this.index);});
         //else -> interrompi la partita
