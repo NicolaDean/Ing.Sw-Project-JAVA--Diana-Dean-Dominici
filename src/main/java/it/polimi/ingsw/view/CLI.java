@@ -100,7 +100,7 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askBuy() {
-        //this.notifyObserver(controller -> controller.setAckManagmentAction(View::askBuy));
+        //this.notifyObserver(controller -> controller.buyCard());
 
         //per evitare loop bisognera inserire nell'input reader un comando
         // che verifichi se lutente ha scritto cancel o qualcosa del genere per tprnare al menu con i comandi
@@ -194,6 +194,7 @@ public class CLI extends Observable<ClientController> implements View {
     public void turnTypeInterpreter(String cmd)
     {
         switch (cmd) {
+            case "market":
             case "2":
                 this.askMarketExtraction();
                 break;
@@ -207,10 +208,12 @@ public class CLI extends Observable<ClientController> implements View {
     }
     public void commandInterpreter(String cmd)
     {
+
         switch (cmd)
         {
             case "q":
                 break;
+            case "cancel":
             case "0":
                 //Do nothing
                 break;
@@ -229,7 +232,6 @@ public class CLI extends Observable<ClientController> implements View {
                 break;
             default:
                 break;
-
         }
     }
 

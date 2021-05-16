@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Storage;
 import it.polimi.ingsw.model.market.Market;
+import it.polimi.ingsw.utils.ConstantValues;
 
 public class MiniModel
 {
@@ -19,8 +20,8 @@ public class MiniModel
 
     public MiniModel()
     {
-        this.nicknames = new String[4];
-        this.positions = new int[4];
+        this.nicknames = new String[ConstantValues.numberOfPlayer];
+        this.positions = new int   [ConstantValues.numberOfPlayer];
     }
 
     public void addPlayer(String nickname,int index)

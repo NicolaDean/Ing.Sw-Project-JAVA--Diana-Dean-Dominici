@@ -1,5 +1,9 @@
 package it.polimi.ingsw.view.utils;
 
+import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.utils.ConstantValues;
+
 public class Logger {
 
     public CliColors out;
@@ -114,6 +118,7 @@ public class Logger {
     {
         this.out.println("------------------------------------------");
     }
+
     public void printTurnTypesHelp()
     {
         this.out.clear();
@@ -126,6 +131,19 @@ public class Logger {
         this.out.println(" 2 - Extract from market");
         this.out.println(" 3 - Activate a production");
         this.printSeparator();
+    }
+
+    public void printResource(Resource res)
+    {
+        int qty           = res.getQuantity();
+        ResourceType type = res.getType();
+
+        ConstantValues.resourceRappresentation.getColorRappresentation(type);
+    }
+
+    public void printResourceType(Resource res)
+    {
+
     }
 
     /**
