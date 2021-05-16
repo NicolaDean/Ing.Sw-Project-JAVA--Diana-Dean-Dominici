@@ -44,7 +44,6 @@ public class ClientApp {
         this.controller.starttolisten();
 
         System.out.println("Click enter to start");
-        System.in.read();
         this.controller.printHelp();
 
         try {

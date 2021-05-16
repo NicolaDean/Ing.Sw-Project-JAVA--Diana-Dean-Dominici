@@ -50,7 +50,10 @@ public class StorageMassInsertion extends Packet<ServerController> implements Pa
             return new MarketResult(remaining);
         }
         else
-            return new ACK(0);
+        {
+            controller.sendMessage(new ACK(0),this.getPlayerIndex());
+            return new OperationCompleted();
+        }
 
     }
 }

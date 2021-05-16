@@ -8,11 +8,13 @@ import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.utils.CliColors;
 import it.polimi.ingsw.view.utils.InputReaderValidation;
 import it.polimi.ingsw.view.utils.Logger;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -21,9 +23,14 @@ public class CLI extends Observable<ClientController> implements View {
 
     Logger                  terminal; //print formatted and colored text on the cli
     InputReaderValidation   input;
+    Thread                  helpThread;
+    boolean                 waiting;
+    int                     lastTurn;
 
     public CLI()
     {
+        lastTurn = -1;
+        waiting = true;
         input = new InputReaderValidation();
         terminal = new Logger();
     }
@@ -44,6 +51,7 @@ public class CLI extends Observable<ClientController> implements View {
                 return true;
 
             case "-exit": //cancel case
+                this.notifyObserver(controller -> {controller.sendMessage(new EndTurn());});
                 customRead(message);
                 return true;
 
@@ -333,8 +341,6 @@ public class CLI extends Observable<ClientController> implements View {
        //
 
         this.notifyObserver(controller -> {controller.sendResourceInsertion(insertions);});
-        this.notifyObserver(controller -> {controller.sendMessage(new EndTurn());});
-
     }
 
     @Override
@@ -355,17 +361,50 @@ public class CLI extends Observable<ClientController> implements View {
         turnTypeInterpreter(cmd);
     }
 
+    public void waitingHelpLoop()
+    {
+        try
+        {
+            while(waiting)
+            {
+                this.terminal.printHelp();
+                while(!this.input.bufferReady())
+                {
+                    Thread.sleep(100);
+                }
+                System.out.println("TREAD VIVO ");
+
+                this.helpCommands(this.input.readLine(),"");
+
+            }
+        }catch (InterruptedException | IOException e)
+        {
+            DebugMessages.printError("OPSS");
+        }
+
+        DebugMessages.printError("Waiting thread help aborted");
+    }
     @Override
     public void askCommand() {
-        this.terminal.printHelp();
-        this.customRead();
-        //System.out.println("HO LETTO");
+        helpThread = new Thread(this::waitingHelpLoop);
+        helpThread.start();
     }
 
     @Override
     public void showGameStarted() {
         this.terminal.printGoodMessages("GAME HAS STARTED");
         this.terminal.printRequest("Click enter to continue");
+    }
+
+    @Override
+    public void abortHelp() {
+        if(helpThread!=null)
+        {
+            DebugMessages.printError("HELP ABORTED");
+            helpThread.interrupt();
+            helpThread = null;
+            waiting   =false;
+        }
     }
 
     @Override
@@ -377,6 +416,35 @@ public class CLI extends Observable<ClientController> implements View {
         //this.askWhiteBalls();
         this.askResourceInsertion(resourceList);
 
+    }
+
+    @Override
+    public void askEndTurn() {
+        terminal.printGoodMessages("Your last action has been sucesfuly completed");
+        terminal.printRequest("Do you want to end turn? (yes or no)");
+
+        String in = this.customRead("Do you want to end turn?");
+        in = in.toLowerCase(Locale.ROOT);
+        if(in.equals("yes") || in.equals("y")) this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
+        else
+        {
+            if(lastTurn == 1)
+            {
+                this.askBuy();
+            }
+            else if(lastTurn == 2)
+            {
+                this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
+            }
+            else if(lastTurn == 3)
+            {
+                this.askProduction();
+            }
+            else
+            {
+
+            }
+        }
     }
 
     @Override

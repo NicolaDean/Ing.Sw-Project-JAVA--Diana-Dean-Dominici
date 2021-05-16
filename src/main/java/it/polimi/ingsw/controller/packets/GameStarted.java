@@ -12,7 +12,7 @@ public class GameStarted extends Packet<ClientController> implements PacketManag
     public Packet analyze(ClientController controller)
     {
         controller.printGameStarted();
-
+        controller.abortHelp();
         return null;
     }
 }

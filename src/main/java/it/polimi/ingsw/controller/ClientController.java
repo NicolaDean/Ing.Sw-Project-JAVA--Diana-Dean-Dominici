@@ -116,6 +116,10 @@ public class ClientController implements Runnable{
         return pongController;
     }
 
+    public void abortHelp()
+    {
+        this.view.abortHelp();
+    }
     public void startGame()
     {
 
@@ -256,7 +260,7 @@ public class ClientController implements Runnable{
     {
         this.view.askTurnType();
     }
-
+    public void askEndTurn(){this.view.askEndTurn();}
     public void sendResourceInsertion(List<InsertionInstruction> instructions)
     {
         this.sendMessage(new StorageMassInsertion(instructions));
