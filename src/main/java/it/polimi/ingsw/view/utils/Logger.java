@@ -107,12 +107,12 @@ public class Logger {
         this.printWarning(" Whenever you need you can type h or help to show this message again");
         this.out.println("------------------------------------------");
         this.out.println(" default = cancel");
-        this.out.println(" -q for quit/disconnect");
-        this.out.println(" -c for cancel");
-        this.out.println(" -sg for startGame");
-        this.out.println(" -d for showDashboard");
-        this.out.println(" -sd for swapDeposit");
-        this.out.println(" -s for spyPlayer");
+        this.out.println(" \"-quit\" to quit the game");
+        this.out.println(" \"-exit\" to exit the turntype you selected (only if you haven't already played) ");
+        this.out.println(" \"-startgame\" to start the game");
+        this.out.println(" \"-dashboard\" to show the Dashboard");
+        this.out.println(" \"-swapdeposits\" to enter the deposit swapping function");
+        this.out.println(" \"-spy\" to spy the dashboard of other players");
         this.out.println("------------------------------------------");
     }
 
@@ -125,7 +125,7 @@ public class Logger {
     {
         this.out.clear();
         this.printSeparator();
-        this.printRequest("Chose one of the following Turn type");
+        this.printRequest("Choose one of the following Turn type");
         this.printRequest("If you want to cancel the turn you can by typing -exit (only if you havent done any action)");
         this.printSeparator();
         this.out.println(" default = 1");

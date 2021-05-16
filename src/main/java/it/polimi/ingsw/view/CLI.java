@@ -13,6 +13,7 @@ import it.polimi.ingsw.view.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CLI extends Observable<ClientController> implements View {
 
@@ -25,31 +26,44 @@ public class CLI extends Observable<ClientController> implements View {
         terminal = new Logger();
     }
 
-    public void helpCommands(String cmd,String message)
+    public boolean helpCommands(String cmd,String message)
     {
+        cmd = cmd.toLowerCase();
         switch (cmd) {
             case "h":
             case "-h":
             case "help":
                 terminal.printHelp();
                 customRead(message);
-                break;
-            case "-q": //quit case
+                return true;
+            case "-quit": //quit case
                 //this.quit();
-                break;
-            case "-c": //cancel case
-                break;
-            case "-sg": //cancel case
+                customRead(message);
+                return true;
+
+            case "-exit": //cancel case
+                customRead(message);
+                return true;
+
+            case "-startgame": //cancel case
                 this.notifyObserver(ClientController::sendStartCommand);
-                break;
-            case "d": //cancel case
-                break;
-            case "sd": //cancel case
-                break;
-            case "s": //cancel case
-                break;
+                return true;
+
+            case "-dashboard": //cancel case
+                customRead(message);
+                return true;
+
+            case "-swapdeposits": //cancel case
+                customRead(message);
+                return true;
+
+            case "-spy": //cancel case
+                customRead(message);
+                return true;
+
             default:
-                break;
+                return false;
+
         }
     }
     public String customRead()
@@ -58,6 +72,7 @@ public class CLI extends Observable<ClientController> implements View {
         helpCommands(s,"");
         return s;
     }
+
 
     public String customRead(String message)
     {
@@ -249,7 +264,8 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void askCommand() {
         this.terminal.printHelp();
-        String cmd = this.customRead();
+        this.customRead();
+        //System.out.println("HO LETTO");
     }
 
     @Override
