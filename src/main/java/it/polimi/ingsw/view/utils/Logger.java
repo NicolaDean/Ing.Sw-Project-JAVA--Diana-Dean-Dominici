@@ -101,16 +101,16 @@ public class Logger {
     {
         this.out.clear();
         this.out.println("------------------------------------------");
-        this.printWarning(" This list of commands is usable only during others turn");
-        this.printWarning(" Whenever you need you can type h or help tho show this print again");
+        this.printWarning(" This list of commands is always usable, even if it's not your turn!");
+        this.printWarning(" Whenever you need you can type h or help to show this message again");
         this.out.println("------------------------------------------");
         this.out.println(" default = cancel");
-        this.out.println(" q-quit/disconnect");
-        this.out.println(" 0-cancel");
-        this.out.println(" 1-startGame");
-        this.out.println(" 2-showDashboard");
-        this.out.println(" 3-swapDeposit");
-        this.out.println(" 4-spyPlayer");
+        this.out.println(" -q for quit/disconnect");
+        this.out.println(" -c for cancel");
+        this.out.println(" -sg for startGame");
+        this.out.println(" -d for showDashboard");
+        this.out.println(" -sd for swapDeposit");
+        this.out.println(" -s for spyPlayer");
         this.out.println("------------------------------------------");
     }
 

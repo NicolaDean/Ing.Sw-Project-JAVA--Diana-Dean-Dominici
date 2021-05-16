@@ -21,6 +21,113 @@ public class CLI extends Observable<ClientController> implements View {
         terminal = new Logger();
     }
 
+    public String customRead()
+    {
+        String s = this.input.readLine();
+        switch (s) {
+            case "h":
+            {
+                terminal.printHelp();
+                customRead();
+            }
+            case "-h":
+            {
+                terminal.printHelp();
+                customRead();
+            }
+            case "help":
+            {
+
+                customRead();
+            }
+            case "-q": //quit case
+            {
+                //this.quit();
+                customRead();
+            }
+            case "-c": //cancel case
+            {
+
+                customRead();
+            }
+            case "-sg": //cancel case
+            {
+
+                customRead();
+            }
+            case "d": //cancel case
+            {
+
+                customRead();
+            }
+            case "sd": //cancel case
+            {
+
+                customRead();
+            }
+            case "s": //cancel case
+            {
+
+                customRead();
+            }
+        }
+        return s;
+    }
+
+    public String customRead(String message)
+    {
+        terminal.printRequest(message);
+        String s = this.input.readLine();
+        switch (s) {
+            case "h":
+            {
+                terminal.printHelp();
+                customRead();
+            }
+            case "-h":
+            {
+                terminal.printHelp();
+                customRead();
+            }
+            case "help":
+            {
+
+                customRead();
+            }
+            case "-q": //quit case
+            {
+                //this.quit();
+                customRead();
+            }
+            case "-c": //cancel case
+            {
+
+                customRead();
+            }
+            case "-sg": //cancel case
+            {
+
+                customRead();
+            }
+            case "d": //cancel case
+            {
+
+                customRead();
+            }
+            case "sd": //cancel case
+            {
+
+                customRead();
+            }
+            case "s": //cancel case
+            {
+
+                customRead();
+            }
+        }
+        return s;
+    }
+
     @Override
     public void printWelcomeScreen() {
         this.terminal.printLogo();

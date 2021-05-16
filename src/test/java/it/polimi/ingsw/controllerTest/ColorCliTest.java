@@ -35,4 +35,11 @@ public class ColorCliTest {
         view.askNickname();
     }
 
+    @Test
+    public void fedetest()
+    {
+        View view = new CLI();
+
+    }
+
 }
