@@ -82,47 +82,47 @@ public class CLI extends Observable<ClientController> implements View {
             case "h":
             {
                 terminal.printHelp();
-                customRead();
+                customRead(message);
             }
             case "-h":
             {
                 terminal.printHelp();
-                customRead();
+                customRead(message);
             }
             case "help":
             {
 
-                customRead();
+                customRead(message);
             }
             case "-q": //quit case
             {
                 //this.quit();
-                customRead();
+                customRead(message);
             }
             case "-c": //cancel case
             {
 
-                customRead();
+                customRead(message);
             }
             case "-sg": //cancel case
             {
 
-                customRead();
+                customRead(message);
             }
             case "d": //cancel case
             {
 
-                customRead();
+                customRead(message);
             }
             case "sd": //cancel case
             {
 
-                customRead();
+                customRead(message);
             }
             case "s": //cancel case
             {
 
-                customRead();
+                customRead(message);
             }
         }
         return s;
