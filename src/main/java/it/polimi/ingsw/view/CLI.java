@@ -3,6 +3,7 @@ package it.polimi.ingsw.view;
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.packets.ExtractionInstruction;
 import it.polimi.ingsw.controller.packets.InsertionInstruction;
+import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.utils.ConstantValues;
@@ -66,6 +67,8 @@ public class CLI extends Observable<ClientController> implements View {
         helpCommands(s,message);
         return s;
     }
+
+
 
     @Override
     public void printWelcomeScreen() {
@@ -173,6 +176,8 @@ public class CLI extends Observable<ClientController> implements View {
             controller.sendMarketExtraction(false, 1);
         });
     }
+
+    //TODO da fare il metodo showMarket(MiniModel) che chiama quello del logger
 
     @Override
     public void askDiscardResource(List<Resource> resourceList) {

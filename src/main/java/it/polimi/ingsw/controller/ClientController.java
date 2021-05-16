@@ -268,6 +268,7 @@ public class ClientController implements Runnable{
      */
     public void sendMarketExtraction(boolean dir,int pos)
     {
+        //view.showMarket(minimodel.getMiniMarket)
         this.sendMessage(new MarketExtraction(dir,pos));
     }
     /**

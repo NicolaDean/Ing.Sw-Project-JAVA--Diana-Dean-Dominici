@@ -15,6 +15,7 @@ public class CliColors extends PrintStream
     public static String MAGENTA_BACKGROUND = "\u001b[45m";
     public static String CYAN_BACKGROUND    = "\u001b[46m";
     public static String WHITE_BACKGROUND   = "\u001b[47m";
+    public static String R_WHITE_BACKGROUND = "\u001b[107m"; //real white
 
     public static String BLACK_TEXT         = "\u001b[30m";
     public static String RED_TEXT           = "\u001b[31m";
@@ -24,6 +25,9 @@ public class CliColors extends PrintStream
     public static String MAGENTA_TEXT       = "\u001b[35m";
     public static String CYAN_TEXT          = "\u001b[36m";
     public static String WHITE_TEXT         = "\u001b[37m";
+    public static String GRAY_TEXT          = "\u001b[30;1m";
+
+
 
 
     public static String BOLD               = "\u001b[1m";

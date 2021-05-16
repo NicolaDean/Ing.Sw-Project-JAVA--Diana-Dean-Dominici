@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.market.balls.*;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.view.utils.CliColors;
 
 import java.awt.*;
 import java.util.List;
@@ -18,10 +19,7 @@ public class Market {
     private int whiteCount=0;
     private List<Resource> pendingResourceExtracted = new ResourceList();
     private BasicBall discardedResouce;
-    private BasicBall resouces[][] = { { new WhiteBall(), new WhiteBall() , new WhiteBall() ,new WhiteBall() } ,
-                               { new ResourceBall(Color.blue,SHIELD), new ResourceBall(Color.blue,SHIELD) , new ResourceBall(Color.gray,ROCK) ,new ResourceBall(Color.gray,ROCK) } ,
-                               { new ResourceBall(Color.yellow,COIN), new ResourceBall(Color.yellow,COIN) , new ResourceBall(Color.magenta,SERVANT) ,new ResourceBall(Color.magenta,SERVANT) } };
-
+    private BasicBall resouces[][]=new BasicBall[marketRow][marketCol];
     /**
      * build e shuffle balls
      */
@@ -39,16 +37,16 @@ public class Market {
                     resouces[i][j]=new WhiteBall();
                 }else if(nb>0){
                     nb--;
-                    resouces[i][j]= new ResourceBall(Color.blue,SHIELD);
+                    resouces[i][j]= new ResourceBall(Color.blue,SHIELD, CliColors.BLUE_TEXT);
                 }else if(ng>0){
                     ng--;
-                    resouces[i][j]= new ResourceBall(Color.gray,ROCK);
+                    resouces[i][j]= new ResourceBall(Color.gray,ROCK, CliColors.GRAY_TEXT);
                 }else if(ny>0){
                     ny--;
-                    resouces[i][j]= new ResourceBall(Color.yellow,COIN);
+                    resouces[i][j]= new ResourceBall(Color.yellow,COIN, CliColors.YELLOW_TEXT);
                 }else if(nv>0){
                     nv--;
-                    resouces[i][j]= new ResourceBall(Color.magenta,SERVANT);
+                    resouces[i][j]= new ResourceBall(Color.magenta,SERVANT,CliColors.MAGENTA_TEXT);
                 }
 
             }

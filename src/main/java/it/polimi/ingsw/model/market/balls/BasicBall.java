@@ -10,6 +10,8 @@ public abstract class BasicBall {
 
     public abstract Color getColor();
 
+    public abstract String getCliColor();
+
     public abstract void active(Market market, Player p);
 
     public abstract ResourceType getType();
