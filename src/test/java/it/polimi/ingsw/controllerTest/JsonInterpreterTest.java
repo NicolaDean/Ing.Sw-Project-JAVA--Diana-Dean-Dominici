@@ -131,9 +131,9 @@ public class JsonInterpreterTest {
         resourceList.add(new Resource(ROCK,2));
 
         List<InsertionInstruction> ins = new ArrayList<>();
-        ins.add(new InsertionInstruction(false,new Resource(COIN,1)));
-        ins.add(new InsertionInstruction(false,new Resource(ROCK,1)));
-        ins.add(new InsertionInstruction(true,new Resource(SERVANT,1),1));
+        ins.add(new InsertionInstruction(new Resource(COIN,1)));
+        ins.add(new InsertionInstruction(new Resource(ROCK,1)));
+        ins.add(new InsertionInstruction(new Resource(SERVANT,1),1));
 
         JsonInterpreterServer interpreter = new JsonInterpreterServer(0,new ServerController(true));
         System.out.println("----------------------------------");

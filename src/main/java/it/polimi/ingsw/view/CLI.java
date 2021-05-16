@@ -9,6 +9,7 @@ import it.polimi.ingsw.view.utils.CliColors;
 import it.polimi.ingsw.view.utils.InputReaderValidation;
 import it.polimi.ingsw.view.utils.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CLI extends Observable<ClientController> implements View {
@@ -22,56 +23,38 @@ public class CLI extends Observable<ClientController> implements View {
         terminal = new Logger();
     }
 
+    public void helpCommands(String cmd,String message)
+    {
+        switch (cmd) {
+            case "h":
+            case "-h":
+            case "help":
+                terminal.printHelp();
+                customRead(message);
+                break;
+            case "-q": //quit case
+                //this.quit();
+                break;
+            case "-c": //cancel case
+
+                break;
+            case "-sg": //cancel case
+                this.notifyObserver(controller -> {controller.sendStartCommand();});
+                break;
+            case "d": //cancel case
+                break;
+            case "sd": //cancel case
+                break;
+            case "s": //cancel case
+                break;
+            default:
+                break;
+        }
+    }
     public String customRead()
     {
         String s = this.input.readLine();
-        switch (s) {
-            case "h":
-            {
-                terminal.printHelp();
-                customRead();
-            }
-            case "-h":
-            {
-                terminal.printHelp();
-                customRead();
-            }
-            case "help":
-            {
-
-                customRead();
-            }
-            case "-q": //quit case
-            {
-                //this.quit();
-                customRead();
-            }
-            case "-c": //cancel case
-            {
-
-                customRead();
-            }
-            case "-sg": //cancel case
-            {
-
-                customRead();
-            }
-            case "d": //cancel case
-            {
-
-                customRead();
-            }
-            case "sd": //cancel case
-            {
-
-                customRead();
-            }
-            case "s": //cancel case
-            {
-
-                customRead();
-            }
-        }
+        helpCommands(s,"");
         return s;
     }
 
@@ -79,53 +62,7 @@ public class CLI extends Observable<ClientController> implements View {
     {
         terminal.printRequest(message);
         String s = this.input.readLine();
-        switch (s) {
-            case "h":
-            {
-                terminal.printHelp();
-                customRead(message);
-            }
-            case "-h":
-            {
-                terminal.printHelp();
-                customRead(message);
-            }
-            case "help":
-            {
-
-                customRead(message);
-            }
-            case "-q": //quit case
-            {
-                //this.quit();
-                customRead(message);
-            }
-            case "-c": //cancel case
-            {
-
-                customRead(message);
-            }
-            case "-sg": //cancel case
-            {
-
-                customRead(message);
-            }
-            case "d": //cancel case
-            {
-
-                customRead(message);
-            }
-            case "sd": //cancel case
-            {
-
-                customRead(message);
-            }
-            case "s": //cancel case
-            {
-
-                customRead(message);
-            }
-        }
+        helpCommands(s,message);
         return s;
     }
 
@@ -246,17 +183,34 @@ public class CLI extends Observable<ClientController> implements View {
 
         boolean flag = true;
 
-        List<InsertionInstruction> insertions;
+        List<InsertionInstruction> insertions = new ArrayList<>();
         do
         {
             for(Resource res:resourceList)
             {
-                this.terminal.printSeparator();
-                this.terminal.printRequest("If you want to discard this resource type \"-d\" or \"-discard\"");
-                this.terminal.printRequest("If you want to keep it type the deposit number (1-3) for normale (4-5) to bonus");
-                this.terminal.printSeparator();
+                int pos =0;
+                do
+                {
+                    this.terminal.printSeparator();
+                    this.terminal.printResource(res);
+                    this.terminal.printRequest("If you want to discard this resource type \"-d\" or \"-discard\"");
+                    this.terminal.printRequest("If you want to keep it type the deposit number (1-3) for normale (4-5) to bonus");
+                    this.terminal.printSeparator();
 
+                    String in = this.customRead();
+                    try
+                    {
+                        pos = Integer.parseInt(in);
+                    }
+                    catch (Exception exception)
+                    {
+                        pos = -1;
+                    }
 
+                }while(input.validateInt(pos,1,5));
+
+                pos = pos-1;
+                insertions.add(new InsertionInstruction(res,pos));
             }
         }while(resourceList.isEmpty() && flag);
     }
@@ -275,16 +229,14 @@ public class CLI extends Observable<ClientController> implements View {
     public void askTurnType() {
 
         this.terminal.printTurnTypesHelp();
-        String cmd = this.input.readLine();
+        String cmd = customRead();
         turnTypeInterpreter(cmd);
     }
 
     @Override
     public void askCommand() {
         this.terminal.printHelp();
-        String cmd = this.input.readLine();
-
-        commandInterpreter(cmd);
+        String cmd = this.customRead();
     }
 
     @Override

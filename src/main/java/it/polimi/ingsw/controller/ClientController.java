@@ -128,7 +128,6 @@ public class ClientController implements Runnable{
 
     public void sendStartCommand()
     {
-
         this.sendMessage(new StartGame());
     }
 
@@ -213,18 +212,21 @@ public class ClientController implements Runnable{
     {
         String message = this.input.nextLine();
 
-        try
-        {
+        Thread t = new Thread(()->{
 
-            this.interpreter.analyzePacket(message);
-            this.respondToClient();
-            DebugMessages.printNetwork("Recived command:" + message);
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-            DebugMessages.printError("Not a json Message: "+ message);
-        }
+            try
+            {
+                this.interpreter.analyzePacket(message);
+                this.respondToClient();
+                DebugMessages.printNetwork("Recived command:" + message);
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+                DebugMessages.printError("Not a json Message: "+ message);
+            }
 
+        });
+        t.start();
     }
 
     /**

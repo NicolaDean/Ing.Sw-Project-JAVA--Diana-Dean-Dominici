@@ -10,18 +10,19 @@ public class InsertionInstruction {
     Resource resource;
     int position;
 
-    public  InsertionInstruction(boolean location,Resource resource,int position)
+    public  InsertionInstruction(Resource resource,int position)
     {
-        this.location       = location;
+        this.location       = true;
         this.resource       = resource;
         this.position       = position;
     }
-    public  InsertionInstruction(boolean location,Resource resource)
+    public  InsertionInstruction(Resource resource)
     {
-        this.location       = location;
+        this.location       = false;
         this.resource       = resource;
         this.position       = 0;
     }
+
     public Packet apply(ServerController controller, int player)
     {
         if(this.location)
