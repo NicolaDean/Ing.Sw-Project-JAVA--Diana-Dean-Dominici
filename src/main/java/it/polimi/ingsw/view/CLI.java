@@ -3,6 +3,7 @@ package it.polimi.ingsw.view;
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.packets.InsertionInstruction;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.utils.CliColors;
@@ -36,10 +37,9 @@ public class CLI extends Observable<ClientController> implements View {
                 //this.quit();
                 break;
             case "-c": //cancel case
-
                 break;
             case "-sg": //cancel case
-                this.notifyObserver(controller -> {controller.sendStartCommand();});
+                this.notifyObserver(ClientController::sendStartCommand);
                 break;
             case "d": //cancel case
                 break;
@@ -181,38 +181,49 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void askResourceInsertion(List<Resource> resourceList) {
 
-        boolean flag = true;
+        //resourceList = (ResourceList) resourceList;
+        boolean flag = false;
 
         List<InsertionInstruction> insertions = new ArrayList<>();
         do
         {
+            List<Resource> removed = new ResourceList();
             for(Resource res:resourceList)
             {
                 int pos =0;
-                do
+                if(res.getQuantity()!= 0)
                 {
-                    this.terminal.printSeparator();
-                    this.terminal.printResource(res);
-                    this.terminal.printRequest("If you want to discard this resource type \"-d\" or \"-discard\"");
-                    this.terminal.printRequest("If you want to keep it type the deposit number (1-3) for normale (4-5) to bonus");
-                    this.terminal.printSeparator();
-
-                    String in = this.customRead();
-                    try
+                    do
                     {
-                        pos = Integer.parseInt(in);
-                    }
-                    catch (Exception exception)
-                    {
-                        pos = -1;
-                    }
+                        this.terminal.printSeparator();
+                        this.terminal.printResource(res);
+                        this.terminal.printRequest("If you want to discard this resource type \"-d\" or \"-discard\"");
+                        this.terminal.printRequest("If you want to keep it type the deposit number (1-3) for normale (4-5) to bonus");
+                        this.terminal.printSeparator();
 
-                }while(input.validateInt(pos,1,5));
+                        String in = this.customRead();
+                        try
+                        {
+                            pos = Integer.parseInt(in);
+                        }
+                        catch (Exception exception)
+                        {
+                            this.terminal.printWarning("Not an integer");
+                            pos = -1;
+                        }
+
+                        if(input.validateInt(pos,1,5)) this.terminal.printWarning("Pos not valid");
+
+                    }while(!input.validateInt(pos,1,5));
+                }
 
                 pos = pos-1;
                 insertions.add(new InsertionInstruction(res,pos));
+                removed.add(res);
             }
+            resourceList.removeAll(removed);
         }while(resourceList.isEmpty() && flag);
+        System.out.println("OOOYT");
     }
 
     @Override
