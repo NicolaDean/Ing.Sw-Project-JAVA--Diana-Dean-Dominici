@@ -169,16 +169,71 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askMarketExtraction() {
-        this.notifyObserver(controller -> {
-            controller.sendMarketExtraction(false, 1);
-        });
+
+        String msg = "Insert \"col\" or \"row\" to select the extraction mode";
+        boolean direction = false;
+        String in = "";
+        int max = 0;
+        boolean cond = true;
+        do {
+            in = this.customRead(msg);
+
+            if(in.equals("col"))
+            {
+                direction = false;
+                max = ConstantValues.marketCol;
+                cond = false;
+            }else if( in.equals("row"))
+            {
+                direction = true;
+                max = ConstantValues.marketRow;
+                cond = false;
+            }
+            else
+            {
+                this.terminal.printWarning("Wrong command");
+                this.terminal.printRequest(msg);
+            }
+        }while(cond);
+
+        msg = "Insert the row/col to extract";
+        //this.terminal.printRequest(msg);
+        int num = askInt(msg,"wrong market row/col number",1,max);
+
+
+        boolean finalDirection = direction;
+        this.notifyObserver(controller -> {controller.sendMarketExtraction(finalDirection,num);});
     }
 
+    public int askInt(String msg,String error,int min,int max)
+    {
+        int num =0;
+        boolean cond = true;
+        do{
+            String in = this.customRead(msg);
+            try
+            {
+                num = Integer.parseInt(in);
+            }
+            catch (Exception e)
+            {
+                this.terminal.printError("Not an integer");
+            }
+            cond = !input.validateInt(num,min,max);
+
+            if(cond) this.terminal.printWarning(error);
+        }while(cond );
+
+        return num;
+    }
     @Override
     public void askDiscardResource(List<Resource> resourceList) {
-
     }
 
+    /**
+     * Ask user in which deposit he want to insert recived resources
+     * @param resourceList ask user where to put recived resources (eventualy call discard resources)
+     */
     @Override
     public void askResourceInsertion(List<Resource> resourceList) {
 
@@ -191,34 +246,63 @@ public class CLI extends Observable<ClientController> implements View {
             List<Resource> removed = new ResourceList();
             for(Resource res:resourceList)
             {
-                int pos =0;
+                int pos = 0;
+                int qty = 0;
+                boolean discarded = false;
                 if(res.getQuantity()!= 0)
                 {
                     do
                     {
                         this.terminal.printSeparator();
                         this.terminal.printResource(res);
-                        this.terminal.printRequest("If you want to discard this resource type \"-d\" or \"-discard\"");
+                        this.terminal.printRequest("If you want to discard this resource type \"d\" or \"discard\"");
                         this.terminal.printRequest("If you want to keep it type the deposit number (1-3) for normale (4-5) to bonus");
                         this.terminal.printSeparator();
 
                         String in = this.customRead();
-                        try
+                        if(in.equals("discard"))
                         {
-                            pos = Integer.parseInt(in);
+                            String msg = "How much of this resources you want to discard";
+                            qty = askInt(msg,"thers not that much quantity",1,res.getQuantity());
+                            Resource tmp = new Resource(res.getType(),qty);
+                            removed.add(tmp);
+                            //this.notifyObserver(controller->{controller.discardResources(qty)})
+                            discarded = true;
                         }
-                        catch (Exception exception)
+                        else
                         {
-                            this.terminal.printWarning("Not an integer");
-                            pos = -1;
+                            try
+                            {
+                                pos = Integer.parseInt(in);
+                            }
+                            catch (Exception exception)
+                            {
+                                this.terminal.printWarning("Not an integer");
+                                pos = -1;
+                            }
+                            if(!input.validateInt(pos,1,5)) this.terminal.printWarning("Pos not valid");
                         }
 
-                        if(!input.validateInt(pos,1,5)) this.terminal.printWarning("Pos not valid");
+                    }while((!input.validateInt(pos,1,5)) && !discarded);
 
-                    }while(!input.validateInt(pos,1,5));
-                    pos = pos-1;
-                    insertions.add(new InsertionInstruction(res,pos));
-                    removed.add(res);
+                    if(!discarded)
+                    {
+                        if(res.getQuantity()>1)
+                        {
+                            String msg = "How much of this resources you want to insert in this deposit";
+                            qty = askInt(msg,"thers not that much quantity",1,res.getQuantity());
+                            Resource tmp = new Resource(res.getType(),qty);
+                            removed.remove(tmp);
+                        }
+                        else
+                        {
+                            removed.add(res);
+                        }
+
+                        pos = pos-1;
+                        insertions.add(new InsertionInstruction(res,pos));
+                    }
+
                 }
             }
             resourceList.removeAll(removed);
@@ -291,34 +375,5 @@ public class CLI extends Observable<ClientController> implements View {
                 break;
         }
     }
-    public void commandInterpreter(String cmd)
-    {
-
-        switch (cmd)
-        {
-            case "q":
-                break;
-            case "cancel":
-            case "0":
-                //Do nothing
-                break;
-            case "1":
-                this.notifyObserver(ClientController::sendStartCommand);
-                break;
-            case "2":
-                //Show dashboard
-                this.notifyObserver(controller -> {controller.sendMarketExtraction(false,1);});
-                break;
-            case "3":
-                //SwapDeposit
-                break;
-            case "4":
-                //SpyPlayer
-                break;
-            default:
-                break;
-        }
-    }
-
 
 }
