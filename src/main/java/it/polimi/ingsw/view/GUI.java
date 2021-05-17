@@ -2,6 +2,7 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.model.MiniModel;
+import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.observer.Observable;
 
@@ -9,10 +10,6 @@ import java.util.List;
 
 public class GUI extends Observable<ClientController> implements View{
 
-    @Override
-    public void setMiniModel(MiniModel model) {
-
-    }
 
     @Override
     public void printWelcomeScreen() {
@@ -20,7 +17,22 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
-    public void showMarket(MiniModel m){
+    public BasicBall[][] getMiniMarketBalls() {
+        return new BasicBall[0][];
+    }
+
+    @Override
+    public BasicBall getMiniMarketDiscardedResouce() {
+        return null;
+    }
+
+    @Override
+    public void showMarket(){
+
+    }
+
+    @Override
+    public void setMarket(BasicBall[][] balls, BasicBall discarted) {
 
     }
 

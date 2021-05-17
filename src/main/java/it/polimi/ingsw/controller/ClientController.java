@@ -43,12 +43,27 @@ public class ClientController implements Runnable{
         else view = new GUI();//GUI()
 
         this.view.setObserver(this);
-        this.view.setMiniModel(model);
+
         this.interpreter= new JsonInterpreterClient(this);
         this.errorManager = new ErrorManager();
         this.resolver = new AckExample();
+        model= new MiniModel(); //provvisiorio
 
-        this.model = new MiniModel();
+    }
+
+    /**
+     * set all initial information into miniMarted
+     * @param miniModel miniModel
+     * @param balls miniMarketBall
+     * @param discarted miniBallDiscarted
+     */
+    public void setInformation(MiniModel miniModel,BasicBall[][] balls, BasicBall discarted){
+        view.setMarket(balls,discarted);
+        this.model = miniModel;
+    }
+
+    public View getView() {
+        return view;
     }
 
     public void setAckManagmentAction(Consumer <View> action)
@@ -201,13 +216,6 @@ public class ClientController implements Runnable{
             sendMessage(new Login(nickname));
     }
 
-    /**
-     * set all initial information into miniMarted
-     * @param mm mini model
-     */
-    public void setMiniModel(MiniModel mm){
-        model=mm;
-    }
 
     /**
      * send packet to server

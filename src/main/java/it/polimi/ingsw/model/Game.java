@@ -44,9 +44,8 @@ public class Game {
     }
 
     public MiniModel getMiniModel(){
-        MiniModel miniModel= new MiniModel();
-        miniModel.setMarket(market.getResouces(),market.getDiscardedResouce());
-        return miniModel;
+        //TODO estrazione mini model dal game
+        return (new MiniModel());
     }
 
     public ProductionCard drawProductionCard(int x, int y)

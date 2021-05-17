@@ -6,6 +6,7 @@ import it.polimi.ingsw.controller.packets.ExtractionInstruction;
 import it.polimi.ingsw.controller.packets.InsertionInstruction;
 import it.polimi.ingsw.model.MiniModel;
 import it.polimi.ingsw.model.market.Market;
+import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.utils.ConstantValues;
@@ -20,6 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static it.polimi.ingsw.utils.ConstantValues.marketCol;
+import static it.polimi.ingsw.utils.ConstantValues.marketRow;
+
 public class CLI extends Observable<ClientController> implements View {
 
     Logger                  terminal; //print formatted and colored text on the cli
@@ -27,18 +31,29 @@ public class CLI extends Observable<ClientController> implements View {
     Thread                  helpThread;
     boolean                 waiting;
     int                     lastTurn;
-    MiniModel               model;
+    private BasicBall[][]   miniMarketBalls;
+    private BasicBall       miniMarketDiscardedResouce;
 
     public CLI()
     {
+        miniMarketBalls=new BasicBall[marketRow][marketCol];
         lastTurn = -1;
         waiting = true;
         input = new InputReaderValidation();
         terminal = new Logger();
     }
 
-    public void setMiniModel(MiniModel model) {
-        this.model = model;
+    public void setMarket(BasicBall[][] balls, BasicBall discarted){
+        miniMarketBalls=balls;
+        miniMarketDiscardedResouce=discarted;
+    }
+
+    public BasicBall[][] getMiniMarketBalls() {
+        return miniMarketBalls;
+    }
+
+    public BasicBall getMiniMarketDiscardedResouce() {
+        return miniMarketDiscardedResouce;
     }
 
     public boolean helpCommands(String cmd, String message)
@@ -213,7 +228,7 @@ public class CLI extends Observable<ClientController> implements View {
         String in = "";
         int max = 0;
         boolean cond = true;
-        //TODO showMarket(model);
+        showMarket();
         do {
             in = this.customRead(msg);
 
@@ -270,11 +285,11 @@ public class CLI extends Observable<ClientController> implements View {
 
     /**
      * show mini market
-     * @param m mini model
+     *
      */
     @Override
-    public void showMarket(MiniModel m){
-        terminal.printMarket(m);
+    public void showMarket(){
+        terminal.printMarket(this);
     }
 
 
