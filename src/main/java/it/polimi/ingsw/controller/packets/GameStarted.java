@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller.packets;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.model.MiniModel;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 
@@ -9,21 +10,11 @@ import static it.polimi.ingsw.utils.ConstantValues.marketRow;
 
 public class GameStarted extends Packet<ClientController> implements PacketManager<ClientController>{
 
-    private BasicBall[][] miniMarketBalls;
-    private BasicBall miniDiscardedResouce;
+    MiniModel miniModel;
 
-    public GameStarted(Market m) {
+    public GameStarted(MiniModel miniModel) {
         super("GameStarted");
-        miniMarketBalls=exactMiniMarket(m);
-        miniDiscardedResouce=m.getDiscardedResouce();
-    }
-
-    public BasicBall[][] getMiniMarketBalls() {
-        return miniMarketBalls;
-    }
-
-    public BasicBall getMiniDiscardedResouce() {
-        return miniDiscardedResouce;
+        this.miniModel=miniModel;
     }
 
     /**
@@ -38,7 +29,7 @@ public class GameStarted extends Packet<ClientController> implements PacketManag
     @Override
     public Packet analyze(ClientController controller)
     {
-        controller.setMiniModel(miniMarketBalls,miniDiscardedResouce);
+        controller.setMiniModel(miniModel); //da modificare quando servirà la modifica
         controller.printGameStarted();
         controller.abortHelp();
         return null;

@@ -43,8 +43,11 @@ public class Game {
         this.currentPapalSpaceToReach = 0;
     }
 
-
-
+    public MiniModel getMiniModel(){
+        MiniModel miniModel= new MiniModel();
+        miniModel.setMarket(market.getResouces(),market.getDiscardedResouce());
+        return miniModel;
+    }
 
     public ProductionCard drawProductionCard(int x, int y)
     {

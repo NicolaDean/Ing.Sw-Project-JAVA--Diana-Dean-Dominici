@@ -203,11 +203,10 @@ public class ClientController implements Runnable{
 
     /**
      * set all initial information into miniMarted
-     * @param balls
-     * @param discarted
+     * @param mm mini model
      */
-    public void setMiniModel(BasicBall[][] balls,BasicBall discarted){
-        model.setMarket(balls,discarted);
+    public void setMiniModel(MiniModel mm){
+        model=mm;
     }
 
     /**

@@ -173,7 +173,7 @@ public class ServerController{
                 int firstPlayer = this.game.getRealPlayerHandlerIndex();
 
                 //Send broadcast with game started packet
-                this.broadcastMessage(-1, new GameStarted(game.getMarket()));
+                this.broadcastMessage(-1, new GameStarted(game.getMiniModel()));
 
                 //notify first player the is its turn
                 this.clients.get(firstPlayer).sendToClient(new TurnNotify());
