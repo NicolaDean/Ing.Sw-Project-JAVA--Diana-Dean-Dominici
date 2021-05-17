@@ -174,7 +174,7 @@ public class ServerController{
                 int firstPlayer = this.game.getRealPlayerHandlerIndex();
 
                 //Send broadcast with game started packet
-                this.broadcastMessage(-1, new GameStarted(game.getMiniModel()));
+                this.broadcastMessage(-1, new GameStarted(game.getMiniModel(),game.getMarket().getResouces(),game.getMarket().getDiscardedResouce()));
 
                 //notify first player the is its turn
                 this.clients.get(firstPlayer).sendToClient(new TurnNotify());
@@ -458,7 +458,7 @@ public class ServerController{
     public void sendStorageUpdate()
     {
         Deposit[] tmp = this.game.getCurrentPlayer().getDashboard().getStorage().getDeposits();
-        this.sendMessage(new StorageUpdate(tmp),this.game.getRealPlayerHandlerIndex());
+        this.sendMessage(new StorageUpdate(tmp),this.currentClient);
     }
     /**
      * if end condition are true send to all a "last Turn" packet
