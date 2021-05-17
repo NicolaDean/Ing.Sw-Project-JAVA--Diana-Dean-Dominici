@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.packets.EndTurn;
 import it.polimi.ingsw.controller.packets.ExtractionInstruction;
 import it.polimi.ingsw.controller.packets.InsertionInstruction;
+import it.polimi.ingsw.model.MiniModel;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
@@ -26,6 +27,7 @@ public class CLI extends Observable<ClientController> implements View {
     Thread                  helpThread;
     boolean                 waiting;
     int                     lastTurn;
+    MiniModel               model;
 
     public CLI()
     {
@@ -35,7 +37,11 @@ public class CLI extends Observable<ClientController> implements View {
         terminal = new Logger();
     }
 
-    public boolean helpCommands(String cmd,String message)
+    public void setMiniModel(MiniModel model) {
+        this.model = model;
+    }
+
+    public boolean helpCommands(String cmd, String message)
     {
         cmd = cmd.toLowerCase();
         switch (cmd) {
@@ -200,6 +206,7 @@ public class CLI extends Observable<ClientController> implements View {
         String in = "";
         int max = 0;
         boolean cond = true;
+        showMarket(model);
         do {
             in = this.customRead(msg);
 
@@ -254,7 +261,14 @@ public class CLI extends Observable<ClientController> implements View {
         return num;
     }
 
-    //TODO da fare il metodo showMarket(MiniModel) che chiama quello del logger
+    /**
+     * show mini market
+     * @param m mini model
+     */
+    @Override
+    public void showMarket(MiniModel m){
+        terminal.printMarket(m);
+    }
 
 
     @Override

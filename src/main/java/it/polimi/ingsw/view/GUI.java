@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.model.MiniModel;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.observer.Observable;
 
@@ -9,7 +10,17 @@ import java.util.List;
 public class GUI extends Observable<ClientController> implements View{
 
     @Override
+    public void setMiniModel(MiniModel model) {
+
+    }
+
+    @Override
     public void printWelcomeScreen() {
+
+    }
+
+    @Override
+    public void showMarket(MiniModel m){
 
     }
 

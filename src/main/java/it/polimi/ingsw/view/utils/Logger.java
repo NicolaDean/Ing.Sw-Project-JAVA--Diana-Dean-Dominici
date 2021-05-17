@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.utils;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.model.MiniModel;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.ConstantValues;
@@ -40,13 +41,17 @@ public class Logger {
         out.printlnColored(content,CliColors.RED_TEXT,this.istructionBackground);
     }
 
-    public void printMarket(Market m){//TODO da aggiustare per avere come parametro un minimodel
+    /**
+     * print mini market
+     * @param m mini model
+     */
+    public void printMarket(MiniModel m){
 
         System.out.println("Market:");
         for (int i = 0; i < marketRow; i++) {
             for(int j = 0; j < marketCol; j++){
                 try {
-                    out.printColored(" ◍ ",CliColors.R_WHITE_BACKGROUND,m.getResouces()[i][j].getCliColor());
+                    out.printColored(" ◍ ",CliColors.R_WHITE_BACKGROUND,m.getMiniMarketBalls()[i][j].getCliColor());
                     if(j==3)
                         System.out.print("← "+(i+1));
                 }catch (Exception e){
@@ -55,7 +60,7 @@ public class Logger {
             System.out.println("");
         }
         System.out.print(" ↑  ↑  ↑  ↑ \n 1  2  3  4\n");
-        out.printColored(" Discarded resource: ◍ ",CliColors.R_WHITE_BACKGROUND,m.getDiscardedResouce().getCliColor());
+        out.printColored(" Discarded resource: ◍ ",CliColors.R_WHITE_BACKGROUND,m.getMiniDiscardedResouce().getCliColor());
 
     }
 

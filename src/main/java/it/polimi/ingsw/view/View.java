@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.model.MiniModel;
 import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.List;
@@ -8,6 +9,12 @@ import java.util.List;
 public interface View {
 
     public void printWelcomeScreen();
+
+    /**
+     * show market's client
+     * @param m mini model
+     */
+    public void showMarket(MiniModel m);
 
     public void showError();
     /**
@@ -112,4 +119,10 @@ public interface View {
      * @param controller client controller
      */
     public void setObserver(ClientController controller);
+
+    /**
+     * set model's client
+     * @param model mini model
+     */
+    void setMiniModel(MiniModel model);
 }
