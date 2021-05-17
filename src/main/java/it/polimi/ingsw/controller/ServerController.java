@@ -470,9 +470,11 @@ public class ServerController{
             return null;
         }
 
-        currentClient ++;
 
-        if(currentClient>=this.clients.size()) currentClient = 0;
+
+        if(currentClient>=this.clients.size()-1) currentClient = 0;
+        else currentClient ++;
+
 
         clients.get(currentClient).sendToClient(new TurnNotify());
         return null;

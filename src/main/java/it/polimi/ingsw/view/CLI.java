@@ -355,9 +355,21 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askTurnType() {
-
+        boolean valid = false;
+        String cmd = null;
         this.terminal.printTurnTypesHelp();
-        String cmd = customRead();
+        while(!valid) {
+
+            cmd = customRead();
+            try{
+            valid = input.validateInt(Integer.parseInt(cmd), 1, 3);}
+            catch (Exception e)
+            {
+
+            }
+            if(!valid)
+                terminal.printWarning("you have to type a number between 1 and 3!");
+        }
         turnTypeInterpreter(cmd);
     }
 
