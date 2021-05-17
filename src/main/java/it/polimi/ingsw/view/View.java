@@ -2,6 +2,7 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.model.MiniModel;
+import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.resources.Resource;
 
@@ -13,9 +14,28 @@ public interface View {
 
     /**
      * show market's client
-     * @param m mini model
+     * @param
      */
-    public void showMarket(MiniModel m);
+    public void showMarket();
+
+    /**
+     * set mini market
+     * @param balls balls
+     * @param discarted ball discarted
+     */
+    public void setMarket(BasicBall[][] balls, BasicBall discarted);
+
+    /**
+     * getter for mini market
+     * @return balls
+     */
+    public BasicBall[][] getMiniMarketBalls();
+
+    /**
+     * getter for mini ball discarted
+     * @return
+     */
+    public BasicBall getMiniMarketDiscardedResouce();
 
     public void showError();
     /**
@@ -123,9 +143,5 @@ public interface View {
      */
     public void setObserver(ClientController controller);
 
-    /**
-     * set model's client
-     * @param model mini model
-     */
-    void setMiniModel(MiniModel model);
+
 }

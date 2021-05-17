@@ -13,13 +13,10 @@ import static it.polimi.ingsw.enumeration.ResourceType.ROCK;
 
 public class ResourceBall  extends BasicBall {
     ResourceType type;
-    String cliColors;
-    Color color;
 
     public ResourceBall(Color color, ResourceType type, String cliColors) {
         this.type = type;
-        this.cliColors = cliColors;
-        this.color=color;
+        this.setColor(color,colorCLI);
     }
 
     /**
@@ -31,15 +28,7 @@ public class ResourceBall  extends BasicBall {
         m.addResourceExtracted(type);
     }
 
-    public Color getColor(){
-        return color;
-    }
-
     public ResourceType getType(){return type;}
 
-    @Override
-    public String getCliColor() {
-        return cliColors;
-    }
 
 }

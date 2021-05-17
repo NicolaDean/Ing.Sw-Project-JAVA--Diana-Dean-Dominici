@@ -3,17 +3,31 @@ package it.polimi.ingsw.model.market.balls;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.market.Market;
+import it.polimi.ingsw.view.utils.CliColors;
 
 import java.awt.*;
 
-public abstract class BasicBall {
+public class BasicBall {
+    Color colorGUI;
+    String colorCLI;
 
+    public void setColor(Color  c,String s){
+        colorGUI=c;
+        colorCLI=s;
+    }
 
-    public abstract Color getColor();
+    public Color getColor(){
+        return colorGUI;
+    }
 
-    public abstract String getCliColor();
+    public String getCliColor(){
+        return colorCLI;
+    }
 
-    public abstract void active(Market market, Player p);
+    public void active(Market market, Player p){}
 
-    public abstract ResourceType getType();
+    public ResourceType getType(){
+        return null;
+    }
+
 }

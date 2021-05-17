@@ -6,8 +6,13 @@ import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.view.utils.CliColors;
 
 import java.awt.*;
+import java.beans.Transient;
 
 public class RedBall extends BasicBall{
+
+    public RedBall() {
+        setColor(Color.red,CliColors.RED_TEXT);
+    }
 
     /**
      *  se true extracted red ball
@@ -18,14 +23,6 @@ public class RedBall extends BasicBall{
         p.incrementPosition();
     }
 
-    /**
-     *
-     * @return type color
-     */
-    @Override
-    public Color getColor() {
-        return Color.red;
-    }
 
     /**
      *  throw exeption
@@ -36,8 +33,5 @@ public class RedBall extends BasicBall{
         throw new RuntimeException("White and red ball dont have resource type");
     }
 
-    @Override
-    public String getCliColor() {
-        return CliColors.RED_TEXT;
-    }
+
 }

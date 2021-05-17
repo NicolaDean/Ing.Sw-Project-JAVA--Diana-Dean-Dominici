@@ -17,22 +17,16 @@ public class MiniModel
 
     private ProductionCard [][] deks;
     private Deposit[]           storage;
+    private Market market;
 
     private ProductionCard[] playerCards;
-
-    private BasicBall[][] miniMarketBalls=new BasicBall[marketRow][marketCol];
-    private BasicBall miniDiscardedResouce;
-
-    public void setMarket(BasicBall[][] balls, BasicBall discarted){
-        miniMarketBalls=balls;
-        miniDiscardedResouce=discarted;
-        this.storage = new Deposit[0];
-    }
 
     public MiniModel()
     {
         this.nicknames = new String[ConstantValues.numberOfPlayer];
         this.positions = new int   [ConstantValues.numberOfPlayer];
+        this.storage=new Deposit[0];
+
     }
 
 
@@ -47,13 +41,6 @@ public class MiniModel
 
     }
 
-    public BasicBall[][] getMiniMarketBalls() {
-        return miniMarketBalls;
-    }
-
-    public BasicBall getMiniDiscardedResouce() {
-        return miniDiscardedResouce;
-    }
 
     public void updateStorage(Deposit[] deposits)
     {

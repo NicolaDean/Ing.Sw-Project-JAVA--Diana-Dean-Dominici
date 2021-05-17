@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.utils.DebugMessages;
 
 import java.util.List;
@@ -46,25 +47,25 @@ public class Logger {
 
     /**
      * print mini market
-     * @param m mini model
+     * @param view view
      */
-    public void printMarket(MiniModel m){
+    public void printMarket(View view){
 
         System.out.println("Market:");
         for (int i = 0; i < marketRow; i++) {
             for(int j = 0; j < marketCol; j++){
                 try {
-                    out.printColored(" ◍ ",CliColors.R_WHITE_BACKGROUND,m.getMiniMarketBalls()[i][j].getCliColor());
+                    out.printColored(" ● ",CliColors.R_WHITE_BACKGROUND,view.getMiniMarketBalls()[i][j].getCliColor());
                     if(j==3)
                         System.out.print("← "+(i+1));
                 }catch (Exception e){
+
                 }
             }
             System.out.println("");
         }
-        System.out.print(" ↑  ↑  ↑  ↑ \n 1  2  3  4\n");
-        out.printColored(" Discarded resource: ◍ ",CliColors.R_WHITE_BACKGROUND,m.getMiniDiscardedResouce().getCliColor());
-
+        System.out.print(" ↑  ↑  ↑  ↑ \n 1  2  3  4\nBall to insert:");
+        out.printColored(" ● ",CliColors.R_WHITE_BACKGROUND,view.getMiniMarketDiscardedResouce().getCliColor());
     }
 
     public void spacer(int space)
@@ -268,14 +269,16 @@ public class Logger {
     {
         this.out.clear();
         this.printSeparator();
-        this.printRequest("Choose one of the following Turn type");
-        this.printRequest("If you want to cancel the turn you can by typing -exit (only if you havent done any action)");
+        this.printRequest("Choose what kind of turn you want to perform ");
+        this.printRequest("If you want to cancel the turn you can by typing \"-exit\" (only if you havent done any action)");
         this.printSeparator();
         this.out.println(" default = 1");
         this.out.println(" 1 - Buy a Card");
         this.out.println(" 2 - Extract from market");
         this.out.println(" 3 - Activate a production");
         this.printSeparator();
+        //System.out.println("sto tornando!");
+        return;
     }
 
     public void printResource(Resource res)
