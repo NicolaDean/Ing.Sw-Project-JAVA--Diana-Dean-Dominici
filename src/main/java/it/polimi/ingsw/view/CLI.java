@@ -286,7 +286,7 @@ public class CLI extends Observable<ClientController> implements View {
                     {
                         this.terminal.printSeparator();
                         this.terminal.printResource(res);
-                        this.terminal.printRequest("If you want to discard this resource type \"d\" or \"discard\"");
+                        this.terminal.printRequest("If you want to discard this resource type \"discard\"");
                         this.terminal.printRequest("If you want to keep it type the deposit number (1-3) for normale (4-5) to bonus");
                         this.terminal.printSeparator();
 
