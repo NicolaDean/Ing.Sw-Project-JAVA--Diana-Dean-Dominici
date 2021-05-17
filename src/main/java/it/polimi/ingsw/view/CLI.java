@@ -455,9 +455,9 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void askEndTurn() {
         terminal.printGoodMessages("Your last action has been sucesfuly completed");
-        terminal.printRequest("Do you want to end turn? (yes or no)");
+        //terminal.printRequest("Do you want to end turn? (yes or no)");
 
-        String in = this.customRead("Do you want to end turn?");
+        String in = this.customRead("Do you want to end turn? (yes or no)");
         in = in.toLowerCase(Locale.ROOT);
         if(in.equals("yes") || in.equals("y")) {
             this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
