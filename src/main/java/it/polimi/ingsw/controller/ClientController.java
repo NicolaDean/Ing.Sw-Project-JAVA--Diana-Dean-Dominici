@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
 import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.controller.pingManager.PongController;
 import it.polimi.ingsw.model.MiniModel;
+import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.GUI;
@@ -217,6 +218,15 @@ public class ClientController implements Runnable{
     }
 
 
+    public void storageUpdate(Deposit[] deposits)
+    {
+        this.model.updateStorage(deposits);
+    }
+
+    public void showStorage()
+    {
+        this.view.showStorage(this.model.getStorage());
+    }
     /**
      * send packet to server
      * @param p

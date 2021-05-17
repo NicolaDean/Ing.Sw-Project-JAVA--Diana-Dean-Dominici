@@ -5,23 +5,14 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.market.Market;
 
 import java.awt.*;
-import java.beans.Transient;
 
-public class BasicBall {
+public abstract class BasicBall {
 
-    Color colorGUI;
-    String colorCLI;
+    public abstract Color getColor();
 
-    public void setColor(Color colorGUI,String colorCLI) {
-        this.colorGUI = colorGUI;
-        this.colorCLI = colorCLI;
-    }
+    public abstract String getCliColor();
 
-    public Color getColor(){return this.colorGUI;}
+    public abstract void active(Market market, Player p);
 
-    public String getCliColor(){return this.colorCLI;}
-
-    public void active(Market market, Player p){}
-
-    public ResourceType getType(){return null;}
+    public abstract ResourceType getType();
 }

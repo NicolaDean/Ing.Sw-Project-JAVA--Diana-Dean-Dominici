@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.dashboard.Storage;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.market.balls.BasicBall;
@@ -15,7 +16,7 @@ public class MiniModel
     private int[]    positions;
 
     private ProductionCard [][] deks;
-    private Storage storage;
+    private Deposit[]           storage;
     private Market market;
 
     private ProductionCard[] playerCards;
@@ -24,6 +25,8 @@ public class MiniModel
     {
         this.nicknames = new String[ConstantValues.numberOfPlayer];
         this.positions = new int   [ConstantValues.numberOfPlayer];
+        this.storage=new Deposit[0];
+
     }
 
 
@@ -38,5 +41,15 @@ public class MiniModel
 
     }
 
+
+    public void updateStorage(Deposit[] deposits)
+    {
+        this.storage = deposits;
+    }
+
+    public Deposit[] getStorage()
+    {
+        return this.storage;
+    }
 
 }

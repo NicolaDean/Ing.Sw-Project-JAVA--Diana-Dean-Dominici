@@ -5,10 +5,12 @@ import it.polimi.ingsw.controller.packets.EndTurn;
 import it.polimi.ingsw.controller.packets.ExtractionInstruction;
 import it.polimi.ingsw.controller.packets.InsertionInstruction;
 import it.polimi.ingsw.model.MiniModel;
+import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.model.resources.ResourceOperator;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.observer.Observable;
@@ -16,13 +18,16 @@ import it.polimi.ingsw.view.utils.CliColors;
 import it.polimi.ingsw.view.utils.InputReaderValidation;
 import it.polimi.ingsw.view.utils.Logger;
 
+
+import static it.polimi.ingsw.model.resources.ResourceOperator.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static it.polimi.ingsw.utils.ConstantValues.marketCol;
-import static it.polimi.ingsw.utils.ConstantValues.marketRow;
+import static sun.util.locale.LocaleUtils.isEmpty;
+
 
 public class CLI extends Observable<ClientController> implements View {
 
@@ -36,7 +41,6 @@ public class CLI extends Observable<ClientController> implements View {
 
     public CLI()
     {
-        miniMarketBalls=new BasicBall[marketRow][marketCol];
         lastTurn = -1;
         waiting = true;
         input = new InputReaderValidation();
@@ -144,11 +148,12 @@ public class CLI extends Observable<ClientController> implements View {
 
         terminal.printRequest("Type here your nickname:");
 
-        String nickname = ".";
+        String nickname = "";
         do {
-            nickname = input.readLine(3);
-            if(nickname.length() == 0) terminal.printWarning("Nickname too short, minimum 3 letters");
-        }while(nickname.length() == 0);
+            nickname = input.readLine();
+            //System.out.println("length: "+nickname.length());
+            if(nickname.length() < 3) terminal.printWarning("Nickname too short, minimum 3 letters");
+        }while(nickname.length() < 3 );
 
 
         String validNickname = nickname;
@@ -305,11 +310,15 @@ public class CLI extends Observable<ClientController> implements View {
     public void askResourceInsertion(List<Resource> resourceList) {
 
         //resourceList = (ResourceList) resourceList;
+        this.notifyObserver(ClientController::showStorage);
+
+        List<Resource> x = new ResourceList();
         boolean flag = false;
 
         List<InsertionInstruction> insertions = new ArrayList<>();
         do
         {
+
             List<Resource> removed = new ResourceList();
             for(Resource res:resourceList)
             {
@@ -354,27 +363,28 @@ public class CLI extends Observable<ClientController> implements View {
 
                     if(!discarded)
                     {
+                        pos = pos-1;
                         if(res.getQuantity()>1)
                         {
                             String msg = "How much of this resources you want to insert in this deposit";
                             qty = askInt(msg,"thers not that much quantity",1,res.getQuantity());
                             Resource tmp = new Resource(res.getType(),qty);
-                            removed.remove(tmp);
+                            insertions.add(new InsertionInstruction(tmp,pos));
+                            removed.add(tmp);
                         }
                         else
                         {
                             removed.add(res);
+                            insertions.add(new InsertionInstruction(res,pos));
                         }
 
-                        pos = pos-1;
-                        insertions.add(new InsertionInstruction(res,pos));
                     }
 
                 }
             }
-            resourceList.removeAll(removed);
-        }while(resourceList.isEmpty() && flag);
-       //
+            resourceList = listSubtraction(resourceList,removed);
+
+        }while(!isEmpty(resourceList));
 
         this.notifyObserver(controller -> {controller.sendResourceInsertion(insertions);});
     }
@@ -420,17 +430,17 @@ public class CLI extends Observable<ClientController> implements View {
                 {
                     Thread.sleep(100);
                 }
-                System.out.println("TREAD VIVO ");
+                //System.out.println("TREAD VIVO ");
 
                 this.helpCommands(this.input.readLine(),"");
 
             }
         }catch (InterruptedException | IOException e)
         {
-            DebugMessages.printError("OPSS");
+            //DebugMessages.printError("OPSS");
         }
 
-        DebugMessages.printError("Waiting thread help aborted");
+        //DebugMessages.printError("Waiting thread help aborted");
     }
     @Override
     public void askCommand() {
@@ -464,6 +474,11 @@ public class CLI extends Observable<ClientController> implements View {
         //this.askWhiteBalls();
         this.askResourceInsertion(resourceList);
 
+    }
+
+    @Override
+    public void showStorage(Deposit[] deposits) {
+        this.terminal.printStorage(deposits);
     }
 
     @Override
@@ -502,6 +517,7 @@ public class CLI extends Observable<ClientController> implements View {
     public void waitturn(){
         terminal.printSeparator();
         terminal.printGoodMessages("sto aspettando il mio turno");
+        terminal.printSeparator();
         waiting = true;
         helpThread = new Thread(this::waitingHelpLoop);
         helpThread.start();
