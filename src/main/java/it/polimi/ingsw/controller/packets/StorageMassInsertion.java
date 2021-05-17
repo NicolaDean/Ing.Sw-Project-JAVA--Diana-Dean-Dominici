@@ -52,6 +52,7 @@ public class StorageMassInsertion extends Packet<ServerController> implements Pa
         else
         {
             controller.sendMessage(new ACK(0),this.getPlayerIndex());
+            controller.sendStorageUpdate();
             return new OperationCompleted();
         }
 

@@ -286,5 +286,12 @@ public class Storage {
             storage[i].setNewDeposit(type, 0);
 
         }
+
+    public Deposit[] getDeposits()
+    {
+        return this.storage;
     }
+
+}
+
 

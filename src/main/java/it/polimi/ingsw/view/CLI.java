@@ -5,6 +5,7 @@ import it.polimi.ingsw.controller.packets.EndTurn;
 import it.polimi.ingsw.controller.packets.ExtractionInstruction;
 import it.polimi.ingsw.controller.packets.InsertionInstruction;
 import it.polimi.ingsw.model.MiniModel;
+import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
@@ -19,6 +20,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static it.polimi.ingsw.model.resources.ResourceOperator.isEmpty;
+import static it.polimi.ingsw.model.resources.ResourceOperator.listSubtraction;
 
 public class CLI extends Observable<ClientController> implements View {
 
@@ -291,11 +295,15 @@ public class CLI extends Observable<ClientController> implements View {
     public void askResourceInsertion(List<Resource> resourceList) {
 
         //resourceList = (ResourceList) resourceList;
+        this.notifyObserver(ClientController::showStorage);
+
+        List<Resource> x = new ResourceList();
         boolean flag = false;
 
         List<InsertionInstruction> insertions = new ArrayList<>();
         do
         {
+
             List<Resource> removed = new ResourceList();
             for(Resource res:resourceList)
             {
@@ -340,27 +348,28 @@ public class CLI extends Observable<ClientController> implements View {
 
                     if(!discarded)
                     {
+                        pos = pos-1;
                         if(res.getQuantity()>1)
                         {
                             String msg = "How much of this resources you want to insert in this deposit";
                             qty = askInt(msg,"thers not that much quantity",1,res.getQuantity());
                             Resource tmp = new Resource(res.getType(),qty);
-                            removed.remove(tmp);
+                            insertions.add(new InsertionInstruction(tmp,pos));
+                            removed.add(tmp);
                         }
                         else
                         {
                             removed.add(res);
+                            insertions.add(new InsertionInstruction(res,pos));
                         }
 
-                        pos = pos-1;
-                        insertions.add(new InsertionInstruction(res,pos));
                     }
 
                 }
             }
-            resourceList.removeAll(removed);
-        }while(resourceList.isEmpty() && flag);
-       //
+            resourceList = listSubtraction(resourceList,removed);
+
+        }while(!isEmpty(resourceList));
 
         this.notifyObserver(controller -> {controller.sendResourceInsertion(insertions);});
     }
@@ -450,6 +459,11 @@ public class CLI extends Observable<ClientController> implements View {
         //this.askWhiteBalls();
         this.askResourceInsertion(resourceList);
 
+    }
+
+    @Override
+    public void showStorage(Deposit[] deposits) {
+        this.terminal.printStorage(deposits);
     }
 
     @Override

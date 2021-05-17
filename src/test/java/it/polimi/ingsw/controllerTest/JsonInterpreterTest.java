@@ -7,14 +7,13 @@ import it.polimi.ingsw.controller.packets.MarketResult;
 import it.polimi.ingsw.controller.packets.PendingCost;
 import it.polimi.ingsw.controller.packets.UpdatePosition;
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.MiniModel;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import org.junit.jupiter.api.Test;
-
+import it.polimi.ingsw.model.MiniModel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -163,7 +162,6 @@ public class JsonInterpreterTest {
         System.out.println( new StartGame().generateJson());
     }
 
-    //TODO il market restituisce solo 2 risorse, chiedere a riki (probabilmente il mischiaggio non avviene in maniera molto casuale)
     public void marketTest()
     {
         System.out.println("----------------------------------");
@@ -203,8 +201,8 @@ public class JsonInterpreterTest {
         System.out.println("----------------------------------");
         MiniModel mm=new MiniModel();
         Market m=new Market();
-        mm.setMarket(m.getResouces(),m.getDiscardedResouce());
-        System.out.println( new GameStarted(mm).generateJson());
+       // mm.setMarket(m.getResouces(),m.getDiscardedResouce());
+        ///System.out.println( new GameStarted(mm).generateJson());
 
 
     }

@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.model.MiniModel;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.market.balls.BasicBall;
+import it.polimi.ingsw.model.market.balls.WhiteBall;
 
 import static it.polimi.ingsw.utils.ConstantValues.marketCol;
 import static it.polimi.ingsw.utils.ConstantValues.marketRow;
