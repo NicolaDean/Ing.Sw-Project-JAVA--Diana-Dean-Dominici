@@ -10,11 +10,11 @@ import static it.polimi.ingsw.utils.ConstantValues.marketRow;
 
 public class GameStarted extends Packet<ClientController> implements PacketManager<ClientController>{
 
-    MiniModel miniModel;
+    //MiniModel miniModel;
 
     public GameStarted(MiniModel miniModel) {
         super("GameStarted");
-        this.miniModel=miniModel;
+        //this.miniModel=miniModel;
     }
 
     /**
@@ -29,7 +29,7 @@ public class GameStarted extends Packet<ClientController> implements PacketManag
     @Override
     public Packet analyze(ClientController controller)
     {
-        controller.setMiniModel(miniModel); //da modificare quando servirà la modifica
+        //controller.setMiniModel(miniModel);
         controller.printGameStarted();
         //controller.abortHelp();
         return null;

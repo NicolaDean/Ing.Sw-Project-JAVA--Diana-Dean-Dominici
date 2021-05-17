@@ -213,7 +213,7 @@ public class CLI extends Observable<ClientController> implements View {
         String in = "";
         int max = 0;
         boolean cond = true;
-        //showMarket(model);
+        //TODO showMarket(model);
         do {
             in = this.customRead(msg);
 
