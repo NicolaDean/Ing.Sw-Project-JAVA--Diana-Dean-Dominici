@@ -181,7 +181,7 @@ public class ServerController{
                 this.warning("Game already started");
                 //return null;
             }
-            DebugMessages.printGeneric("\n new currplayer: "+ currentClient + ", total players: "+this.clients.size()+"\n");
+            //DebugMessages.printGeneric("\n new currplayer: "+ currentClient + ", total players: "+this.clients.size()+"\n");
 
             this.lock.notify();
         }
@@ -475,7 +475,7 @@ public class ServerController{
 
         currentClient=this.game.getRealPlayerHandlerIndex();
 
-        DebugMessages.printGeneric("\n new currplayer: "+ currentClient + ", total players: "+this.clients.size()+"\n");
+        //DebugMessages.printGeneric("\n new currplayer: "+ currentClient + ", total players: "+this.clients.size()+"\n");
 
 
         clients.get(currentClient).sendToClient(new TurnNotify());

@@ -83,6 +83,13 @@ public class CLI extends Observable<ClientController> implements View {
         return s;
     }
 
+    public String waitRead()
+    {
+        String s = this.input.readLine();
+        helpCommands(s,"");
+        waitRead();
+        return s;
+    }
 
     public String customRead(String message)
     {
@@ -437,7 +444,11 @@ public class CLI extends Observable<ClientController> implements View {
 
         String in = this.customRead("Do you want to end turn?");
         in = in.toLowerCase(Locale.ROOT);
-        if(in.equals("yes") || in.equals("y")) this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
+        if(in.equals("yes") || in.equals("y")) {
+            this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
+            this.waitturn();
+
+        }
         else
         {
             if(lastTurn == 1)
@@ -457,6 +468,15 @@ public class CLI extends Observable<ClientController> implements View {
 
             }
         }
+    }
+
+    public void waitturn(){
+        terminal.printSeparator();
+        terminal.printGoodMessages("sto aspettando il mio turno");
+        waiting = true;
+        helpThread = new Thread(this::waitingHelpLoop);
+        helpThread.start();
+
     }
 
     @Override
