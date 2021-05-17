@@ -2,6 +2,7 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.model.MiniModel;
+import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.resources.Resource;
@@ -82,9 +83,10 @@ public interface View {
      */
     public void askMarketExtraction();
 
+    public void showDecks(ProductionCard[][] ProductionCards);
     /**
      * ask user which resouce extracted from market he want to discard
-     * @param resourceList recived resources
+     * @param resource recived resources
      */
     public Resource askDiscardResource(Resource resource);
 

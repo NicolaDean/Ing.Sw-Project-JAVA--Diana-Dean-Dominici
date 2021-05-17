@@ -12,8 +12,8 @@ import static it.polimi.ingsw.utils.ConstantValues.marketRow;
 public class GameStarted extends Packet<ClientController> implements PacketManager<ClientController>{
 
     MiniModel miniModel;
-    BasicBall[][] miniBallsMarket;
-    BasicBall miniBallDiscarted;
+    transient BasicBall[][] miniBallsMarket;
+    transient BasicBall miniBallDiscarted;
 
     public GameStarted(MiniModel miniModel,BasicBall[][] miniBallsMarket,BasicBall miniBallDiscarted) {
         super("GameStarted");

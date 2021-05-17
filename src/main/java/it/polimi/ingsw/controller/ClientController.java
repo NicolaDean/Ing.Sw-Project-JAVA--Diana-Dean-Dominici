@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
 import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.controller.pingManager.PongController;
 import it.polimi.ingsw.model.MiniModel;
+import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.resources.Resource;
@@ -20,15 +21,17 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
+import static it.polimi.ingsw.enumeration.ErrorMessages.NotEnoughResources;
+
 public class ClientController implements Runnable{
 
-    private Socket server;
-    private Scanner input;
-    private PrintWriter output;
+    private Socket                server;
+    private Scanner               input;
+    private PrintWriter           output;
     private JsonInterpreterClient interpreter;
 
 
-    private PongController pongController;
+    private PongController        pongController;
     private int                   index;
     private boolean               connected;
 
@@ -36,6 +39,8 @@ public class ClientController implements Runnable{
     private View                  view;   //Interface with all view methods
     private MiniModel             model;
     private AckExample            resolver;
+
+
 
     public ClientController(boolean type)
     {
@@ -77,6 +82,17 @@ public class ClientController implements Runnable{
         return this.model;
     }
 
+    /**
+     *
+     * @param newCard new card (under the buyed one)
+     * @param x col
+     * @param y row
+     * @param dashboardPos where i set the old card in my dashboard
+     */
+    public void updateCardBuyed(ProductionCard newCard,int x,int y,int dashboardPos)
+    {
+        this.model.updateCard(newCard,x,y,dashboardPos);
+    }
     /**
      * Add new logged player to the minimodel
      * @param index
@@ -133,6 +149,16 @@ public class ClientController implements Runnable{
         return pongController;
     }
 
+    public void sendBuyCard(int x,int y,int pos)
+    {
+        this.sendMessage(new BuyCard(x,y,pos));
+    }
+
+    public void sendProduction(int pos)
+    {
+        this.sendMessage(new Production(pos));
+
+    }
     public void abortHelp()
     {
         this.view.abortHelp();
@@ -294,14 +320,34 @@ public class ClientController implements Runnable{
         this.view.showMarketExtraction(res,whiteBalls);
     }
 
+    public void showDecks()
+    {
+        view.showDecks(this.model.getDecks());
+    }
+
     public void excecuteTurn()
     {
         this.view.askTurnType();
     }
-    public void askEndTurn(){this.view.askEndTurn();}
+
+    public void askEndTurn(){
+        this.view.askEndTurn();
+    }
+
+    public void askBuy(){this.view.askBuy();}
+
+    public void askResourceExtraction(List<Resource> resourceList)
+    {
+        this.view.askResourceExtraction(resourceList);
+    }
+
     public void sendResourceInsertion(List<InsertionInstruction> instructions)
     {
         this.sendMessage(new StorageMassInsertion(instructions));
+    }
+    public void sendResourceExtraction(boolean buyturn,List<ExtractionInstruction> instructions)
+    {
+        this.sendMessage(new StorageMassExtraction( buyturn,instructions));
     }
     /**
      * Send a packet of market exrtrction

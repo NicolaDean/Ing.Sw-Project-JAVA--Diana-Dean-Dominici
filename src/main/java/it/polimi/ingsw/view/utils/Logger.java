@@ -45,6 +45,7 @@ public class Logger {
         out.printlnColored(content,CliColors.RED_TEXT,this.istructionBackground);
     }
 
+
     /**
      * print mini market
      * @param view view
@@ -140,13 +141,31 @@ public class Logger {
 
     public void printCardRow(ProductionCard[] row)
     {
+        //31
+        System.out.print("╔");
+        for(ProductionCard card: row) {
+            int index = 11;
+            for(int i=0;i<index;i++) System.out.print("═");
+            this.out.setBold();
+            String header = " L: "+card.getLevel()+ " VP: " + card.getVictoryPoints();
+            this.out.printColored(header,CliColors.BLACK_TEXT,card.getColor());
+            this.out.reset();
+            index = 9;
+            if(header.length() > 11) index = index-1;
+
+            for(int i=0;i<index;i++) System.out.print("═");
+            System.out.print("╦╦");
+        }
+
+        System.out.println("");
         for(ProductionCard card: row)
         {
             this.out.print("║");
             this.out.printColored("Cost     : ",CliColors.RED_TEXT);
             this.printInlineResourceList(card.getCost());
-            int padding = 16 - 4* ResourceOperator.getTypeCounter(card.getCost());
+            int padding = 20 - 3* ResourceOperator.getTypeCounter(card.getCost());
             this.spacer(padding);
+            this.out.print("║");
         }
         System.out.println("");
         for(ProductionCard card: row)
@@ -155,20 +174,35 @@ public class Logger {
             this.out.printColored("Raw  mat : ",CliColors.RED_TEXT);
             this.printInlineResourceList(card.getRawMaterials());
 
-            int padding = 16 - 4* ResourceOperator.getTypeCounter(card.getRawMaterials());
+            int padding = 20 - 3* ResourceOperator.getTypeCounter(card.getRawMaterials());
             this.spacer(padding);
+            this.out.print("║");
         }
         System.out.println("");
         for(ProductionCard card: row)
         {
+            int faith =card.getObtainedFaith();
             this.out.print("║");
             this.out.printColored("Obt mat  : ",CliColors.RED_TEXT);
             this.printInlineResourceList(card.getObtainedMaterials());
-            int padding = 16 - 4* ResourceOperator.getTypeCounter(card.getObtainedMaterials());
+
+            int padding = 20 - 3* ResourceOperator.getTypeCounter(card.getObtainedMaterials());
+
+            if( faith !=0)
+            {   padding = padding-3;
+                this.out.printColored(" "+faith+ " ",CliColors.BLACK_TEXT,CliColors.RED_BACKGROUND);
+            }
             this.spacer(padding);
+            this.out.print("║");
         }
         System.out.println("");
-        System.out.println("╚══════════════════════════════════════════════════════════════════════════════════════════╝");
+        System.out.print("╚");
+        for(ProductionCard card: row) {
+            for(int i=0;i<31;i++) System.out.print("═");
+            System.out.print("╩╩");
+        }
+
+        System.out.println("");
 
     }
 
@@ -178,6 +212,11 @@ public class Logger {
         {
             printCardRow(row);
         }
+    }
+
+    public void printDashboard()
+    {
+
     }
     /**
      * Print a colored message corresponding to "warnings"

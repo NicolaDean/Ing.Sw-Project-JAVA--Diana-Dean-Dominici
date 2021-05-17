@@ -10,9 +10,9 @@ public class Production extends Packet<ServerController> implements PacketManage
     int position;
 
 
-    public Production(int pos,int playerIndex)
+    public Production(int pos)
     {
-        super("Production",playerIndex);
+        super("Production");
         this.position = pos;
         //this.playerIndex = playerIndex;
     }

@@ -11,9 +11,9 @@ public class BuyCard  extends Packet<ServerController> implements PacketManager<
     int position;
 
 
-    public BuyCard(int x,int y,int pos,int playerIndex)
+    public BuyCard(int x,int y,int pos)
     {
-        super("BuyCard",playerIndex);
+        super("BuyCard");
         this.x =x;
         this.y =y;
         this.position = pos;
@@ -22,6 +22,13 @@ public class BuyCard  extends Packet<ServerController> implements PacketManager<
     @Override
     public Packet analyze(ServerController controller)
     {
-       return  controller.buyCard(this.x,this.y,this.position,this.getPlayerIndex());
+        Packet p = controller.buyCard(this.x,this.y,this.position,this.getPlayerIndex());
+
+        if(p.getType().equals("ACK"))
+        {
+            controller.sendMessage(new BuyFailed(),this.getPlayerIndex());
+            return p;
+        }
+       return p;
     }
 }

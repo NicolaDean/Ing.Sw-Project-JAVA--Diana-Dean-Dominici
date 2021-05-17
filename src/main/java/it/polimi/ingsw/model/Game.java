@@ -44,8 +44,12 @@ public class Game {
     }
 
     public MiniModel getMiniModel(){
+
+        MiniModel m = new MiniModel();
+
+        m.setDeck(this.productionDecks);
         //TODO estrazione mini model dal game
-        return (new MiniModel());
+        return (m);
     }
 
     public ProductionCard drawProductionCard(int x, int y)
@@ -285,7 +289,6 @@ public class Game {
 
         return players.get(currentPlayer);
     }
-
     public List<Player> getPlayers() {
         return players;
     }

@@ -50,7 +50,7 @@ public class JsonInterpreterTest {
         //interpreter.analyzePacket( pos.generateJson());
 
 
-        Production prod = new Production(2,1);
+        Production prod = new Production(2);
         System.out.println("JSON3: -> " +prod.generateJson());
 
         System.out.println("----------------------------------");
@@ -110,7 +110,7 @@ public class JsonInterpreterTest {
 
         //should get an error NACK (not enough money)
         System.out.println("Production with no resource TEST");
-        Production prod = new Production(0,interpreter.getPlayerIndex());
+        Production prod = new Production(0);
         interpreter.analyzePacket(prod.generateJson());
         interpreter.getResponse();
 
@@ -145,13 +145,13 @@ public class JsonInterpreterTest {
 
         System.out.println( new Login("Nicola").generateJson());
         System.out.println( new UpdatePosition(1,1).generateJson());
-        System.out.println( new Production(1,0).generateJson());
+        System.out.println( new Production(1).generateJson());
         System.out.println( new BasicProduction(COIN,SERVANT,ROCK).generateJson());
         System.out.println( new BonusProduction(1,COIN,ROCK).generateJson());
-        System.out.println( new BuyCard(1,2,1,0).generateJson());
+        System.out.println( new BuyCard(1,2,1).generateJson());
         System.out.println( new PendingCost(resourceList).generateJson());
         System.out.println( new MarketExtraction(false,1).generateJson());
-        System.out.println( new StorageMassExtraction(ins).generateJson());
+        System.out.println( new StorageMassExtraction(false,ins).generateJson());
         System.out.println( new ActivateLeader(1,false).generateJson());
         System.out.println( new DiscardResource(1).generateJson());
         System.out.println( new SwapDeposit(1,2).generateJson());

@@ -34,4 +34,8 @@ public class ExtractionInstruction {
             return controller.chestExtraction(resource,player);
         }
     }
+
+    public Resource getResource() {
+        return resource;
+    }
 }

@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
+import it.polimi.ingsw.utils.ConstantValues;
 
 import java.util.List;
 
@@ -138,7 +139,10 @@ public class ProductionCard extends Card {
             {
                 out = p.getDashboard().setProductionCard(this,pos);
                 if (out)
+                {
                     p.increaseScore(this.getVictoryPoints());
+                }
+
 
             } catch (WrongPosition wrongPosition) {
                 throw new WrongPosition("");
@@ -177,5 +181,13 @@ public class ProductionCard extends Card {
         return this.rawMaterials;
     }
     public List<Resource> getObtainedMaterials(){return this.obtainedMaterials;}
+    public int getObtainedFaith()
+    {
+        return this.obtainedFaith;
+    }
+    public String getColor()
+    {
+        return ConstantValues.resourceRappresentation.getCardTypeColorRappresentation(this.type);
+    }
 
 }

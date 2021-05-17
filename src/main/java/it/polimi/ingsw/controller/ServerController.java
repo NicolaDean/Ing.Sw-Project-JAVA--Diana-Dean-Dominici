@@ -220,6 +220,11 @@ public class ServerController{
         return new ACK(ErrorMessages.NotYourTurn);
     }
 
+
+    public void sendPendingCard()
+    {
+        this.sendMessage(this.game.getCurrentPlayer().getPendingCard(),this.currentClient);
+    }
     /**
      * Player "player" buy the card in position x,y of the deks
      * @param x level
@@ -236,6 +241,11 @@ public class ServerController{
         try
         {
             card.buy(p,pos);
+
+            //Set a pending card, when user finish to pay it i will send the updateBuyedCard packet i added to player
+            ProductionCard newCard = this.game.getProductionDecks()[x][y].peek();
+            p.setPendingBuy(newCard,x,y,pos);
+
             return setPendingCost(p.getDashboard());
         } catch (AckManager err) {
             return err.getAck();
@@ -461,7 +471,10 @@ public class ServerController{
 
     }
 
+    public void sendBuyedCardUpdate(int newX,int newY,int dashPos)
+    {
 
+    }
     public void sendStorageUpdate()
     {
         Deposit[] tmp = this.game.getCurrentPlayer().getDashboard().getStorage().getDeposits();

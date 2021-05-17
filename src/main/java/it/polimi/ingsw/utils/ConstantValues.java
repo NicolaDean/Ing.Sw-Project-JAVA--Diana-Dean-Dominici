@@ -9,6 +9,8 @@ public class ConstantValues {
     public static int                       maxBonusDepositNumb     = 2;
     public static int                       maxDepositsNumber       = ConstantValues.normalDepositNumber + ConstantValues.maxBonusDepositNumb;
     public static int                       bonusDepositSize        = 2;
+    public static int                       rowDeck                 = 3;
+    public static int                       colDeck                 = 4;
     public static int                       marketRow               = 3;
     public static int                       marketCol               = 4;
     public static int                       playerOwnedLeaders      = 2;

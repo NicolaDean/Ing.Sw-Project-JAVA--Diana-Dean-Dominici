@@ -9,12 +9,14 @@ import java.util.List;
 
 public class StorageMassInsertion extends Packet<ServerController> implements PacketManager<ServerController> {
 
+
     List<InsertionInstruction> insertions;
 
-    public StorageMassInsertion( List<InsertionInstruction> insertions)
+    public StorageMassInsertion(List<InsertionInstruction> insertions)
     {
         super("StorageMassInsertion");
         this.insertions = insertions;
+
     }
 
     @Override
@@ -47,12 +49,14 @@ public class StorageMassInsertion extends Packet<ServerController> implements Pa
         if(failed)
         {
             controller.sendMessage(packet,this.getPlayerIndex());
+            controller.sendStorageUpdate();
             return new MarketResult(remaining);
         }
         else
         {
             controller.sendMessage(new ACK(0),this.getPlayerIndex());
             controller.sendStorageUpdate();
+
             return new OperationCompleted();
         }
 

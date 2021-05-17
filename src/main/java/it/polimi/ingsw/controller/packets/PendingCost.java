@@ -25,6 +25,7 @@ public class PendingCost  extends Packet<ClientController> implements PacketMana
 
     @Override
     public Packet analyze(ClientController controller) {
+        controller.askResourceExtraction(this.pendingCost);
         return null;
     }
 }

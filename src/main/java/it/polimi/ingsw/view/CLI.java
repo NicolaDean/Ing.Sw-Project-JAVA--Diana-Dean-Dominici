@@ -6,6 +6,7 @@ import it.polimi.ingsw.controller.packets.ExtractionInstruction;
 import it.polimi.ingsw.controller.packets.InsertionInstruction;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.MiniModel;
+import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.market.balls.BasicBall;
@@ -39,12 +40,14 @@ public class CLI extends Observable<ClientController> implements View {
     private BasicBall[][]   miniMarketBalls;
     private BasicBall       miniMarketDiscardedResouce;
 
+    int turnSelected;
     public CLI()
     {
         lastTurn = -1;
         waiting = true;
         input = new InputReaderValidation();
         terminal = new Logger();
+        turnSelected = -1;
     }
 
     public void setMarket(BasicBall[][] balls, BasicBall discarted){
@@ -133,8 +136,6 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void printWelcomeScreen() {
-
-
         this.terminal.printLogo();
         this.terminal.out.setBackgroundColor(CliColors.BLACK_BACKGROUND);
         this.clickEnter();
@@ -211,20 +212,29 @@ public class CLI extends Observable<ClientController> implements View {
         askServerData();
     }
 
+
     @Override
     public void askBuy() {
 
-        this.terminal.printRequest("");
+        this.notifyObserver(ClientController::showDecks);
+        this.terminal.printRequest("Buy a card");
 
-        //this.notifyObserver(controller -> controller.buyCard());
+        int col = askInt("Insert Column coordinate (1-4) of the card you want to buy","wrong index",1,ConstantValues.colDeck) -1;
+        int row = askInt("Insert Row    coordinate (1-3) of the card you want to buy","wrong index",1,ConstantValues.rowDeck) -1;
+        int pos = askInt("Where you want to put it in your dashboard (1-3)","wrong index",1,ConstantValues.productionSpaces)  -1;
 
-        //per evitare loop bisognera inserire nell'input reader un comando
-        // che verifichi se lutente ha scritto cancel o qualcosa del genere per tprnare al menu con i comandi
+        this.notifyObserver(controller -> controller.sendBuyCard(row,col,pos));
     }
 
     @Override
     public void askProduction() {
 
+        //SHOW DASHBOARD
+        this.terminal.printRequest("Activate a production card on your dashboard");
+
+        int pos = askInt("Select a card to activate (1-3)","wrong index",1,ConstantValues.productionSpaces)  -1;
+
+        this.notifyObserver(controller -> controller.sendProduction(pos));
     }
 
     @Override
@@ -277,6 +287,11 @@ public class CLI extends Observable<ClientController> implements View {
         this.notifyObserver(controller -> {controller.sendMarketExtraction(finalDirection,num);});
     }
 
+    @Override
+    public void showDecks(ProductionCard[][] productionCards) {
+        terminal.printDeks(productionCards);
+    }
+
     public int askInt(String msg,String error,int min,int max)
     {
         int num =0;
@@ -307,7 +322,7 @@ public class CLI extends Observable<ClientController> implements View {
      */
     @Override
     public void showMarket(){
-        terminal.printMarket(this);
+       // terminal.printMarket(this);
     }
 
 
@@ -412,6 +427,60 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askResourceExtraction(List<Resource> resourceList) {
+        this.notifyObserver(ClientController::showStorage);
+
+        this.terminal.printSeparator();
+        this.terminal.printRequest("You have the following pending costs to pay");
+        this.terminal.printResourceList(resourceList);
+        this.terminal.printSeparator();
+
+        List<Resource> payed = new ResourceList();
+        List<ExtractionInstruction> extractions = new ArrayList<>();
+
+        do {
+            for(Resource res:resourceList)
+            {
+                String in="";
+                if(res.getQuantity()!=0)
+                {
+                    do {
+                        this.terminal.printResource(res);
+                        in = customRead("Where you want to pick this resources? options ->(storage-chest)");
+
+                        int pos = -1;
+                        int quantity = 1;
+                        //TODO CERCA POSIZIONE STORAGE IN AUTOMATICO SENZA CHIEDERA ALLUTENTE (storage-chest-bonus)
+                        if(in.equals("storage"))
+                        {
+                            pos = askInt("Which deposit you want to use? normal(1-3) bonus(4-5)","Wrong deposit number",1,ConstantValues.maxDepositsNumber) -1;
+                        }
+
+                        Resource tmp = null;
+                        if(res.getQuantity()!=1)
+                        {
+                            quantity = askInt("How much of this resources you want to pay here?","Excessive quantity",1,res.getQuantity());
+                            tmp = new Resource(res.getType(),quantity);
+                        }
+
+                        if(pos == -1) extractions.add(new ExtractionInstruction(tmp));
+                        else          extractions.add(new ExtractionInstruction(tmp,pos));
+
+                    }while(in.equals("storage")|| in.equals("chest"));
+                }
+
+            }
+
+            resourceList = ResourceOperator.listSubtraction(resourceList,payed);
+        }while(ResourceOperator.isEmpty(resourceList));
+
+        if(turnSelected == 1)
+        {
+            this.notifyObserver(controller -> controller.sendResourceExtraction(true,extractions));
+        }
+        else
+        {
+            this.notifyObserver(controller -> controller.sendResourceExtraction(false,extractions));
+        }
 
     }
 
@@ -560,14 +629,20 @@ public class CLI extends Observable<ClientController> implements View {
     public void turnTypeInterpreter(String cmd)
     {
         switch (cmd) {
+            case "1":
+                turnSelected =1;
+                this.askBuy();
             case "market":
             case "2":
                 this.askMarketExtraction();
+                turnSelected =2;
                 break;
             case "3":
+                turnSelected =3;
                 this.askProduction();
                 break;
             default:
+                turnSelected =1;
                 this.askBuy();
                 break;
         }

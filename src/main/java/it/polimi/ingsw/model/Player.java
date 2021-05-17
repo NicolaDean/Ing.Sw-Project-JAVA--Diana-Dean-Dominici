@@ -1,8 +1,11 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.packets.Packet;
+import it.polimi.ingsw.controller.packets.UpdateCardBuyed;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.cards.LeaderCard;
+import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.resources.Resource;
@@ -27,6 +30,24 @@ public class Player {
     private int lastadded = 0;
     private int controllerIndex=0;
 
+    private UpdateCardBuyed pendingCard = null;
+
+
+    public void resetPendingBuy()
+    {
+        this.pendingCard = null;
+    }
+
+    public void setPendingBuy(ProductionCard newCard,int x,int y,int dashPos)
+    {
+        this.pendingCard = new UpdateCardBuyed(newCard,x,y,dashPos);
+    }
+
+    public Packet getPendingCard()
+    {
+        return this.pendingCard;
+    }
+    //PENDING BUYED CARD
 
     public int getPositionLeaderActive() {
         return positionLeaderActive;
