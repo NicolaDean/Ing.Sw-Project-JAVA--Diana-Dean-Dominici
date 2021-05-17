@@ -4,8 +4,10 @@ import it.polimi.ingsw.controller.ClientController;
 
 public class GameStarted extends Packet<ClientController> implements PacketManager<ClientController>{
 
+    
     public GameStarted() {
         super("GameStarted");
+
     }
 
     @Override

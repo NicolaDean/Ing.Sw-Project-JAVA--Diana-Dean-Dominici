@@ -55,7 +55,7 @@ public class Logger {
             System.out.println("");
         }
         System.out.print(" ↑  ↑  ↑  ↑ \n 1  2  3  4\n");
-        out.printColored(" Discarded resource: ◍",CliColors.R_WHITE_BACKGROUND,m.getDiscardedResouce().getCliColor());
+        out.printColored(" Discarded resource: ◍ ",CliColors.R_WHITE_BACKGROUND,m.getDiscardedResouce().getCliColor());
 
     }
 
