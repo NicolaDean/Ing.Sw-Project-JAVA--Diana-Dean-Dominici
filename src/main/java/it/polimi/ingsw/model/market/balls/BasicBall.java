@@ -8,7 +8,6 @@ import java.awt.*;
 
 public abstract class BasicBall {
 
-
     public abstract Color getColor();
 
     public abstract String getCliColor();

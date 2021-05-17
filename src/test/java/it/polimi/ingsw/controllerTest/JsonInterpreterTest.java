@@ -196,15 +196,9 @@ public class JsonInterpreterTest {
         interpreter.analyzePacket(new EndTurn().generateJson());
         interpreter.getResponse();
     }
-
+    @Test
     public void gameStartedTest(){
-        System.out.println("----------------------------------");
-        MiniModel mm=new MiniModel();
-        Market m=new Market();
-       // mm.setMarket(m.getResouces(),m.getDiscardedResouce());
-        ///System.out.println( new GameStarted(mm).generateJson());
-
-
+        //TODO
     }
 
 }

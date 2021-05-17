@@ -458,7 +458,7 @@ public class ServerController{
     public void sendStorageUpdate()
     {
         Deposit[] tmp = this.game.getCurrentPlayer().getDashboard().getStorage().getDeposits();
-        this.sendMessage(new StorageUpdate(tmp),currentClient);
+        this.sendMessage(new StorageUpdate(tmp),this.game.getRealPlayerHandlerIndex());
     }
     /**
      * if end condition are true send to all a "last Turn" packet

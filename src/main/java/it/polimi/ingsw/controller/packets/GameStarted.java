@@ -11,11 +11,15 @@ import static it.polimi.ingsw.utils.ConstantValues.marketRow;
 
 public class GameStarted extends Packet<ClientController> implements PacketManager<ClientController>{
 
-    //MiniModel miniModel;
+    MiniModel miniModel;
+    BasicBall[][] miniBallsMarket;
+    BasicBall miniBallDiscarted;
 
-    public GameStarted(MiniModel miniModel) {
+    public GameStarted(MiniModel miniModel,BasicBall[][] miniBallsMarket,BasicBall miniBallDiscarted) {
         super("GameStarted");
-        //this.miniModel=miniModel;
+        this.miniModel=miniModel;
+        this.miniBallsMarket=miniBallsMarket;
+        this.miniBallDiscarted=miniBallDiscarted;
     }
 
     /**
@@ -30,7 +34,7 @@ public class GameStarted extends Packet<ClientController> implements PacketManag
     @Override
     public Packet analyze(ClientController controller)
     {
-        //controller.setMiniModel(miniModel);
+        controller.setInformation(miniModel,miniBallsMarket,miniBallDiscarted);
         controller.printGameStarted();
         //controller.abortHelp();
         return null;

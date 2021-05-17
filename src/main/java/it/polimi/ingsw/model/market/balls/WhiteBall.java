@@ -8,9 +8,15 @@ import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.utils.CliColors;
 
 import java.awt.*;
+import java.beans.Transient;
 
 public class WhiteBall extends BasicBall{
 
+    public WhiteBall() {
+        this.colorGUI = colorGUI;
+        this.colorCLI = colorCLI;
+        this.setColor(Color.white,CliColors.WHITE_TEXT);
+    }
 
     /**
      * if player had 2 leader activated increment white cout, if had just 1 leader add resource
@@ -26,15 +32,6 @@ public class WhiteBall extends BasicBall{
     }
 
     /**
-     *
-     * @return type color
-     */
-    @Override
-    public Color getColor() {
-        return Color.white;
-    }
-
-    /**
      *  throw exeption
      * @return no one
      */
@@ -43,8 +40,4 @@ public class WhiteBall extends BasicBall{
         throw new RuntimeException("White and red ball dont have resource type");
     }
 
-    @Override
-    public String getCliColor() {
-        return CliColors.WHITE_TEXT;
-    }
 }
