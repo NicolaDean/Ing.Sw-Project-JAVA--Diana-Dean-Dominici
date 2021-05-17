@@ -124,6 +124,7 @@ public class JsonInterpreterTest {
 
 
     }
+    @Test
     public void AllPacketGeneration()
     {
         List<Resource> resourceList = new ResourceList();
@@ -159,7 +160,6 @@ public class JsonInterpreterTest {
         System.out.println( new StartGame().generateJson());
     }
 
-    //TODO il market restituisce solo 2 risorse, chiedere a riki (probabilmente il mischiaggio non avviene in maniera molto casuale)
     public void marketTest()
     {
         System.out.println("----------------------------------");

@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static it.polimi.ingsw.model.resources.ResourceOperator.listSubtraction;
+
 public class CLI extends Observable<ClientController> implements View {
 
     Logger                  terminal; //print formatted and colored text on the cli
@@ -269,11 +271,14 @@ public class CLI extends Observable<ClientController> implements View {
     public void askResourceInsertion(List<Resource> resourceList) {
 
         //resourceList = (ResourceList) resourceList;
+
+        List<Resource> x = new ResourceList();
         boolean flag = false;
 
         List<InsertionInstruction> insertions = new ArrayList<>();
         do
         {
+
             List<Resource> removed = new ResourceList();
             for(Resource res:resourceList)
             {
@@ -323,7 +328,7 @@ public class CLI extends Observable<ClientController> implements View {
                             String msg = "How much of this resources you want to insert in this deposit";
                             qty = askInt(msg,"thers not that much quantity",1,res.getQuantity());
                             Resource tmp = new Resource(res.getType(),qty);
-                            removed.remove(tmp);
+                            removed.add(tmp);
                         }
                         else
                         {
@@ -333,10 +338,13 @@ public class CLI extends Observable<ClientController> implements View {
                         pos = pos-1;
                         insertions.add(new InsertionInstruction(res,pos));
                     }
+                    for(Resource r:removed) System.out.println(r.getType() +" -> "+r.getQuantity());
 
                 }
             }
-            resourceList.removeAll(removed);
+            resourceList = listSubtraction(resourceList,removed);
+
+            System.out.println("");
         }while(resourceList.isEmpty() && flag);
        //
 

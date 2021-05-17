@@ -126,5 +126,25 @@ public class ResourceOperator {
         return new Resource(type,0);
     }
 
+    /**
+     * list A - list B (UNSAFE, dosnt check if A hase more resource then B)
+     * @param a op1
+     * @param b op2
+     * @return a list with subtracted qwuantity
+     */
+    public static List<Resource> listSubtraction(List<Resource> a,List<Resource>b)
+    {
+        List<Resource> out = new ResourceList();
+
+
+        for(Resource res1 : a)
+        {
+            int qty = extractQuantityOf(res1.getType(),b);
+                qty = res1.getQuantity() - qty;
+            out.add(new Resource(res1.getType(),qty));
+        }
+        return out;
+    }
+
 
 }
