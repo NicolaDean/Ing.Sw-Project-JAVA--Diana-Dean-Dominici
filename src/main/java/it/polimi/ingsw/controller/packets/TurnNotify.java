@@ -12,6 +12,7 @@ public class TurnNotify  extends Packet<ClientController> implements PacketManag
     public Packet analyze(ClientController controller)
     {
         System.out.println("It's your turn!");
+        controller.abortHelp();
         controller.excecuteTurn();
         return null;
     }

@@ -31,7 +31,7 @@ public class GameStarted extends Packet<ClientController> implements PacketManag
     {
         controller.setMiniModel(miniModel); //da modificare quando servirà la modifica
         controller.printGameStarted();
-        controller.abortHelp();
+        //controller.abortHelp();
         return null;
     }
 }
