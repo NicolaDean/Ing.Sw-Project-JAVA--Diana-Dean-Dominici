@@ -232,6 +232,8 @@ public class Logger {
         this.out.println(" 2 - Extract from market");
         this.out.println(" 3 - Activate a production");
         this.printSeparator();
+        //System.out.println("sto tornando!");
+        return;
     }
 
     public void printResource(Resource res)
