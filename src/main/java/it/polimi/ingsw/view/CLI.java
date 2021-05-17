@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.packets.EndTurn;
 import it.polimi.ingsw.controller.packets.ExtractionInstruction;
 import it.polimi.ingsw.controller.packets.InsertionInstruction;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.MiniModel;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.Market;
@@ -111,6 +112,8 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void printWelcomeScreen() {
+
+
         this.terminal.printLogo();
         this.terminal.out.setBackgroundColor(CliColors.BLACK_BACKGROUND);
         this.clickEnter();
@@ -189,6 +192,9 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askBuy() {
+
+        this.terminal.printRequest("");
+
         //this.notifyObserver(controller -> controller.buyCard());
 
         //per evitare loop bisognera inserire nell'input reader un comando

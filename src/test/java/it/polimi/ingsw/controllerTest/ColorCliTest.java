@@ -1,5 +1,7 @@
 package it.polimi.ingsw.controllerTest;
 
+import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.view.utils.CliColors;
@@ -9,7 +11,9 @@ import it.polimi.ingsw.view.View;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
 
@@ -69,6 +73,31 @@ public class ColorCliTest {
         resourceList.add(new Resource(ROCK,1));
 
         log.printResourceList(resourceList);
+    }
+
+    @Test
+    public void printCard()
+    {
+        Game g = new Game();
+
+        Logger logger = new Logger();
+
+        ProductionCard[][] cards = new ProductionCard[3][4];
+
+        int i=0;
+
+        for(Stack<ProductionCard> p[] :g.getProductionDecks())
+        {
+            int j=0;
+            for(Stack<ProductionCard> t:p)
+            {
+                cards[i][j] = t.peek();
+                j++;
+            }
+            i++;
+        }
+        logger.printDeks(cards);
+
     }
 
 }

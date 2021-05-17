@@ -2,9 +2,11 @@ package it.polimi.ingsw.view.utils;
 
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.MiniModel;
+import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceOperator;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 
@@ -134,6 +136,48 @@ public class Logger {
 
         }
     }
+
+    public void printCardRow(ProductionCard[] row)
+    {
+        for(ProductionCard card: row)
+        {
+            this.out.print("║");
+            this.out.printColored("Cost     : ",CliColors.RED_TEXT);
+            this.printInlineResourceList(card.getCost());
+            int padding = 16 - 4* ResourceOperator.getTypeCounter(card.getCost());
+            this.spacer(padding);
+        }
+        System.out.println("");
+        for(ProductionCard card: row)
+        {
+            this.out.print("║");
+            this.out.printColored("Raw  mat : ",CliColors.RED_TEXT);
+            this.printInlineResourceList(card.getRawMaterials());
+
+            int padding = 16 - 4* ResourceOperator.getTypeCounter(card.getRawMaterials());
+            this.spacer(padding);
+        }
+        System.out.println("");
+        for(ProductionCard card: row)
+        {
+            this.out.print("║");
+            this.out.printColored("Obt mat  : ",CliColors.RED_TEXT);
+            this.printInlineResourceList(card.getObtainedMaterials());
+            int padding = 16 - 4* ResourceOperator.getTypeCounter(card.getObtainedMaterials());
+            this.spacer(padding);
+        }
+        System.out.println("");
+        System.out.println("╚══════════════════════════════════════════════════════════════════════════════════════════╝");
+
+    }
+
+    public void printDeks(ProductionCard[][] productionCards)
+    {
+        for(ProductionCard[] row:productionCards)
+        {
+            printCardRow(row);
+        }
+    }
     /**
      * Print a colored message corresponding to "warnings"
      * @param content message
@@ -245,12 +289,16 @@ public class Logger {
         this.reset();
     }
 
-    public void printResourceList(List<Resource> resourceList)
+    public void printInlineResourceList(List<Resource> resourceList)
     {
         for(Resource res : resourceList)
         {
             if(res.getQuantity() != 0) this.printResource(res);
         }
+    }
+    public void printResourceList(List<Resource> resourceList)
+    {
+        this.printInlineResourceList(resourceList);
         this.out.println("");
     }
 

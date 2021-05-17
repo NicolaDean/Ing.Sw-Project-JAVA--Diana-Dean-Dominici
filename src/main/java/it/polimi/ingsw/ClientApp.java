@@ -4,6 +4,8 @@ import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
 import it.polimi.ingsw.controller.packets.Login;
 import it.polimi.ingsw.controller.packets.StartGame;
+import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.view.utils.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,7 +46,10 @@ public class ClientApp {
         this.controller.starttolisten();
 
         System.out.println("Click enter to start");
+
+
         this.controller.printHelp();
+
 
         try {
             TimeUnit.SECONDS.sleep(2);

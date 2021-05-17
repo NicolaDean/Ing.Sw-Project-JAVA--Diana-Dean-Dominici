@@ -28,7 +28,10 @@ public class CliColors extends PrintStream
     public static String GRAY_TEXT          = "\u001b[30;1m";
 
 
-
+    public static String UP_CURSOR          = "A";
+    public static String DOWN_CURSOR        = "B";
+    public static String RIGHT_CURSOR       = "C";
+    public static String LEFT_CURSOR        = "D";
 
     public static String BOLD               = "\u001b[1m";
     public static String UNDERLINE          = "\u001b[4m";
@@ -109,5 +112,28 @@ public class CliColors extends PrintStream
         this.println("");
         this.reset();
     }
+
+    public void move(String dir,int numb)
+    {
+        this.print("\u001b[" + numb +dir);
+    }
+
+    public void moveUp()
+    {
+        this.print("\u001b[" + "1"+UP_CURSOR);
+    }
+    public void moveDown()
+    {
+        this.print("\u001b[" + "1"+DOWN_CURSOR);
+    }
+    public void moveLeft()
+    {
+        this.print("\u001b[" + "1"+LEFT_CURSOR);
+    }
+    public void moveRight()
+    {
+        this.print("\u001b[" + "1"+RIGHT_CURSOR);
+    }
+
 
 }

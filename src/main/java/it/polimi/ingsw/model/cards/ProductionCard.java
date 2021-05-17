@@ -176,5 +176,6 @@ public class ProductionCard extends Card {
     {
         return this.rawMaterials;
     }
+    public List<Resource> getObtainedMaterials(){return this.obtainedMaterials;}
 
 }

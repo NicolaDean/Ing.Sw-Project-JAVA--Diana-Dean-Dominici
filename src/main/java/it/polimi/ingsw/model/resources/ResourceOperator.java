@@ -156,4 +156,13 @@ public class ResourceOperator {
     }
 
 
+    public static int getTypeCounter(List<Resource> resources)
+    {
+        int out =0;
+        for(Resource res1 : resources) {
+            if(res1.getQuantity()!=0)out ++;
+        }
+        return out;
+    }
+
 }
