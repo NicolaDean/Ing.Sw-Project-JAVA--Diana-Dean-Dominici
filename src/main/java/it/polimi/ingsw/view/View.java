@@ -95,8 +95,10 @@ public interface View {
 
     public void showGameStarted();
 
+    public void abortHelp();
     public void showMarketExtraction(List<Resource> resourceList,int whiteballs);
 
+    public void askEndTurn();
     //Other methods
 
     /**

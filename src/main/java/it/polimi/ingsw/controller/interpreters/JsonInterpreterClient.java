@@ -25,6 +25,7 @@ public class JsonInterpreterClient extends BasicJsonInterpreter{
             packet = BasicPacketFactory.getPacket(type,content, Class.forName("it.polimi.ingsw.controller.packets." + type));
             this.setResponse(packet.analyze(controller));
 
+
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

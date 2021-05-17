@@ -1,14 +1,18 @@
 package it.polimi.ingsw.view.utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class InputReaderValidation {
 
 
     public Scanner console;
+    BufferedReader console2 = new BufferedReader(new InputStreamReader(System.in));
     public InputReaderValidation()
     {
-        console = new Scanner(System.in);
+        //console = new Scanner(System.in);
     }
 
 
@@ -17,7 +21,12 @@ public class InputReaderValidation {
      */
     public void enter()
     {
-        this.console.nextLine();
+        //this.console.nextLine();
+        try {
+            this.console2.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -26,12 +35,24 @@ public class InputReaderValidation {
      */
     public String readLine()
     {
-        return this.console.nextLine();
+        //return this.console.nextLine();
+        try {
+            return this.console2.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public int readInt()
     {
-        return this.console.nextInt();
+        try {
+            return Integer.parseInt(this.console2.readLine());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
     public boolean validateInt(int num,int min,int max)
     {
@@ -47,10 +68,20 @@ public class InputReaderValidation {
     {
         String out;
         do {
-            out= console.nextLine();
+            try {
+                out= console2.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+                out="";
+            }
+
         }while(!(out.length() >= lenght));
 
         return out;
+    }
+
+    public boolean bufferReady() throws IOException {
+        return this.console2.ready();
     }
 
 
