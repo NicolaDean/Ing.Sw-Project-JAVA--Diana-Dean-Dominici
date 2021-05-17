@@ -129,11 +129,12 @@ public class CLI extends Observable<ClientController> implements View {
 
         terminal.printRequest("Type here your nickname:");
 
-        String nickname = ".";
+        String nickname = "";
         do {
-            nickname = input.readLine(3);
-            if(nickname.length() == 0) terminal.printWarning("Nickname too short, minimum 3 letters");
-        }while(nickname.length() == 0);
+            nickname = input.readLine();
+            //System.out.println("length: "+nickname.length());
+            if(nickname.length() < 3) terminal.printWarning("Nickname too short, minimum 3 letters");
+        }while(nickname.length() < 3 );
 
 
         String validNickname = nickname;
@@ -405,17 +406,17 @@ public class CLI extends Observable<ClientController> implements View {
                 {
                     Thread.sleep(100);
                 }
-                System.out.println("TREAD VIVO ");
+                //System.out.println("TREAD VIVO ");
 
                 this.helpCommands(this.input.readLine(),"");
 
             }
         }catch (InterruptedException | IOException e)
         {
-            DebugMessages.printError("OPSS");
+            //DebugMessages.printError("OPSS");
         }
 
-        DebugMessages.printError("Waiting thread help aborted");
+        //DebugMessages.printError("Waiting thread help aborted");
     }
     @Override
     public void askCommand() {
@@ -487,6 +488,7 @@ public class CLI extends Observable<ClientController> implements View {
     public void waitturn(){
         terminal.printSeparator();
         terminal.printGoodMessages("sto aspettando il mio turno");
+        terminal.printSeparator();
         waiting = true;
         helpThread = new Thread(this::waitingHelpLoop);
         helpThread.start();
