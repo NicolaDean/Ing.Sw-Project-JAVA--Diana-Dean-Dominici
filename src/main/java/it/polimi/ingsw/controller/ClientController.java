@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
 import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.controller.pingManager.PongController;
 import it.polimi.ingsw.model.MiniModel;
+import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.utils.DebugMessages;
@@ -42,7 +43,7 @@ public class ClientController implements Runnable{
         else view = new GUI();//GUI()
 
         this.view.setObserver(this);
-
+        this.view.setMiniModel(model);
         this.interpreter= new JsonInterpreterClient(this);
         this.errorManager = new ErrorManager();
         this.resolver = new AckExample();
@@ -198,6 +199,14 @@ public class ClientController implements Runnable{
             sendMessage(new LoginSinglePlayer(nickname));
         else
             sendMessage(new Login(nickname));
+    }
+
+    /**
+     * set all initial information into miniMarted
+     * @param mm mini model
+     */
+    public void setMiniModel(MiniModel mm){
+        model=mm;
     }
 
     /**

@@ -9,10 +9,11 @@ import it.polimi.ingsw.controller.packets.UpdatePosition;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import org.junit.jupiter.api.Test;
-
+import it.polimi.ingsw.model.MiniModel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -124,6 +125,7 @@ public class JsonInterpreterTest {
 
 
     }
+
     @Test
     public void AllPacketGeneration()
     {
@@ -180,7 +182,7 @@ public class JsonInterpreterTest {
 
     }
 
-    public void lorenzoTest(){ //TODO da finire test del pacchetto
+    public void lorenzoTest(){
         System.out.println("----------------------------------");
         LoginSinglePlayer log   = new LoginSinglePlayer("SuperRichi99XDXDXD");
 
@@ -194,4 +196,15 @@ public class JsonInterpreterTest {
         interpreter.analyzePacket(new EndTurn().generateJson());
         interpreter.getResponse();
     }
+
+    public void gameStartedTest(){
+        System.out.println("----------------------------------");
+        MiniModel mm=new MiniModel();
+        Market m=new Market();
+       // mm.setMarket(m.getResouces(),m.getDiscardedResouce());
+        ///System.out.println( new GameStarted(mm).generateJson());
+
+
+    }
+
 }

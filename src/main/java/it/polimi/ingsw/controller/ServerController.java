@@ -173,7 +173,7 @@ public class ServerController{
                 int firstPlayer = this.game.getRealPlayerHandlerIndex();
 
                 //Send broadcast with game started packet
-                this.broadcastMessage(-1, new GameStarted());
+                this.broadcastMessage(-1, new GameStarted(game.getMiniModel()));
 
                 //notify first player the is its turn
                 this.clients.get(firstPlayer).sendToClient(new TurnNotify());
@@ -181,7 +181,7 @@ public class ServerController{
                 this.warning("Game already started");
                 //return null;
             }
-            DebugMessages.printGeneric("\n new currplayer: "+ currentClient + ", total players: "+this.clients.size()+"\n");
+            //DebugMessages.printGeneric("\n new currplayer: "+ currentClient + ", total players: "+this.clients.size()+"\n");
 
             this.lock.notify();
         }
@@ -475,7 +475,7 @@ public class ServerController{
 
         currentClient=this.game.getRealPlayerHandlerIndex();
 
-        DebugMessages.printGeneric("\n new currplayer: "+ currentClient + ", total players: "+this.clients.size()+"\n");
+        //DebugMessages.printGeneric("\n new currplayer: "+ currentClient + ", total players: "+this.clients.size()+"\n");
 
 
         clients.get(currentClient).sendToClient(new TurnNotify());
