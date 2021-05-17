@@ -2,15 +2,16 @@ package it.polimi.ingsw.view.utils;
 
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.MiniModel;
+import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.utils.DebugMessages;
 
 import java.util.List;
 import java.util.Locale;
 
-import static it.polimi.ingsw.utils.ConstantValues.marketCol;
-import static it.polimi.ingsw.utils.ConstantValues.marketRow;
+import static it.polimi.ingsw.utils.ConstantValues.*;
 
 public class Logger {
 
@@ -64,6 +65,75 @@ public class Logger {
 
     }
 
+    public void spacer(int space)
+    {
+        for(int i=0;i<space;i++)
+        {
+            System.out.print(" ");
+        }
+    }
+
+    public void colorSpacer(int space,String color)
+    {
+        this.out.setBackgroundColor(color);
+        for(int i=0;i<space;i++)
+        {
+            System.out.print(" ");
+        }
+        this.out.reset();
+    }
+    public void printEmptyDeposit()
+    {
+        this.out.printColored(" ◍ ",CliColors.BLACK_TEXT,CliColors.R_WHITE_BACKGROUND);
+    }
+    public void printStorage(Deposit[] deposits)
+    {
+
+        if(deposits == null)
+        {
+            DebugMessages.printError("Empty Storage");
+            return;
+        }
+        for(Deposit d:deposits)
+        {
+            if(d == null) break;
+            int size            = d.getSizeMax();
+            Resource res = d.getResource();
+            int qty;
+            String  color ="";
+            if(res != null)
+            {
+                 qty             = d.getResource().getQuantity();
+                 color       = resourceRappresentation.getColorRappresentation(d.getResource().getType());
+            }
+            else
+            {
+                 qty =0;
+            }
+
+
+
+            if(size==1) spacer(8);
+            if(size==2) spacer(4);
+
+            for(int i=0;i<size;i++)
+            {
+                if(qty ==0)
+                {
+                    spacer(4);
+                    printEmptyDeposit();
+                }
+                else
+                {
+                    spacer(4);
+                    colorSpacer(4,color);
+                    qty--;
+                }
+            }
+            System.out.println("");
+
+        }
+    }
     /**
      * Print a colored message corresponding to "warnings"
      * @param content message

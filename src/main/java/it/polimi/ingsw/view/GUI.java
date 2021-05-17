@@ -2,6 +2,7 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.model.MiniModel;
+import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.observer.Observable;
 
@@ -112,6 +113,11 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void showMarketExtraction(List<Resource> resourceList, int whiteballs) {
         
+    }
+
+    @Override
+    public void showStorage(Deposit[] deposits) {
+
     }
 
     @Override

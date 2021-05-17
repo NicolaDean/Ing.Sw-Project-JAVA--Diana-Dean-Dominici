@@ -146,5 +146,14 @@ public class ResourceOperator {
         return out;
     }
 
+    public static boolean isEmpty(List<Resource> resources)
+    {
+        for(Resource res1 : resources) {
+            if(res1.getQuantity()!=0)return false;
+        }
+        return true;
+
+    }
+
 
 }

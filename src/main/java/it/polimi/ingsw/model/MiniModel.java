@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.dashboard.Storage;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.market.balls.BasicBall;
@@ -15,8 +16,7 @@ public class MiniModel
     private int[]    positions;
 
     private ProductionCard [][] deks;
-    private Storage storage;
-    private Market market;
+    private Deposit[]           storage;
 
     private ProductionCard[] playerCards;
 
@@ -26,6 +26,7 @@ public class MiniModel
     public void setMarket(BasicBall[][] balls, BasicBall discarted){
         miniMarketBalls=balls;
         miniDiscardedResouce=discarted;
+        this.storage = new Deposit[0];
     }
 
     public MiniModel()
@@ -52,6 +53,16 @@ public class MiniModel
 
     public BasicBall getMiniDiscardedResouce() {
         return miniDiscardedResouce;
+    }
+
+    public void updateStorage(Deposit[] deposits)
+    {
+        this.storage = deposits;
+    }
+
+    public Deposit[] getStorage()
+    {
+        return this.storage;
     }
 
 }

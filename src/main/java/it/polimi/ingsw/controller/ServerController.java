@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Dashboard;
+import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.DebugMessages;
@@ -454,6 +455,11 @@ public class ServerController{
 
     }
 
+    public void sendStorageUpdate()
+    {
+        Deposit[] tmp = this.game.getCurrentPlayer().getDashboard().getStorage().getDeposits();
+        this.sendMessage(new StorageUpdate(tmp),this.game.getRealPlayerHandlerIndex());
+    }
     /**
      * if end condition are true send to all a "last Turn" packet
      * if the current player is 4 and the match is ended then send an "end game" packet to all
