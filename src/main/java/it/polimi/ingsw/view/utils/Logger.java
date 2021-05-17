@@ -225,14 +225,16 @@ public class Logger {
     {
         this.out.clear();
         this.printSeparator();
-        this.printRequest("Choose one of the following Turn type");
-        this.printRequest("If you want to cancel the turn you can by typing -exit (only if you havent done any action)");
+        this.printRequest("Choose what kind of turn you want to perform ");
+        this.printRequest("If you want to cancel the turn you can by typing \"-exit\" (only if you havent done any action)");
         this.printSeparator();
         this.out.println(" default = 1");
         this.out.println(" 1 - Buy a Card");
         this.out.println(" 2 - Extract from market");
         this.out.println(" 3 - Activate a production");
         this.printSeparator();
+        //System.out.println("sto tornando!");
+        return;
     }
 
     public void printResource(Resource res)

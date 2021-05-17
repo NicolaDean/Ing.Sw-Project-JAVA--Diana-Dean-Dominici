@@ -59,67 +59,74 @@ public class CLI extends Observable<ClientController> implements View {
         return miniMarketDiscardedResouce;
     }
 
-    public boolean helpCommands(String cmd, String message)
+    public String helpCommands(String cmd, String message)
     {
+        //
         cmd = cmd.toLowerCase();
         switch (cmd) {
             case "h":
             case "-h":
             case "help":
                 terminal.printHelp();
-                customRead(message);
-                return true;
+                return customRead(message);
+
             case "-quit": //quit case
                 //this.quit();
-                customRead(message);
-                return true;
+                return customRead(message);
 
             case "-exit": //cancel case
                 this.notifyObserver(controller -> {controller.sendMessage(new EndTurn());});
-                customRead(message);
-                return true;
+                return customRead(message);
 
             case "-startgame": //cancel case
                 this.notifyObserver(ClientController::sendStartCommand);
-                return true;
+                return cmd;
 
             case "-dashboard": //cancel case
+                this.notifyObserver(ClientController::showStorage);
                 customRead(message);
-                return true;
+                return customRead(message);
 
             case "-swapdeposits": //cancel case
                 customRead(message);
-                return true;
+                return customRead(message);
 
             case "-spy": //cancel case
                 customRead(message);
-                return true;
+                return customRead(message);
 
             default:
-                return false;
+                //System.out.println("opzione di default, cmd vale "+cmd);
+                return cmd;
 
         }
     }
-    public String customRead()
+    public synchronized String customRead()
     {
+        //System.out.println("!!!!!!!!!!!!!!!!!!!");
         String s = this.input.readLine();
-        helpCommands(s,"");
+        //System.out.println("???????????????????");
+       // System.out.println("s vale: "+s);
+        s = helpCommands(s,"");
         return s;
     }
 
     public String waitRead()
     {
         String s = this.input.readLine();
-        helpCommands(s,"");
+        s = helpCommands(s,"");
         waitRead();
         return s;
     }
 
     public String customRead(String message)
     {
+        //System.out.println("entrato nella custom con messaggio");
         terminal.printRequest(message);
         String s = this.input.readLine();
-        helpCommands(s,message);
+        //System.out.println("cazo culo "+s);
+        s = helpCommands(s,message);
+        //System.out.println("tette: "+s);
         return s;
     }
 
@@ -235,6 +242,7 @@ public class CLI extends Observable<ClientController> implements View {
         showMarket();
         do {
             in = this.customRead(msg);
+            //System.out.println("in ora vale: "+in);
 
             if(in.equals("col"))
             {
@@ -250,7 +258,7 @@ public class CLI extends Observable<ClientController> implements View {
             else
             {
                 this.terminal.printWarning("Wrong command");
-                this.terminal.printRequest(msg);
+                //this.terminal.printRequest(msg);
             }
         }while(cond);
 
@@ -400,13 +408,18 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askTurnType() {
+      //  System.out.println("eccomi nell'askturntype");
         boolean valid = false;
         String cmd = null;
+       // System.out.println("valid vale "+ valid);
         this.terminal.printTurnTypesHelp();
+       // System.out.println("valid vale "+ valid);
         while(!valid) {
-
+            //System.out.println("about to call customread");
             cmd = customRead();
+            //System.out.println("cmd is now "+cmd);
             try{
+                //tem.out.println("cmd vale:"+cmd);
             valid = input.validateInt(Integer.parseInt(cmd), 1, 3);}
             catch (Exception e)
             {
@@ -483,9 +496,9 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void askEndTurn() {
         terminal.printGoodMessages("Your last action has been sucesfuly completed");
-        terminal.printRequest("Do you want to end turn? (yes or no)");
+        //terminal.printRequest("Do you want to end turn? (yes or no)");
 
-        String in = this.customRead("Do you want to end turn?");
+        String in = this.customRead("Do you want to end turn? (yes or no)");
         in = in.toLowerCase(Locale.ROOT);
         if(in.equals("yes") || in.equals("y")) {
             this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
