@@ -194,18 +194,13 @@ public class Game {
 
     /**
      * Discard resource of a player and increment other position
-     * @param p player that want to discard
-     * @param res resource to discard
-     * @param pos deposit pos
-     * @throws Exception wrong deposit
+     * @param qty resources discarter
      */
-    public void discardResource(Player p, Resource res,int pos) throws EmptyDeposit, WrongPosition {
-        p.getDashboard().getStorage().safeSubtraction(res,pos);
+    public void discardResource(int qty) {
 
-        for(Player x:this.players)
+        for(int i=0;i<this.players.size();i++)
         {
-            if(x.getNickname() != p.getNickname())
-                x.incrementPosition(res.getQuantity());
+            if(i!=this.currentPlayer) this.players.get(i).incrementPosition(qty);
         }
     }
 

@@ -418,7 +418,13 @@ public class ServerController{
         }
     }
 
+    public Packet discardResource(int quantity)
+    {
+        this.game.discardResource(quantity);
 
+        this.broadcastMessage(this.currentClient,new UpdatePosition(quantity,this.game.getCurrentPlayerIndex()));
+        return new ACK(0);
+    }
 
     /**
      *
@@ -454,6 +460,7 @@ public class ServerController{
         return  new MarketResult(res,white);
 
     }
+
 
     public void sendStorageUpdate()
     {

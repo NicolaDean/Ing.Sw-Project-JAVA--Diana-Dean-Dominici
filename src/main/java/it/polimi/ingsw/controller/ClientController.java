@@ -202,6 +202,10 @@ public class ClientController implements Runnable{
             sendMessage(new Login(nickname));
     }
 
+    public void sendResourceDiscard(int quantity)
+    {
+        this.sendMessage(new DiscardResource(quantity));
+    }
     /**
      * set all initial information into miniMarted
      * @param mm mini model

@@ -284,7 +284,12 @@ public class CLI extends Observable<ClientController> implements View {
 
 
     @Override
-    public void askDiscardResource(List<Resource> resourceList) {
+    public Resource askDiscardResource(Resource res) {
+        String msg = "How much of this resources you want to discard";
+        int qty = askInt(msg,"thers not that much quantity",1,res.getQuantity());
+        Resource tmp = new Resource(res.getType(),qty);
+
+        return tmp;
     }
 
     /**
@@ -294,13 +299,11 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void askResourceInsertion(List<Resource> resourceList) {
 
-        //resourceList = (ResourceList) resourceList;
         this.notifyObserver(ClientController::showStorage);
 
-        List<Resource> x = new ResourceList();
-        boolean flag = false;
-
+        List<Resource> resDiscarded = new ResourceList();
         List<InsertionInstruction> insertions = new ArrayList<>();
+
         do
         {
 
@@ -323,15 +326,20 @@ public class CLI extends Observable<ClientController> implements View {
                         String in = this.customRead();
                         if(in.equals("discard"))
                         {
-                            String msg = "How much of this resources you want to discard";
-                            qty = askInt(msg,"thers not that much quantity",1,res.getQuantity());
-                            Resource tmp = new Resource(res.getType(),qty);
-                            removed.add(tmp);
-                            //this.notifyObserver(controller->{controller.discardResources(qty)})
+                            //ASK QUANTITY TO DISCARD
+                            Resource discRes = this.askDiscardResource(res);
                             discarded = true;
+                            removed.add(discRes);
+
+                            //SEND TO SERVER DISCARD MESSAGE
+                            this.notifyObserver(controller->{controller.sendResourceDiscard(discRes.getQuantity());});
+
+                            //TODO SI PTOREBBE INVIARE TUTTE LE RISORSE SCARTATE IN BLOCCO (ora lo fa per i singoli tipi di risorsa)
+                            resDiscarded.add(discRes);
                         }
                         else
                         {
+                            //TRY CONVERTING INPUT TO INT
                             try
                             {
                                 pos = Integer.parseInt(in);

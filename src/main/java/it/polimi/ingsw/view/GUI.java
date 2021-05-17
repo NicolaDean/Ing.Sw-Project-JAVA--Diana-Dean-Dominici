@@ -71,8 +71,8 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
-    public void askDiscardResource(List<Resource> resourceList) {
-
+    public Resource askDiscardResource(Resource resource) {
+        return null;
     }
 
     @Override

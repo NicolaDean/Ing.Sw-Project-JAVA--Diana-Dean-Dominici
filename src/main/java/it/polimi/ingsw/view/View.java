@@ -66,7 +66,7 @@ public interface View {
      * ask user which resouce extracted from market he want to discard
      * @param resourceList recived resources
      */
-    public void askDiscardResource(List<Resource> resourceList);
+    public Resource askDiscardResource(Resource resource);
 
     //Cost and gain of resource
 
