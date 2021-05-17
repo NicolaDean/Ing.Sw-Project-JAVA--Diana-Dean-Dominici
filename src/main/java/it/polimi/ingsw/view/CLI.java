@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static sun.util.locale.LocaleUtils.isEmpty;
 
 
 public class CLI extends Observable<ClientController> implements View {

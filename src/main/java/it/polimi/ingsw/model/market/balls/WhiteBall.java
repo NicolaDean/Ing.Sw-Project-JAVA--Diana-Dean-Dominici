@@ -13,8 +13,6 @@ import java.beans.Transient;
 public class WhiteBall extends BasicBall{
 
     public WhiteBall() {
-        this.colorGUI = colorGUI;
-        this.colorCLI = colorCLI;
         this.setColor(Color.white,CliColors.WHITE_TEXT);
     }
 
