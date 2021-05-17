@@ -203,7 +203,7 @@ public class Logger {
         this.out.clear();
         this.out.println("------------------------------------------");
         this.printWarning(" This list of commands is always usable, even if it's not your turn!");
-        this.printWarning(" Whenever you need you can type h or help to show this message again");
+        this.printWarning(" Whenever you need you can type \"h\" or \"help\" to show this message again");
         this.out.println("------------------------------------------");
         this.out.println(" default = cancel");
         this.out.println(" \"-quit\" to quit the game");
