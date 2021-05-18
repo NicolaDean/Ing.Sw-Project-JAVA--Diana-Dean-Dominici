@@ -36,18 +36,19 @@ public class CLI extends Observable<ClientController> implements View {
     InputReaderValidation   input;
     Thread                  helpThread;
     boolean                 waiting;
-    int                     lastTurn;
+    int                     turnSelected;
     private BasicBall[][]   miniMarketBalls;
     private BasicBall       miniMarketDiscardedResouce;
+    boolean canEndTurn;
+    boolean actionDone;
 
-    int turnSelected;
     public CLI()
     {
-        lastTurn = -1;
         waiting = true;
         input = new InputReaderValidation();
         terminal = new Logger();
         turnSelected = -1;
+        canEndTurn = false;
     }
 
     public void setMarket(BasicBall[][] balls, BasicBall discarted){
@@ -223,6 +224,7 @@ public class CLI extends Observable<ClientController> implements View {
         int pos = askInt("Where you want to put it in your dashboard (1-3)","wrong index",1,ConstantValues.productionSpaces)  -1;
 
         this.notifyObserver(controller -> controller.sendBuyCard(row,col,pos));
+        actionDone = true;
     }
 
     @Override
@@ -234,6 +236,7 @@ public class CLI extends Observable<ClientController> implements View {
         int pos = askInt("Select a card to activate (1-3)","wrong index",1,ConstantValues.productionSpaces)  -1;
 
         this.notifyObserver(controller -> controller.sendProduction(pos));
+        actionDone = true;
     }
 
     @Override
@@ -284,6 +287,7 @@ public class CLI extends Observable<ClientController> implements View {
 
         boolean finalDirection = direction;
         this.notifyObserver(controller -> {controller.sendMarketExtraction(finalDirection,num);});
+        actionDone = true;
     }
 
     @Override
@@ -327,11 +331,15 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public Resource askDiscardResource(Resource res) {
-        String msg = "How much of this resources you want to discard";
-        int qty = askInt(msg,"thers not that much quantity",1,res.getQuantity());
-        Resource tmp = new Resource(res.getType(),qty);
 
-        return tmp;
+        if(res.getQuantity() > 1)
+        {
+            String msg = "How much of this resources you want to discard";
+            int qty = askInt(msg,"thers not that much quantity",1,res.getQuantity());
+            Resource tmp = new Resource(res.getType(),qty);
+            return tmp;
+        }
+        else return res;
     }
 
     /**
@@ -343,6 +351,7 @@ public class CLI extends Observable<ClientController> implements View {
 
         this.notifyObserver(ClientController::showStorage);
 
+        canEndTurn = false;
         List<Resource> resDiscarded = new ResourceList();
         List<InsertionInstruction> insertions = new ArrayList<>();
 
@@ -426,6 +435,7 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askResourceExtraction(List<Resource> resourceList) {
+        canEndTurn = false;
         this.notifyObserver(ClientController::showStorage);
 
         this.terminal.printSeparator();
@@ -433,6 +443,7 @@ public class CLI extends Observable<ClientController> implements View {
         this.terminal.printResourceList(resourceList);
         this.terminal.printSeparator();
 
+        boolean flag = false;
         List<Resource> payed = new ResourceList();
         List<ExtractionInstruction> extractions = new ArrayList<>();
 
@@ -449,28 +460,34 @@ public class CLI extends Observable<ClientController> implements View {
                         int pos = -1;
                         int quantity = 1;
                         //TODO CERCA POSIZIONE STORAGE IN AUTOMATICO SENZA CHIEDERA ALLUTENTE (storage-chest-bonus)
-                        if(in.equals("storage"))
+
+                        if((in.equals("storage")|| in.equals("chest"))) flag = true;
+
+                        if(flag)
                         {
-                            pos = askInt("Which deposit you want to use? normal(1-3) bonus(4-5)","Wrong deposit number",1,ConstantValues.maxDepositsNumber) -1;
+                            if(in.equals("storage")) {
+                                pos = askInt("Which deposit you want to use? normal(1-3) bonus(4-5)", "Wrong deposit number", 1, ConstantValues.maxDepositsNumber) - 1;
+                            }
+                            Resource tmp = null;
+                            if(res.getQuantity()!=1)
+                            {
+                                quantity = askInt("How much of this resources you want to pay here?","Excessive quantity",1,res.getQuantity());
+                                tmp = new Resource(res.getType(),quantity);
+                                payed.add(tmp);
+                            }
+                            if(tmp == null)tmp = res;
+
+                            if(pos == -1) extractions.add(new ExtractionInstruction(tmp));
+                            else          extractions.add(new ExtractionInstruction(tmp,pos));
                         }
-
-                        Resource tmp = null;
-                        if(res.getQuantity()!=1)
-                        {
-                            quantity = askInt("How much of this resources you want to pay here?","Excessive quantity",1,res.getQuantity());
-                            tmp = new Resource(res.getType(),quantity);
-                        }
-
-                        if(pos == -1) extractions.add(new ExtractionInstruction(tmp));
-                        else          extractions.add(new ExtractionInstruction(tmp,pos));
-
-                    }while(in.equals("storage")|| in.equals("chest"));
+                    }while(!(in.equals("storage")|| in.equals("chest")));
                 }
 
             }
 
             resourceList = ResourceOperator.listSubtraction(resourceList,payed);
-        }while(ResourceOperator.isEmpty(resourceList));
+            payed = new ResourceList();
+        }while(!ResourceOperator.isEmpty(resourceList));
 
         if(turnSelected == 1)
         {
@@ -575,8 +592,33 @@ public class CLI extends Observable<ClientController> implements View {
         this.terminal.printStorage(deposits);
     }
 
+    public void changeTurnType()
+    {
+        if(!actionDone)
+        {
+            //askTurnType
+            DebugMessages.printError("This function will COMING SOON,non ready yet");
+        }
+    }
+    public void helpEndTurn()
+    {
+        if(canEndTurn)
+        {
+            this.askEndTurn();
+        }
+        else
+        {
+            terminal.printError("You cant end turn now, you probably have pending cost to pay or resources to insert");
+        }
+    }
+
+    /**
+     * Called ONLY by operationCompleted packet (if want to call in help use helpEndTurn())
+     */
     @Override
     public void askEndTurn() {
+        canEndTurn = true;
+        actionDone = true;
         terminal.printGoodMessages("Your last action has been sucesfuly completed");
         //terminal.printRequest("Do you want to end turn? (yes or no)");
 
@@ -585,25 +627,24 @@ public class CLI extends Observable<ClientController> implements View {
         if(in.equals("yes") || in.equals("y")) {
             this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
             this.waitturn();
-
         }
         else
         {
-            if(lastTurn == 1)
+            if(turnSelected == 1)
             {
                 this.askBuy();
             }
-            else if(lastTurn == 2)
+            else if(turnSelected == 2)
             {
                 this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
             }
-            else if(lastTurn == 3)
+            else if(turnSelected == 3)
             {
                 this.askProduction();
             }
             else
             {
-
+                this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
             }
         }
     }
@@ -631,10 +672,11 @@ public class CLI extends Observable<ClientController> implements View {
             case "1":
                 turnSelected =1;
                 this.askBuy();
+                break;
             case "market":
             case "2":
-                this.askMarketExtraction();
                 turnSelected =2;
+                this.askMarketExtraction();
                 break;
             case "3":
                 turnSelected =3;
