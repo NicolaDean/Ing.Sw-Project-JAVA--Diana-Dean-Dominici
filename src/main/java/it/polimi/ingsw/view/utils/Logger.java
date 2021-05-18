@@ -43,7 +43,7 @@ public class Logger {
 
     public void printError(String content)
     {
-        out.printlnColored(content,CliColors.WHITE_TEXT,this.istructionBackground);
+        out.printlnColored(content,CliColors.RED_TEXT,this.istructionBackground);
     }
 
 

@@ -10,6 +10,7 @@ public class OperationCompleted  extends Packet<ClientController> implements Pac
     @Override
     public Packet analyze(ClientController controller) {
         controller.askEndTurn();
+
         return null;
     }
 }

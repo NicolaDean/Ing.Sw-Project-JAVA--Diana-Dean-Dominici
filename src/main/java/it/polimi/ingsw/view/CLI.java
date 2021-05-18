@@ -525,7 +525,7 @@ public class CLI extends Observable<ClientController> implements View {
 
             }
             if(!valid)
-                terminal.printWarning("you have to type a number between 1 and 3!");
+                terminal.printWarning("you have to type a number between 1 and 4!");
         }
         turnTypeInterpreter(cmd);
     }
@@ -624,10 +624,10 @@ public class CLI extends Observable<ClientController> implements View {
     public void askEndTurn() {
         canEndTurn = true;
         actionDone = true;
-        terminal.printGoodMessages("Your last action has been sucesfuly completed");
+        terminal.printGoodMessages("Your last action has been successfully completed");
         //terminal.printRequest("Do you want to end turn? (yes or no)");
 
-        String in = this.customRead("Do you want to end turn? (yes or no)");
+        String in = this.customRead("Do you want to end the turn? (yes or no)");
         in = in.toLowerCase(Locale.ROOT);
         if(in.equals("yes") || in.equals("y")) {
             this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
@@ -659,9 +659,9 @@ public class CLI extends Observable<ClientController> implements View {
     }
 
     public void waitturn(){
-        terminal.printSeparator();
-        terminal.printGoodMessages("sto aspettando il mio turno");
-        terminal.printSeparator();
+        //terminal.printSeparator();
+        //terminal.printGoodMessages("sto aspettando il mio turno");
+        //terminal.printSeparator();
         waiting = true;
         helpThread = new Thread(this::waitingHelpLoop);
         helpThread.start();
