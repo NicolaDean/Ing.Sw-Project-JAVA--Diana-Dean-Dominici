@@ -265,12 +265,12 @@ public class CLI extends Observable<ClientController> implements View {
 
             if(in.equals("col"))
             {
-                direction = false;
+                direction = true;
                 max = ConstantValues.marketCol;
                 cond = false;
             }else if( in.equals("row"))
             {
-                direction = true;
+                direction = false;
                 max = ConstantValues.marketRow;
                 cond = false;
             }
