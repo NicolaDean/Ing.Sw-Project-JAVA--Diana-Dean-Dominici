@@ -118,6 +118,7 @@ public class ServerController{
 
     public boolean isSinglePlayer()
     {
+
         return this.isSinglePlayer;
     }
 

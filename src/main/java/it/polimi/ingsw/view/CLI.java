@@ -125,8 +125,8 @@ public class CLI extends Observable<ClientController> implements View {
 
     public String customRead(String message)
     {
-        //System.out.println("entrato nella custom con messaggio");
-        terminal.printRequest(message);
+        if(!message.equals(""))
+            terminal.printRequest(message);
         String s = this.input.readLine();
         //System.out.println("cazo culo "+s);
         s = helpCommands(s,message);
