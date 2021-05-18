@@ -95,8 +95,8 @@ public class Logger {
 
         if(deposits == null)
         {
-            DebugMessages.printError("Empty Storage");
-            return;
+            DebugMessages.printWarning("Empty Storage");
+            //return;
         }
         for(Deposit d:deposits)
         {
@@ -307,15 +307,15 @@ public class Logger {
     public void printTurnTypesHelp()
     {
         this.out.clear();
-        this.printSeparator();
+        //this.printSeparator();
         this.printRequest("Choose what kind of turn you want to perform ");
-        this.printRequest("If you want to cancel the turn you can by typing \"-exit\" (only if you havent done any action)");
+        this.printRequest("If you want to cancel the turn you can do so by typing \"-exit\" (only if you havent done any action)");
         this.printSeparator();
-        this.out.println(" default = 1");
-        this.out.println(" 1 - Buy a Card");
-        this.out.println(" 2 - Extract from market");
-        this.out.println(" 3 - Activate a production");
-        this.printSeparator();
+        //this.out.println(" default = 1");
+        //this.out.println(" 1 - Buy a Card");
+        //this.out.println(" 2 - Extract from market");
+        //this.out.println(" 3 - Activate a production");
+        //this.printSeparator();
         //System.out.println("sto tornando!");
         return;
     }
