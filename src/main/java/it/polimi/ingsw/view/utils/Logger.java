@@ -13,6 +13,7 @@ import it.polimi.ingsw.utils.DebugMessages;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 import static it.polimi.ingsw.utils.ConstantValues.*;
 
@@ -52,21 +53,20 @@ public class Logger {
      */
     public void printMarket(View view){
 
-        System.out.println("Market:");
-        for (int i = 0; i < marketRow; i++) {
-            for(int j = 0; j < marketCol; j++){
-                try {
-                    out.printColored(" ● ",CliColors.R_WHITE_BACKGROUND,view.getMiniMarketBalls()[i][j].getCliColor());
-                    if(j==3)
-                        System.out.print("← "+(i+1));
-                }catch (Exception e){
-
+        System.out.println("Market:\n");
+        try {
+            System.out.print(" 1  2  3  4\n ↓  ↓  ↓  ↓ \n");
+            for (int i = 0; i < marketRow; i++) {
+                for (int j = 0; j < marketCol; j++) {
+                    out.printColored(" ● ", CliColors.R_WHITE_BACKGROUND, view.getMiniMarketBalls()[i][j].getCliColor());
+                    if (j == 3) System.out.print("← " + (i + 1)+"\n");
                 }
             }
-            System.out.println("");
+            System.out.print("\nBall to insert");
+            out.printColored(": ● ", CliColors.R_WHITE_BACKGROUND, view.getMiniMarketDiscardedResouce().getCliColor());
+        }catch (Exception e){
+            DebugMessages.printWarning("lanciato eccezione "+e.getLocalizedMessage());
         }
-        System.out.print(" ↑  ↑  ↑  ↑ \n 1  2  3  4\nBall to insert:");
-        out.printColored(" ● ",CliColors.R_WHITE_BACKGROUND,view.getMiniMarketDiscardedResouce().getCliColor());
     }
 
     public void spacer(int space)
