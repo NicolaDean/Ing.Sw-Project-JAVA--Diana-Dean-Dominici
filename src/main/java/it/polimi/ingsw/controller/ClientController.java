@@ -182,6 +182,7 @@ public class ClientController implements Runnable{
     {
         view.askCommand();
     }
+
     /**
      * Open a connection with this server
      * @param ip server ip

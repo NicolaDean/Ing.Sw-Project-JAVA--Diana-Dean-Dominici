@@ -89,7 +89,6 @@ public class CLI extends Observable<ClientController> implements View {
 
             case "-dashboard": //cancel case
                 this.notifyObserver(ClientController::showStorage);
-                customRead(message);
                 return customRead(message);
 
             case "-swapdeposits": //cancel case
@@ -326,7 +325,7 @@ public class CLI extends Observable<ClientController> implements View {
      */
     @Override
     public void showMarket(){
-       // terminal.printMarket(this);
+       terminal.printMarket(this);
     }
 
 
@@ -516,17 +515,17 @@ public class CLI extends Observable<ClientController> implements View {
        // System.out.println("valid vale "+ valid);
         while(!valid) {
             //System.out.println("about to call customread");
-            cmd = customRead();
+            cmd = customRead("select what type of turn you want to perform!\n\"1\" to buy a card\n\"2\" to extract from market\n\"3\" to activate production\n\"4\" to skip the turn");
             //System.out.println("cmd is now "+cmd);
             try{
                 //tem.out.println("cmd vale:"+cmd);
-            valid = input.validateInt(Integer.parseInt(cmd), 1, 3);}
+            valid = input.validateInt(Integer.parseInt(cmd), 1, 4);}
             catch (Exception e)
             {
 
             }
             if(!valid)
-                terminal.printWarning("you have to type a number between 1 and 3!");
+                terminal.printWarning("you have to type a number between 1 and 4!");
         }
         turnTypeInterpreter(cmd);
     }
@@ -535,9 +534,10 @@ public class CLI extends Observable<ClientController> implements View {
     {
         try
         {
+            this.terminal.printHelp();
             while(waiting)
             {
-                this.terminal.printHelp();
+
                 while(!this.input.bufferReady())
                 {
                     Thread.sleep(100);
@@ -563,7 +563,11 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void showGameStarted() {
         this.terminal.printGoodMessages("GAME HAS STARTED");
-        this.terminal.printRequest("Click enter to continue");
+        //this.terminal.printRequest("Click enter to continue");
+    }
+
+    public Logger getTerminal() {
+        return terminal;
     }
 
     @Override
@@ -620,10 +624,10 @@ public class CLI extends Observable<ClientController> implements View {
     public void askEndTurn() {
         canEndTurn = true;
         actionDone = true;
-        terminal.printGoodMessages("Your last action has been sucesfuly completed");
+        terminal.printGoodMessages("Your last action has been successfully completed");
         //terminal.printRequest("Do you want to end turn? (yes or no)");
 
-        String in = this.customRead("Do you want to end turn? (yes or no)");
+        String in = this.customRead("Do you want to end the turn? (yes or no)");
         in = in.toLowerCase(Locale.ROOT);
         if(in.equals("yes") || in.equals("y")) {
             this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
@@ -643,6 +647,10 @@ public class CLI extends Observable<ClientController> implements View {
             {
                 this.askProduction();
             }
+            else if(turnSelected == 4)
+            {
+                this.askEndTurn();
+            }
             else
             {
                 this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
@@ -651,9 +659,9 @@ public class CLI extends Observable<ClientController> implements View {
     }
 
     public void waitturn(){
-        terminal.printSeparator();
-        terminal.printGoodMessages("sto aspettando il mio turno");
-        terminal.printSeparator();
+        //terminal.printSeparator();
+        //terminal.printGoodMessages("sto aspettando il mio turno");
+        //terminal.printSeparator();
         waiting = true;
         helpThread = new Thread(this::waitingHelpLoop);
         helpThread.start();
@@ -683,7 +691,12 @@ public class CLI extends Observable<ClientController> implements View {
                 turnSelected =3;
                 this.askProduction();
                 break;
+            case "4":
+                turnSelected =4;
+                this.askEndTurn();
+                break;
             default:
+                //System.out.println("sono entrato con cmd= "+cmd );
                 turnSelected =1;
                 this.askBuy();
                 break;

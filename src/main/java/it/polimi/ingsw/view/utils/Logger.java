@@ -13,6 +13,7 @@ import it.polimi.ingsw.utils.DebugMessages;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 import static it.polimi.ingsw.utils.ConstantValues.*;
 
@@ -52,21 +53,20 @@ public class Logger {
      */
     public void printMarket(View view){
 
-        System.out.println("Market:");
-        for (int i = 0; i < marketRow; i++) {
-            for(int j = 0; j < marketCol; j++){
-                try {
-                    out.printColored(" ● ",CliColors.R_WHITE_BACKGROUND,view.getMiniMarketBalls()[i][j].getCliColor());
-                    if(j==3)
-                        System.out.print("← "+(i+1));
-                }catch (Exception e){
-
+        System.out.println("Market:\n");
+        try {
+            System.out.print(" 1  2  3  4\n ↓  ↓  ↓  ↓ \n");
+            for (int i = 0; i < marketRow; i++) {
+                for (int j = 0; j < marketCol; j++) {
+                    out.printColored(" ● ", CliColors.R_WHITE_BACKGROUND, view.getMiniMarketBalls()[i][j].getCliColor());
+                    if (j == 3) System.out.print("← " + (i + 1)+"\n");
                 }
             }
-            System.out.println("");
+            System.out.print("\nBall to insert: ");
+            out.printColored(" ● ", CliColors.R_WHITE_BACKGROUND, view.getMiniMarketDiscardedResouce().getCliColor());
+        }catch (Exception e){
+            DebugMessages.printWarning("lanciato eccezione "+e.getLocalizedMessage());
         }
-        System.out.print(" ↑  ↑  ↑  ↑ \n 1  2  3  4\nBall to insert:");
-        out.printColored(" ● ",CliColors.R_WHITE_BACKGROUND,view.getMiniMarketDiscardedResouce().getCliColor());
     }
 
     public void spacer(int space)
@@ -95,8 +95,8 @@ public class Logger {
 
         if(deposits == null)
         {
-            DebugMessages.printError("Empty Storage");
-            return;
+            DebugMessages.printWarning("Empty Storage");
+            //return;
         }
         for(Deposit d:deposits)
         {
@@ -161,7 +161,7 @@ public class Logger {
         for(ProductionCard card: row)
         {
             this.out.print("║");
-            this.out.printColored("Cost     : ",CliColors.RED_TEXT);
+            this.out.printColored("Cost     : ",CliColors.WHITE_TEXT);
             this.printInlineResourceList(card.getCost());
             int padding = 20 - 3* ResourceOperator.getTypeCounter(card.getCost());
             this.spacer(padding);
@@ -171,7 +171,7 @@ public class Logger {
         for(ProductionCard card: row)
         {
             this.out.print("║");
-            this.out.printColored("Raw  mat : ",CliColors.RED_TEXT);
+            this.out.printColored("Raw  mat : ",CliColors.WHITE_TEXT);
             this.printInlineResourceList(card.getRawMaterials());
 
             int padding = 20 - 3* ResourceOperator.getTypeCounter(card.getRawMaterials());
@@ -183,14 +183,14 @@ public class Logger {
         {
             int faith =card.getObtainedFaith();
             this.out.print("║");
-            this.out.printColored("Obt mat  : ",CliColors.RED_TEXT);
+            this.out.printColored("Obt mat  : ",CliColors.WHITE_TEXT);
             this.printInlineResourceList(card.getObtainedMaterials());
 
             int padding = 20 - 3* ResourceOperator.getTypeCounter(card.getObtainedMaterials());
 
             if( faith !=0)
             {   padding = padding-3;
-                this.out.printColored(" "+faith+ " ",CliColors.BLACK_TEXT,CliColors.RED_BACKGROUND);
+                this.out.printColored(" "+faith+ " ",CliColors.BLACK_TEXT,CliColors.WHITE_BACKGROUND);
             }
             this.spacer(padding);
             this.out.print("║");
@@ -238,7 +238,7 @@ public class Logger {
 
     public void Welcome()
     {
-        out.printlnColored("WELCOMEE TO LORENZO IL MAGNIFICO", CliColors.RED_TEXT,CliColors.WHITE_BACKGROUND);
+        out.printlnColored("WELCOMEE TO LORENZO IL MAGNIFICO", CliColors.WHITE_TEXT,CliColors.WHITE_BACKGROUND);
     }
 
     /**
@@ -273,9 +273,9 @@ public class Logger {
         this.out.clear();
         this.out.setBold();
 
-       //this.out.printColored(logo,CliColors.RED_TEXT,CliColors.BLACK_BACKGROUND);
+       //this.out.printColored(logo,CliColors.WHITE_TEXT,CliColors.BLACK_BACKGROUND);
        this.out.reset();
-       this.out.printlnColored(logo2,CliColors.RED_TEXT,CliColors.BLACK_BACKGROUND);
+       this.out.printlnColored(logo2,CliColors.WHITE_TEXT,CliColors.BLACK_BACKGROUND);
        this.out.reset();
     }
 
@@ -307,15 +307,15 @@ public class Logger {
     public void printTurnTypesHelp()
     {
         this.out.clear();
-        this.printSeparator();
+        //this.printSeparator();
         this.printRequest("Choose what kind of turn you want to perform ");
-        this.printRequest("If you want to cancel the turn you can by typing \"-exit\" (only if you havent done any action)");
+        this.printRequest("If you want to cancel the turn you can do so by typing \"-exit\" (only if you havent done any action)");
         this.printSeparator();
-        this.out.println(" default = 1");
-        this.out.println(" 1 - Buy a Card");
-        this.out.println(" 2 - Extract from market");
-        this.out.println(" 3 - Activate a production");
-        this.printSeparator();
+        //this.out.println(" default = 1");
+        //this.out.println(" 1 - Buy a Card");
+        //this.out.println(" 2 - Extract from market");
+        //this.out.println(" 3 - Activate a production");
+        //this.printSeparator();
         //System.out.println("sto tornando!");
         return;
     }
