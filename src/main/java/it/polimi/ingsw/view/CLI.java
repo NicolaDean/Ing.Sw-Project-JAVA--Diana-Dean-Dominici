@@ -251,8 +251,7 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askMarketExtraction() {
-
-        String msg = "Insert \"col\" or \"row\" to select the extraction mode";
+        String msg = "\nInsert \"col\" or \"row\" to select the extraction mode";
         boolean direction = false;
         String in = "";
         int max = 0;

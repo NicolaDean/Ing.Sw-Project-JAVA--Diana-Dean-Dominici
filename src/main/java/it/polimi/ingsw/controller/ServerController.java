@@ -210,8 +210,8 @@ public class ServerController{
     public boolean isRightPlayer(int playerIndex)
     {
         //TODO CHECK BETTER THE BOOLEAN EXPRESSION
-        //return (this.game.getCurrentPlayerIndex() == this.clients.get(currentClient).getRealPlayerIndex());
-        return true;
+        return (this.game.getCurrentPlayerIndex() == this.clients.get(currentClient).getRealPlayerIndex());
+        //return true;
     }
 
     /**
@@ -510,8 +510,8 @@ public class ServerController{
         }
 
 
-
-        currentClient=this.game.getRealPlayerHandlerIndex();
+        currentClient = player.getControllerIndex();
+        //currentClient=this.game.getRealPlayerHandlerIndex();
 
         //DebugMessages.printGeneric("\n new currplayer: "+ currentClient + ", total players: "+this.clients.size()+"\n");
 

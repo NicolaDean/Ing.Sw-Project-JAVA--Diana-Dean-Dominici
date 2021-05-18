@@ -38,7 +38,7 @@ public class Game {
         this.leaders         = CardFactory.loadLeaderCardsFromJsonFile();
         this.papalSpaces     = MapFactory.loadPapalSpacesFromJsonFile();
         this.scorePositions  = MapFactory.loadCellScoresFromJsonFile();
-
+        this.currentPlayer   =0;
         this.players = new ArrayList<>();
         this.currentPapalSpaceToReach = 0;
     }
