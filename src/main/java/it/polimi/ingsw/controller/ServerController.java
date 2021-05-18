@@ -173,10 +173,10 @@ public class ServerController{
                 }
 
                 int firstPlayer = this.game.getRealPlayerHandlerIndex();
-
+                currentClient = firstPlayer;
                 //Send broadcast with game started packet
                 this.broadcastMessage(-1, new GameStarted(game.getMiniModel(),game.getMarket().getResouces(),game.getMarket().getDiscardedResouce()));
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.MILLISECONDS.sleep(500);
                 //notify first player the is its turn
                 this.clients.get(firstPlayer).sendToClient(new TurnNotify());
             } else {
@@ -199,7 +199,8 @@ public class ServerController{
     public boolean isRightPlayer(int playerIndex)
     {
         //TODO CHECK BETTER THE BOOLEAN EXPRESSION
-        return (this.game.getCurrentPlayerIndex() == this.clients.get(currentClient).getRealPlayerIndex());
+        //return (this.game.getCurrentPlayerIndex() == this.clients.get(currentClient).getRealPlayerIndex());
+        return true;
     }
 
     /**

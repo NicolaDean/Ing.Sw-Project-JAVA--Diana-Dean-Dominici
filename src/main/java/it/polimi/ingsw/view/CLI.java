@@ -515,7 +515,7 @@ public class CLI extends Observable<ClientController> implements View {
        // System.out.println("valid vale "+ valid);
         while(!valid) {
             //System.out.println("about to call customread");
-            cmd = customRead("select what type of turn you want to perform!\n\"1\" to buy a card\n\"2\" to extract from market\n\"3\" to activate production");
+            cmd = customRead("select what type of turn you want to perform!\n\"1\" to buy a card\n\"2\" to extract from market\n\"3\" to activate production\n\"4\" to skip the turn");
             //System.out.println("cmd is now "+cmd);
             try{
                 //tem.out.println("cmd vale:"+cmd);
@@ -534,9 +534,10 @@ public class CLI extends Observable<ClientController> implements View {
     {
         try
         {
+            this.terminal.printHelp();
             while(waiting)
             {
-                this.terminal.printHelp();
+
                 while(!this.input.bufferReady())
                 {
                     Thread.sleep(100);
