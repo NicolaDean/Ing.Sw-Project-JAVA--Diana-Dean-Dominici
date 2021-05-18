@@ -519,7 +519,7 @@ public class CLI extends Observable<ClientController> implements View {
             //System.out.println("cmd is now "+cmd);
             try{
                 //tem.out.println("cmd vale:"+cmd);
-            valid = input.validateInt(Integer.parseInt(cmd), 1, 3);}
+            valid = input.validateInt(Integer.parseInt(cmd), 1, 4);}
             catch (Exception e)
             {
 
@@ -564,6 +564,10 @@ public class CLI extends Observable<ClientController> implements View {
     public void showGameStarted() {
         this.terminal.printGoodMessages("GAME HAS STARTED");
         //this.terminal.printRequest("Click enter to continue");
+    }
+
+    public Logger getTerminal() {
+        return terminal;
     }
 
     @Override
@@ -643,6 +647,10 @@ public class CLI extends Observable<ClientController> implements View {
             {
                 this.askProduction();
             }
+            else if(turnSelected == 4)
+            {
+                this.askEndTurn();
+            }
             else
             {
                 this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
@@ -683,7 +691,12 @@ public class CLI extends Observable<ClientController> implements View {
                 turnSelected =3;
                 this.askProduction();
                 break;
+            case "4":
+                turnSelected =4;
+                this.askEndTurn();
+                break;
             default:
+                //System.out.println("sono entrato con cmd= "+cmd );
                 turnSelected =1;
                 this.askBuy();
                 break;
