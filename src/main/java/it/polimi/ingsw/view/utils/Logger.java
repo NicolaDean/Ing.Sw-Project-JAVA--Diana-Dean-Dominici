@@ -42,7 +42,7 @@ public class Logger {
 
     public void printError(String content)
     {
-        out.printlnColored(content,CliColors.RED_TEXT,this.istructionBackground);
+        out.printlnColored(content,CliColors.WHITE_TEXT,this.istructionBackground);
     }
 
 
@@ -161,7 +161,7 @@ public class Logger {
         for(ProductionCard card: row)
         {
             this.out.print("║");
-            this.out.printColored("Cost     : ",CliColors.RED_TEXT);
+            this.out.printColored("Cost     : ",CliColors.WHITE_TEXT);
             this.printInlineResourceList(card.getCost());
             int padding = 20 - 3* ResourceOperator.getTypeCounter(card.getCost());
             this.spacer(padding);
@@ -171,7 +171,7 @@ public class Logger {
         for(ProductionCard card: row)
         {
             this.out.print("║");
-            this.out.printColored("Raw  mat : ",CliColors.RED_TEXT);
+            this.out.printColored("Raw  mat : ",CliColors.WHITE_TEXT);
             this.printInlineResourceList(card.getRawMaterials());
 
             int padding = 20 - 3* ResourceOperator.getTypeCounter(card.getRawMaterials());
@@ -183,14 +183,14 @@ public class Logger {
         {
             int faith =card.getObtainedFaith();
             this.out.print("║");
-            this.out.printColored("Obt mat  : ",CliColors.RED_TEXT);
+            this.out.printColored("Obt mat  : ",CliColors.WHITE_TEXT);
             this.printInlineResourceList(card.getObtainedMaterials());
 
             int padding = 20 - 3* ResourceOperator.getTypeCounter(card.getObtainedMaterials());
 
             if( faith !=0)
             {   padding = padding-3;
-                this.out.printColored(" "+faith+ " ",CliColors.BLACK_TEXT,CliColors.RED_BACKGROUND);
+                this.out.printColored(" "+faith+ " ",CliColors.BLACK_TEXT,CliColors.WHITE_BACKGROUND);
             }
             this.spacer(padding);
             this.out.print("║");
@@ -238,7 +238,7 @@ public class Logger {
 
     public void Welcome()
     {
-        out.printlnColored("WELCOMEE TO LORENZO IL MAGNIFICO", CliColors.RED_TEXT,CliColors.WHITE_BACKGROUND);
+        out.printlnColored("WELCOMEE TO LORENZO IL MAGNIFICO", CliColors.WHITE_TEXT,CliColors.WHITE_BACKGROUND);
     }
 
     /**
@@ -273,9 +273,9 @@ public class Logger {
         this.out.clear();
         this.out.setBold();
 
-       //this.out.printColored(logo,CliColors.RED_TEXT,CliColors.BLACK_BACKGROUND);
+       //this.out.printColored(logo,CliColors.WHITE_TEXT,CliColors.BLACK_BACKGROUND);
        this.out.reset();
-       this.out.printlnColored(logo2,CliColors.RED_TEXT,CliColors.BLACK_BACKGROUND);
+       this.out.printlnColored(logo2,CliColors.WHITE_TEXT,CliColors.BLACK_BACKGROUND);
        this.out.reset();
     }
 
