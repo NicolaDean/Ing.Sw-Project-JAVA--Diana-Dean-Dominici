@@ -3,20 +3,20 @@ package it.polimi.ingsw.model.market.balls;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.market.Market;
-import it.polimi.ingsw.model.resources.Resource;
-import it.polimi.ingsw.view.utils.CliColors;
 
 import java.awt.*;
 
-import static it.polimi.ingsw.enumeration.ResourceType.COIN;
-import static it.polimi.ingsw.enumeration.ResourceType.ROCK;
-
 public class ResourceBall  extends BasicBall {
     ResourceType type;
+    transient Color GUI;
+    String CLI;
 
-    public ResourceBall(Color color, ResourceType type, String cliColors) {
+    public ResourceBall(Color colorGUI, ResourceType type, String cliColors) {
+        super();
         this.type = type;
-        this.setColor(color,colorCLI);
+        this.CLI=cliColors;
+        this.GUI =colorGUI;
+        this.setColor(colorGUI,CLI);
     }
 
     /**
@@ -29,6 +29,5 @@ public class ResourceBall  extends BasicBall {
     }
 
     public ResourceType getType(){return type;}
-
 
 }

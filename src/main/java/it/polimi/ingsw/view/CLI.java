@@ -325,7 +325,7 @@ public class CLI extends Observable<ClientController> implements View {
      */
     @Override
     public void showMarket(){
-       // terminal.printMarket(this);
+       terminal.printMarket(this);
     }
 
 

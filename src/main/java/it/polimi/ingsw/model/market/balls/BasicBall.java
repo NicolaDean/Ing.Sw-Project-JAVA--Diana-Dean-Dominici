@@ -8,7 +8,7 @@ import it.polimi.ingsw.view.utils.CliColors;
 import java.awt.*;
 
 public class BasicBall {
-    Color colorGUI;
+    transient Color colorGUI;
     String colorCLI;
 
     public void setColor(Color  c,String s){
