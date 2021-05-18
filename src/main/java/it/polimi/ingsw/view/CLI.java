@@ -88,7 +88,6 @@ public class CLI extends Observable<ClientController> implements View {
 
             case "-dashboard": //cancel case
                 this.notifyObserver(ClientController::showStorage);
-                customRead(message);
                 return customRead(message);
 
             case "-swapdeposits": //cancel case
@@ -499,7 +498,7 @@ public class CLI extends Observable<ClientController> implements View {
        // System.out.println("valid vale "+ valid);
         while(!valid) {
             //System.out.println("about to call customread");
-            cmd = customRead();
+            cmd = customRead("select what type of turn you want to perform!\n\"1\" to buy a card\n\"2\" to extract from market\n\"3\" to activate production");
             //System.out.println("cmd is now "+cmd);
             try{
                 //tem.out.println("cmd vale:"+cmd);
@@ -546,7 +545,7 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void showGameStarted() {
         this.terminal.printGoodMessages("GAME HAS STARTED");
-        this.terminal.printRequest("Click enter to continue");
+        //this.terminal.printRequest("Click enter to continue");
     }
 
     @Override

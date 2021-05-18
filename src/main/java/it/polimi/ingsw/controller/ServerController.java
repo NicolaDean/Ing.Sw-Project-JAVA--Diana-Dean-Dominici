@@ -17,6 +17,7 @@ import it.polimi.ingsw.view.utils.CliColors;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ServerController{
 
@@ -175,7 +176,7 @@ public class ServerController{
 
                 //Send broadcast with game started packet
                 this.broadcastMessage(-1, new GameStarted(game.getMiniModel(),game.getMarket().getResouces(),game.getMarket().getDiscardedResouce()));
-
+                TimeUnit.SECONDS.sleep(1);
                 //notify first player the is its turn
                 this.clients.get(firstPlayer).sendToClient(new TurnNotify());
             } else {
