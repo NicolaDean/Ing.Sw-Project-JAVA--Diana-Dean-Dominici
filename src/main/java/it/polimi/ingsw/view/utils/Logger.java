@@ -62,8 +62,8 @@ public class Logger {
                     if (j == 3) System.out.print("← " + (i + 1)+"\n");
                 }
             }
-            System.out.print("\nBall to insert");
-            out.printColored(": ● ", CliColors.R_WHITE_BACKGROUND, view.getMiniMarketDiscardedResouce().getCliColor());
+            System.out.print("\nBall to insert: ");
+            out.printColored(" ● ", CliColors.R_WHITE_BACKGROUND, view.getMiniMarketDiscardedResouce().getCliColor());
         }catch (Exception e){
             DebugMessages.printWarning("lanciato eccezione "+e.getLocalizedMessage());
         }
