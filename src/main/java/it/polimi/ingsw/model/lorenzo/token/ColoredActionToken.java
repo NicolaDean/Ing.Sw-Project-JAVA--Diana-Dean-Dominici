@@ -3,6 +3,8 @@ package it.polimi.ingsw.model.lorenzo.token;
 import it.polimi.ingsw.enumeration.CardType;
 import it.polimi.ingsw.model.lorenzo.LorenzoGame;
 import it.polimi.ingsw.model.lorenzo.token.ActionToken;
+import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.view.utils.CliColors;
 
 public class ColoredActionToken implements ActionToken {
     CardType type;
@@ -45,5 +47,10 @@ public class ColoredActionToken implements ActionToken {
     @Override
     public CardType getType() {
         return type;
+    }
+
+    @Override
+    public String getColor() {
+        return ConstantValues.resourceRappresentation.getCardTypeColorRappresentation(type) + CliColors.BLACK_TEXT +  "Card";
     }
 }

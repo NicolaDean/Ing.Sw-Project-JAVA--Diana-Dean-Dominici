@@ -117,7 +117,6 @@ public class ColorCliTest {
         }
 
         Deposit [] x = s.getDeposits();
-
         logger.printDashboard(x,cards[2][2].getCost(),cards[1]);
     }
 

@@ -45,15 +45,15 @@ public class StorageMassExtraction extends Packet<ServerController> implements P
         if(failed)
         {
             controller.sendMessage(packet,this.getPlayerIndex());
-            controller.sendStorageUpdate();
+            controller.sendStorageUpdate(this.getPlayerIndex());
             return new PendingCost(remaining);
         }
         else
         {
             controller.sendMessage(new ACK(0),this.getPlayerIndex());
-            controller.sendStorageUpdate();
+            controller.sendStorageUpdate(this.getPlayerIndex());
 
-            if(buyturn) controller.sendPendingCard();
+            if(buyturn) controller.sendPendingCard(this.getPlayerIndex());
 
             return new OperationCompleted();
         }

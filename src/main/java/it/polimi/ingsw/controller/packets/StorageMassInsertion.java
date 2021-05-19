@@ -49,13 +49,13 @@ public class StorageMassInsertion extends Packet<ServerController> implements Pa
         if(failed)
         {
             controller.sendMessage(packet,this.getPlayerIndex());
-            controller.sendStorageUpdate();
+            controller.sendStorageUpdate(this.getPlayerIndex());
             return new MarketResult(remaining);
         }
         else
         {
             controller.sendMessage(new ACK(0),this.getPlayerIndex());
-            controller.sendStorageUpdate();
+            controller.sendStorageUpdate(this.getPlayerIndex());
 
             return new OperationCompleted();
         }

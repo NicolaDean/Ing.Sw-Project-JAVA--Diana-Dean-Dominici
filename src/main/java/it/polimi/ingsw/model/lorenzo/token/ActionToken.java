@@ -15,4 +15,6 @@ public interface ActionToken {
 
     public CardType getType();
 
+    public String getColor();
+
 }
