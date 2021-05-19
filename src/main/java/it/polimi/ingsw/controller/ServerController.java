@@ -472,7 +472,9 @@ public class ServerController{
 
             //System.out.println("\n postswap d1: "+ p.getDashboard().getStorage().getStorage()[0].getResource().getType());
             //System.out.println(" postswap d2: "+ p.getDashboard().getStorage().getStorage()[1].getResource().getType()+"\n");
-            return new StorageUpdate(tmp);
+            sendStorageUpdate(player);
+            return null;
+
         } catch (Exception e) {
             e.printStackTrace();
             //System.out.println("ack con code 1 inviatoo\n\n");
@@ -533,6 +535,8 @@ public class ServerController{
         Deposit[] tmp = this.game.getCurrentPlayer().getDashboard().getStorage().getDeposits();
         this.sendMessage(new StorageUpdate(tmp),this.currentClient);
     }
+
+
 
     public void sendStorageUpdate(int index)
     {

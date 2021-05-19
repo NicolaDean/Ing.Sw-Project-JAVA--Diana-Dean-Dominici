@@ -19,11 +19,13 @@ public class AskSwap extends Packet<ServerController> implements PacketManager<S
     {
         Packet p = controller.swapDeposit(this.d1,this.d2,index);
 
+        if(p!=null)
+        {
         if(p.getType().equals("ACK"))
         {
             controller.sendMessage(new SwapFailed(this.d1, this.d2),this.getPlayerIndex());
             return p;
-        }
+        }}
         return p;
     }
 
