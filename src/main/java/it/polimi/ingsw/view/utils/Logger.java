@@ -51,12 +51,13 @@ public class Logger {
 
         System.out.println("Market:\n");
         try {
-            System.out.print(" 1  2  3  4\n ↓  ↓  ↓  ↓ \n");
+            System.out.print("    1  2  3  4\n    ↓  ↓  ↓  ↓ \n");
             for (int i = 0; i < marketRow; i++) {
                 for (int j = 0; j < marketCol; j++) {
+                    if (j == 0) System.out.print((i + 1)+" → ");
                     out.printColored(" ● ", CliColors.R_WHITE_BACKGROUND, view.getMiniMarketBalls()[i][j].getCliColor());
-                    if (j == 3) System.out.print("← " + (i + 1)+"\n");
                 }
+                System.out.print("\n");
             }
             System.out.print("\nBall to insert: ");
             out.printColored(" ● ", CliColors.R_WHITE_BACKGROUND, view.getMiniMarketDiscardedResouce().getCliColor());

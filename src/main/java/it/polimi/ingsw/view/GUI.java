@@ -24,7 +24,7 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public BasicBall[][] getMiniMarketBalls() {
-        return new BasicBall[0][];
+        return null;
     }
 
     @Override
