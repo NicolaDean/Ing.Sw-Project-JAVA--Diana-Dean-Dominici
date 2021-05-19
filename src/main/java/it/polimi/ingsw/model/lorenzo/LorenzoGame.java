@@ -4,13 +4,17 @@ import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.CellScore;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.lorenzo.token.ActionToken;
 import it.polimi.ingsw.model.lorenzo.token.BlackCrossToken;
 import it.polimi.ingsw.model.lorenzo.token.ColoredActionToken;
 import it.polimi.ingsw.model.lorenzo.token.SpecialBlackCrossToken;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.utils.ConstantValues;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 import static it.polimi.ingsw.enumeration.CardType.*;
@@ -44,6 +48,7 @@ public class LorenzoGame extends Game {
      * @param nickname the nickname of the player
      * @throws Exception
      */
+    @Override
     public void addPlayer(String nickname) throws NicknameAlreadyTaken, MatchFull {
         if(getNofplayers()<1) {
             for (Player p: getPlayers()) {
@@ -134,7 +139,14 @@ public class LorenzoGame extends Game {
     }
 
     private boolean productionDeckIsEmty() {
-        return ((productionDecks[3][0].size()==0)||(productionDecks[3][1].size()==0)||(productionDecks[3][2].size()==0)||(productionDecks[3][3].size()==0));
+        for(Stack<ProductionCard>[] row : productionDecks)
+        {
+            for(Stack<ProductionCard> col :row)
+            {
+                if(col.isEmpty()) return true;
+            }
+        }
+        return false;
     }
 
     public ActionToken getTokenDrawn() {

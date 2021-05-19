@@ -17,7 +17,7 @@ import java.util.Stack;
 
 
 public class Game {
-    protected List<Player> players;
+    private List<Player> players;
     protected LeaderCard[] leaders;
     protected Stack<ProductionCard>[][] productionDecks;
     protected Market market;
@@ -179,7 +179,7 @@ public class Game {
             {
                 if(p.getNickname().equals(str))
                 {
-                    outIndexes[currIndex] = i;
+                    outIndexes[i] = currIndex;
                     p.setControllerIndex(i);
                 }
                 i++;

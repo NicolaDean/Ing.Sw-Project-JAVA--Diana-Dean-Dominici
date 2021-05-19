@@ -192,13 +192,13 @@ public class Logger {
         for(ProductionCard card: row) {
             if(card!=null)
             {
-                int index = 11;
+                int index = 7;
                 for(int i=0;i<index;i++) System.out.print("═");
                 this.out.setBold();
                 String header = " L: "+card.getLevel()+ " VP: " + card.getVictoryPoints();
                 this.out.printColored(header,CliColors.BLACK_TEXT,card.getColor());
                 this.out.reset();
-                index = 9;
+                index = 6;
                 if(header.length() > 11) index = index-1;
 
                 for(int i=0;i<index;i++) System.out.print("═");
@@ -222,7 +222,7 @@ public class Logger {
             {
                 this.out.printColored("Cost     : ",CliColors.WHITE_TEXT);
                 this.printInlineResourceList(card.getCost());
-                int padding = 20 - 3* ResourceOperator.getTypeCounter(card.getCost());
+                int padding = 13 - 3* ResourceOperator.getTypeCounter(card.getCost());
                 this.spacer(padding);
             }
             else
@@ -241,7 +241,7 @@ public class Logger {
                 this.out.printColored("Raw  mat : ", CliColors.WHITE_TEXT);
                 this.printInlineResourceList(card.getRawMaterials());
 
-                int padding = 20 - 3 * ResourceOperator.getTypeCounter(card.getRawMaterials());
+                int padding = 13 - 3 * ResourceOperator.getTypeCounter(card.getRawMaterials());
                 this.spacer(padding);
             }
             else
@@ -261,7 +261,7 @@ public class Logger {
                 this.out.printColored("Obt mat  : ",CliColors.WHITE_TEXT);
                 this.printInlineResourceList(card.getObtainedMaterials());
 
-                int padding = 20 - 3* ResourceOperator.getTypeCounter(card.getObtainedMaterials());
+                int padding = 13 - 3* ResourceOperator.getTypeCounter(card.getObtainedMaterials());
 
                 if( faith !=0)
                 {   padding = padding-3;
@@ -280,7 +280,7 @@ public class Logger {
         for(ProductionCard card: row)
         {
 
-            for(int i=0;i<31;i++) System.out.print("═");
+            for(int i=0;i<24;i++) System.out.print("═");
             System.out.print("╩╩");
         }
 
