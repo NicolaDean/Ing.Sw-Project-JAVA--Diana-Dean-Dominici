@@ -275,7 +275,7 @@ public class ClientController implements Runnable{
 
     public void askSwap (int d1, int d2, int index)
     {
-        this.sendMessage(new AskSwap(d1, d2, index));
+        this.sendMessage(new AskSwap(d1, d2, this.getMiniModel().getPersanalIndex()));
 
     }
 
