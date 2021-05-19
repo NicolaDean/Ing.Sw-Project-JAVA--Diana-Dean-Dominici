@@ -39,9 +39,11 @@ public class CLI extends Observable<ClientController> implements View {
     private BasicBall       miniMarketDiscardedResouce;
     boolean canEndTurn;
     boolean actionDone;
+    int index;
 
-    public CLI()
+    public CLI(int index)
     {
+        this.index=index;
         waiting = true;
         input = new InputReaderValidation();
         terminal = new Logger();
@@ -97,8 +99,8 @@ public class CLI extends Observable<ClientController> implements View {
             case "-shop":
                 this.notifyObserver(ClientController::showDecks);
                 return customRead(message);
-            case "-swapdeposits": //cancel case
-                customRead(message);
+            case "-swapdeposit": //cancel case
+                this.askSwapDeposit(this.index);
                 return customRead(message);
 
             case "-spy": //cancel case
@@ -111,8 +113,8 @@ public class CLI extends Observable<ClientController> implements View {
 
         }
     }
-
-    public synchronized String customRead()  {
+    public synchronized String customRead()
+    {
         //System.out.println("!!!!!!!!!!!!!!!!!!!");
         String s = this.input.readLine();
         //System.out.println("???????????????????");
@@ -254,6 +256,8 @@ public class CLI extends Observable<ClientController> implements View {
     public void askBasicProduction() {
 
     }
+
+
 
     @Override
     public void askMarketExtraction() {
@@ -511,7 +515,30 @@ public class CLI extends Observable<ClientController> implements View {
     }
 
     @Override
-    public void askSwapDeposit() {
+    public void askSwapDeposit(int index) {
+        int d1;
+        int d2;
+        String cmd;
+        boolean valid = false;
+        //this.terminal.printRequest("\nthis is your storage:");
+        this.notifyObserver(ClientController::showStorage);
+        cmd = customRead("\nselect the first deposit you want to swap. (1-3) for normal (4-5) for bonus (6) to quit the swap");
+        valid = input.validateInt(Integer.parseInt(cmd), 1, 6);
+        if(valid)
+        {
+            d1=Integer.parseInt(cmd);
+            cmd = customRead("select the second deposit you want to swap. (1-3) for normal (4-5) for bonus (6) to quit the swap");
+            valid = input.validateInt(Integer.parseInt(cmd), 1, 6);
+            if(valid)
+            {
+
+                d2 = Integer.parseInt(cmd);
+                if(d1 != 6 && d2!= 6)
+                    this.notifyObserver(controller -> controller.askSwap(d1, d2, index));
+                return;
+
+            }
+        }
 
     }
 

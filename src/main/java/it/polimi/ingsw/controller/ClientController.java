@@ -52,7 +52,7 @@ public class ClientController implements Runnable{
     public ClientController(boolean type)
     {
         this.connected = false;
-        if(type)view = new CLI();
+        if(type)view = new CLI(this.index);
         else view = new GUI();//GUI()
 
         this.view.setObserver(this);
@@ -271,6 +271,12 @@ public class ClientController implements Runnable{
             sendMessage(new LoginSinglePlayer(nickname));
         else
             sendMessage(new Login(nickname));
+    }
+
+    public void askSwap (int d1, int d2, int index)
+    {
+        this.sendMessage(new AskSwap(d1, d2, index));
+
     }
 
     public void sendResourceDiscard(int quantity)

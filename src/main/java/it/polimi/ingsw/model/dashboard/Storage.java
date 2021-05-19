@@ -43,7 +43,8 @@ public class Storage {
                 storage[pos1].getResource().getQuantity()>storage[pos2].getSizeMax() ||
                         storage[pos2].getResource().getQuantity()>storage[pos1].getSizeMax())))*/
 
-
+        System.out.println("pos1 subito  è "+pos1);
+        System.out.println("pos2 subito è "+pos2);
 
         if (pos1>5 || pos2 > 5)
             throw new IllegalSwap("");
@@ -81,6 +82,8 @@ public class Storage {
             }
             else
             {
+                System.out.println("pos1 è "+pos1);
+                System.out.println("pos2 è "+pos2);
                 if (storage[pos1].getResource().getQuantity() <= storage[pos2].getSizeMax() && storage[pos2].getResource().getQuantity() <= storage[pos1].getSizeMax()) {
                     Resource tmp = storage[pos1].getResource();
                     storage[pos1].setNewDeposit(storage[pos2].getResource().getType(), storage[pos2].getResource().getQuantity());

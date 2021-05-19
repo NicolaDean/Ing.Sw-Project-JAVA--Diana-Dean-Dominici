@@ -110,7 +110,7 @@ public interface View {
     /**
      * ask user which deposit he want to swap
      */
-    public void askSwapDeposit();
+    public void askSwapDeposit(int index);
 
     //Commands
 

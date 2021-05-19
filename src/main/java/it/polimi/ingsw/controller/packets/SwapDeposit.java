@@ -18,6 +18,7 @@ public class SwapDeposit  extends Packet<ServerController> implements PacketMana
 
     @Override
     public Packet analyze(ServerController controller) {
-        return controller.swapDeposit(this.pos1,this.pos2,this.getPlayerIndex());
+
+        return null;
     }
 }

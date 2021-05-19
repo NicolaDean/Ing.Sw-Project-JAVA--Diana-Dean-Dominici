@@ -10,7 +10,7 @@ public interface PacketManager<T>{
      * @param controller  the client or server controller
      * @return
      */
-    public Packet <T>  analyze(T controller);
+    public Packet <T>  analyze(T controller) throws InterruptedException;
 
     /**
      * Generate a string with the json corresponding to its packetType

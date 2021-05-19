@@ -46,7 +46,7 @@ public class ColorCliTest {
     @Disabled
     public void printLogo()
     {
-        View view = new CLI();
+        View view = new CLI(0);
 
         view.printWelcomeScreen();
         view.askNickname();
@@ -55,7 +55,7 @@ public class ColorCliTest {
     @Test
     public void fedetest()
     {
-        View view = new CLI();
+        View view = new CLI(0);
 
     }
 

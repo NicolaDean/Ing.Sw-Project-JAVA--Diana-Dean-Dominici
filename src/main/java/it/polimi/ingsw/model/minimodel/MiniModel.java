@@ -15,7 +15,7 @@ import java.util.Stack;
 public class MiniModel
 {
 
-    private int persanalIndex;
+    private int persanalIndex = 0;
 
     private MiniPlayer[] players;
 

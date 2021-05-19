@@ -10,7 +10,7 @@ public class LoggerTest {
     @Test
     public void testMarketPrint(){
         Logger l=new Logger();
-        View v=new CLI();
+        View v=new CLI(0);
         Market m=new Market();
         v.setMarket(m.getResouces(),m.getDiscardedResouce());
         l.printMarket(v);
