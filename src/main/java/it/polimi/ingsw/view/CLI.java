@@ -606,6 +606,11 @@ public class CLI extends Observable<ClientController> implements View {
     }
 
     @Override
+    public void setMiniMarketDiscardedResouce(BasicBall miniMarketDiscardedResouce) {
+        this.miniMarketDiscardedResouce = miniMarketDiscardedResouce;
+    }
+
+    @Override
     public void showStorage(Deposit[] deposits) {
         this.terminal.printStorage(deposits,null,false);
     }

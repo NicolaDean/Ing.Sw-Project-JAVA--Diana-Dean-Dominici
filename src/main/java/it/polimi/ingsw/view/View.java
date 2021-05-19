@@ -12,6 +12,8 @@ public interface View {
 
     public void printWelcomeScreen();
 
+    public void setMiniMarketDiscardedResouce(BasicBall miniMarketBalls);
+
     /**
      * show market's client
      * @param
