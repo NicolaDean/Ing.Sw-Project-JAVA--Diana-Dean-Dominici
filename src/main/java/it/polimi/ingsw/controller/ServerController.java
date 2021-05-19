@@ -22,13 +22,13 @@ import java.util.concurrent.TimeUnit;
 public class ServerController{
 
     //view
-    Game                game;
-    List<ClientHandler> clients;
-    final Object              lock;
-    int                 currentClient = 0;
-    boolean             isSinglePlayer;
-    boolean             isStarted;
-    private int         idpartita;
+    protected Game                game;
+    protected List<ClientHandler> clients;
+    protected final Object              lock;
+    protected int                 currentClient = 0;
+    protected boolean             isSinglePlayer;
+    protected boolean             isStarted;
+    protected  int         idpartita;
 
     /**
      *
@@ -118,7 +118,6 @@ public class ServerController{
 
     public boolean isSinglePlayer()
     {
-
         return this.isSinglePlayer;
     }
 
@@ -211,8 +210,8 @@ public class ServerController{
     public boolean isRightPlayer(int playerIndex)
     {
         //TODO CHECK BETTER THE BOOLEAN EXPRESSION
-        //return (this.game.getCurrentPlayerIndex() == this.clients.get(currentClient).getRealPlayerIndex());
-        return true;
+        return (this.game.getCurrentPlayerIndex() == this.clients.get(playerIndex).getRealPlayerIndex());
+        //return true;
     }
 
     /**
@@ -234,9 +233,9 @@ public class ServerController{
     }
 
 
-    public void sendPendingCard()
+    public void sendPendingCard(int index)
     {
-        this.sendMessage(this.game.getCurrentPlayer().getPendingCard(),this.currentClient);
+        this.sendMessage(this.game.getCurrentPlayer().getPendingCard(),index);
     }
     /**
      * Player "player" buy the card in position x,y of the deks
@@ -493,6 +492,12 @@ public class ServerController{
     {
         Deposit[] tmp = this.game.getCurrentPlayer().getDashboard().getStorage().getDeposits();
         this.sendMessage(new StorageUpdate(tmp),this.currentClient);
+    }
+
+    public void sendStorageUpdate(int index)
+    {
+        Deposit[] tmp = this.game.getPlayer(this.clients.get(index).getRealPlayerIndex()).getDashboard().getStorage().getDeposits();
+        this.sendMessage(new StorageUpdate(tmp),index);
     }
     /**
      * if end condition are true send to all a "last Turn" packet

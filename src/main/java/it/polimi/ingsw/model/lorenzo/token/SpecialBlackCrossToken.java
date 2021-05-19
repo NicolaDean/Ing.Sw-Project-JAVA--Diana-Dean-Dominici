@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.lorenzo.token;
 
 import it.polimi.ingsw.enumeration.CardType;
 import it.polimi.ingsw.model.lorenzo.LorenzoGame;
+import it.polimi.ingsw.view.utils.CliColors;
 
 public class SpecialBlackCrossToken extends BlackCrossToken{
     int bonus=1;
@@ -19,5 +20,10 @@ public class SpecialBlackCrossToken extends BlackCrossToken{
     @Override
     public CardType getType() {
         return null;
+    }
+
+    @Override
+    public String getColor() {
+        return CliColors.WHITE_BACKGROUND+"2" +CliColors.BLACK_TEXT;
     }
 }

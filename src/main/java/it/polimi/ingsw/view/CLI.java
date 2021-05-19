@@ -156,6 +156,7 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void askNickname() {
 
+        boolean singlePlayer = false;
         terminal.printRequest("Type here your nickname:");
 
         String nickname = "";
@@ -165,9 +166,19 @@ public class CLI extends Observable<ClientController> implements View {
             if(nickname.length() < 3) terminal.printWarning("Nickname too short, minimum 3 letters");
         }while(nickname.length() < 3 );
 
+        terminal.printRequest("If you want single player type \"single\" else anything");
+
+        String single = input.readLine();
+
+        if(single.equals("single"))
+        {
+            System.out.println("try single login");
+            singlePlayer = true;
+        }
 
         String validNickname = nickname;
-        this.notifyObserver(controller -> controller.setNickname(validNickname,true));
+        boolean finalSinglePlayer = singlePlayer;
+        this.notifyObserver(controller -> controller.setNickname(validNickname, finalSinglePlayer));
 
         //Example set action to do in case of NACK on Login command
         //this.notifyObserver(controller -> controller.setAckManagmentAction(View::askNickname));

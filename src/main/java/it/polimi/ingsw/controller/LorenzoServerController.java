@@ -1,19 +1,42 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.controller.packets.LorenzoTurn;
-import it.polimi.ingsw.controller.packets.Packet;
+import it.polimi.ingsw.controller.packets.*;
+import it.polimi.ingsw.exceptions.MatchFull;
+import it.polimi.ingsw.exceptions.NicknameAlreadyTaken;
+import it.polimi.ingsw.exceptions.NotEnoughPlayers;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.lorenzo.Lorenzo;
 import it.polimi.ingsw.model.lorenzo.LorenzoGame;
+import it.polimi.ingsw.utils.DebugMessages;
+
+import javax.swing.plaf.metal.MetalBorders;
 
 public class LorenzoServerController extends ServerController{
-    LorenzoGame game;
+
+
 
     public LorenzoServerController() {
         super(true);
-        game = new LorenzoGame();
+        this.game = new LorenzoGame();
+        DebugMessages.printError("SINGLE PLAYER GAME CREATED");
     }
 
+
+    @Override
+    public Packet login(String nickname)
+    {
+        try {
+            this.game.addPlayer(nickname);
+
+        } catch (NicknameAlreadyTaken nicknameAlreadyTaken) {
+            nicknameAlreadyTaken.printStackTrace();
+        } catch (Exception matchFull) {
+            matchFull.printStackTrace();
+        }
+
+        return new ACK(0);
+
+    }
     /**
      *
      * @return Packet to send at client with
@@ -26,7 +49,21 @@ public class LorenzoServerController extends ServerController{
             endGame();
             return null;
         }
+        this.clients.get(0).sendToClient(new TurnNotify());
         return new LorenzoTurn(((LorenzoGame)game).getTokenDrawn());
+    }
+
+    @Override
+    public void startGame()
+    {
+        try {
+            this.game.startGame();
+            this.clients.get(0).sendToClient(new GameStarted(this.game.getMiniModel(),this.game.getMarket().getResouces(),this.game.getMarket().getDiscardedResouce()));
+            this.clients.get(0).sendToClient(new TurnNotify());
+        } catch (NotEnoughPlayers notEnoughPlayers) {
+            notEnoughPlayers.printStackTrace();
+        }
+
     }
 
 }
