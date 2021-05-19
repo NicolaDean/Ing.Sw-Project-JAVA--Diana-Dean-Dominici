@@ -532,6 +532,7 @@ public class ServerController{
 
         List <Resource> res = m.getPendingResourceExtracted();
         int white           = m.getWhiteCount();
+        this.broadcastMessage(-1,new UpdateMiniMarket(direction,pos)); //col 1 estrate su col 2 , mentre row 1 estrae su row 2 ma al contrario
         return  new MarketResult(res,white);
 
     }

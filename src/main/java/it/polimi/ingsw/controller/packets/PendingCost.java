@@ -19,9 +19,6 @@ public class PendingCost  extends Packet<ClientController> implements PacketMana
         this.pendingCost = list;
     }
 
-    public List<Resource> getPendingCost() {
-        return pendingCost;
-    }
 
     @Override
     public Packet analyze(ClientController controller) {

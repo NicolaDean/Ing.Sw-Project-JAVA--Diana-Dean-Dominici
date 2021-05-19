@@ -394,8 +394,6 @@ public class ClientController implements Runnable{
      */
     public void sendMarketExtraction(boolean dir,int pos)
     {
-        if(dir) exstractColumn(pos);
-        else exstractRow(pos);
         this.sendMessage(new MarketExtraction(dir,pos));
     }
 
@@ -404,6 +402,7 @@ public class ClientController implements Runnable{
      * @param pos row position, it must be between 1 and 3
      */
     public void exstractRow(int pos)  {
+        pos--;
         BasicBall tmp;
         for (int i = 1; i < ConstantValues.marketCol; i++) {
             tmp = view.getMiniMarketBalls()[pos][i];
@@ -421,6 +420,7 @@ public class ClientController implements Runnable{
      * @param pos column position, it must be between 1 and 4
      */
     public void exstractColumn(int pos) {
+        pos--;
         BasicBall tmp;
         for (int i = 1; i < marketRow; i++) {
             tmp = view.getMiniMarketBalls()[i][pos];
@@ -430,7 +430,6 @@ public class ClientController implements Runnable{
         tmp = view.getMiniMarketDiscardedResouce();
         view.setMiniMarketDiscardedResouce( view.getMiniMarketBalls()[0][pos]);
         view.getMiniMarketBalls()[0][pos] = tmp;
-
     }
 
     /**
