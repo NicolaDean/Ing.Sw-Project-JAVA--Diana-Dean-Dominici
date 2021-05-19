@@ -17,7 +17,7 @@ public class UserEnterGame extends Packet<ClientController> implements PacketMan
     @Override
     public Packet analyze(ClientController controller)
     {
-        controller.addPlayer(this.playerIndex,this.nickname);
+        controller.notifyPlayer(this.playerIndex,this.nickname);
         return null;
     }
 }

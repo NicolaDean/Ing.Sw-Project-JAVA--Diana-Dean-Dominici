@@ -20,21 +20,17 @@ public class MiniModel
     private MiniPlayer[] players;
 
     private ProductionCard [][] decks;
-    private Deposit[]           storage;
-
-    private ProductionCard[] playerCards;
 
     public MiniModel()
     {
         players = new MiniPlayer[ConstantValues.numberOfPlayer];
-        this.storage=new Deposit[0];
     }
 
 
 
     public void updateCard(ProductionCard newCard,int x,int y,int dashboardPos)
     {
-        playerCards[dashboardPos] = decks[x][y];
+        players[persanalIndex].getDecks()[dashboardPos] = decks[x][y];
         decks[x][y] = newCard;
         System.out.println("Dash updated");
     }
@@ -56,23 +52,19 @@ public class MiniModel
         }
 
     }
-    public void addPlayer(String nickname, int index)
-    {
-        this.players[index] = new MiniPlayer(nickname);
-    }
 
-    public void removePlayer(String nickname,int index) { }
+    public void setPlayers(MiniPlayer[] players) { this.players = players; }
 
     public MiniPlayer[] getPlayers() { return players; }
 
     public void updateStorage(Deposit[] deposits)
     {
-        this.storage = deposits;
+        players[persanalIndex].setStorage(deposits);
     }
 
     public Deposit[] getStorage()
     {
-        return this.storage;
+        return players[persanalIndex].getStorage();
     }
 
     public ProductionCard[][] getDecks()
@@ -82,5 +74,5 @@ public class MiniModel
 
     public int getPersanalIndex() { return persanalIndex; }
 
-    public ProductionCard[] getPlayerCards() { return this.playerCards; }
+    public ProductionCard[] getPlayerCards() { return this.players[persanalIndex].getDecks(); }
 }

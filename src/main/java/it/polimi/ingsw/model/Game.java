@@ -7,14 +7,13 @@ import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.factory.MapFactory;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.minimodel.MiniModel;
+import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.utils.ConstantValues;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
-
-
 
 public class Game {
     private List<Player> players;
@@ -43,14 +42,7 @@ public class Game {
         this.currentPapalSpaceToReach = 0;
     }
 
-    public MiniModel getMiniModel(){
 
-        MiniModel m = new MiniModel();
-
-        m.setDeck(this.productionDecks);
-        //TODO estrazione mini model dal game
-        return (m);
-    }
 
     public ProductionCard drawProductionCard(int x, int y)
     {

@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.Market;
+import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.utils.CliColors;
@@ -175,7 +176,7 @@ public class ServerController{
                 int firstPlayer = this.game.getRealPlayerHandlerIndex();
                 currentClient = firstPlayer;
                 //Send broadcast with game started packet
-                this.broadcastMessage(-1, new GameStarted(game.getMiniModel(),game.getMarket().getResouces(),game.getMarket().getDiscardedResouce()));
+                this.broadcastMessage(-1,generateGameStartedPacket());
                 TimeUnit.SECONDS.sleep(2);
                 //notify first player the is its turn
                 //this.clients.get(firstPlayer).sendToClient(new TurnNotify());
@@ -189,6 +190,20 @@ public class ServerController{
             this.lock.notify();
         }
 
+    }
+
+
+    public Packet generateGameStartedPacket(){
+        return new GameStarted(generateMiniPlayer(),game.getProductionDecks(),game.getMarket().getResouces(),game.getMarket().getDiscardedResouce());
+    }
+
+    public MiniPlayer[] generateMiniPlayer(){
+        MiniPlayer[] players= new MiniPlayer[game.getNofplayers()];
+        for (Player p:game.getPlayers()){
+            players[p.getControllerIndex()]=new MiniPlayer(p.getNickname());
+            players[p.getControllerIndex()].setStorage(p.getDashboard().getStorage().getDeposits());
+        }
+        return players;
     }
 
     public void turnNotifier()
