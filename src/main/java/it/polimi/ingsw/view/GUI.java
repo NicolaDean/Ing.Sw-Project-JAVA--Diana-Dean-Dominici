@@ -103,7 +103,7 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
-    public void askSwapDeposit() {
+    public void askSwapDeposit(int index) {
 
     }
 
