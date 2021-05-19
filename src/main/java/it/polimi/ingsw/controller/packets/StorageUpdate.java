@@ -6,15 +6,17 @@ import it.polimi.ingsw.model.dashboard.Deposit;
 public class StorageUpdate extends Packet<ClientController> implements PacketManager<ClientController>{
 
     Deposit[] deposits;
-    public StorageUpdate(Deposit [] deposits) {
+    int playerIndex;
+    public StorageUpdate(Deposit [] deposits,int playerIndex) {
         super("StorageUpdate");
         this.deposits = deposits;
+        this.playerIndex = playerIndex;
     }
 
     @Override
     public Packet analyze(ClientController controller)
     {
-        controller.storageUpdate(this.deposits);
+        controller.storageUpdate(this.deposits,this.playerIndex);
         return null;
     }
 

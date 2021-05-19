@@ -94,7 +94,7 @@ public class CLI extends Observable<ClientController> implements View {
                 return customRead(message);
 
             case "-spy": //cancel case
-                customRead(message);
+                this.askSpyPlayer();
                 return customRead(message);
 
             default:
@@ -541,6 +541,25 @@ public class CLI extends Observable<ClientController> implements View {
                 terminal.printWarning("you have to type a number between 1 and 4!");
         }
         turnTypeInterpreter(cmd);
+    }
+
+    public void askSpyPlayer()
+    {
+        this.terminal.printRequest("Which player you want to spy?");
+        this.notifyObserver(ClientController::showAvailableNickname);
+
+        int index = this.askInt("select a player","wrong input range",1,ConstantValues.numberOfPlayer);
+
+        index = index-1;
+        int finalIndex = index;
+        this.notifyObserver(controller -> {controller.spyPlayer(finalIndex);});
+    }
+    @Override
+    public void showPlayer(Deposit[]deposits, List<Resource> chest, ProductionCard[] cards,String name) {
+
+        this.terminal.printSeparator();
+        this.terminal.out.printColored("THIS IS "+ name+ " Dashboard",CliColors.GREEN_TEXT);
+        this.showDashboard(deposits,chest,cards);
     }
 
     public void waitingHelpLoop()

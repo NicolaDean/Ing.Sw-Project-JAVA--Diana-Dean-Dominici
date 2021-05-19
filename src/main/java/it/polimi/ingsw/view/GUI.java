@@ -118,6 +118,11 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
+    public void showPlayer(Deposit[]deposits, List<Resource> chest, ProductionCard[] cards,String name){
+
+    }
+
+    @Override
     public void askCommand() {
 
     }

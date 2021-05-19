@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.utils.CurrentOS;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.utils.DebugMessages;
 
@@ -140,6 +141,7 @@ public class Logger {
 
             if(res != null)
             {
+
                  qty             = d.getResource().getQuantity();
                  color           = resourceRappresentation.getColorRappresentation(d.getResource().getType());
             }
@@ -163,7 +165,9 @@ public class Logger {
                 else
                 {
                     this.spacer(4);
-                    this.colorSpacer(4,color);
+                    //this.colorSpacer(4,color);
+                    this.out.print(res.getCliRappresentation(false));
+                    this.reset();
                     qty--;
                 }
             }
@@ -409,9 +413,9 @@ public class Logger {
     {
         int          qty    = res.getQuantity();
         ResourceType type   = res.getType();
-        String       color  = ConstantValues.resourceRappresentation.getColorRappresentation(type);
 
-        this.out.printColored(" " + qty + " ",CliColors.BLACK_TEXT,color);
+        this.out.print(res.getCliRappresentation(true));
+
         this.out.setBold();
         this.reset();
     }

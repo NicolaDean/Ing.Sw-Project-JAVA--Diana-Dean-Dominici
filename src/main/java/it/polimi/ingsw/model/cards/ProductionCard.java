@@ -185,9 +185,12 @@ public class ProductionCard extends Card {
     {
         return this.obtainedFaith;
     }
+
     public String getColor()
     {
         return ConstantValues.resourceRappresentation.getCardTypeColorRappresentation(this.type);
     }
+
+    //printHeader con gia isWindow integrata
 
 }

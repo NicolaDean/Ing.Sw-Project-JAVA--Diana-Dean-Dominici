@@ -1,6 +1,9 @@
 package it.polimi.ingsw.model.resources;
 
 import it.polimi.ingsw.enumeration.*;
+import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.utils.CurrentOS;
+import it.polimi.ingsw.view.utils.CliColors;
 
 public class Resource {
     private              ResourceType  type;
@@ -38,5 +41,33 @@ public class Resource {
     public void setQuantity(int quantity)
     {
         this.quantity = quantity;
+    }
+
+    public String getCliRappresentation(boolean quantity)
+    {
+        if(quantity)
+        {
+            if(!CurrentOS.IsWindows())
+            {
+                return ConstantValues.resourceRappresentation.getColorRappresentation(this.getType()) + CliColors.BLACK_TEXT + CliColors.BOLD +
+                        " " + this.getQuantity() + " ";
+            }
+            else
+            {
+                return ConstantValues.resourceRappresentation.getNonColorRappresentation(this.getType()) + this.getQuantity();
+            }
+        }
+        else
+        {
+            if(!CurrentOS.IsWindows())
+            {
+                return ConstantValues.resourceRappresentation.getColorRappresentation(this.getType()) + "    ";
+            }
+            else
+            {
+                return ConstantValues.resourceRappresentation.getNonColorRappresentation(this.getType()) +"-";
+            }
+        }
+
     }
 }
