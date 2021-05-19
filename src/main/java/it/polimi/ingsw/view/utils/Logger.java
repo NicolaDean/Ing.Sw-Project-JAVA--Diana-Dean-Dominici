@@ -1,20 +1,15 @@
 package it.polimi.ingsw.view.utils;
 
 import it.polimi.ingsw.enumeration.ResourceType;
-import it.polimi.ingsw.model.MiniModel;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
-import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 import it.polimi.ingsw.utils.ConstantValues;
-import it.polimi.ingsw.view.CLI;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.utils.DebugMessages;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
 import static it.polimi.ingsw.utils.ConstantValues.*;
 
