@@ -456,7 +456,7 @@ public class ServerController{
     {
         //if(!isRightPlayer(player)) return this.notYourTurn();
 
-
+        System.out.println("\n" +player +"\n");
         Player p = null;
         //System.out.println(player + "!!!!\n\n\n");
 

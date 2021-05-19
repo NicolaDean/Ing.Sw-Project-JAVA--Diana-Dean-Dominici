@@ -101,6 +101,7 @@ public class CLI extends Observable<ClientController> implements View {
                 this.notifyObserver(ClientController::showDecks);
                 return customRead(message);
             case "-swapdeposit": //cancel case
+                //System.out.println("index di questa cli: "+this.index);
                 this.askSwapDeposit(this.index);
                 return customRead(message);
 
