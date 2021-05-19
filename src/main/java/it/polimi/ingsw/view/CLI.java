@@ -86,11 +86,12 @@ public class CLI extends Observable<ClientController> implements View {
             case "-startgame": //cancel case
                 this.notifyObserver(ClientController::sendStartCommand);
                 return cmd;
-
             case "-dashboard": //cancel case
-                this.notifyObserver(ClientController::showStorage);
+                this.notifyObserver(ClientController::showDashboard);
                 return customRead(message);
-
+            case "-shop":
+                this.notifyObserver(ClientController::showDecks);
+                return customRead(message);
             case "-swapdeposits": //cancel case
                 customRead(message);
                 return customRead(message);
@@ -474,7 +475,12 @@ public class CLI extends Observable<ClientController> implements View {
                                 tmp = new Resource(res.getType(),quantity);
                                 payed.add(tmp);
                             }
-                            if(tmp == null)tmp = res;
+
+                            if(tmp == null)
+                            {
+                                tmp = res;
+                                payed.add(tmp);
+                            }
 
                             if(pos == -1) extractions.add(new ExtractionInstruction(tmp));
                             else          extractions.add(new ExtractionInstruction(tmp,pos));
@@ -593,7 +599,12 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void showStorage(Deposit[] deposits) {
-        this.terminal.printStorage(deposits);
+        this.terminal.printStorage(deposits,null,false);
+    }
+
+    @Override
+    public void showDashboard(Deposit[] deposits, List<Resource> chest, ProductionCard[] cards) {
+        this.terminal.printDashboard(deposits,chest,cards);
     }
 
     public void changeTurnType()

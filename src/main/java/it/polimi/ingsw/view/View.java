@@ -129,6 +129,7 @@ public interface View {
     public void showMarketExtraction(List<Resource> resourceList,int whiteballs);
 
     public void showStorage(Deposit[] deposits);
+    public void showDashboard(Deposit[] deposits,List<Resource>chest,ProductionCard[] cards);
 
     public void askEndTurn();
     //Other methods

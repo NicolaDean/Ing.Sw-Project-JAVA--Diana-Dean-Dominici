@@ -255,6 +255,7 @@ public class ServerController{
         {
             card.buy(p,pos);
 
+            this.game.getProductionDecks()[x][y].pop();
             //Set a pending card, when user finish to pay it i will send the updateBuyedCard packet i added to player
             ProductionCard newCard = this.game.getProductionDecks()[x][y].peek();
             p.setPendingBuy(newCard,x,y,pos);

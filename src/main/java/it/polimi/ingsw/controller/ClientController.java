@@ -157,8 +157,8 @@ public class ClientController implements Runnable{
     public void sendProduction(int pos)
     {
         this.sendMessage(new Production(pos));
-
     }
+
     public void abortHelp()
     {
         this.view.abortHelp();
@@ -265,6 +265,7 @@ public class ClientController implements Runnable{
     {
         this.view.showStorage(this.model.getStorage());
     }
+    public void showDashboard(){this.view.showDashboard(this.model.getStorage(),this.model.getChest(),this.model.getPlayerCards());}
     /**
      * send packet to server
      * @param p
