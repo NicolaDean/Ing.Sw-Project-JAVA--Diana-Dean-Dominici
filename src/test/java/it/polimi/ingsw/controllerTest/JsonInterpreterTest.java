@@ -9,11 +9,10 @@ import it.polimi.ingsw.controller.packets.UpdatePosition;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
-import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import org.junit.jupiter.api.Test;
-import it.polimi.ingsw.model.MiniModel;
+
 import java.util.ArrayList;
 import java.util.List;
 

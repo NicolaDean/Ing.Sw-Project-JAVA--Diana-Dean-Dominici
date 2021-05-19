@@ -1,6 +1,5 @@
 package it.polimi.ingsw.viewTest;
 
-import it.polimi.ingsw.model.MiniModel;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.view.CLI;
 import it.polimi.ingsw.view.View;
