@@ -444,16 +444,41 @@ public class ServerController{
 
     public Packet swapDeposit(int pos1,int pos2,int player)
     {
-        if(!isRightPlayer(player)) return this.notYourTurn();
+        //if(!isRightPlayer(player)) return this.notYourTurn();
 
-        Player p = this.game.getCurrentPlayer();
+
+        Player p = null;
+        //System.out.println(player + "!!!!\n\n\n");
+
+        for (Player p2: game.getPlayers())
+        {
+            if(p2.getControllerIndex()==player) {
+
+                p = p2;
+            }
+        }
+
+        //System.out.println("\n preswap d1: "+ p.getDashboard().getStorage().getStorage()[0].getResource().getType());
+        //System.out.println(" preswap d2: "+ p.getDashboard().getStorage().getStorage()[1].getResource().getType());
+
+
         try {
-            p.getDashboard().getStorage().swapDeposit(pos1,pos2);
-            return new ACK(0);
+
+
+
+            p.getDashboard().getStorage().swapDeposit(pos1 -1,pos2 -1);
+
+            Deposit[] tmp = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex()).getDashboard().getStorage().getDeposits();
+
+            //System.out.println("\n postswap d1: "+ p.getDashboard().getStorage().getStorage()[0].getResource().getType());
+            //System.out.println(" postswap d2: "+ p.getDashboard().getStorage().getStorage()[1].getResource().getType()+"\n");
+            return new StorageUpdate(tmp);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ACK(1);
+            //System.out.println("ack con code 1 inviatoo\n\n");
+            return new ACK(8);
         }
+
     }
 
     public Packet discardResource(int quantity)

@@ -14,7 +14,9 @@ public class StorageUpdate extends Packet<ClientController> implements PacketMan
     @Override
     public Packet analyze(ClientController controller)
     {
+
         controller.storageUpdate(this.deposits);
+        controller.showStorage();
         return null;
     }
 

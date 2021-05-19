@@ -17,8 +17,14 @@ public class AskSwap extends Packet<ServerController> implements PacketManager<S
 
     public Packet analyze(ServerController controller)
     {
-        controller.swapDeposit(this.d1,this.d2,index);
-        return null;
+        Packet p = controller.swapDeposit(this.d1,this.d2,index);
+
+        if(p.getType().equals("ACK"))
+        {
+            controller.sendMessage(new SwapFailed(this.d1, this.d2),this.getPlayerIndex());
+            return p;
+        }
+        return p;
     }
 
 }

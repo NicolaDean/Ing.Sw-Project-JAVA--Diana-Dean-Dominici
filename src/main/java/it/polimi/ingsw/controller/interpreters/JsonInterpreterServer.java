@@ -47,7 +47,7 @@ public class JsonInterpreterServer extends BasicJsonInterpreter {
             packet.setPlayerIndex(this.playerIndex);
             this.setResponse(packet.analyze(controller));
 
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | InterruptedException e) {
             e.printStackTrace();
         }
 

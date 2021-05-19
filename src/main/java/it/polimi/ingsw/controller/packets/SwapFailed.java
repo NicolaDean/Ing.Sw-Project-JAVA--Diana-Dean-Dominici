@@ -2,6 +2,8 @@ package it.polimi.ingsw.controller.packets;
 
 import it.polimi.ingsw.controller.ClientController;
 
+import java.util.concurrent.TimeUnit;
+
 public class SwapFailed extends  Packet<ClientController> implements PacketManager<ClientController> {
     int d1;
     int d2;
@@ -15,8 +17,10 @@ public class SwapFailed extends  Packet<ClientController> implements PacketManag
     }
 
     @Override
-    public Packet analyze(ClientController controller) {
-        controller.askSwap(d1, d2, index);
+    public Packet analyze(ClientController controller)  {
+
+        //System.out.println("swap failed inviato");
+        controller.getView().askSwapDeposit(index);
         return null;
     }
 }
