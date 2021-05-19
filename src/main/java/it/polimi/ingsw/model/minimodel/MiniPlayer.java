@@ -52,4 +52,9 @@ public class MiniPlayer {
         this.storage = storage;
     }
 
+    public ProductionCard[] getCards()
+    {
+        return this.decks;
+    }
+
 }

@@ -15,13 +15,15 @@ public class GameStarted extends Packet<ClientController> implements PacketManag
     Stack<ProductionCard>[][] productionDecks;
     BasicBall[][] miniBallsMarket;
     BasicBall miniBallDiscarted;
+    int index;
 
-    public GameStarted(MiniPlayer[] players,Stack<ProductionCard>[][] productionDecks, BasicBall[][] miniBallsMarket, BasicBall miniBallDiscarted) {
+    public GameStarted(int index,MiniPlayer[] players,Stack<ProductionCard>[][] productionDecks, BasicBall[][] miniBallsMarket, BasicBall miniBallDiscarted) {
         super("GameStarted");
         this.players=players;
         this.productionDecks=productionDecks;
         this.miniBallsMarket=miniBallsMarket;
         this.miniBallDiscarted=miniBallDiscarted;
+        this.index = index;
     }
 
     /**
@@ -36,7 +38,7 @@ public class GameStarted extends Packet<ClientController> implements PacketManag
     @Override
     public Packet analyze(ClientController controller)
     {
-        controller.setInformation(players,productionDecks,miniBallsMarket,miniBallDiscarted);
+        controller.setInformation(index,players,productionDecks,miniBallsMarket,miniBallDiscarted);
         controller.printGameStarted();
         //controller.abortHelp();
         return null;

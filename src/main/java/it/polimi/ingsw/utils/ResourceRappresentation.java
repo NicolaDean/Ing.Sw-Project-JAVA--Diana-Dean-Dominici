@@ -23,10 +23,10 @@ public class ResourceRappresentation {
         colorRappresentation.put(ROCK   , CliColors.WHITE_BACKGROUND);
 
 
-        noColorRappresentation.put(COIN   , "-CO-");
-        noColorRappresentation.put(SERVANT, "-SE-");
-        noColorRappresentation.put(SHIELD , "-SH-");
-        noColorRappresentation.put(ROCK   , "-RO-");
+        noColorRappresentation.put(COIN   , "-X");
+        noColorRappresentation.put(SERVANT, "-Y");
+        noColorRappresentation.put(SHIELD , "-Z");
+        noColorRappresentation.put(ROCK   , "-F");
 
         cardTypeColorRappresentation.put(CardType.YELLOW    , CliColors.YELLOW_BACKGROUND);
         cardTypeColorRappresentation.put(CardType.BLUE      , CliColors.BLUE_BACKGROUND);

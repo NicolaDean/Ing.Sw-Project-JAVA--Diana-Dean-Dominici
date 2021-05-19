@@ -8,6 +8,7 @@ public  class DebugMessages {
     public static boolean enableWarning = true;
     public static boolean enableNetwork= false;
     public static boolean enableGeneric = true;
+    public static boolean windowsDetection = false;
     public static Logger log = new Logger();
 
     public static void printError(String msg)

@@ -67,10 +67,20 @@ public class ClientController implements Runnable{
     /*
      * set all initial information into miniMarted
      */
-    public void setInformation(MiniPlayer[] players, Stack<ProductionCard>[][] productionDecks, BasicBall[][] miniBallsMarket, BasicBall miniBallDiscarted){
+    public void setInformation(int index,MiniPlayer[] players, Stack<ProductionCard>[][] productionDecks, BasicBall[][] miniBallsMarket, BasicBall miniBallDiscarted){
         view.setMarket(miniBallsMarket,miniBallDiscarted);
         this.model.setDeck(productionDecks);
         this.model.setPlayers(players);
+        this.model.setPersanalIndex(index);
+
+        DebugMessages.printWarning("INDEX : " + index);
+
+        int i=0;
+        for(MiniPlayer p: this.model.getPlayers())
+        {
+            DebugMessages.printWarning(p.getNickname() + " -> "+ i);
+            i++;
+        }
 
     }
 
@@ -95,9 +105,9 @@ public class ClientController implements Runnable{
      * @param y row
      * @param dashboardPos where i set the old card in my dashboard
      */
-    public void updateCardBuyed(ProductionCard newCard,int x,int y,int dashboardPos)
+    public void updateCardBuyed(ProductionCard newCard,int x,int y,int dashboardPos,int index)
     {
-        this.model.updateCard(newCard,x,y,dashboardPos);
+        this.model.updateCard(newCard,x,y,dashboardPos,index);
     }
     /**
      * Add new logged player to the minimodel
@@ -164,6 +174,20 @@ public class ClientController implements Runnable{
         this.sendMessage(new Production(pos));
     }
 
+    public void showAvailableNickname()
+    {
+        int i=0;
+        for(MiniPlayer p:this.model.getPlayers())
+        {
+            System.out.println((i+1 )+ "- "+p.getNickname());
+            i++;
+        }
+    }
+    public void spyPlayer(int index)
+    {
+        MiniPlayer p = this.model.getPlayers()[index];
+        this.view.showPlayer(p.getStorage(),p.getChest(),p.getDecks(),p.getNickname());
+    }
     public void abortHelp()
     {
         this.view.abortHelp();
@@ -260,9 +284,9 @@ public class ClientController implements Runnable{
         this.sendMessage(new DiscardResource(quantity));
     }
 
-    public void storageUpdate(Deposit[] deposits)
+    public void storageUpdate(Deposit[] deposits,int index)
     {
-        this.model.updateStorage(deposits);
+        this.model.updateStorage(deposits,index);
     }
 
     public void showStorage()

@@ -38,9 +38,9 @@ public class Player {
         this.pendingCard = null;
     }
 
-    public void setPendingBuy(ProductionCard newCard,int x,int y,int dashPos)
+    public void setPendingBuy(ProductionCard newCard,int x,int y,int dashPos,int playerIndex)
     {
-        this.pendingCard = new UpdateCardBuyed(newCard,x,y,dashPos);
+        this.pendingCard = new UpdateCardBuyed(newCard,x,y,dashPos,playerIndex);
     }
 
     public Packet getPendingCard()

@@ -119,6 +119,7 @@ public interface View {
      */
     public void askTurnType();
 
+    public void showPlayer(Deposit[]deposits, List<Resource> chest, ProductionCard[] cards,String name);
     /**
      * ask user which command he want to execute
      */
