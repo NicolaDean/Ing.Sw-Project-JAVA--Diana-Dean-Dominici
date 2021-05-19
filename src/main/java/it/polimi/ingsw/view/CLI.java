@@ -523,7 +523,7 @@ public class CLI extends Observable<ClientController> implements View {
         int d2;
         String cmd;
         boolean valid = false;
-        this.terminal.printRequest("\nthis is your storage:");
+        //this.terminal.printRequest("\nthis is your storage:");
         this.notifyObserver(ClientController::showStorage);
         cmd = customRead("\nselect the first deposit you want to swap. (1-3) for normal (4-5) for bonus (6) to quit the swap");
         valid = input.validateInt(Integer.parseInt(cmd), 1, 6);
