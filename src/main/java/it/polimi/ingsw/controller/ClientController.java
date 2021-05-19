@@ -3,10 +3,10 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
 import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.controller.pingManager.PongController;
-import it.polimi.ingsw.model.MiniModel;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.balls.BasicBall;
+import it.polimi.ingsw.model.minimodel.MiniModel;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.utils.DebugMessages;
@@ -20,8 +20,6 @@ import java.net.Socket;
 import java.util.List;
 import java.util.Scanner;
 import java.util.function.Consumer;
-
-import static it.polimi.ingsw.enumeration.ErrorMessages.NotEnoughResources;
 
 public class ClientController implements Runnable{
 
@@ -63,7 +61,7 @@ public class ClientController implements Runnable{
      * @param balls miniMarketBall
      * @param discarted miniBallDiscarted
      */
-    public void setInformation(MiniModel miniModel,BasicBall[][] balls, BasicBall discarted){
+    public void setInformation(MiniModel miniModel, BasicBall[][] balls, BasicBall discarted){
         view.setMarket(balls,discarted);
         this.model = miniModel;
     }
@@ -270,7 +268,14 @@ public class ClientController implements Runnable{
     {
         this.view.showStorage(this.model.getStorage());
     }
-    public void showDashboard(){this.view.showDashboard(this.model.getStorage(),this.model.getChest(),this.model.getPlayerCards());}
+
+    public void showDashboard(){
+        this.view.showDashboard(
+                this.model.getStorage(),
+                this.model.getPlayers()[this.model.getPersanalIndex()].getChest(),
+                this.model.getPlayerCards()
+        );
+    }
     /**
      * send packet to server
      * @param p

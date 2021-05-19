@@ -1,7 +1,6 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
-import it.polimi.ingsw.model.MiniModel;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.dashboard.Deposit;

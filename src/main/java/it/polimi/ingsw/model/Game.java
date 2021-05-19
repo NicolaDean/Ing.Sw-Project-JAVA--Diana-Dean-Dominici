@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.factory.MapFactory;
 import it.polimi.ingsw.model.market.Market;
-import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.minimodel.MiniModel;
 import it.polimi.ingsw.utils.ConstantValues;
 
 import java.util.ArrayList;
