@@ -18,6 +18,11 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
+    public void setMiniMarketDiscardedResouce(BasicBall miniMarketBall){
+
+    }
+
+    @Override
     public BasicBall[][] getMiniMarketBalls() {
         return new BasicBall[0][];
     }

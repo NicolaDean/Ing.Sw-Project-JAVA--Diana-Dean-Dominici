@@ -3,12 +3,16 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
 import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.controller.pingManager.PongController;
+import it.polimi.ingsw.exceptions.WrongPosition;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniModel;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.utils.ErrorManager;
@@ -22,6 +26,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.function.Consumer;
+
+import static it.polimi.ingsw.utils.ConstantValues.marketCol;
+import static it.polimi.ingsw.utils.ConstantValues.marketRow;
 
 public class ClientController implements Runnable{
 
@@ -252,13 +259,6 @@ public class ClientController implements Runnable{
     {
         this.sendMessage(new DiscardResource(quantity));
     }
-    /**
-     * set all initial information into miniMarted
-     * @param mm mini model
-     */
-    public void setMiniModel(MiniModel mm){
-        model=mm;
-    }
 
     public void storageUpdate(Deposit[] deposits)
     {
@@ -369,9 +369,45 @@ public class ClientController implements Runnable{
      */
     public void sendMarketExtraction(boolean dir,int pos)
     {
-        //view.showMarket(minimodel.getMiniMarket)
+        if(dir) exstractColumn(pos);
+        else exstractRow(pos);
         this.sendMessage(new MarketExtraction(dir,pos));
     }
+
+    /**
+     *extraction row from minimarker
+     * @param pos row position, it must be between 1 and 3
+     */
+    public void exstractRow(int pos)  {
+        BasicBall tmp;
+        for (int i = 1; i < ConstantValues.marketCol; i++) {
+            tmp = view.getMiniMarketBalls()[pos][i];
+            view.getMiniMarketBalls()[pos][i] = view.getMiniMarketBalls()[pos][0];
+            view.getMiniMarketBalls()[pos][0] = tmp;
+        }
+
+        tmp = view.getMiniMarketDiscardedResouce();
+        view.setMiniMarketDiscardedResouce(view.getMiniMarketBalls()[pos][0]);
+        view.getMiniMarketBalls()[pos][0] = tmp;
+    }
+
+    /**
+     *extraction column fror minimarket
+     * @param pos column position, it must be between 1 and 4
+     */
+    public void exstractColumn(int pos) {
+        BasicBall tmp;
+        for (int i = 1; i < marketRow; i++) {
+            tmp = view.getMiniMarketBalls()[i][pos];
+            view.getMiniMarketBalls()[i][pos] = view.getMiniMarketBalls()[0][pos];
+            view.getMiniMarketBalls()[0][pos] = tmp;
+        }
+        tmp = view.getMiniMarketDiscardedResouce();
+        view.setMiniMarketDiscardedResouce( view.getMiniMarketBalls()[0][pos]);
+        view.getMiniMarketBalls()[0][pos] = tmp;
+
+    }
+
     /**
      * This thread listen to the server packet and analyze them
      */
