@@ -10,11 +10,12 @@ import it.polimi.ingsw.model.resources.ResourceList;
 import java.util.List;
 
 public class MiniPlayer {
-    private List<Resource> chest;
-    private ProductionCard[] decks;
-    private int position;
-    private String nickname;
-    private Deposit[] storage;
+    private List<Resource>      chest;
+    private LeaderCard []       leaderCards;
+    private ProductionCard[]    decks;
+    private int                 position;
+    private String              nickname;
+    private Deposit[]           storage;
 
 
     public MiniPlayer(String nickname) {
@@ -57,4 +58,16 @@ public class MiniPlayer {
         return this.decks;
     }
 
+    public void setLeaderCards(LeaderCard[] leaderCards) {
+        this.leaderCards = leaderCards;
+    }
+    public LeaderCard[] getLeaderCards()
+    {
+        return this.leaderCards;
+    }
+
+    public void updateChest(List<Resource> chest)
+    {
+        this.chest = chest;
+    }
 }

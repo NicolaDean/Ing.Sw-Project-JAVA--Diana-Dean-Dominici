@@ -5,6 +5,7 @@ import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.controller.pingManager.PongController;
 import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.balls.BasicBall;
@@ -188,6 +189,21 @@ public class ClientController implements Runnable{
         MiniPlayer p = this.model.getPlayers()[index];
         this.view.showPlayer(p.getStorage(),p.getChest(),p.getDecks(),p.getNickname());
     }
+    public void updateLeader(LeaderCard [] leaderCard,int index)
+    {
+        this.model.getPlayers()[index].setLeaderCards(leaderCard);
+    }
+
+    public void sendLeader(LeaderCard[] leaderCards)
+    {
+        this.sendMessage(new SelectLeader(leaderCards));
+    }
+    public void askLeaders()
+    {
+        int index = this.model.getPersanalIndex();
+        MiniPlayer p = this.model.getPlayers()[index];
+        this.view.askLeaders(p.getLeaderCards());
+    }
     public void abortHelp()
     {
         this.view.abortHelp();
@@ -275,7 +291,8 @@ public class ClientController implements Runnable{
 
     public void askSwap (int d1, int d2, int index)
     {
-        this.sendMessage(new AskSwap(d1, d2, index));
+        this.sendMessage(new AskSwap(d1, d2, this.getMiniModel().getPersanalIndex()));
+
     }
 
     public void sendResourceDiscard(int quantity)
@@ -286,6 +303,11 @@ public class ClientController implements Runnable{
     public void storageUpdate(Deposit[] deposits,int index)
     {
         this.model.updateStorage(deposits,index);
+    }
+
+    public void chestUpdate(List<Resource> chest,int index)
+    {
+        this.model.updateChest(chest,index);
     }
 
     public void showStorage()

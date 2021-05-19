@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.dashboard.Deposit;
@@ -125,6 +126,7 @@ public interface View {
      */
     public void askCommand();
 
+    public void askLeaders(LeaderCard[] cards);
     public void showGameStarted();
 
     public void abortHelp();

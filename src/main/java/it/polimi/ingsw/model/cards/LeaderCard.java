@@ -5,6 +5,7 @@ import it.polimi.ingsw.exceptions.NotSoddisfedPrerequisite;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
+import it.polimi.ingsw.utils.ConstantValues;
 
 import java.util.List;
 
@@ -57,5 +58,15 @@ LeaderCard extends Card{
             p.increaseScore(this.getVictoryPoints());
         else
             throw new NotSoddisfedPrerequisite("");
+    }
+
+    public String getHeader()
+    {
+        return ConstantValues.resourceRappresentation.getColorRappresentation(this.type) + "Leader";
+    }
+
+    public List<PrerequisiteCard> getCardPrequisite()
+    {
+        return this.cardPrequisite;
     }
 }

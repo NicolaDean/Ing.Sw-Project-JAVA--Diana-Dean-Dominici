@@ -38,6 +38,10 @@ public class Player {
         this.pendingCard = null;
     }
 
+    public LeaderCard[] getLeaders()
+    {
+        return this.leaders;
+    }
     public void setPendingBuy(ProductionCard newCard,int x,int y,int dashPos,int playerIndex)
     {
         this.pendingCard = new UpdateCardBuyed(newCard,x,y,dashPos,playerIndex);
