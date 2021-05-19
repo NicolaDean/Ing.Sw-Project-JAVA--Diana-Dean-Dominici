@@ -32,6 +32,7 @@ public class CLI extends Observable<ClientController> implements View {
     Logger                  terminal; //print formatted and colored text on the cli
     InputReaderValidation   input;
     Thread                  helpThread;
+    Thread                  turnThread;
     boolean                 waiting;
     int                     turnSelected;
     private BasicBall[][]   miniMarketBalls;
@@ -61,8 +62,11 @@ public class CLI extends Observable<ClientController> implements View {
         return miniMarketDiscardedResouce;
     }
 
-    public String helpCommands(String cmd, String message)
+    public void turnSabotage()
     {
+        this.turnThread.interrupt();
+    }
+    public String helpCommands(String cmd, String message) {
         //
         cmd = cmd.toLowerCase();
         switch (cmd) {
@@ -76,9 +80,13 @@ public class CLI extends Observable<ClientController> implements View {
                 //this.quit();
                 return customRead(message);
 
+                //Idea creare un thread per i 3 tipi di turni e se lutente non ha fatto azioni questo thread permette di killarlo
             case "-exit": //cancel case
-                this.notifyObserver(controller -> {controller.sendMessage(new EndTurn());});
-                return customRead(message);
+                DebugMessages.printError("-exit command not available yet");
+                Thread kill = new Thread(this::turnSabotage);//Create a thread whit "thread sabotage"
+                //this.input.interruptableInput();
+                //this.turnThread.interrupt();
+                return "";
 
             case "-startgame": //cancel case
                 this.notifyObserver(ClientController::sendStartCommand);
@@ -103,8 +111,8 @@ public class CLI extends Observable<ClientController> implements View {
 
         }
     }
-    public synchronized String customRead()
-    {
+
+    public synchronized String customRead()  {
         //System.out.println("!!!!!!!!!!!!!!!!!!!");
         String s = this.input.readLine();
         //System.out.println("???????????????????");
@@ -113,22 +121,11 @@ public class CLI extends Observable<ClientController> implements View {
         return s;
     }
 
-    public String waitRead()
-    {
-        String s = this.input.readLine();
-        s = helpCommands(s,"");
-        waitRead();
-        return s;
-    }
 
-    public String customRead(String message)
-    {
-        //System.out.println("entrato nella custom con messaggio");
+    public String customRead(String message)  {
         terminal.printRequest(message);
         String s = this.input.readLine();
-        //System.out.println("cazo culo "+s);
         s = helpCommands(s,message);
-        //System.out.println("tette: "+s);
         return s;
     }
 
