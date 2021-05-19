@@ -244,6 +244,11 @@ public class ClientController implements Runnable{
             sendMessage(new Login(nickname));
     }
 
+    public void askSwap (int d1, int d2)
+    {
+
+    }
+
     public void sendResourceDiscard(int quantity)
     {
         this.sendMessage(new DiscardResource(quantity));

@@ -385,6 +385,7 @@ public class Logger {
         this.out.println(" \"-startgame\" to start the game");
         this.out.println(" \"-dashboard\" to show the Dashboard");
         this.out.println(" \"-swapdeposits\" to enter the deposit swapping function");
+        this.out.println(" \"-shop\" to show the cards that can be bought");
         this.out.println(" \"-spy\" to spy the dashboard of other players");
         this.out.println("------------------------------------------");
     }

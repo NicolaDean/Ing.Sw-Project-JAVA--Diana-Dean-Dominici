@@ -250,6 +250,8 @@ public class CLI extends Observable<ClientController> implements View {
 
     }
 
+
+
     @Override
     public void askMarketExtraction() {
         String msg = "\nInsert \"col\" or \"row\" to select the extraction mode";
@@ -507,6 +509,23 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askSwapDeposit() {
+        int d1;
+        int d2;
+        String cmd;
+        boolean valid = false;
+        cmd = customRead("select the first deposit you want to swap. (1-3) for normal (4-5) for bonus");
+        valid = input.validateInt(Integer.parseInt(cmd), 1, 4);
+        if(valid)
+        {
+            d1=Integer.parseInt(cmd);
+            cmd = customRead("select the second deposit you want to swap. (1-3) for normal (4-5) for bonus");
+            valid = input.validateInt(Integer.parseInt(cmd), 1, 4);
+            if(valid)
+            {
+                d2=Integer.parseInt(cmd);
+                this.notifyObserver(controller -> controller.askSwap(d1,d2));
+            }
+        }
 
     }
 

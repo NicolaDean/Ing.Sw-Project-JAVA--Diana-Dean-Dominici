@@ -128,6 +128,7 @@ public class GUI extends Observable<ClientController> implements View{
 
     }
 
+
     @Override
     public void showMarketExtraction(List<Resource> resourceList, int whiteballs) {
         
