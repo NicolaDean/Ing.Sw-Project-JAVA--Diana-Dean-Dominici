@@ -1,8 +1,13 @@
 package it.polimi.ingsw.controllerTest;
 
 import it.polimi.ingsw.controller.packets.GameStarted;
+import it.polimi.ingsw.exceptions.FullDepositException;
+import it.polimi.ingsw.exceptions.NoBonusDepositOwned;
+import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.dashboard.Deposit;
+import it.polimi.ingsw.model.dashboard.Storage;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.view.utils.CliColors;
@@ -99,6 +104,21 @@ public class ColorCliTest {
         }
         logger.printDeks(cards);
 
+        Storage s = new Storage();
+
+        try {
+            s.safeInsertion(new Resource(COIN,1),1);
+        } catch (NoBonusDepositOwned noBonusDepositOwned) {
+            noBonusDepositOwned.printStackTrace();
+        } catch (WrongPosition wrongPosition) {
+            wrongPosition.printStackTrace();
+        } catch (FullDepositException e) {
+            e.printStackTrace();
+        }
+
+        Deposit [] x = s.getDeposits();
+
+        logger.printDashboard(x,cards[2][2].getCost(),cards[1]);
     }
 
 

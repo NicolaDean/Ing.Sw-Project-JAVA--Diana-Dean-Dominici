@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.view.CLI;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.utils.DebugMessages;
 
@@ -69,6 +70,10 @@ public class Logger {
         }
     }
 
+    /**
+     * print a number of space equal to space
+     * @param space number of space to print
+     */
     public void spacer(int space)
     {
         for(int i=0;i<space;i++)
@@ -77,6 +82,11 @@ public class Logger {
         }
     }
 
+    /**
+     * Draw a rectangle by printing colored space
+     * @param space size of rectangle
+     * @param color color of recrtangle
+     */
     public void colorSpacer(int space,String color)
     {
         this.out.setBackgroundColor(color);
@@ -86,11 +96,22 @@ public class Logger {
         }
         this.out.reset();
     }
+
+    /**
+     * print an empty deposit cell
+     */
     public void printEmptyDeposit()
     {
-        this.out.printColored(" ◍ ",CliColors.BLACK_TEXT,CliColors.R_WHITE_BACKGROUND);
+        this.out.printColored(" NO ",CliColors.BLACK_TEXT,CliColors.R_WHITE_BACKGROUND);
     }
-    public void printStorage(Deposit[] deposits)
+
+    /**
+     *
+     * @param deposits storage of a player
+     * @param chest    chest of a player
+     * @param dash     true if i want to print both false if i want to print only storage and not chest
+     */
+    public void printStorage(Deposit[] deposits,List<Resource> chest,boolean dash)
     {
 
         if(deposits == null)
@@ -98,17 +119,34 @@ public class Logger {
             DebugMessages.printWarning("Empty Storage");
             //return;
         }
+        else
+        {
+
+            this.spacer(4);
+            this.out.setUnderline();
+            this.out.printColored("Storage:", CliColors.MAGENTA_TEXT);
+            this.reset();
+            if(dash)
+            {
+                this.spacer(20);
+                this.out.setUnderline();
+                this.out.printColored("Chest:", CliColors.MAGENTA_TEXT);
+                this.reset();
+            }
+            System.out.println("");
+        }
         for(Deposit d:deposits)
         {
             if(d == null) break;
-            int size            = d.getSizeMax();
-            Resource res = d.getResource();
-            int qty;
-            String  color ="";
+            int         size    = d.getSizeMax();
+            Resource    res     = d.getResource();
+            int         qty;
+            String      color   ="";
+
             if(res != null)
             {
                  qty             = d.getResource().getQuantity();
-                 color       = resourceRappresentation.getColorRappresentation(d.getResource().getType());
+                 color           = resourceRappresentation.getColorRappresentation(d.getResource().getType());
             }
             else
             {
@@ -117,23 +155,31 @@ public class Logger {
 
 
 
-            if(size==1) spacer(8);
-            if(size==2) spacer(4);
+            if(size==1) this.spacer(8);
+            if(size==2) this.spacer(4);
 
             for(int i=0;i<size;i++)
             {
                 if(qty ==0)
                 {
-                    spacer(4);
-                    printEmptyDeposit();
+                    this.spacer(4);
+                    this.printEmptyDeposit();
                 }
                 else
                 {
-                    spacer(4);
-                    colorSpacer(4,color);
+                    this.spacer(4);
+                    this.colorSpacer(4,color);
                     qty--;
                 }
             }
+
+            if(size==1 && dash)
+            {
+                this.spacer(16);
+                this.printInlineResourceList(chest);
+            }
+
+
             System.out.println("");
 
         }
@@ -144,60 +190,96 @@ public class Logger {
         //31
         System.out.print("╔");
         for(ProductionCard card: row) {
-            int index = 11;
-            for(int i=0;i<index;i++) System.out.print("═");
-            this.out.setBold();
-            String header = " L: "+card.getLevel()+ " VP: " + card.getVictoryPoints();
-            this.out.printColored(header,CliColors.BLACK_TEXT,card.getColor());
-            this.out.reset();
-            index = 9;
-            if(header.length() > 11) index = index-1;
+            if(card!=null)
+            {
+                int index = 11;
+                for(int i=0;i<index;i++) System.out.print("═");
+                this.out.setBold();
+                String header = " L: "+card.getLevel()+ " VP: " + card.getVictoryPoints();
+                this.out.printColored(header,CliColors.BLACK_TEXT,card.getColor());
+                this.out.reset();
+                index = 9;
+                if(header.length() > 11) index = index-1;
 
-            for(int i=0;i<index;i++) System.out.print("═");
-            System.out.print("╦╦");
-        }
-
-        System.out.println("");
-        for(ProductionCard card: row)
-        {
-            this.out.print("║");
-            this.out.printColored("Cost     : ",CliColors.WHITE_TEXT);
-            this.printInlineResourceList(card.getCost());
-            int padding = 20 - 3* ResourceOperator.getTypeCounter(card.getCost());
-            this.spacer(padding);
-            this.out.print("║");
-        }
-        System.out.println("");
-        for(ProductionCard card: row)
-        {
-            this.out.print("║");
-            this.out.printColored("Raw  mat : ",CliColors.WHITE_TEXT);
-            this.printInlineResourceList(card.getRawMaterials());
-
-            int padding = 20 - 3* ResourceOperator.getTypeCounter(card.getRawMaterials());
-            this.spacer(padding);
-            this.out.print("║");
-        }
-        System.out.println("");
-        for(ProductionCard card: row)
-        {
-            int faith =card.getObtainedFaith();
-            this.out.print("║");
-            this.out.printColored("Obt mat  : ",CliColors.WHITE_TEXT);
-            this.printInlineResourceList(card.getObtainedMaterials());
-
-            int padding = 20 - 3* ResourceOperator.getTypeCounter(card.getObtainedMaterials());
-
-            if( faith !=0)
-            {   padding = padding-3;
-                this.out.printColored(" "+faith+ " ",CliColors.BLACK_TEXT,CliColors.WHITE_BACKGROUND);
+                for(int i=0;i<index;i++) System.out.print("═");
+                System.out.print("╦╦");
             }
-            this.spacer(padding);
+            else
+            {
+                for(int i=0;i<13;i++) System.out.print("═");
+                this.out.printColored("EMPTY",CliColors.RED_TEXT);
+                for(int i=0;i<13;i++) System.out.print("═");
+                System.out.print("╦╦");
+            }
+
+        }
+
+        System.out.println("");
+        for(ProductionCard card: row)
+        {
+            this.out.print("║");
+            if(card != null)
+            {
+                this.out.printColored("Cost     : ",CliColors.WHITE_TEXT);
+                this.printInlineResourceList(card.getCost());
+                int padding = 20 - 3* ResourceOperator.getTypeCounter(card.getCost());
+                this.spacer(padding);
+            }
+            else
+            {
+                this.spacer(31);
+            }
+
+            this.out.print("║");
+        }
+        System.out.println("");
+        for(ProductionCard card: row)
+        {
+            this.out.print("║");
+            if(card != null)
+            {
+                this.out.printColored("Raw  mat : ", CliColors.WHITE_TEXT);
+                this.printInlineResourceList(card.getRawMaterials());
+
+                int padding = 20 - 3 * ResourceOperator.getTypeCounter(card.getRawMaterials());
+                this.spacer(padding);
+            }
+            else
+            {
+                this.spacer(31);
+            }
+            this.out.print("║");
+        }
+        System.out.println("");
+        for(ProductionCard card: row)
+        {
+
+            this.out.print("║");
+            if(card != null)
+            {
+                int faith =card.getObtainedFaith();
+                this.out.printColored("Obt mat  : ",CliColors.WHITE_TEXT);
+                this.printInlineResourceList(card.getObtainedMaterials());
+
+                int padding = 20 - 3* ResourceOperator.getTypeCounter(card.getObtainedMaterials());
+
+                if( faith !=0)
+                {   padding = padding-3;
+                    this.out.printColored(" "+faith+ " ",CliColors.BLACK_TEXT,CliColors.WHITE_BACKGROUND);
+                }
+                this.spacer(padding);
+            }
+            else
+            {
+                this.spacer(31);
+            }
             this.out.print("║");
         }
         System.out.println("");
         System.out.print("╚");
-        for(ProductionCard card: row) {
+        for(ProductionCard card: row)
+        {
+
             for(int i=0;i<31;i++) System.out.print("═");
             System.out.print("╩╩");
         }
@@ -214,9 +296,17 @@ public class Logger {
         }
     }
 
-    public void printDashboard()
+    public void printDashboard(Deposit[] storage,List<Resource> chest,ProductionCard[] productionCards)
     {
-
+        this.printSeparator();
+        this.printStorage(storage,chest,true);
+        this.printSeparator();
+        this.spacer(4);
+        this.out.setUnderline();
+        this.out.printColored("Productions:",CliColors.MAGENTA_TEXT);
+        this.reset();
+        this.out.println("");
+        this.printCardRow(productionCards);
     }
     /**
      * Print a colored message corresponding to "warnings"

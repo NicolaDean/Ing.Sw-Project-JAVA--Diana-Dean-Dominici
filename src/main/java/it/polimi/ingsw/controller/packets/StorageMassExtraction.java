@@ -14,6 +14,7 @@ public class StorageMassExtraction extends Packet<ServerController> implements P
     {
         super("StorageMassExtraction");
         this.insertions = insertions;
+        this.buyturn = buyturn;
     }
 
     @Override

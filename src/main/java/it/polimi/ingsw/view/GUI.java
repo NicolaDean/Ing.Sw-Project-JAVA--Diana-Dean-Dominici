@@ -139,6 +139,11 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
+    public void showDashboard(Deposit[] deposits, List<Resource> chest, ProductionCard[] cards) {
+
+    }
+
+    @Override
     public void askEndTurn() {
 
     }
