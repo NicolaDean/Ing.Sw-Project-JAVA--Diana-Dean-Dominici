@@ -211,8 +211,8 @@ public class ServerController{
     public boolean isRightPlayer(int playerIndex)
     {
         //TODO CHECK BETTER THE BOOLEAN EXPRESSION
-        return (this.game.getCurrentPlayerIndex() == this.clients.get(currentClient).getRealPlayerIndex());
-        //return true;
+        //return (this.game.getCurrentPlayerIndex() == this.clients.get(currentClient).getRealPlayerIndex());
+        return true;
     }
 
     /**
