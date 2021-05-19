@@ -1,22 +1,35 @@
 package it.polimi.ingsw.model.minimodel;
 
 import it.polimi.ingsw.model.cards.LeaderCard;
+import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.dashboard.Storage;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
 
 import java.util.List;
 
 public class MiniPlayer {
     private List<Resource> chest;
+    private ProductionCard[] decks;
     private int position;
     private String nickname;
-    private Storage storage;
+    private Deposit[] storage;
+
 
     public MiniPlayer(String nickname) {
         this.position = 0;
         this.nickname = nickname;
-        this.chest = chest;
-        this.storage = storage;
+        this.chest = new ResourceList();
+        decks = new ProductionCard[3];
+    }
+
+    public void setDecks(ProductionCard[] decks) {
+        this.decks = decks;
+    }
+
+    public ProductionCard[] getDecks() {
+        return decks;
     }
 
     public List<Resource> getChest() {
@@ -31,7 +44,12 @@ public class MiniPlayer {
         return nickname;
     }
 
-    public Storage getStorage() {
+    public Deposit[] getStorage() {
         return storage;
     }
+
+    public void setStorage(Deposit[] storage) {
+        this.storage = storage;
+    }
+
 }

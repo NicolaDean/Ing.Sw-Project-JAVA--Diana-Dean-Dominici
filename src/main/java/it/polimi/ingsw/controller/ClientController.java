@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniModel;
+import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.utils.DebugMessages;
@@ -19,6 +20,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.function.Consumer;
 
 public class ClientController implements Runnable{
@@ -55,15 +57,14 @@ public class ClientController implements Runnable{
 
     }
 
-    /**
+    /*
      * set all initial information into miniMarted
-     * @param miniModel miniModel
-     * @param balls miniMarketBall
-     * @param discarted miniBallDiscarted
      */
-    public void setInformation(MiniModel miniModel, BasicBall[][] balls, BasicBall discarted){
-        view.setMarket(balls,discarted);
-        this.model = miniModel;
+    public void setInformation(MiniPlayer[] players, Stack<ProductionCard>[][] productionDecks, BasicBall[][] miniBallsMarket, BasicBall miniBallDiscarted){
+        view.setMarket(miniBallsMarket,miniBallDiscarted);
+        this.model.setDeck(productionDecks);
+        this.model.setPlayers(players);
+
     }
 
     public View getView() {
@@ -96,10 +97,9 @@ public class ClientController implements Runnable{
      * @param index
      * @param nickname
      */
-    public void addPlayer(int index,String nickname)
+    public void notifyPlayer(int index, String nickname)
     {
         this.view.playerLogged(nickname);
-        this.model.addPlayer(nickname,index);
     }
 
     public ClientController() {
