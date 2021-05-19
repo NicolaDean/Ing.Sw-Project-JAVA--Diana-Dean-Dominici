@@ -68,7 +68,7 @@ public class CLI extends Observable<ClientController> implements View {
     {
         this.turnThread.interrupt();
     }
-    public String helpCommands(String cmd, String message) {
+    public String helpCommands(String cmd, String message) throws InterruptedException {
         //
         cmd = cmd.toLowerCase();
         switch (cmd) {
@@ -86,7 +86,8 @@ public class CLI extends Observable<ClientController> implements View {
             case "-exit": //cancel case
                 DebugMessages.printError("-exit command not available yet");
                 Thread kill = new Thread(this::turnSabotage);//Create a thread whit "thread sabotage"
-                //this.input.interruptableInput();
+                //kill.start();
+                this.input.interruptableInput();
                 //this.turnThread.interrupt();
                 return "";
 
@@ -113,24 +114,41 @@ public class CLI extends Observable<ClientController> implements View {
 
         }
     }
-    public synchronized String customRead()
-    {
+    public synchronized String customRead()  {
         //System.out.println("!!!!!!!!!!!!!!!!!!!");
         String s = this.input.readLine();
         //System.out.println("???????????????????");
        // System.out.println("s vale: "+s);
-        s = helpCommands(s,"");
+        try {
+            s = helpCommands(s,"");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return s;
     }
 
 
-    public String customRead(String message)  {
+    public String customRead(String message) {
         terminal.printRequest(message);
         String s = this.input.readLine();
-        s = helpCommands(s,message);
+        try {
+            s = helpCommands(s,message);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return s;
     }
 
+    public String interruptableCustomRead(String message) throws InterruptedException {
+
+        String s = this.input.interruptableInput();
+        try {
+            s = helpCommands(s,message);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return s;
+    }
     @Override
     public void printWelcomeScreen() {
         this.terminal.printLogo();
@@ -260,7 +278,7 @@ public class CLI extends Observable<ClientController> implements View {
 
 
     @Override
-    public void askMarketExtraction() {
+    public void askMarketExtraction() throws InterruptedException {
         String msg = "\nInsert \"col\" or \"row\" to select the extraction mode";
         boolean direction = false;
         String in = "";
@@ -304,6 +322,28 @@ public class CLI extends Observable<ClientController> implements View {
         terminal.printDeks(productionCards);
     }
 
+    public int askIntInterruptable(String msg,String error,int min,int max) throws InterruptedException {
+        int num =0;
+        boolean cond = true;
+        do{
+            String in = this.interruptableCustomRead(msg);
+            try
+            {
+                num = Integer.parseInt(in);
+            }
+            catch (Exception e)
+            {
+                this.terminal.printError("Not an integer");
+            }
+            cond = !input.validateInt(num,min,max);
+
+
+
+            if(cond) this.terminal.printWarning(error);
+        }while(cond );
+
+        return num;
+    }
     public int askInt(String msg,String error,int min,int max)
     {
         int num =0;
@@ -743,30 +783,36 @@ public class CLI extends Observable<ClientController> implements View {
 
     public void turnTypeInterpreter(String cmd)
     {
-        switch (cmd) {
-            case "1":
-                turnSelected =1;
-                this.askBuy();
-                break;
-            case "market":
-            case "2":
-                turnSelected =2;
-                this.askMarketExtraction();
-                break;
-            case "3":
-                turnSelected =3;
-                this.askProduction();
-                break;
-            case "4":
-                turnSelected =4;
-                this.askEndTurn();
-                break;
-            default:
-                //System.out.println("sono entrato con cmd= "+cmd );
-                turnSelected =1;
-                this.askBuy();
-                break;
+        try {
+            switch (cmd) {
+                case "1":
+                    turnSelected =1;
+                    this.askBuy();
+                    break;
+                case "market":
+                case "2":
+                    turnSelected =2;
+                    this.askMarketExtraction();
+                    break;
+                case "3":
+                    turnSelected =3;
+                    this.askProduction();
+                    break;
+                case "4":
+                    turnSelected =4;
+                    this.askEndTurn();
+                    break;
+                default:
+                    //System.out.println("sono entrato con cmd= "+cmd );
+                    turnSelected =1;
+                    this.askBuy();
+                    break;
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            this.askTurnType();//Se interropo il turno lo rifaccio qui
         }
+
     }
 
 }

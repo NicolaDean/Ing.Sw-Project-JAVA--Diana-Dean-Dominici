@@ -82,7 +82,7 @@ public interface View {
     /**
      * ask user which line/row he want to select for the market extraction
      */
-    public void askMarketExtraction();
+    public void askMarketExtraction() throws InterruptedException;
 
     public void showDecks(ProductionCard[][] ProductionCards);
     /**

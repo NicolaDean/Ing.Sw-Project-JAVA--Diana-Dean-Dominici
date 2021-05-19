@@ -276,7 +276,6 @@ public class ClientController implements Runnable{
     public void askSwap (int d1, int d2, int index)
     {
         this.sendMessage(new AskSwap(d1, d2, index));
-
     }
 
     public void sendResourceDiscard(int quantity)
@@ -371,7 +370,9 @@ public class ClientController implements Runnable{
         this.view.askEndTurn();
     }
 
-    public void askBuy(){this.view.askBuy();}
+    public void askBuy(){
+            this.view.askBuy();
+    }
 
     public void askResourceExtraction(List<Resource> resourceList)
     {
