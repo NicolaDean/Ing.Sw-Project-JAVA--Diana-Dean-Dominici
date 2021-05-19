@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.minimodel.MiniModel;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.utils.DebugMessages;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -172,6 +173,7 @@ public class Game {
                 if(p.getNickname().equals(str))
                 {
                     outIndexes[i] = currIndex;
+                    System.out.println(i + " -->"+ currIndex);
                     p.setControllerIndex(i);
                 }
                 i++;
@@ -272,6 +274,8 @@ public class Game {
             currentPlayer = 0;
         else
             currentPlayer++;
+
+
 
         //Papal space activation check
         papalSpaceCheck();

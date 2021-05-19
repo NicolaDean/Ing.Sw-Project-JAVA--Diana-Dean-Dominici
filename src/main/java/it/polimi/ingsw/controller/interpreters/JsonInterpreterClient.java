@@ -26,7 +26,7 @@ public class JsonInterpreterClient extends BasicJsonInterpreter{
             this.setResponse(packet.analyze(controller));
 
 
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | InterruptedException e) {
             e.printStackTrace();
         }
 

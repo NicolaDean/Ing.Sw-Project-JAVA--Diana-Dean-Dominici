@@ -1,5 +1,7 @@
 package it.polimi.ingsw.view.utils;
 
+import it.polimi.ingsw.utils.CurrentOS;
+
 import java.io.OutputStream;
 import java.io.PrintStream;
 
@@ -48,37 +50,47 @@ public class CliColors extends PrintStream
 
     public void reset()
     {
-        this.print(CLI_RESET);
+        if(!CurrentOS.IsWindows())
+            this.print(CLI_RESET);
     }
 
     public void clear(){
-        this.println(CLEAR_FULL);
+        if(!CurrentOS.IsWindows())
+            this.println(CLEAR_FULL);
+        else
+            for(int i=0;i<25;i++) System.out.println("");
+
         this.flush();
     }
 
     public  void setBold()
     {
-        this.print(BOLD);
+        if(!CurrentOS.IsWindows())
+            this.print(BOLD);
     }
 
     public void setUnderline()
     {
-        this.print(UNDERLINE);
+        if(!CurrentOS.IsWindows())
+            this.print(UNDERLINE);
     }
 
     public void setReversed()
     {
-        this.print(REVERSED);
+        if(!CurrentOS.IsWindows())
+            this.print(REVERSED);
     }
 
     public void setBackgroundColor(String backgroundStyle)
     {
-        this.print(backgroundStyle);
+        if(!CurrentOS.IsWindows())
+            this.print(backgroundStyle);
     }
 
     public void setTextColor(String textColor)
     {
-        this.print(textColor);
+        if(!CurrentOS.IsWindows())
+            this.print(textColor);
     }
 
     public void printlnColored(String content, String textColor)
@@ -111,28 +123,6 @@ public class CliColors extends PrintStream
     {
         this.println("");
         this.reset();
-    }
-
-    public void move(String dir,int numb)
-    {
-        this.print("\u001b[" + numb +dir);
-    }
-
-    public void moveUp()
-    {
-        this.print("\u001b[" + "1"+UP_CURSOR);
-    }
-    public void moveDown()
-    {
-        this.print("\u001b[" + "1"+DOWN_CURSOR);
-    }
-    public void moveLeft()
-    {
-        this.print("\u001b[" + "1"+LEFT_CURSOR);
-    }
-    public void moveRight()
-    {
-        this.print("\u001b[" + "1"+RIGHT_CURSOR);
     }
 
 

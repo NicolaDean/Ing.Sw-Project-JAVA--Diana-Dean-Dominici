@@ -15,7 +15,7 @@ import java.util.Stack;
 public class MiniModel
 {
 
-    private int persanalIndex;
+    private int persanalIndex = 0;
 
     private MiniPlayer[] players;
 
@@ -28,9 +28,9 @@ public class MiniModel
 
 
 
-    public void updateCard(ProductionCard newCard,int x,int y,int dashboardPos)
+    public void updateCard(ProductionCard newCard,int x,int y,int dashboardPos,int index)
     {
-        players[persanalIndex].getDecks()[dashboardPos] = decks[x][y];
+        players[index].getDecks()[dashboardPos] = decks[x][y];
         decks[x][y] = newCard;
         System.out.println("Dash updated");
     }
@@ -57,9 +57,9 @@ public class MiniModel
 
     public MiniPlayer[] getPlayers() { return players; }
 
-    public void updateStorage(Deposit[] deposits)
+    public void updateStorage(Deposit[] deposits,int index)
     {
-        players[persanalIndex].setStorage(deposits);
+        players[index].setStorage(deposits);
     }
 
     public Deposit[] getStorage()
@@ -75,4 +75,10 @@ public class MiniModel
     public int getPersanalIndex() { return persanalIndex; }
 
     public ProductionCard[] getPlayerCards() { return this.players[persanalIndex].getDecks(); }
+
+    public void setPersanalIndex(int index)
+    {
+        this.persanalIndex = index;
+    }
+
 }

@@ -173,10 +173,18 @@ public class ServerController{
                     i++;
                 }
 
-                int firstPlayer = this.game.getRealPlayerHandlerIndex();
+                int firstPlayer = this.game.getPlayer(0).getControllerIndex();
                 currentClient = firstPlayer;
                 //Send broadcast with game started packet
-                this.broadcastMessage(-1,generateGameStartedPacket());
+
+                i=0;
+                for (ClientHandler c : clients) {
+                    DebugMessages.printError("PLAYER "+ c.getRealPlayerIndex() + "->controller: "+i);
+                    c.sendToClient(generateGameStartedPacket(c.getRealPlayerIndex()));
+                    i++;
+                }
+
+
                 TimeUnit.SECONDS.sleep(2);
                 //notify first player the is its turn
                 //this.clients.get(firstPlayer).sendToClient(new TurnNotify());
@@ -193,15 +201,17 @@ public class ServerController{
     }
 
 
-    public Packet generateGameStartedPacket(){
-        return new GameStarted(generateMiniPlayer(),game.getProductionDecks(),game.getMarket().getResouces(),game.getMarket().getDiscardedResouce());
+    public Packet generateGameStartedPacket(int index){
+        return new GameStarted(index,generateMiniPlayer(),game.getProductionDecks(),game.getMarket().getResouces(),game.getMarket().getDiscardedResouce());
     }
 
     public MiniPlayer[] generateMiniPlayer(){
         MiniPlayer[] players= new MiniPlayer[game.getNofplayers()];
+        int i=0;
         for (Player p:game.getPlayers()){
-            players[p.getControllerIndex()]=new MiniPlayer(p.getNickname());
-            players[p.getControllerIndex()].setStorage(p.getDashboard().getStorage().getDeposits());
+            players[i]=new MiniPlayer(p.getNickname());
+            players[i].setStorage(p.getDashboard().getStorage().getDeposits());
+            i++;
         }
         return players;
     }
@@ -250,7 +260,7 @@ public class ServerController{
 
     public void sendPendingCard(int index)
     {
-        this.sendMessage(this.game.getCurrentPlayer().getPendingCard(),index);
+        this.broadcastMessage(-1,this.game.getCurrentPlayer().getPendingCard());
     }
     /**
      * Player "player" buy the card in position x,y of the deks
@@ -272,7 +282,7 @@ public class ServerController{
             this.game.getProductionDecks()[x][y].pop();
             //Set a pending card, when user finish to pay it i will send the updateBuyedCard packet i added to player
             ProductionCard newCard = this.game.getProductionDecks()[x][y].peek();
-            p.setPendingBuy(newCard,x,y,pos);
+            p.setPendingBuy(newCard,x,y,pos,this.clients.get(player).getRealPlayerIndex());
 
             return setPendingCost(p.getDashboard());
         } catch (AckManager err) {
@@ -444,16 +454,43 @@ public class ServerController{
 
     public Packet swapDeposit(int pos1,int pos2,int player)
     {
-        if(!isRightPlayer(player)) return this.notYourTurn();
+        //if(!isRightPlayer(player)) return this.notYourTurn();
 
-        Player p = this.game.getCurrentPlayer();
+
+        Player p = null;
+        //System.out.println(player + "!!!!\n\n\n");
+
+        for (Player p2: game.getPlayers())
+        {
+            if(p2.getControllerIndex()==player) {
+
+                p = p2;
+            }
+        }
+
+        //System.out.println("\n preswap d1: "+ p.getDashboard().getStorage().getStorage()[0].getResource().getType());
+        //System.out.println(" preswap d2: "+ p.getDashboard().getStorage().getStorage()[1].getResource().getType());
+
+
         try {
-            p.getDashboard().getStorage().swapDeposit(pos1,pos2);
-            return new ACK(0);
+
+
+
+            p.getDashboard().getStorage().swapDeposit(pos1 -1,pos2 -1);
+
+            Deposit[] tmp = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex()).getDashboard().getStorage().getDeposits();
+
+            //System.out.println("\n postswap d1: "+ p.getDashboard().getStorage().getStorage()[0].getResource().getType());
+            //System.out.println(" postswap d2: "+ p.getDashboard().getStorage().getStorage()[1].getResource().getType()+"\n");
+            sendStorageUpdate(player);
+            return null;
+
         } catch (Exception e) {
             e.printStackTrace();
-            return new ACK(1);
+            //System.out.println("ack con code 1 inviatoo\n\n");
+            return new ACK(8);
         }
+
     }
 
     public Packet discardResource(int quantity)
@@ -500,20 +537,14 @@ public class ServerController{
 
     }
 
-    public void sendBuyedCardUpdate(int newX,int newY,int dashPos)
-    {
 
-    }
-    public void sendStorageUpdate()
-    {
-        Deposit[] tmp = this.game.getCurrentPlayer().getDashboard().getStorage().getDeposits();
-        this.sendMessage(new StorageUpdate(tmp),this.currentClient);
-    }
+
+
 
     public void sendStorageUpdate(int index)
     {
-        Deposit[] tmp = this.game.getPlayer(this.clients.get(index).getRealPlayerIndex()).getDashboard().getStorage().getDeposits();
-        this.sendMessage(new StorageUpdate(tmp),index);
+        Deposit[] tmp = this.game.getPlayer(this.clients.get(index).getRealPlayerIndex() ).getDashboard().getStorage().getDeposits();
+        this.broadcastMessage(-1,new StorageUpdate(tmp,this.clients.get(index).getRealPlayerIndex()));
     }
     /**
      * if end condition are true send to all a "last Turn" packet
@@ -523,7 +554,7 @@ public class ServerController{
      */
     public Packet nextTurn(){
         Player player = game.nextTurn();
-
+        DebugMessages.printError("PLAYER "+ this.game.getCurrentPlayerIndex() + "->controller:"+this.game.getCurrentPlayer().getControllerIndex());
         //se risulterà positivo invierà in broadcast EndTurn e chiudera la connessione in maniera safe
         if(game.checkEndGame()) lastTurn();
         if(game.IsEnded())
@@ -561,11 +592,10 @@ public class ServerController{
 
     public void sendMessage(Packet p,int index)
     {
-        this.clients.get(index).sendToClient(p);
-        /*for(ClientHandler c: clients )
+        for(ClientHandler c: clients )
         {
             if(c.getRealPlayerIndex() == index) c.sendToClient(p);
-        }*/
+        }
     }
 
 

@@ -108,12 +108,17 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
-    public void askSwapDeposit() {
+    public void askSwapDeposit(int index) {
 
     }
 
     @Override
     public void askTurnType() {
+
+    }
+
+    @Override
+    public void showPlayer(Deposit[]deposits, List<Resource> chest, ProductionCard[] cards,String name){
 
     }
 
@@ -131,6 +136,7 @@ public class GUI extends Observable<ClientController> implements View{
     public void abortHelp() {
 
     }
+
 
     @Override
     public void showMarketExtraction(List<Resource> resourceList, int whiteballs) {

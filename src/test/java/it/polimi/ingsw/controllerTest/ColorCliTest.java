@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.dashboard.Storage;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.utils.CurrentOS;
 import it.polimi.ingsw.view.utils.CliColors;
 import it.polimi.ingsw.view.utils.Logger;
 import it.polimi.ingsw.view.CLI;
@@ -45,7 +46,7 @@ public class ColorCliTest {
     @Disabled
     public void printLogo()
     {
-        View view = new CLI();
+        View view = new CLI(0);
 
         view.printWelcomeScreen();
         view.askNickname();
@@ -54,7 +55,7 @@ public class ColorCliTest {
     @Test
     public void fedetest()
     {
-        View view = new CLI();
+        View view = new CLI(0);
 
     }
 
@@ -118,6 +119,8 @@ public class ColorCliTest {
 
         Deposit [] x = s.getDeposits();
         logger.printDashboard(x,cards[2][2].getCost(),cards[1]);
+
+
     }
 
 

@@ -32,7 +32,7 @@ public abstract class   Packet<T> implements PacketManager<T>
     }
 
     @Override
-    public Packet analyze(T controller) {
+    public Packet analyze(T controller) throws InterruptedException {
         return null;
     }
 
