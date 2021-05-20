@@ -20,6 +20,7 @@ public class RedBall extends BasicBall{
      */
     @Override
     public void active(Market m,Player p){
+        m.setRedBallExtracted(true);
         p.incrementPosition();
     }
 
