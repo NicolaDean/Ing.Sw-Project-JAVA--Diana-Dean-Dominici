@@ -46,6 +46,7 @@ public class CLI extends Observable<ClientController> implements View {
     private BasicBall       miniMarketDiscardedResouce;
     boolean canEndTurn;
     boolean actionDone;
+    boolean Avoidable = true;
     boolean firstTurn = true;
     int index;
 
@@ -118,13 +119,11 @@ public class CLI extends Observable<ClientController> implements View {
                 //Idea creare un thread per i 3 tipi di turni e se lutente non ha fatto azioni questo thread permette di killarlo
             case "-exit": //cancel case
                 DebugMessages.printError("-exit command not available yet");
-                //TODO fare un exitException e circondare lo swwitch dei turni con questa (spostare -exit in una customRead apoosta)
-                //Thread kill = new Thread(this::turnSabotage);//Create a thread whit "thread sabotage"
-                //kill.start();
-                //this.input.interruptableInput();
-                //this.turnThread.interrupt();
+                if(Avoidable)
+                {
+                    return InputReaderValidation.exitCodeString;
+                }
                 return "";
-
             case "-startgame": //cancel case
                 this.notifyObserver(ClientController::sendStartCommand);
                 return cmd;
@@ -138,7 +137,6 @@ public class CLI extends Observable<ClientController> implements View {
                 //System.out.println("index di questa cli: "+this.index);
                 this.askSwapDeposit(this.index);
                 return customRead(message);
-
             case "-spy": //cancel case
                 this.askSpyPlayer();
                 return customRead(message);
@@ -163,6 +161,17 @@ public class CLI extends Observable<ClientController> implements View {
         return s;
     }
 
+    public boolean isExit(int num)
+    {
+        if(num == InputReaderValidation.exitCode) DebugMessages.printError("EXIT FROM TURN INT");
+        return num == InputReaderValidation.exitCode;
+    }
+    public boolean isExit(String str)
+    {
+        if(str.toLowerCase(Locale.ROOT).equals(InputReaderValidation.exitCodeString.toLowerCase(Locale.ROOT)))
+            DebugMessages.printError("EXIT FROM TURN");
+        return str.toLowerCase(Locale.ROOT).equals(InputReaderValidation.exitCodeString.toLowerCase(Locale.ROOT));
+    }
     /**
      * return true if this string contain a "cancell" code (this code is caused when interruptableInput is interrupted)
      * @param str string to check
@@ -324,8 +333,13 @@ public class CLI extends Observable<ClientController> implements View {
         this.terminal.printRequest("Buy a card");
 
         int col = askInt("Insert Column coordinate (1-4) of the card you want to buy","wrong index",1,ConstantValues.colDeck) -1;
+        if(isExit(col+1)) return;
+
         int row = askInt("Insert Row    coordinate (1-3) of the card you want to buy","wrong index",1,ConstantValues.rowDeck) -1;
+        if(isExit(row+1)) return;
+
         int pos = askInt("Where you want to put it in your dashboard (1-3)","wrong index",1,ConstantValues.productionSpaces)  -1;
+        if(isExit(pos+1)) return;
 
         this.notifyObserver(controller -> controller.sendBuyCard(row,col,pos));
         actionDone = true;
@@ -391,6 +405,8 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askMarketExtraction()  {
+        Avoidable = false;
+
         String msg = "\nInsert \"col\" or \"row\" to select the extraction mode";
         boolean direction = false;
         String in = "";
@@ -399,7 +415,8 @@ public class CLI extends Observable<ClientController> implements View {
         showMarket();
         do {
             in = this.customRead(msg);
-            //System.out.println("in ora vale: "+in);
+
+            if(isExit(in))return; //-EXIT COMMAND
 
             if(in.equals("col"))
             {
@@ -423,10 +440,12 @@ public class CLI extends Observable<ClientController> implements View {
         //this.terminal.printRequest(msg);
         int num = askInt(msg,"wrong market row/col number",1,max);
 
+        if(isExit(num))return; //-EXIT COMMAND
 
         boolean finalDirection = direction;
         this.notifyObserver(controller -> {controller.sendMarketExtraction(finalDirection,num);});
         actionDone = true;
+        Avoidable = true;
     }
 
     @Override
@@ -450,6 +469,7 @@ public class CLI extends Observable<ClientController> implements View {
         do {
             in = this.askInt(msg,error,min,max);
 
+            if(isExit(in)) return in;
             if(isInputCancelled(in)) return in;
 
             if(in == except) this.terminal.printError(errorExept);
@@ -474,6 +494,8 @@ public class CLI extends Observable<ClientController> implements View {
             String in = this.input.interruptableInput();
             in = helpCommands(in,msg);
 
+            if(isExit(in))
+                return InputReaderValidation.exitCode;
             if(isInputCancelled(in))
                 return InputReaderValidation.cancellInt;
             try
@@ -522,6 +544,7 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void askResourceInsertion(List<Resource> resourceList) {
 
+        Avoidable = false;
         this.notifyObserver(ClientController::showStorage);
 
         canEndTurn = false;
@@ -611,7 +634,7 @@ public class CLI extends Observable<ClientController> implements View {
             e.printStackTrace();
         }
         this.notifyObserver(ClientController::showStorage);
-
+        Avoidable = true;
     }
 
     @Override
@@ -739,6 +762,11 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void askTurnType() {
 
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if(firstTurn)
         {
             this.notifyObserver(ClientController::askLeaders);

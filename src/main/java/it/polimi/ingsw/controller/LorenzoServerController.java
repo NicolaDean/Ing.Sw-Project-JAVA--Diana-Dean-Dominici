@@ -13,8 +13,6 @@ import javax.swing.plaf.metal.MetalBorders;
 
 public class LorenzoServerController extends ServerController{
 
-
-
     public LorenzoServerController() {
         super(true);
         this.game = new LorenzoGame();
