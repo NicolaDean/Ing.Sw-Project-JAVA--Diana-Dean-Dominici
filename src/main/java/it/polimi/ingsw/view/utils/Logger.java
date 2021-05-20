@@ -539,6 +539,18 @@ public class Logger {
         out.printlnColored(content,this.goodMessage,this.istructionBackground);
     }
 
+    public void printResourceTypeSelection()
+    {
+
+        System.out.println("\nRESOURCE TYPES:");
+        out.printColored("  1 - SHIELD\n", CliColors.BLUE_TEXT);
+        out.printColored("  2 - ROCK\n", CliColors.WHITE_TEXT);
+        out.printColored("  3 - COIN\n", CliColors.YELLOW_TEXT);
+        out.printColored("  4 - SERVANT\n\n", CliColors.MAGENTA_TEXT);
+
+        //printGoodMessages("1 - SHIELD\n2 - ROCK\n3 - COIN\n4 - SERVANT ");
+    }
+
     public void Welcome()
     {
         out.printlnColored("WELCOMEE TO LORENZO IL MAGNIFICO", CliColors.WHITE_TEXT,CliColors.WHITE_BACKGROUND);

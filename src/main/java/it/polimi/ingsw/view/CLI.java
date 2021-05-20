@@ -337,10 +337,10 @@ public class CLI extends Observable<ClientController> implements View {
         //SHOW DASHBOARD
         this.terminal.printRequest("Activate a production card on your dashboard");
 
-        int pos = askInt("Select a card to activate (1-3) or type 4 for the basic " +
-                "production","wrong index",1,ConstantValues.productionSpaces + 1)  -1;
-        if (pos == 4) {
-            System.out.println("ci sono");
+        int pos = askInt("Select a card to activate (1-3) or type 4 for the basic " + "production","wrong index",1,ConstantValues.productionSpaces + 1)  -1;
+
+        if (pos == 3) {
+
 
             this.askBasicProduction();
             return;
@@ -358,17 +358,18 @@ public class CLI extends Observable<ClientController> implements View {
     public void askBasicProduction() {
         notifyObserver(ClientController::showStorage);
 
-        this.terminal.printGoodMessages("1 - SHIELD\n2 - ROCK\n3 - COIN\n4 - SERVANT ");
-        int type = askInt("Select the first resource.","wrong index",1,4)  -1;
-        int type2 = askInt("Select the second resource.","wrong index",1,4)  -1;
-        int type3 = askInt("Select the second resource.","wrong index",1,4)  -1;
+        this.terminal.printResourceTypeSelection();
+        int type = askInt("Select the first resource to discard.","wrong index",1,4)  -1;
+        int type2 = askInt("Select the second resource to discard.","wrong index",1,4)  -1;
+        int type3 = askInt("Select the resource you want to obtain.","wrong index",1,4)  -1;
         ResourceType res1 = ResourceInterpreter(type);
         ResourceType res2 = ResourceInterpreter(type2);
         ResourceType res3 = ResourceInterpreter(type3);
 
         this.notifyObserver(controller -> controller.sendBasicProduction(res1, res2, res3));
-
         this.notifyObserver(ClientController::showStorage);
+
+        //this.notifyObserver(ClientController::showStorage);
 
     }
 
