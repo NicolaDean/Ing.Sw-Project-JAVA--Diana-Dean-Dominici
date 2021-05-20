@@ -4,8 +4,13 @@ import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.packets.EndTurn;
 import it.polimi.ingsw.controller.packets.ExtractionInstruction;
 import it.polimi.ingsw.controller.packets.InsertionInstruction;
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.cards.leaders.DepositBonus;
+import it.polimi.ingsw.model.cards.leaders.LeaderDiscountCard;
+import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
+import it.polimi.ingsw.model.cards.leaders.LeaderWhiteCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
@@ -304,7 +309,17 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askBuy() {
+        /*try {
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException e) {
 
+        }*/
+
+        try {
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException e) {
+
+        }
         this.notifyObserver(ClientController::showDecks);
         this.terminal.printRequest("Buy a card");
 
@@ -322,8 +337,14 @@ public class CLI extends Observable<ClientController> implements View {
         //SHOW DASHBOARD
         this.terminal.printRequest("Activate a production card on your dashboard");
 
-        int pos = askInt("Select a card to activate (1-3)","wrong index",1,ConstantValues.productionSpaces)  -1;
+        int pos = askInt("Select a card to activate (1-3) or type 4 for the basic " +
+                "production","wrong index",1,ConstantValues.productionSpaces + 1)  -1;
+        if (pos == 4) {
+            System.out.println("ci sono");
 
+            this.askBasicProduction();
+            return;
+        }
         this.notifyObserver(controller -> controller.sendProduction(pos));
         actionDone = true;
     }
@@ -335,9 +356,36 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askBasicProduction() {
+        notifyObserver(ClientController::showStorage);
+
+        this.terminal.printGoodMessages("1 - SHIELD\n2 - ROCK\n3 - COIN\n4 - SERVANT ");
+        int type = askInt("Select the first resource.","wrong index",1,4)  -1;
+        int type2 = askInt("Select the second resource.","wrong index",1,4)  -1;
+        int type3 = askInt("Select the second resource.","wrong index",1,4)  -1;
+        ResourceType res1 = ResourceInterpreter(type);
+        ResourceType res2 = ResourceInterpreter(type2);
+        ResourceType res3 = ResourceInterpreter(type3);
+
+        this.notifyObserver(controller -> controller.sendBasicProduction(res1, res2, res3));
+
+        this.notifyObserver(ClientController::showStorage);
 
     }
 
+    public ResourceType ResourceInterpreter(int r1)
+    {
+        switch (r1) {
+            case 1:
+                return ResourceType.SHIELD;
+            case 2:
+                return  ResourceType.ROCK;
+            case 3:
+                return  ResourceType.COIN;
+            case 4:
+                return  ResourceType.SERVANT;
+        }
+        return null;
+    }
 
 
     @Override
