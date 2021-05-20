@@ -617,6 +617,11 @@ public class CLI extends Observable<ClientController> implements View {
                 if(d1 != 6 && d2!= 6)
                     this.notifyObserver(controller -> controller.askSwap(d1, d2, index));
                 System.out.println("\n");
+                try {
+                    TimeUnit.MILLISECONDS.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 this.notifyObserver(ClientController::showStorage);
 
                 return;
