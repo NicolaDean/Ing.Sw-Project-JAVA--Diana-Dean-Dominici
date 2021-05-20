@@ -140,6 +140,11 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
+    public void askInitialResoruce(int number) {
+
+    }
+
+    @Override
     public void showGameStarted() {
 
     }

@@ -410,6 +410,18 @@ public class ClientController implements Runnable{
         this.view.askTurnType();
     }
 
+    public void askInitialResoruce()
+    {
+
+        if(this.model.getPersanalIndex() == 1 || this.model.getPersanalIndex() == 2)
+            this.view.askInitialResoruce(1);
+
+        else if(this.model.getPersanalIndex() == 3)
+            this.view.askInitialResoruce(2);
+        else
+            this.view.askInitialResoruce(0);
+    }
+
     public void askEndTurn(){
         this.view.askEndTurn();
     }

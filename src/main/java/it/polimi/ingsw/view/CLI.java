@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.packets.EndTurn;
 import it.polimi.ingsw.controller.packets.ExtractionInstruction;
 import it.polimi.ingsw.controller.packets.InsertionInstruction;
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
@@ -41,10 +42,9 @@ public class CLI extends Observable<ClientController> implements View {
     private BasicBall       miniMarketDiscardedResouce;
     boolean canEndTurn;
     boolean actionDone;
-    boolean Avoidable = true;
-    boolean firstTurn = true;
+    boolean Avoidable = true;  //TO DO EXIT COMMAND
+    boolean firstTurn = true;  //LEADER SELECTION AND INITIAL RESOURCE
     int index;
-
     public CLI(int index)
     {
         this.index=index;
@@ -708,25 +708,77 @@ public class CLI extends Observable<ClientController> implements View {
         }while(count != 2);
 
         this.notifyObserver(controller -> {controller.sendLeader(leaderCards);});
-        firstTurn = false;
     }
+
+    @Override
+    public void askInitialResoruce(int number) {
+
+        if(number == 0)
+        {
+            firstTurn = false;
+            this.askTurnType();
+            return;
+        }
+
+        boolean flag = number == 2;
+        List<Resource> wantedRes = new ResourceList();
+        this.terminal.printRequest("This is your first turn and you have the right to chose "+number+" of your choice");
+        for(int i=0;i<number;i++)
+        {
+            this.terminal.printRequest("Resource types:");
+            int j=0;
+            for(ResourceType resourceType:ResourceType.values())
+            {
+                j++;
+                String color = ConstantValues.resourceRappresentation.getColorRappresentation(resourceType);
+                this.terminal.out.printlnColored(j + " - " + resourceType.toString(),color);
+            }
+            int num = this.askInt("Insert a number rappresenting the resource you want:","Input not in range",1,ResourceType.values().length);
+
+            ResourceType type = null;
+            j=0;
+            //FIND RESOURCE TYPE
+            for(ResourceType resourceType:ResourceType.values())
+            {
+                if(resourceType.ordinal() == num-1) type = resourceType;
+            }
+
+            num = 1;
+            //ONLY FOR FIRST RESOURCE (avoid asking again type if user want 2 equal resource
+            if(flag)
+            {
+                num = this.askInt("How much of this resource you want? 1 or 2?:","Input not in range",1,2);
+                flag = false;
+                if(num == 2) number = -1;//EXIT CICLE;
+            }
+
+            wantedRes.add(new Resource(type,num));
+        }
+
+        //Ask user where to insert them
+        this.askResourceInsertion(wantedRes);
+    }
+
     @Override
     public void askTurnType() {
 
         try {
-            Thread.sleep(200);
+            Thread.sleep(50);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         if(firstTurn)
         {
             this.notifyObserver(ClientController::askLeaders);
+            this.notifyObserver(ClientController::askInitialResoruce);
+
+            return;
         }
         boolean valid = false;
         String cmd = null;
-       // System.out.println("valid vale "+ valid);
         this.terminal.printTurnTypesHelp();
-       // System.out.println("valid vale "+ valid);
+
         while(!valid) {
             //System.out.println("about to call customread");
             cmd = customRead("select what type of turn you want to perform!\n\"1\" to buy a card\n\"2\" to extract from market\n\"3\" to activate production\n\"4\" to skip the turn");
@@ -872,6 +924,14 @@ public class CLI extends Observable<ClientController> implements View {
      */
     @Override
     public void askEndTurn() {
+
+        if(firstTurn)
+        {
+            firstTurn = false;
+            this.askTurnType();
+            return;
+        }
+
         canEndTurn = true;
         actionDone = true;
         terminal.printGoodMessages("Your last action has been successfully completed");
@@ -964,6 +1024,7 @@ public class CLI extends Observable<ClientController> implements View {
                 default:
                     break;
             }
+            //DebugMessages.printWarning("Turn executed");
     }
 
 }

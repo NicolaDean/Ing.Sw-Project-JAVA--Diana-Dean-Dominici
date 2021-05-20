@@ -134,6 +134,7 @@ public interface View {
     public void askCommand();
 
     public void askLeaders(LeaderCard[] cards);
+    public void  askInitialResoruce(int number);
     public void showGameStarted();
 
     public void abortHelp();
