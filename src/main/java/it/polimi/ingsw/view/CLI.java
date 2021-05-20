@@ -167,6 +167,11 @@ public class CLI extends Observable<ClientController> implements View {
      * @return input wanted
      */
     public String customRead(String message) {
+        try {
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         terminal.printRequest(message);
         String s = this.input.readLine();
             s = helpCommands(s,message);
@@ -784,7 +789,7 @@ public class CLI extends Observable<ClientController> implements View {
         terminal.printGoodMessages("Your last action has been successfully completed");
         //terminal.printRequest("Do you want to end turn? (yes or no)");
 
-        String in = this.customRead("Do you want to end the turn? (yes or no)");
+        String in = this.customRead("\nDo you want to end the turn? (yes or no)");
         in = in.toLowerCase(Locale.ROOT);
         if(in.equals("yes") || in.equals("y")) {
             this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
