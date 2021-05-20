@@ -271,8 +271,10 @@ public class ServerController{
      */
     public Packet setLeaders(LeaderCard[] leaders, int index)
     {
+        int playerIndex = this.clients.get(index).getRealPlayerIndex();
         this.game.getCurrentPlayer().setLeaders(leaders);
-        this.broadcastMessage(-1,new UpdateLeaders(this.game.getCurrentPlayer().getLeaders(),index));
+
+        this.broadcastMessage(-1,new UpdateLeaders(this.game.getCurrentPlayer().getLeaders(),playerIndex));
         return null;
     }
     /**
@@ -500,7 +502,6 @@ public class ServerController{
 
 
         try {
-
 
 
             p.getDashboard().getStorage().swapDeposit(pos1 -1,pos2 -1);
