@@ -28,7 +28,7 @@ public class CliColors extends PrintStream
     public static String CYAN_TEXT          = "\u001b[36m";
     public static String WHITE_TEXT         = "\u001b[37m";
     public static String GRAY_TEXT          = "\u001b[30;1m";
-
+    public static String R_WHITE_TEXT       = "\033[0;97m";
 
     public static String UP_CURSOR          = "A";
     public static String DOWN_CURSOR        = "B";
