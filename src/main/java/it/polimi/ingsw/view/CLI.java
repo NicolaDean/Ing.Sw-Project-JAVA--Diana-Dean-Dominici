@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
+import java.util.concurrent.TimeUnit;
 
 
 public class CLI extends Observable<ClientController> implements View {
@@ -127,7 +127,11 @@ public class CLI extends Observable<ClientController> implements View {
     public String customRead(String message)
     {
         if(!message.equals("")) {
-
+           /* try {
+                TimeUnit.MILLISECONDS.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } */
             terminal.printRequest(message);
         }
         String s = this.input.readLine();
