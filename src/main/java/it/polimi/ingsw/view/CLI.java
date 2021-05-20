@@ -598,6 +598,8 @@ public class CLI extends Observable<ClientController> implements View {
         if(valid)
         {
             d1=Integer.parseInt(cmd);
+            if(d1 == 6 )
+                return;
             cmd = customRead("select the second deposit you want to swap. (1-3) for normal (4-5) for bonus (6) to quit the swap");
             valid = input.validateInt(Integer.parseInt(cmd), 1, 6);
             if(valid)
@@ -621,6 +623,7 @@ public class CLI extends Observable<ClientController> implements View {
         do {
 
             int in = this.askInt("Which of those leaders you want to draw? (1-4)","wrong input range",1,ConstantValues.leaderCardsToDraw);
+            in--;
             leaderCards[count] = cards[in];
             count++;
         }while(count != 2);
