@@ -595,27 +595,49 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askSwapDeposit(int index) {
-        int d1;
+        int d1 = 0;
         int d2;
         String cmd;
         boolean valid = false;
         //this.terminal.printRequest("\nthis is your storage:");
         this.notifyObserver(ClientController::showStorage);
         cmd = customRead("\nselect the first deposit you want to swap. (1-3) for normal (4-5) for bonus (6) to quit the swap");
-        valid = input.validateInt(Integer.parseInt(cmd), 1, 6);
+        try{
+        valid = input.validateInt(Integer.parseInt(cmd), 1, 6);}
+        catch (Exception e)
+        {
+            this.terminal.printError("invalid input! retry please. \n");
+            this.askSwapDeposit(index);
+            return;
+        }
         if(valid)
         {
+
+
             d1=Integer.parseInt(cmd);
+
             if(d1 == 6 )
                 return;
             cmd = customRead("select the second deposit you want to swap. (1-3) for normal (4-5) for bonus (6) to quit the swap");
-            valid = input.validateInt(Integer.parseInt(cmd), 1, 6);
-            if(valid)
+        try{
+            valid = input.validateInt(Integer.parseInt(cmd), 1, 6);}
+        catch (NumberFormatException e)
+        {
+            this.terminal.printError("invalid input! retry please. \n");
+            this.askSwapDeposit(index);
+            return;
+        }
+
+        if(valid)
             {
 
+
                 d2 = Integer.parseInt(cmd);
-                if(d1 != 6 && d2!= 6)
-                    this.notifyObserver(controller -> controller.askSwap(d1, d2, index));
+
+                if(d2 == 6)
+                    return;
+                int finalD = d1;
+                this.notifyObserver(controller -> controller.askSwap(finalD, d2, index));
                 System.out.println("\n");
                 try {
                     TimeUnit.MILLISECONDS.sleep(100);
@@ -626,7 +648,16 @@ public class CLI extends Observable<ClientController> implements View {
 
                 return;
 
+            }else
+            {
+                this.terminal.printError("invalid input! retry please. \n");
+                this.askSwapDeposit(index);
+                return;
             }
+        }else{
+            this.terminal.printError("invalid input! retry please. \n");
+            this.askSwapDeposit(index);
+            return;
         }
 
     }
