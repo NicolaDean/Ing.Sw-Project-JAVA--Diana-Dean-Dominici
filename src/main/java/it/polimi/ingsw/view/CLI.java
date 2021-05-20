@@ -167,11 +167,7 @@ public class CLI extends Observable<ClientController> implements View {
      * @return input wanted
      */
     public String customRead(String message) {
-        try {
-            TimeUnit.MILLISECONDS.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         terminal.printRequest(message);
         String s = this.input.readLine();
             s = helpCommands(s,message);
@@ -751,10 +747,10 @@ public class CLI extends Observable<ClientController> implements View {
             }
         }catch (InterruptedException | IOException e)
         {
-            //DebugMessages.printError("OPSS");
+            DebugMessages.printError("OPSS");
         }
 
-        //DebugMessages.printError("Waiting thread help aborted");
+        DebugMessages.printError("Waiting thread help aborted");
     }
     @Override
     public void askCommand() {
