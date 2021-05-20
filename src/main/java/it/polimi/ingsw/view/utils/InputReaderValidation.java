@@ -9,8 +9,10 @@ import java.util.Scanner;
 
 public class InputReaderValidation {
 
-    public static String    cancellString = "#CANCELLED#";
-    public static int       cancellInt    = -1234;
+    public static String    cancellString  = "#CANCELLED#";
+    public static String    exitCodeString = "#EXIT#";
+    public static int       exitCode       = -1111;
+    public static int       cancellInt     = -1234;
     public Scanner          console;
     BufferedReader          console2 = new BufferedReader(new InputStreamReader(System.in));
     public InputReaderValidation()
