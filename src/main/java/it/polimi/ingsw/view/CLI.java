@@ -717,6 +717,7 @@ public class CLI extends Observable<ClientController> implements View {
         this.notifyObserver(ClientController::showAvailableNickname);
 
         int index = this.askInt("select a player","wrong input range",1,ConstantValues.numberOfPlayer);
+        if(isInputCancelled(index)) return;
 
         index = index-1;
         int finalIndex = index;
@@ -752,10 +753,10 @@ public class CLI extends Observable<ClientController> implements View {
             }
         }catch (InterruptedException | IOException e)
         {
-            //DebugMessages.printError("OPSS");
+            DebugMessages.printError("OPSS");
         }
 
-        //DebugMessages.printError("Waiting thread help aborted");
+        DebugMessages.printError("Waiting thread help aborted");
     }
     @Override
     public void askCommand() {
