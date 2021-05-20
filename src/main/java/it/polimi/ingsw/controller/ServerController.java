@@ -486,16 +486,10 @@ public class ServerController{
         //if(!isRightPlayer(player)) return this.notYourTurn();
 
         System.out.println("\n" +player +"\n");
-        Player p = null;
+        Player p = this.game.getPlayer(player);
         //System.out.println(player + "!!!!\n\n\n");
 
-        for (Player p2: game.getPlayers())
-        {
-            if(p2.getControllerIndex()==player) {
 
-                p = p2;
-            }
-        }
 
         //System.out.println("\n preswap d1: "+ p.getDashboard().getStorage().getStorage()[0].getResource().getType());
         //System.out.println(" preswap d2: "+ p.getDashboard().getStorage().getStorage()[1].getResource().getType());
@@ -506,11 +500,11 @@ public class ServerController{
 
             p.getDashboard().getStorage().swapDeposit(pos1 -1,pos2 -1);
 
-            Deposit[] tmp = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex()).getDashboard().getStorage().getDeposits();
+            Deposit[] tmp = (p.getDashboard().getStorage().getDeposits());
 
             //System.out.println("\n postswap d1: "+ p.getDashboard().getStorage().getStorage()[0].getResource().getType());
             //System.out.println(" postswap d2: "+ p.getDashboard().getStorage().getStorage()[1].getResource().getType()+"\n");
-            sendStorageUpdate(player);
+            sendStorageUpdate(p.getControllerIndex());
             return null;
 
         } catch (Exception e) {
