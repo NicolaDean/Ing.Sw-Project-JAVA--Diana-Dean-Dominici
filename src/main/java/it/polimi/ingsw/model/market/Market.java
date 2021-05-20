@@ -17,6 +17,7 @@ import static it.polimi.ingsw.utils.ConstantValues.*;
 
 public class Market {
     private int whiteCount=0;
+    private Boolean redBallExtracted=false;
     private List<Resource> pendingResourceExtracted = new ResourceList();
     private BasicBall discardedResouce;
     private BasicBall resouces[][]=new BasicBall[marketRow][marketCol];
@@ -52,6 +53,14 @@ public class Market {
             }
 
         randomized();
+    }
+
+    public Boolean getRedBallExtracted() {
+        return redBallExtracted;
+    }
+
+    public void setRedBallExtracted(Boolean redBallExtracted) {
+        this.redBallExtracted = redBallExtracted;
     }
 
     /**
@@ -108,6 +117,7 @@ public class Market {
         BasicBall tmp;
         BasicBall out[] = new BasicBall[ConstantValues.marketCol];
         whiteCount=0;
+        redBallExtracted=false;
         pendingResourceExtracted = new ResourceList();
         if ((pos > marketRow) || (pos < 1)) {
             throw new WrongPosition("invalid position");
@@ -140,6 +150,7 @@ public class Market {
     public void exstractColumn(int pos,Player p) throws WrongPosition {
         BasicBall tmp;
         BasicBall out[] = new BasicBall[marketRow];
+        redBallExtracted=false;
         whiteCount=0;
         pendingResourceExtracted = new ResourceList();
         if ((pos > marketCol) || (pos < 1)) {

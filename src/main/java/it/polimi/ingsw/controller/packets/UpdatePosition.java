@@ -22,7 +22,7 @@ public class UpdatePosition extends Packet<ClientController> implements PacketMa
     public Packet analyze(ClientController controller)
     {
         DebugMessages.printWarning("Player " + this.player + " discarded " + this.position + "resources so you incrementr your position by " + this.position);
-        //Increment player position
+        controller.incrementPositionPlayersWithOut(player,position);
         return null;
     }
 

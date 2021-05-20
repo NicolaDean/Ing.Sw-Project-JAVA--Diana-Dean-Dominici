@@ -85,6 +85,8 @@ public class ClientController implements Runnable{
 
     }
 
+
+
     public View getView() {
         return view;
     }
@@ -316,6 +318,7 @@ public class ClientController implements Runnable{
     }
 
     public void showDashboard(){
+        this.view.showPapalCell(this.model.getPlayers());
         this.view.showDashboard(
                 this.model.getStorage(),
                 this.model.getPlayers()[this.model.getPersanalIndex()].getChest(),
@@ -353,6 +356,25 @@ public class ClientController implements Runnable{
 
         });
         t.start();
+    }
+
+    /**
+     * increment players position without player index
+     * @param index player index
+     * @param quantity quantity to add
+     */
+    public void incrementPositionPlayersWithOut(int index,int quantity){
+        for(MiniPlayer p:this.model.getPlayers())
+            if(!p.equals(this.model.getPlayers()[index]))
+                p.incrementPosition(quantity);
+    }
+
+    /**
+     * increment player position
+     * @param index player index
+     */
+    public void incrementPositionPlayer(int index,int quantity){
+        this.model.getPlayers()[index].incrementPosition(quantity);
     }
 
     /**
