@@ -108,7 +108,8 @@ public class CLI extends Observable<ClientController> implements View {
                 //Idea creare un thread per i 3 tipi di turni e se lutente non ha fatto azioni questo thread permette di killarlo
             case "-exit": //cancel case
                 DebugMessages.printError("-exit command not available yet");
-                Thread kill = new Thread(this::turnSabotage);//Create a thread whit "thread sabotage"
+                //TODO fare un exitException e circondare lo swwitch dei turni con questa (spostare -exit in una customRead apoosta)
+                //Thread kill = new Thread(this::turnSabotage);//Create a thread whit "thread sabotage"
                 //kill.start();
                 //this.input.interruptableInput();
                 //this.turnThread.interrupt();
@@ -152,12 +153,24 @@ public class CLI extends Observable<ClientController> implements View {
         return s;
     }
 
-    public String waitRead()
+    /**
+     * return true if this string contain a "cancell" code (this code is caused when interruptableInput is interrupted)
+     * @param str string to check
+     * @return true if this string contain a "cancell" code
+     */
+    public boolean isInputCancelled(String str)
     {
-        String s = this.input.readLine();
-        s = helpCommands(s,"");
+        return str.toLowerCase(Locale.ROOT).equals(InputReaderValidation.cancellString);
+    }
 
-        return s;
+    /**
+     * same of isInputCancelled(string) but with integer code
+     * @param num integer to check for exit codee
+     * @return true if input aborted
+     */
+    public boolean isInputCancelled(int num)
+    {
+        return num == InputReaderValidation.cancellInt;
     }
 
 
@@ -170,10 +183,10 @@ public class CLI extends Observable<ClientController> implements View {
         try {
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            return InputReaderValidation.cancellString;
         }
         terminal.printRequest(message);
-        String s = this.input.readLine();
+        String s = this.input.interruptableInput();
             s = helpCommands(s,message);
         return s;
     }
@@ -381,6 +394,7 @@ public class CLI extends Observable<ClientController> implements View {
         boolean cond = true;
         do{
             String in = this.customRead(msg);
+            if(isInputCancelled(in)) return InputReaderValidation.cancellInt;
             try
             {
                 num = Integer.parseInt(in);
@@ -390,8 +404,6 @@ public class CLI extends Observable<ClientController> implements View {
                 this.terminal.printError("Not an integer");
             }
             cond = !input.validateInt(num,min,max);
-
-
 
             if(cond) this.terminal.printWarning(error);
         }while(cond );
@@ -602,6 +614,9 @@ public class CLI extends Observable<ClientController> implements View {
         //this.terminal.printRequest("\nthis is your storage:");
         this.notifyObserver(ClientController::showStorage);
         cmd = customRead("\nselect the first deposit you want to swap. (1-3) for normal (4-5) for bonus (6) to quit the swap");
+
+        if(isInputCancelled(cmd)) return;
+
         valid = input.validateInt(Integer.parseInt(cmd), 1, 6);
         if(valid)
         {
@@ -609,6 +624,7 @@ public class CLI extends Observable<ClientController> implements View {
             if(d1 == 6 )
                 return;
             cmd = customRead("select the second deposit you want to swap. (1-3) for normal (4-5) for bonus (6) to quit the swap");
+            if(isInputCancelled(cmd)) return;
             valid = input.validateInt(Integer.parseInt(cmd), 1, 6);
             if(valid)
             {
@@ -680,6 +696,7 @@ public class CLI extends Observable<ClientController> implements View {
         this.notifyObserver(ClientController::showAvailableNickname);
 
         int index = this.askInt("select a player","wrong input range",1,ConstantValues.numberOfPlayer);
+        if(isInputCancelled(index)) return;
 
         index = index-1;
         int finalIndex = index;
