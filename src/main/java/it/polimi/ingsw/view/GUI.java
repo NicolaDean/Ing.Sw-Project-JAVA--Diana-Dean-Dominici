@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.dashboard.Deposit;
+import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.observer.Observable;
 
@@ -15,6 +16,11 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void printWelcomeScreen() {
+
+    }
+
+    @Override
+    public void showPapalCell(MiniPlayer[] p) {
 
     }
 

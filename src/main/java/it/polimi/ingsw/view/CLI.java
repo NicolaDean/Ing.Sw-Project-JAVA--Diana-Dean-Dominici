@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.balls.BasicBall;
+import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.model.resources.ResourceOperator;
@@ -82,6 +83,10 @@ public class CLI extends Observable<ClientController> implements View {
     public void turnSabotage()
     {
         this.turnThread.interrupt();
+    }
+
+    public void showPapalCell(MiniPlayer[] p){
+        terminal.printPapalPosition(p);
     }
 
     /**

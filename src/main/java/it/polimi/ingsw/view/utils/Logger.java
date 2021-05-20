@@ -1,10 +1,14 @@
 package it.polimi.ingsw.view.utils;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.model.CellScore;
+import it.polimi.ingsw.model.PapalSpace;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.PrerequisiteCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
+import it.polimi.ingsw.model.factory.MapFactory;
+import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 import it.polimi.ingsw.utils.ConstantValues;
@@ -45,6 +49,167 @@ public class Logger {
         out.printlnColored(content,CliColors.RED_TEXT,this.istructionBackground);
     }
 
+    public void printPapalPosition(MiniPlayer[] players){
+        List<CellScore> scorePositions = MapFactory.loadCellScoresFromJsonFile();
+        List<PapalSpace> papalSpaces= MapFactory.loadPapalSpacesFromJsonFile();
+        int dim=(papalSpaces.get(papalSpaces.size()-1).getFinalPosition()+1);
+        boolean controll=false;
+        String[] colorCLI= new String[numberOfPlayer];
+
+        printPapalPositionLegend(players);
+
+        for (int i = 0; i < numberOfPlayer; i++) {
+            if(i==0) colorCLI[i]=CliColors.BLUE_TEXT;
+            if(i==1) colorCLI[i]=CliColors.MAGENTA_TEXT;
+            if(i==2) colorCLI[i]=CliColors.YELLOW_TEXT;
+            if(i==3) colorCLI[i]=CliColors.GREEN_TEXT;
+        } //color
+
+
+        for (int i = 0; i < dim; i++) {
+            controll=false;
+            for (PapalSpace p:papalSpaces) {
+                if (((i > p.getInitialPosition()) && (i < p.getFinalPosition()))) {
+                    this.out.printColored("═════", CliColors.RED_TEXT);
+                    controll=true;
+                    break;
+                }
+                else if((i==p.getInitialPosition())){
+                    this.out.printColored("╔════",CliColors.RED_TEXT);
+                    controll=true;
+                    break;
+                }
+                else if((i==p.getFinalPosition())) {
+                    this.out.printColored("══ ✝︎ ╗",CliColors.RED_TEXT);
+                    controll=true;
+                    break;
+
+                }
+                else if((i==p.getFinalPosition()+1)){
+                    this.out.printColored("    ",CliColors.RED_TEXT);
+                    controll=true;
+                    break;
+                }
+                else controll=false;
+            }
+            if(!controll) System.out.print("     ");
+        } //papal space marker
+
+
+        System.out.print("\n╔");
+        for (int i = 0; i < dim-1; i++) System.out.print("════╦"); //up border
+        System.out.print("════");
+
+        System.out.print("╗\n║");
+
+        int l,n,k,nOfPlayerWhitComunCell;
+        for (int i = 0; i < dim; i++) {
+            controll=false;
+            nOfPlayerWhitComunCell=0;
+            for (int j = 0; j < numberOfPlayer; j++) {
+                for (k = 0; k < numberOfPlayer; k++) {
+                    if((players[j].getPosition()==players[k].getPosition())&&(j!=k)&&(players[j].getPosition()==i)) {
+                        nOfPlayerWhitComunCell++;
+                    }
+                }
+
+                if ((nOfPlayerWhitComunCell==0)&&(players[j].getPosition() == i)) { // 1 player
+                    this.out.printColored(" ⚑ ", colorCLI[j]);
+                    System.out.print(" ║");
+                    controll=true;
+                    break;
+                }
+                if ((nOfPlayerWhitComunCell==1)&&(players[j].getPosition() == i)) { // 2 player
+                    for (k = 0; k < numberOfPlayer; k++) { if((players[j].getPosition()==players[k].getPosition())&&(j!=k)&&(players[j].getPosition()==i)) { break; } }
+
+                    this.out.printColored(" ⚑", colorCLI[j]);
+                    this.out.printColored("⚑", colorCLI[k]);
+                    System.out.print(" ║");
+
+                    controll=true;
+                    break;
+                }
+
+                if ((nOfPlayerWhitComunCell==2)&&(players[j].getPosition() == i)) { // 3 player
+
+                    for (k = 0; k < numberOfPlayer; k++) { if((players[j].getPosition()==players[k].getPosition())&&(j!=k)&&(players[j].getPosition()==i)) { break; } }
+
+                    for (l = k; l < nOfPlayerWhitComunCell; l++) { if((players[j].getPosition()==players[l].getPosition())&&(j!=l)&&(l!=k)&&(players[j].getPosition()==i)) { break; } }
+
+                    this.out.printColored("⚑", colorCLI[j]);
+                    this.out.printColored("⚑", colorCLI[k]);
+                    this.out.printColored("⚑", colorCLI[l]);
+                    System.out.print(" ║");
+
+                    controll=true;
+                    break;
+                }
+
+                if ((nOfPlayerWhitComunCell==3)&&(players[j].getPosition() == i)) { // 4 player
+
+                    for (k = 0; k < numberOfPlayer; k++) { if((players[j].getPosition()==players[k].getPosition())&&(j!=k)&&(players[j].getPosition()==i)) { break; } }
+
+                    for (l = k; l < nOfPlayerWhitComunCell; l++) { if((players[j].getPosition()==players[l].getPosition())&&(j!=l)&&(l!=k)&&(players[j].getPosition()==i)) { break; } }
+
+                    for (n = l; n < nOfPlayerWhitComunCell; n++) { if((players[j].getPosition()==players[n].getPosition())&&(j!=n)&&(n!=l)&&(l!=k)&&(players[j].getPosition()==i)) { break; } }
+
+                    this.out.printColored("⚑", colorCLI[j]);
+                    this.out.printColored("⚑", colorCLI[k]);
+                    this.out.printColored("⚑", colorCLI[l]);
+                    this.out.printColored("⚑", colorCLI[n]);
+                    System.out.print("║");
+
+                    controll=true;
+                    break;
+                }
+
+            }
+            if(!controll){
+                if ((i) < 10) System.out.print(" " + (i) + "  ║");
+                else System.out.print(" " + (i) + " ║");
+            }
+
+        }
+        System.out.print("\n║");
+        for (int i = 0; i < dim; i++) {
+            controll=false;
+            for(CellScore c:scorePositions){
+                if(c.getPosition()==i) {
+                    if(c.getScore()>=10) this.out.printColored(c.getScore()+"VP", CliColors.RED_TEXT);
+                    else this.out.printColored(c.getScore()+"VP ", CliColors.RED_TEXT);
+                    controll = true;
+                }
+            }
+            if(!controll){
+                System.out.print("    ");
+            }
+            System.out.print("║");
+        }
+
+
+        System.out.print("\n╚");
+        for (int i = 0; i < dim-1; i++) System.out.print("════╩");
+
+        System.out.println("════╝");
+        numberOfPlayer=4;
+    }
+
+    public void printPapalPositionLegend(MiniPlayer[] players){
+        numberOfPlayer=players.length;
+        String[] colorCLI= new String[numberOfPlayer];
+        for (int i = 0; i < numberOfPlayer; i++) {
+            if(i==0) colorCLI[i]=CliColors.BLUE_TEXT;
+            if(i==1) colorCLI[i]=CliColors.MAGENTA_TEXT;
+            if(i==2) colorCLI[i]=CliColors.YELLOW_TEXT;
+            if(i==3) colorCLI[i]=CliColors.GREEN_TEXT;
+        }
+        System.out.println(numberOfPlayer);
+        for (int i = 0; i < numberOfPlayer; i++) {
+            System.out.print(players[i].getNickname()+": ");
+            out.printColored("⚑  ",colorCLI[i]);
+        }
+        System.out.println();
+    }
 
     /**
      * print mini market
@@ -54,7 +219,7 @@ public class Logger {
 
         System.out.println("Market:\n");
         try {
-            System.out.print("    1  2  3  4\n    ↓  ↓  ↓  ↓ \n");
+            System.out.print("     1  2  3  4\n     ↓  ↓  ↓  ↓ \n");
             for (int i = 0; i < marketRow; i++) {
                 for (int j = 0; j < marketCol; j++) {
                     if (j == 0) System.out.print((i + 1)+" → ");

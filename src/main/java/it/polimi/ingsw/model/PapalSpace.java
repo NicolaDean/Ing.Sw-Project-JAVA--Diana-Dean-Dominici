@@ -19,6 +19,18 @@ public class PapalSpace {
         this.score = score;
     }
 
+    public int getInitialPosition() {
+        return initialPosition;
+    }
+
+    public int getFinalPosition() {
+        return finalPosition;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
     public boolean checkPlayerInsidePapalSpace(Player p)
     {
         if(p.getPosition() >= this.initialPosition)

@@ -25,6 +25,10 @@ public class MiniPlayer {
         decks = new ProductionCard[3];
     }
 
+    public void incrementPosition(int position) {
+        this.position += position;
+    }
+
     public void setDecks(ProductionCard[] decks) {
         this.decks = decks;
     }

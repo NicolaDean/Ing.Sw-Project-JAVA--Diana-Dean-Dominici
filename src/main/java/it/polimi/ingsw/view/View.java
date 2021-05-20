@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.dashboard.Deposit;
+import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.List;
@@ -99,6 +100,12 @@ public interface View {
      * @param resourceList ask user where to put recived resources (eventualy call discard resources)
      */
     public void askResourceInsertion(List<Resource> resourceList);
+
+    /**
+     * show papal cell
+     * @param p mini player
+     */
+    public void showPapalCell(MiniPlayer[] p);
 
     /**
      * ask user where to exract resources to pay a production/buy...

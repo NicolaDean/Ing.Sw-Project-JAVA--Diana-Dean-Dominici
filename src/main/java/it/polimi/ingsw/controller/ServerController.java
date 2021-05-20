@@ -524,7 +524,7 @@ public class ServerController{
     {
         this.game.discardResource(quantity);
 
-        this.broadcastMessage(this.currentClient,new UpdatePosition(quantity,this.game.getCurrentPlayerIndex()));
+        this.broadcastMessage(-1,new UpdatePosition(quantity,this.game.getCurrentPlayerIndex()));
         return new ACK(0);
     }
 
