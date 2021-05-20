@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.packets.EndTurn;
 import it.polimi.ingsw.controller.packets.ExtractionInstruction;
 import it.polimi.ingsw.controller.packets.InsertionInstruction;
+import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.balls.BasicBall;
@@ -32,12 +33,14 @@ public class CLI extends Observable<ClientController> implements View {
     Logger                  terminal; //print formatted and colored text on the cli
     InputReaderValidation   input;
     Thread                  helpThread;
+    Thread                  turnThread;
     boolean                 waiting;
     int                     turnSelected;
     private BasicBall[][]   miniMarketBalls;
     private BasicBall       miniMarketDiscardedResouce;
     boolean canEndTurn;
     boolean actionDone;
+    boolean firstTurn = true;
     int index;
 
     public CLI(int index)
@@ -50,21 +53,45 @@ public class CLI extends Observable<ClientController> implements View {
         canEndTurn = false;
     }
 
+    /**
+     * set mini model of market in the view
+     * @param balls balls
+     * @param discarted ball discarted
+     */
     public void setMarket(BasicBall[][] balls, BasicBall discarted){
         miniMarketBalls=balls;
         miniMarketDiscardedResouce=discarted;
     }
 
+    /**
+     *
+     * @return the matrix of balls in the market
+     */
     public BasicBall[][] getMiniMarketBalls() {
         return miniMarketBalls;
     }
 
+    /**
+     *
+     * @return discarded ball
+     */
     public BasicBall getMiniMarketDiscardedResouce() {
         return miniMarketDiscardedResouce;
     }
 
-    public String helpCommands(String cmd, String message)
+    public void turnSabotage()
     {
+        this.turnThread.interrupt();
+    }
+
+    /**
+     * list of possible action during the turn
+     * @param cmd     a string potentialy containing a command to parse
+     * @param message a message to show after the execution of a command
+     * @return a string containing the input the user asked before helpCommand was called
+     * @throws InterruptedException if a thread is interrupted while helpCommand this function "crush"
+     */
+    public String helpCommands(String cmd, String message){
         //
         cmd = cmd.toLowerCase();
         switch (cmd) {
@@ -78,9 +105,14 @@ public class CLI extends Observable<ClientController> implements View {
                 //this.quit();
                 return customRead(message);
 
+                //Idea creare un thread per i 3 tipi di turni e se lutente non ha fatto azioni questo thread permette di killarlo
             case "-exit": //cancel case
-                this.notifyObserver(controller -> {controller.sendMessage(new EndTurn());});
-                return customRead(message);
+                DebugMessages.printError("-exit command not available yet");
+                Thread kill = new Thread(this::turnSabotage);//Create a thread whit "thread sabotage"
+                //kill.start();
+                //this.input.interruptableInput();
+                //this.turnThread.interrupt();
+                return "";
 
             case "-startgame": //cancel case
                 this.notifyObserver(ClientController::sendStartCommand);
@@ -106,8 +138,12 @@ public class CLI extends Observable<ClientController> implements View {
 
         }
     }
-    public synchronized String customRead()
-    {
+
+    /**
+     * This function allow to ask for inputs while parsing eventual other commands (help list)
+     * @return wanted input
+     */
+    public synchronized String customRead()  {
         //System.out.println("!!!!!!!!!!!!!!!!!!!");
         String s = this.input.readLine();
         //System.out.println("???????????????????");
@@ -120,24 +156,36 @@ public class CLI extends Observable<ClientController> implements View {
     {
         String s = this.input.readLine();
         s = helpCommands(s,"");
-        waitRead();
+
         return s;
     }
 
-    public String customRead(String message)
-    {
-        if(!message.equals("")) {
-           /* try {
-                TimeUnit.MILLISECONDS.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } */
-            terminal.printRequest(message);
-        }
+
+    /**
+     * same of custom read but show a message after the command parsing
+     * @param message message to show
+     * @return input wanted
+     */
+    public String customRead(String message) {
+        terminal.printRequest(message);
         String s = this.input.readLine();
-        //System.out.println("cazo culo "+s);
+            s = helpCommands(s,message);
+        return s;
+    }
+
+    /**
+     * equal to custom read but interruptable
+     * @param message message toshow
+     * @return wanted input
+     * @throws InterruptedException interrupt exeption (if thread.interrupt is called)
+     */
+    public String interruptableCustomRead(String message) throws InterruptedException {
+
+        String s = this.input.interruptableInput();
+
         s = helpCommands(s,message);
-        //System.out.println("tette: "+s);
+
+
         return s;
     }
 
@@ -270,7 +318,7 @@ public class CLI extends Observable<ClientController> implements View {
 
 
     @Override
-    public void askMarketExtraction() {
+    public void askMarketExtraction()  {
         String msg = "\nInsert \"col\" or \"row\" to select the extraction mode";
         boolean direction = false;
         String in = "";
@@ -314,6 +362,14 @@ public class CLI extends Observable<ClientController> implements View {
         terminal.printDeks(productionCards);
     }
 
+    /**
+     * ask for an integer in loop until user insert a valid one
+     * @param msg    message to describe input
+     * @param error  error to show if user do something wrong
+     * @param min    minimum value acceptable
+     * @param max    amximum value acceptable
+     * @return       an valid integer  in range (min,max) typed by user
+     */
     public int askInt(String msg,String error,int min,int max)
     {
         int num =0;
@@ -552,9 +608,28 @@ public class CLI extends Observable<ClientController> implements View {
 
     }
 
+    public void askLeaders(LeaderCard[] cards)
+    {
+        this.terminal.printLeaders(cards);
+        int count = 0;
+        LeaderCard[] leaderCards = new LeaderCard[2];
+        do {
+
+            int in = this.askInt("Which of those leaders you want to draw? (1-4)","wrong input range",1,ConstantValues.leaderCardsToDraw);
+            leaderCards[count] = cards[in];
+            count++;
+        }while(count != 2);
+
+        this.notifyObserver(controller -> {controller.sendLeader(leaderCards);});
+        firstTurn = false;
+    }
     @Override
     public void askTurnType() {
-      //  System.out.println("eccomi nell'askturntype");
+
+        if(firstTurn)
+        {
+            this.notifyObserver(ClientController::askLeaders);
+        }
         boolean valid = false;
         String cmd = null;
        // System.out.println("valid vale "+ valid);
@@ -563,10 +638,10 @@ public class CLI extends Observable<ClientController> implements View {
         while(!valid) {
             //System.out.println("about to call customread");
             cmd = customRead("select what type of turn you want to perform!\n\"1\" to buy a card\n\"2\" to extract from market\n\"3\" to activate production\n\"4\" to skip the turn");
-            //System.out.println("cmd is now "+cmd);
-            try{
-                //tem.out.println("cmd vale:"+cmd);
-            valid = input.validateInt(Integer.parseInt(cmd), 1, 4);}
+            try
+            {
+                valid = input.validateInt(Integer.parseInt(cmd), 1, 4);
+            }
             catch (Exception e)
             {
 
@@ -577,6 +652,9 @@ public class CLI extends Observable<ClientController> implements View {
         turnTypeInterpreter(cmd);
     }
 
+    /**
+     * ask player which player he want to spy
+     */
     public void askSpyPlayer()
     {
         this.terminal.printRequest("Which player you want to spy?");
@@ -596,6 +674,9 @@ public class CLI extends Observable<ClientController> implements View {
         this.showDashboard(deposits,chest,cards);
     }
 
+    /**
+     * ask for help in loop, aborted when turnNotify is recived
+     */
     public void waitingHelpLoop()
     {
         try
@@ -734,6 +815,11 @@ public class CLI extends Observable<ClientController> implements View {
         }
     }
 
+
+    /**
+     *  open a thread to wait turn (ask help in loop)
+     *  the thread is "aborted" when turn notify is recived
+     */
     public void waitturn(){
         //terminal.printSeparator();
         //terminal.printGoodMessages("sto aspettando il mio turno");
@@ -753,30 +839,27 @@ public class CLI extends Observable<ClientController> implements View {
 
     public void turnTypeInterpreter(String cmd)
     {
-        switch (cmd) {
-            case "1":
-                turnSelected =1;
-                this.askBuy();
-                break;
-            case "market":
-            case "2":
-                turnSelected =2;
-                this.askMarketExtraction();
-                break;
-            case "3":
-                turnSelected =3;
-                this.askProduction();
-                break;
-            case "4":
-                turnSelected =4;
-                this.askEndTurn();
-                break;
-            default:
-                //System.out.println("sono entrato con cmd= "+cmd );
-                turnSelected =1;
-                this.askBuy();
-                break;
-        }
+            switch (cmd) {
+                case "1":
+                    turnSelected =1;
+                    this.askBuy();
+                    break;
+                case "market":
+                case "2":
+                    turnSelected =2;
+                    this.askMarketExtraction();
+                    break;
+                case "3":
+                    turnSelected =3;
+                    this.askProduction();
+                    break;
+                case "4":
+                    turnSelected =4;
+                    this.askEndTurn();
+                    break;
+                default:
+                    break;
+            }
     }
 
 }

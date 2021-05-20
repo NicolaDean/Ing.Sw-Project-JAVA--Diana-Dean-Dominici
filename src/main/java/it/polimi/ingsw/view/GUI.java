@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.dashboard.Deposit;
@@ -124,6 +125,11 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void askCommand() {
+
+    }
+
+    @Override
+    public void askLeaders(LeaderCard[] cards) {
 
     }
 

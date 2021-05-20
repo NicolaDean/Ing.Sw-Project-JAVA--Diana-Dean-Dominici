@@ -7,6 +7,7 @@ import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.exceptions.AckManager;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.dashboard.Deposit;
@@ -178,9 +179,10 @@ public class ServerController{
                 //Send broadcast with game started packet
 
                 i=0;
+                MiniPlayer[] miniPlayers = this.generateMiniPlayer();
                 for (ClientHandler c : clients) {
                     DebugMessages.printError("PLAYER "+ c.getRealPlayerIndex() + "->controller: "+i);
-                    c.sendToClient(generateGameStartedPacket(c.getRealPlayerIndex()));
+                    c.sendToClient(generateGameStartedPacket(miniPlayers,c.getRealPlayerIndex()));
                     i++;
                 }
 
@@ -201,21 +203,34 @@ public class ServerController{
     }
 
 
-    public Packet generateGameStartedPacket(int index){
-        return new GameStarted(index,generateMiniPlayer(),game.getProductionDecks(),game.getMarket().getResouces(),game.getMarket().getDiscardedResouce());
+    /**
+     * Generate entire minimodel/miniplayers for the "startGame" packet (sended only the first time then update only changed parts)
+     * @param index player index inside game
+     * @return game started packet
+     */
+    public Packet generateGameStartedPacket(MiniPlayer[] players,int index){
+        return new GameStarted(index,players,game.getProductionDecks(),game.getMarket().getResouces(),game.getMarket().getDiscardedResouce());
     }
 
+    /**
+     *
+     * @return a list of miniplayer
+     */
     public MiniPlayer[] generateMiniPlayer(){
         MiniPlayer[] players= new MiniPlayer[game.getNofplayers()];
         int i=0;
         for (Player p:game.getPlayers()){
             players[i]=new MiniPlayer(p.getNickname());
             players[i].setStorage(p.getDashboard().getStorage().getDeposits());
+            players[i].setLeaderCards(this.game.get4leaders());
             i++;
         }
         return players;
     }
 
+    /**
+     * send turn packet to the next player and notify the other withthe name of current player
+     */
     public void turnNotifier()
     {
         clients.get(currentClient).sendToClient(new TurnNotify());
@@ -248,6 +263,18 @@ public class ServerController{
         return  new PendingCost(dashboard.getPendingCost());
     }
 
+    /**
+     * chose 2 of 4 leaders drawed
+     * @param leaders 2 chosed leaders
+     * @param index
+     * @return
+     */
+    public Packet setLeaders(LeaderCard[] leaders, int index)
+    {
+        this.game.getCurrentPlayer().setLeaders(leaders);
+        this.broadcastMessage(-1,new UpdateLeaders(this.game.getCurrentPlayer().getLeaders(),index));
+        return null;
+    }
     /**
      *
      * @return a NACK packet indicating that is not your turn
@@ -539,12 +566,22 @@ public class ServerController{
 
 
 
-
+    public void sendLeaderUpdate(int index)
+    {
+        LeaderCard[] leaderCards = this.game.getPlayer(this.clients.get(index).getRealPlayerIndex() ).getLeaders();
+        this.broadcastMessage(-1,new UpdateLeaders(leaderCards,this.clients.get(index).getRealPlayerIndex()));
+    }
 
     public void sendStorageUpdate(int index)
     {
         Deposit[] tmp = this.game.getPlayer(this.clients.get(index).getRealPlayerIndex() ).getDashboard().getStorage().getDeposits();
         this.broadcastMessage(-1,new StorageUpdate(tmp,this.clients.get(index).getRealPlayerIndex()));
+    }
+
+    public void sendChestUpdate(int index)
+    {
+        List<Resource>chest = this.game.getPlayer(this.clients.get(index).getRealPlayerIndex() ).getDashboard().getChest();
+        this.broadcastMessage(-1,new ChestUpdate(chest,this.clients.get(index).getRealPlayerIndex()));
     }
     /**
      * if end condition are true send to all a "last Turn" packet

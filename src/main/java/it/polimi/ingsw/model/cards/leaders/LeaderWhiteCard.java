@@ -13,16 +13,13 @@ import java.util.List;
 
 public class LeaderWhiteCard extends LeaderCard {
 
-    ResourceType type;
-
     public LeaderWhiteCard(List<Resource> cost, List<PrerequisiteCard> cardPrequisite, int victoryPoints, ResourceType type) {
         super(cost,cardPrequisite, victoryPoints, type);
-        this.type=type;
     }
 
     @Override
     public void activate(Player p) throws NotSoddisfedPrerequisite {
         super.activate(p);
-        p.addBonusball(type);
+        p.addBonusball(this.getType());
     }
 }

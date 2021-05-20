@@ -1,6 +1,8 @@
 package it.polimi.ingsw.view.utils;
 
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.model.cards.LeaderCard;
+import it.polimi.ingsw.model.cards.PrerequisiteCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.resources.Resource;
@@ -307,6 +309,52 @@ public class Logger {
         this.reset();
         this.out.println("");
         this.printCardRow(productionCards);
+    }
+
+
+    public void printLeaders(LeaderCard[] cards)
+    {
+
+        System.out.print("╔");
+        for(LeaderCard card:cards)
+        {
+            for(int i=0;i<4;i++) System.out.print("═");
+            this.out.print(card.getHeader());
+            this.reset();
+            for(int i=0;i<4;i++) System.out.print("═");
+            System.out.print("╦╦");
+        }
+
+        this.out.println("");
+
+/*
+        for(int i=0;i<3;i++)
+        {
+            for(LeaderCard card:cards)
+            {
+                List<PrerequisiteCard> prerequisites = card.getCardPrequisite();
+                if(prerequisites.size() == i+1)
+                {
+                    this.out.print("║");
+                    this.out.print(prerequisites.get(i).getCliRappresentation());
+                    this.reset();
+                }
+
+            }
+            this.out.println("");
+        }
+*/
+
+        System.out.println("");
+        System.out.print("╚");
+        for(LeaderCard card:cards)
+        {
+            for(int i=0;i<14;i++) System.out.print("═");
+            System.out.print("╩╩");
+        }
+
+        System.out.println("");
+        this.out.print("║");
     }
     /**
      * Print a colored message corresponding to "warnings"

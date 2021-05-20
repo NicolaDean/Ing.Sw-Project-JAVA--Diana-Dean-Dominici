@@ -33,8 +33,21 @@ public class InputReaderValidation {
      * read a non empty line
      * @return non empty input line
      */
-    public String readLine()
-    {
+
+    public String interruptableInput() throws InterruptedException {
+        try {
+            while(!this.bufferReady())
+            {
+                Thread.sleep(200);
+            }
+            return this.console2.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    public String readLine(){
         //return this.console.nextLine();
         try {
             return this.console2.readLine();

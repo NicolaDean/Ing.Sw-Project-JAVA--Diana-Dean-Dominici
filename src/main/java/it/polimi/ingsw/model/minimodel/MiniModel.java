@@ -81,4 +81,9 @@ public class MiniModel
         this.persanalIndex = index;
     }
 
+    public void updateChest(List<Resource> chest,int index)
+    {
+        this.players[index].updateChest(chest);
+    }
+
 }

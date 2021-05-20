@@ -49,7 +49,10 @@ public class Dashboard {
     public int getScore(){
         return 0;
     }
-
+    public List<Resource> getChest()
+    {
+        return this.chest;
+    }
     /**
      *  Insert a resource in the storage
      * @param res resource to insert
@@ -171,7 +174,7 @@ public class Dashboard {
         try
         {
             boolean out = card.produce(p);
-            this.pendingCost.addAll(card.getCost(this));
+            this.pendingCost.addAll(card.getRawMaterials());
 
         } catch (NotEnoughResource notEnoughResource) {
             throw new NotEnoughResource("");

@@ -5,6 +5,7 @@ import it.polimi.ingsw.exceptions.FullDepositException;
 import it.polimi.ingsw.exceptions.NoBonusDepositOwned;
 import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.dashboard.Storage;
@@ -121,6 +122,15 @@ public class ColorCliTest {
         logger.printDashboard(x,cards[2][2].getCost(),cards[1]);
 
 
+
+    }
+    @Test
+    public void leaders()
+    {
+        Logger logger = new Logger();
+        Game g = new Game();
+        LeaderCard[] leaders= g.get4leaders();
+        logger.printLeaders(leaders);
     }
 
 
