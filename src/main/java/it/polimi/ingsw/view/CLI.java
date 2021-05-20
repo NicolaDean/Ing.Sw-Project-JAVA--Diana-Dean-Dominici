@@ -7,6 +7,10 @@ import it.polimi.ingsw.controller.packets.InsertionInstruction;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.cards.leaders.DepositBonus;
+import it.polimi.ingsw.model.cards.leaders.LeaderDiscountCard;
+import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
+import it.polimi.ingsw.model.cards.leaders.LeaderWhiteCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
@@ -313,7 +317,17 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askBuy() {
+        /*try {
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException e) {
 
+        }*/
+
+        try {
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException e) {
+
+        }
         this.notifyObserver(ClientController::showDecks);
         this.terminal.printRequest("Buy a card");
 
@@ -336,9 +350,16 @@ public class CLI extends Observable<ClientController> implements View {
         //SHOW DASHBOARD
         this.terminal.printRequest("Activate a production card on your dashboard");
 
-        int pos = askInt("Select a card to activate (1-3)","wrong index",1,ConstantValues.productionSpaces)  -1;
+        int pos = askInt("Select a card to activate (1-3) or type 4 for the basic " + "production","wrong index",1,ConstantValues.productionSpaces + 1)  -1;
 
+        if (pos == 3) {
+
+
+            this.askBasicProduction();
+            return;
+        }
         this.notifyObserver(controller -> controller.sendProduction(pos));
+
         actionDone = true;
     }
 
@@ -349,9 +370,39 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askBasicProduction() {
+        notifyObserver(ClientController::showStorage);
+
+        this.terminal.printResourceTypeSelection();
+        int type = askInt("Select the first resource to discard.","wrong index",1,4)  -1;
+        int type2 = askInt("Select the second resource to discard.","wrong index",1,4)  -1;
+        int type3 = askInt("Select the resource you want to obtain.","wrong index",1,4)  -1;
+        ResourceType res1 = ResourceInterpreter(type);
+        ResourceType res2 = ResourceInterpreter(type2);
+        ResourceType res3 = ResourceInterpreter(type3);
+
+        System.out.println("res 1: "+res1);
+        System.out.println("res 2: "+res2);
+        System.out.println("res 3: "+res3);
+
+        this.notifyObserver(controller -> controller.sendBasicProduction(res1, res2, res3));
+
 
     }
 
+    public ResourceType ResourceInterpreter(int r1)
+    {
+        switch (r1) {
+            case 0:
+                return ResourceType.SHIELD;
+            case 1:
+                return  ResourceType.ROCK;
+            case 2:
+                return  ResourceType.COIN;
+            case 3:
+                return  ResourceType.SERVANT;
+        }
+        return null;
+    }
 
 
     @Override

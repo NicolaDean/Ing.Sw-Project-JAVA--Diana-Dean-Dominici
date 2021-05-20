@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
 import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.controller.pingManager.PongController;
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.LeaderCard;
@@ -63,6 +64,10 @@ public class ClientController implements Runnable{
         this.resolver = new AckExample();
         model= new MiniModel(); //provvisiorio
 
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     /*
@@ -175,6 +180,11 @@ public class ClientController implements Runnable{
     public void sendProduction(int pos)
     {
         this.sendMessage(new Production(pos));
+    }
+
+    public void sendBasicProduction(ResourceType res1, ResourceType res2, ResourceType obt)
+    {
+        this.sendMessage(new BasicProduction(res1,res2,obt, index));
     }
 
     public void showAvailableNickname()
@@ -317,6 +327,11 @@ public class ClientController implements Runnable{
         this.view.showStorage(this.model.getStorage());
     }
 
+    public void showStorage(int a)
+    {
+        this.view.showStorage(this.model.getStorage());
+    }
+
     public void showDashboard(){
         this.view.showPapalCell(this.model.getPlayers());
         this.view.showDashboard(
@@ -402,6 +417,7 @@ public class ClientController implements Runnable{
 
     public void showDecks()
     {
+
         view.showDecks(this.model.getDecks());
     }
 
