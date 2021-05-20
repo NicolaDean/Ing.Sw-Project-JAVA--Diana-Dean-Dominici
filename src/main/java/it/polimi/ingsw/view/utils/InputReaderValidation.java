@@ -48,6 +48,7 @@ public class InputReaderValidation {
             DebugMessages.printError("read line cancelled");
         } catch (InterruptedException e) {
             DebugMessages.printError("thread killed: input cancellation");
+            return cancellString;
         }
         return cancellString;
     }

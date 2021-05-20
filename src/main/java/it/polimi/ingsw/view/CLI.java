@@ -160,7 +160,7 @@ public class CLI extends Observable<ClientController> implements View {
      */
     public boolean isInputCancelled(String str)
     {
-        return str.toLowerCase(Locale.ROOT).equals(InputReaderValidation.cancellString);
+        return str.toLowerCase(Locale.ROOT).equals(InputReaderValidation.cancellString.toLowerCase(Locale.ROOT));
     }
 
     /**
@@ -187,7 +187,7 @@ public class CLI extends Observable<ClientController> implements View {
         }
         terminal.printRequest(message);
         String s = this.input.interruptableInput();
-            s = helpCommands(s,message);
+        s = helpCommands(s,message);
         return s;
     }
 
@@ -415,8 +415,13 @@ public class CLI extends Observable<ClientController> implements View {
         int num =0;
         boolean cond = true;
         do{
-            String in = this.customRead(msg);
-            if(isInputCancelled(in)) return InputReaderValidation.cancellInt;
+            //String in = this.customRead(msg); //Check here
+            this.terminal.printRequest(msg);
+            String in = this.input.interruptableInput();
+            in = helpCommands(in,msg);
+
+            if(isInputCancelled(in))
+                return InputReaderValidation.cancellInt;
             try
             {
                 num = Integer.parseInt(in);
@@ -426,8 +431,6 @@ public class CLI extends Observable<ClientController> implements View {
                 this.terminal.printError("Not an integer");
             }
             cond = !input.validateInt(num,min,max);
-
-
 
             if(cond) this.terminal.printWarning(error);
         }while(cond );
