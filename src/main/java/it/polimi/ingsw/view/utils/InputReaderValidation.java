@@ -1,5 +1,7 @@
 package it.polimi.ingsw.view.utils;
 
+import it.polimi.ingsw.utils.DebugMessages;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,9 +9,10 @@ import java.util.Scanner;
 
 public class InputReaderValidation {
 
-
-    public Scanner console;
-    BufferedReader console2 = new BufferedReader(new InputStreamReader(System.in));
+    public static String    cancellString = "#CANCELLED#";
+    public static int       cancellInt    = -1234;
+    public Scanner          console;
+    BufferedReader          console2 = new BufferedReader(new InputStreamReader(System.in));
     public InputReaderValidation()
     {
         //console = new Scanner(System.in);
@@ -34,19 +37,21 @@ public class InputReaderValidation {
      * @return non empty input line
      */
 
-    public String interruptableInput() throws InterruptedException {
+    public String interruptableInput() {
         try {
             while(!this.bufferReady())
             {
-                Thread.sleep(200);
+                Thread.sleep(100);
             }
             return this.console2.readLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            DebugMessages.printError("read line cancelled");
+        } catch (InterruptedException e) {
+            DebugMessages.printError("thread killed: input cancellation");
         }
-
-        return null;
+        return cancellString;
     }
+
     public String readLine(){
         //return this.console.nextLine();
         try {

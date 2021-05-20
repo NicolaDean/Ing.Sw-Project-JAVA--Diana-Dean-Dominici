@@ -271,8 +271,10 @@ public class ServerController{
      */
     public Packet setLeaders(LeaderCard[] leaders, int index)
     {
+        int playerIndex = this.clients.get(index).getRealPlayerIndex();
         this.game.getCurrentPlayer().setLeaders(leaders);
-        this.broadcastMessage(-1,new UpdateLeaders(this.game.getCurrentPlayer().getLeaders(),index));
+
+        this.broadcastMessage(-1,new UpdateLeaders(this.game.getCurrentPlayer().getLeaders(),playerIndex));
         return null;
     }
     /**
@@ -484,16 +486,10 @@ public class ServerController{
         //if(!isRightPlayer(player)) return this.notYourTurn();
 
         System.out.println("\n" +player +"\n");
-        Player p = null;
+        Player p = this.game.getPlayer(player);
         //System.out.println(player + "!!!!\n\n\n");
 
-        for (Player p2: game.getPlayers())
-        {
-            if(p2.getControllerIndex()==player) {
 
-                p = p2;
-            }
-        }
 
         //System.out.println("\n preswap d1: "+ p.getDashboard().getStorage().getStorage()[0].getResource().getType());
         //System.out.println(" preswap d2: "+ p.getDashboard().getStorage().getStorage()[1].getResource().getType());
@@ -502,14 +498,13 @@ public class ServerController{
         try {
 
 
-
             p.getDashboard().getStorage().swapDeposit(pos1 -1,pos2 -1);
 
-            Deposit[] tmp = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex()).getDashboard().getStorage().getDeposits();
+            Deposit[] tmp = (p.getDashboard().getStorage().getDeposits());
 
             //System.out.println("\n postswap d1: "+ p.getDashboard().getStorage().getStorage()[0].getResource().getType());
             //System.out.println(" postswap d2: "+ p.getDashboard().getStorage().getStorage()[1].getResource().getType()+"\n");
-            sendStorageUpdate(player);
+            sendStorageUpdate(p.getControllerIndex());
             return null;
 
         } catch (Exception e) {
