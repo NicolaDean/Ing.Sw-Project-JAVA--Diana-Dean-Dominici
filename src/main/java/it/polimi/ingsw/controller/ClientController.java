@@ -370,6 +370,14 @@ public class ClientController implements Runnable{
     }
 
     /**
+     * increment player position
+     * @param index player index
+     */
+    public void incrementPositionPlayer(int index,int quantity){
+        this.model.getPlayers()[index].incrementPosition(quantity);
+    }
+
+    /**
      * //TODO Obsolete function, client almost never respond to server message immediatly but use directly "sendMessage"
      * Send respond to server
      */

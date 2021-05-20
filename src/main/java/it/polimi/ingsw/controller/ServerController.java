@@ -551,6 +551,9 @@ public class ServerController{
             return err.getAck();
         }
 
+        if(this.game.getMarket().getRedBallExtracted()){
+            this.broadcastMessage(-1,new ExtreactedRedBall(1,player));
+        }
 
         List <Resource> res = m.getPendingResourceExtracted();
         int white           = m.getWhiteCount();
