@@ -511,6 +511,14 @@ public class CLI extends Observable<ClientController> implements View {
         }while(!isEmpty(resourceList));
 
         this.notifyObserver(controller -> {controller.sendResourceInsertion(insertions);});
+
+        try {
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        this.notifyObserver(ClientController::showStorage);
+
     }
 
     @Override
@@ -608,6 +616,9 @@ public class CLI extends Observable<ClientController> implements View {
                 d2 = Integer.parseInt(cmd);
                 if(d1 != 6 && d2!= 6)
                     this.notifyObserver(controller -> controller.askSwap(d1, d2, index));
+                System.out.println("\n");
+                this.notifyObserver(ClientController::showStorage);
+
                 return;
 
             }
@@ -791,8 +802,13 @@ public class CLI extends Observable<ClientController> implements View {
         actionDone = true;
         terminal.printGoodMessages("Your last action has been successfully completed");
         //terminal.printRequest("Do you want to end turn? (yes or no)");
-
-        String in = this.customRead("\nDo you want to end the turn? (yes or no)");
+        String in = null;
+        if(turnSelected == 2) {
+            this.terminal.printWarning("you completed the action and the turn automatically ended.");
+            in = "y";
+        }
+        else
+            in = this.customRead("\nDo you want to end the turn? (yes or no)");
         in = in.toLowerCase(Locale.ROOT);
         if(in.equals("yes") || in.equals("y")) {
             this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
@@ -833,6 +849,12 @@ public class CLI extends Observable<ClientController> implements View {
         //terminal.printGoodMessages("sto aspettando il mio turno");
         //terminal.printSeparator();
         waiting = true;
+        try {
+            TimeUnit.MILLISECONDS.sleep(110);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         helpThread = new Thread(this::waitingHelpLoop);
         helpThread.start();
 
