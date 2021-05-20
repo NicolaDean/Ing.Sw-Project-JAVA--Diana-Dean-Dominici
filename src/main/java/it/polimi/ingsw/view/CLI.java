@@ -360,6 +360,7 @@ public class CLI extends Observable<ClientController> implements View {
             return;
         }
         this.notifyObserver(controller -> controller.sendProduction(pos));
+
         actionDone = true;
     }
 
@@ -380,23 +381,25 @@ public class CLI extends Observable<ClientController> implements View {
         ResourceType res2 = ResourceInterpreter(type2);
         ResourceType res3 = ResourceInterpreter(type3);
 
-        this.notifyObserver(controller -> controller.sendBasicProduction(res1, res2, res3));
-        this.notifyObserver(ClientController::showStorage);
+        System.out.println("res 1: "+res1);
+        System.out.println("res 2: "+res2);
+        System.out.println("res 3: "+res3);
 
-        //this.notifyObserver(ClientController::showStorage);
+        this.notifyObserver(controller -> controller.sendBasicProduction(res1, res2, res3));
+
 
     }
 
     public ResourceType ResourceInterpreter(int r1)
     {
         switch (r1) {
-            case 1:
+            case 0:
                 return ResourceType.SHIELD;
-            case 2:
+            case 1:
                 return  ResourceType.ROCK;
-            case 3:
+            case 2:
                 return  ResourceType.COIN;
-            case 4:
+            case 3:
                 return  ResourceType.SERVANT;
         }
         return null;

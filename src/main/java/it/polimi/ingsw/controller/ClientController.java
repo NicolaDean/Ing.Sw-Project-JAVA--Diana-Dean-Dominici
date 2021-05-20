@@ -66,6 +66,10 @@ public class ClientController implements Runnable{
 
     }
 
+    public int getIndex() {
+        return index;
+    }
+
     /*
      * set all initial information into miniMarted
      */
@@ -180,7 +184,7 @@ public class ClientController implements Runnable{
 
     public void sendBasicProduction(ResourceType res1, ResourceType res2, ResourceType obt)
     {
-        this.sendMessage(new BasicProduction(res1,res2,obt));
+        this.sendMessage(new BasicProduction(res1,res2,obt, index));
     }
 
     public void showAvailableNickname()
@@ -319,6 +323,11 @@ public class ClientController implements Runnable{
     }
 
     public void showStorage()
+    {
+        this.view.showStorage(this.model.getStorage());
+    }
+
+    public void showStorage(int a)
     {
         this.view.showStorage(this.model.getStorage());
     }

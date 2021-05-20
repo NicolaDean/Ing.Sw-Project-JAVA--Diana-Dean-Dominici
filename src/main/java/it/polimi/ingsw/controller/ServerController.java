@@ -353,15 +353,21 @@ public class ServerController{
      */
     public Packet basicProduction(ResourceType res1,ResourceType res2, ResourceType obt, int player)
     {
+        System.out.println(game.getCurrentPlayer().getNickname());
         Player p = this.game.getCurrentPlayer();
         Dashboard dashboard = p.getDashboard();
 
-        if(!isRightPlayer(player)) return this.notYourTurn();
+        //if(!isRightPlayer(player)) return this.notYourTurn();
+        System.out.println("Res 1: "+ res1);
+        System.out.println("Res 2: "+ res2);
+        System.out.println("obt: "+ obt);
 
         try {
+
             dashboard.basicProduction(res1,res2,obt);
             return setPendingCost(dashboard);
         } catch (AckManager err) {
+            System.out.println("\nerrore nella production\n");
             return err.getAck();
         }
     }
