@@ -290,6 +290,7 @@ public class CLI extends Observable<ClientController> implements View {
                 new Random().nextBytes(array);
                 nickname  = new String(array, Charset.forName("UTF-8"));*/
                 nickname=this.getRandomNickname();
+                terminal.printGoodMessages("You random nickname is "+nickname+".");
 
             }
             if(nickname.length() < 3) terminal.printWarning("Nickname too short, minimum 3 letters");
