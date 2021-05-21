@@ -222,7 +222,9 @@ public class ServerController{
         for (Player p:game.getPlayers()){
             players[i]=new MiniPlayer(p.getNickname());
             players[i].setStorage(p.getDashboard().getStorage().getDeposits());
-            players[i].setLeaderCards(this.game.get4leaders());
+            LeaderCard[] leaderCards = this.game.get4leaders();
+            players[i].setLeaderCards(leaderCards);
+            p.setLeaders(leaderCards);
             i++;
         }
         return players;
@@ -269,11 +271,11 @@ public class ServerController{
      * @param index
      * @return
      */
-    public Packet setLeaders(LeaderCard[] leaders, int index)
+    public Packet setLeaders(LeaderCard[] leaders,int pos1,int pos2, int index)
     {
         int playerIndex = this.clients.get(index).getRealPlayerIndex();
-        this.game.getCurrentPlayer().setLeaders(leaders);
-
+        //this.game.getCurrentPlayer().setLeaders(leaders);
+        this.game.getCurrentPlayer().setLeaders(pos1,pos2);
         this.broadcastMessage(-1,new UpdateLeaders(this.game.getCurrentPlayer().getLeaders(),playerIndex));
         return null;
     }

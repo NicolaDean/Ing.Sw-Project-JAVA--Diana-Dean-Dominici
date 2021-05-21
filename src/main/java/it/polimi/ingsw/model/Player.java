@@ -112,6 +112,16 @@ public class Player {
         this.leaders = leaders;
     }
 
+    public void setLeaders(int pos1,int pos2)
+    {
+        LeaderCard[] cards = new LeaderCard[2];
+
+        cards[0] = this.leaders[pos1];
+        cards[1] = this.leaders[pos2];
+
+        this.setLeaders(cards);
+    }
+
     public String getNickname()
     {
         return this.nickname;
@@ -220,7 +230,8 @@ public class Player {
 
     public Packet getLeaderCardUpdate(int position,int playerIndex)
     {
-        return this.leaders[position].updateMiniModel(this,playerIndex);
+        LeaderCard update =  this.leaders[position];
+        return update.updateMiniModel(this,playerIndex);
     }
 
     /**

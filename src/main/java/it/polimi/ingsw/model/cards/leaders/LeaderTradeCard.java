@@ -13,7 +13,7 @@ import it.polimi.ingsw.model.resources.ResourceOperator;
 
 import java.util.List;
 
-public class LeaderTradeCard extends LeaderCard implements BonusProductionInterface {
+public class LeaderTradeCard extends LeaderCard implements BonusProductionInterface{
 
     private ResourceType obtain;
 
@@ -31,7 +31,7 @@ public class LeaderTradeCard extends LeaderCard implements BonusProductionInterf
     }
 
     //USER can select the card and call the method "changeRawMat()" or
-    @Override
+
     public void produce(Player p, ResourceType obtain) throws NotEnoughResource {
         int possession = ResourceOperator.extractQuantityOf(this.getType(),p.getDashboard().getAllAvailableResource());
 

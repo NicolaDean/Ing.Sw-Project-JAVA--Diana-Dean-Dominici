@@ -112,8 +112,18 @@ public class LeadersTest {
             c.activate(p);
         });
 
+    }
 
+    @Test
+    public void testMinimodel()
+    {
+        Game g = new Game();
 
+        LeaderCard[] leaderCards = g.get4leaders();
+
+        Player p = new Player();
+
+        p.setLeaders(leaderCards);
     }
 
 

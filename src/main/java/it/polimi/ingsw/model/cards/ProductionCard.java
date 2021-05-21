@@ -75,13 +75,13 @@ public class ProductionCard extends Card {
 
 
         //If level is not negative check level
-        if(level != -1)
+        if(card.getLevel() != -1)
         {
             if(card.getLevel() != this.level) return false;
         }
 
         //If level is ok or not necessary check Type
-        return this.getType() == card.getType();
+        return this.getType().equals(card.getType());
 
     }
 

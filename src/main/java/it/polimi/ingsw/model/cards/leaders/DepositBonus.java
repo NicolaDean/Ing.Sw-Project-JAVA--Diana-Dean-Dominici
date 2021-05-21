@@ -11,7 +11,7 @@ import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.List;
 
-public class DepositBonus extends LeaderCard {
+public class DepositBonus extends LeaderCard{
 
 
     public DepositBonus(List<Resource> cost, List<PrerequisiteCard> cardPrequisite, int victoryPoints, ResourceType resourcetype) {
@@ -29,7 +29,6 @@ public class DepositBonus extends LeaderCard {
 
     }
 
-    @Override
     public Packet updateMiniModel(Player p,int index)
     {
         return new StorageUpdate(p.getDashboard().getStorage().getDeposits(),index);

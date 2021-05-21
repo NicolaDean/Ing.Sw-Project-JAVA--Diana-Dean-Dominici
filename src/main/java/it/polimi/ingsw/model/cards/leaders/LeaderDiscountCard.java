@@ -11,7 +11,7 @@ import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.List;
 
-public class LeaderDiscountCard extends LeaderCard {
+public class LeaderDiscountCard extends LeaderCard{
 
 
     public LeaderDiscountCard(List<Resource> cost, List<PrerequisiteCard> cardPrequisite, int victoryPoints, ResourceType type) {
@@ -24,6 +24,7 @@ public class LeaderDiscountCard extends LeaderCard {
         super.activate(p);
         p.addDiscount(new Resource(this.getType(), 1));
     }
+
 
     @Override
     public Packet updateMiniModel(Player p,int index)
