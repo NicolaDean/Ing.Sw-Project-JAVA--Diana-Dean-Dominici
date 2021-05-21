@@ -223,12 +223,12 @@ public class Logger {
             for (int i = 0; i < marketRow; i++) {
                 for (int j = 0; j < marketCol; j++) {
                     if (j == 0) System.out.print((i + 1)+" → ");
-                    out.printColored(" ● ", CliColors.R_WHITE_BACKGROUND, view.getMiniMarketBalls()[i][j].getCliColor());
+                    out.printColored(" ● ", CliColors.BLACK_BACKGROUND, view.getMiniMarketBalls()[i][j].getCliColor());
                 }
                 System.out.print("\n");
             }
             System.out.print("\nBall to insert: ");
-            out.printColored(" ● ", CliColors.R_WHITE_BACKGROUND, view.getMiniMarketDiscardedResouce().getCliColor());
+            out.printColored(" ● ", CliColors.BLACK_BACKGROUND, view.getMiniMarketDiscardedResouce().getCliColor());
         }catch (Exception e){
             DebugMessages.printWarning("lanciato eccezione "+e.getLocalizedMessage());
         }
