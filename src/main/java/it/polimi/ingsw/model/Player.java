@@ -153,7 +153,7 @@ public class Player extends Observable<ServerController> {
     public void incrementPosition()
     {
         this.position++;
-        this.notifyObserver(ServerController::checkPapalSpaceActivation);
+        try { this.notifyObserver(ServerController::checkPapalSpaceActivation); }catch(Exception e){ }
     }
 
     /**
