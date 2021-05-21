@@ -195,9 +195,16 @@ public class Player {
      * Delete Leader from the Leader List of the player
      * @param position
      */
-    public void discardLeader(int position)
-    {
-        this.leaders[position] = null;
+    public void discardLeader(int position) throws LeaderActivated {
+        if(this.leaders[position].isActive()|| this.leaders[position] == null)
+        {
+            throw new LeaderActivated("");
+        }
+        else
+        {
+            this.leaders[position] = null;
+        }
+
     }
 
 
@@ -206,7 +213,7 @@ public class Player {
      * @param position position leader
      * @return true if it's active
      */
-    public void activateLeader(int position) throws Exception {
+    public void activateLeader(int position) throws NotSoddisfedPrerequisite {
         positionLeaderActive = position;
         this.leaders[position].activate(this);
     }

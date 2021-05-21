@@ -127,21 +127,23 @@ public interface View {
      */
     public void askTurnType();
 
-    public void showPlayer(Deposit[]deposits, List<Resource> chest, ProductionCard[] cards,String name);
+    public void showPlayer(Deposit[]deposits, List<Resource> chest, ProductionCard[] cards,LeaderCard[] leaderCards,String name) ;
     /**
      * ask user which command he want to execute
      */
     public void askCommand();
 
     public void askLeaders(LeaderCard[] cards);
-    public void  askInitialResoruce(int number);
+    public void askLeaderActivation();
+    public void askDiscardLeader();
+    public void askInitialResoruce(int number);
     public void showGameStarted();
 
     public void abortHelp();
     public void showMarketExtraction(List<Resource> resourceList,int whiteballs);
 
-    public void showStorage(Deposit[] deposits);
-    public void showDashboard(Deposit[] deposits,List<Resource>chest,ProductionCard[] cards);
+    public void showStorage(Deposit[] deposits,List<Resource> chest);
+    public void showDashboard(Deposit[] deposits, List<Resource> chest, ProductionCard[] cards,LeaderCard[] leaderCards);
 
     public void askEndTurn();
     //Other methods

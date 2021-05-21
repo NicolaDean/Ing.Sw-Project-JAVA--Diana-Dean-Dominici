@@ -14,8 +14,7 @@ public class EndGame extends Packet<ClientController> implements PacketManager<C
 
     @Override
     public Packet analyze(ClientController controller) {
-
-        DebugMessages.printWarning("GAME ENDED, SOMEONE DISCONNECT");
+        controller.endGame();
         return null;
     }
 }

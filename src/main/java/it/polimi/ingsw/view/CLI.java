@@ -7,10 +7,6 @@ import it.polimi.ingsw.controller.packets.InsertionInstruction;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
-import it.polimi.ingsw.model.cards.leaders.DepositBonus;
-import it.polimi.ingsw.model.cards.leaders.LeaderDiscountCard;
-import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
-import it.polimi.ingsw.model.cards.leaders.LeaderWhiteCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
@@ -132,6 +128,7 @@ public class CLI extends Observable<ClientController> implements View {
             case "-shop":
                 this.notifyObserver(ClientController::showDecks);
                 return customRead(message);
+            case "-swap":
             case "-swapdeposit": //cancel case
                 //System.out.println("index di questa cli: "+this.index);
                 this.askSwapDeposit(this.index);
@@ -139,7 +136,12 @@ public class CLI extends Observable<ClientController> implements View {
             case "-spy": //cancel case
                 this.askSpyPlayer();
                 return customRead(message);
-
+            case "-activateleader":
+                this.askLeaderActivation();
+                return customRead(message);
+            case "-discardleader":
+                this.askDiscardLeader();
+                return customRead(message);
             default:
                 //System.out.println("opzione di default, cmd vale "+cmd);
                 return cmd;
@@ -271,8 +273,6 @@ public class CLI extends Observable<ClientController> implements View {
         boolean finalSinglePlayer = singlePlayer;
         this.notifyObserver(controller -> controller.setNickname(validNickname, finalSinglePlayer));
 
-        //Example set action to do in case of NACK on Login command
-        //this.notifyObserver(controller -> controller.setAckManagmentAction(View::askNickname));
     }
 
     @Override
@@ -317,11 +317,6 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askBuy() {
-        /*try {
-            TimeUnit.MILLISECONDS.sleep(100);
-        } catch (InterruptedException e) {
-
-        }*/
 
         try {
             TimeUnit.MILLISECONDS.sleep(100);
@@ -762,6 +757,24 @@ public class CLI extends Observable<ClientController> implements View {
     }
 
     @Override
+    public void askLeaderActivation() {
+
+        int pos = askInt("Which leader you want to activate? (1-2)","wrong input range",1,2);
+        if(isInputCancelled(pos))return;
+
+        this.notifyObserver(controller -> controller.activateLeader(pos));
+
+    }
+
+    @Override
+    public void askDiscardLeader() {
+        int pos = askInt("Which leader you want to discard? (1-2)","wrong input range",1,2);
+        if(isInputCancelled(pos))return;
+
+        this.notifyObserver(controller -> controller.discardLeader(pos));
+    }
+
+    @Override
     public void askInitialResoruce(int number) {
 
         if(number == 0)
@@ -863,11 +876,11 @@ public class CLI extends Observable<ClientController> implements View {
         this.notifyObserver(controller -> {controller.spyPlayer(finalIndex);});
     }
     @Override
-    public void showPlayer(Deposit[]deposits, List<Resource> chest, ProductionCard[] cards,String name) {
+    public void showPlayer(Deposit[]deposits, List<Resource> chest, ProductionCard[] cards,LeaderCard[] leaderCards,String name) {
 
         this.terminal.printSeparator();
         this.terminal.out.printColored("THIS IS "+ name+ " Dashboard",CliColors.GREEN_TEXT);
-        this.showDashboard(deposits,chest,cards);
+        this.showDashboard(deposits,chest,cards,leaderCards);
     }
 
     /**
@@ -941,13 +954,14 @@ public class CLI extends Observable<ClientController> implements View {
     }
 
     @Override
-    public void showStorage(Deposit[] deposits) {
-        this.terminal.printStorage(deposits,null,false);
+    public void showStorage(Deposit[] deposits,List<Resource>chest) {
+        this.terminal.printStorage(deposits,chest,true);
     }
 
     @Override
-    public void showDashboard(Deposit[] deposits, List<Resource> chest, ProductionCard[] cards) {
+    public void showDashboard(Deposit[] deposits, List<Resource> chest, ProductionCard[] cards,LeaderCard[] leaderCards) {
         this.terminal.printDashboard(deposits,chest,cards);
+        this.terminal.printLeaders(leaderCards);
     }
 
     public void changeTurnType()

@@ -125,7 +125,7 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
-    public void showPlayer(Deposit[]deposits, List<Resource> chest, ProductionCard[] cards,String name){
+    public void showPlayer(Deposit[]deposits, List<Resource> chest, ProductionCard[] cards,LeaderCard[] leaderCards,String name) {
 
     }
 
@@ -136,6 +136,16 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void askLeaders(LeaderCard[] cards) {
+
+    }
+
+    @Override
+    public void askLeaderActivation() {
+
+    }
+
+    @Override
+    public void askDiscardLeader() {
 
     }
 
@@ -161,12 +171,12 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
-    public void showStorage(Deposit[] deposits) {
+    public void showStorage(Deposit[] deposits,List<Resource>chest) {
 
     }
 
     @Override
-    public void showDashboard(Deposit[] deposits, List<Resource> chest, ProductionCard[] cards) {
+    public void showDashboard(Deposit[] deposits, List<Resource> chest, ProductionCard[] cards,LeaderCard[] leaderCards) {
 
     }
 

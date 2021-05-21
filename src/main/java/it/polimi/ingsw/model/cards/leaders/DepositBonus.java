@@ -11,6 +11,7 @@ import java.util.List;
 
 public class DepositBonus extends LeaderCard {
 
+
     public DepositBonus(List<Resource> cost, List<PrerequisiteCard> cardPrequisite, int victoryPoints, ResourceType resourcetype) {
         super(cost,cardPrequisite, victoryPoints, resourcetype);
     }

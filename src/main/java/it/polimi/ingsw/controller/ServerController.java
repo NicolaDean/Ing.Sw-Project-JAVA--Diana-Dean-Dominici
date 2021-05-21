@@ -460,7 +460,7 @@ public class ServerController{
             }
 
             return new ACK(0);
-        } catch (Exception e) {
+        } catch (AckManager e) {
             e.printStackTrace();
             return new ACK(1);
         }

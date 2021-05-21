@@ -196,10 +196,16 @@ public class ClientController implements Runnable{
             i++;
         }
     }
+    public void endGame()
+    {
+        this.showDashboard();
+        DebugMessages.printWarning("GAME ENDED, SOMEONE DISCONNECT");
+
+    }
     public void spyPlayer(int index)
     {
         MiniPlayer p = this.model.getPlayers()[index];
-        this.view.showPlayer(p.getStorage(),p.getChest(),p.getDecks(),p.getNickname());
+        this.view.showPlayer(p.getStorage(),p.getChest(),p.getDecks(),p.getLeaderCards(),p.getNickname());
     }
     public void updateLeader(LeaderCard [] leaderCard,int index)
     {
@@ -215,6 +221,20 @@ public class ClientController implements Runnable{
         int index = this.model.getPersanalIndex();
         MiniPlayer p = this.model.getPlayers()[index];
         this.view.askLeaders(p.getLeaderCards());
+    }
+
+    public void showLeaders()
+    {
+        //TODO
+    }
+    public void activateLeader(int pos)
+    {
+        this.sendMessage(new ActivateLeader(pos,true));
+    }
+
+    public void discardLeader(int pos)
+    {
+        this.sendMessage(new ActivateLeader(pos,false));
     }
     public void abortHelp()
     {
@@ -324,12 +344,7 @@ public class ClientController implements Runnable{
 
     public void showStorage()
     {
-        this.view.showStorage(this.model.getStorage());
-    }
-
-    public void showStorage(int a)
-    {
-        this.view.showStorage(this.model.getStorage());
+        this.view.showStorage(this.model.getStorage(),this.model.getChest());
     }
 
     public void showDashboard(){
@@ -337,7 +352,8 @@ public class ClientController implements Runnable{
         this.view.showDashboard(
                 this.model.getStorage(),
                 this.model.getPlayers()[this.model.getPersanalIndex()].getChest(),
-                this.model.getPlayerCards()
+                this.model.getPlayerCards(),
+                this.model.getPlayers()[this.model.getPersanalIndex()].getLeaderCards()
         );
     }
     /**

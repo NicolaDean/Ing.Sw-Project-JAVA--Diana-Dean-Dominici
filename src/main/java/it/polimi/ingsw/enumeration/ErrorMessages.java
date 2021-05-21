@@ -11,5 +11,6 @@ public enum ErrorMessages {
     WrongPosition,
     IllegalSwap,
     InsertionFailed,
-    ExtractionFailed
+    ExtractionFailed,
+    LeaderActivated
 }
