@@ -25,9 +25,11 @@ import it.polimi.ingsw.view.utils.Logger;
 import static it.polimi.ingsw.model.resources.ResourceOperator.*;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 
@@ -260,12 +262,19 @@ public class CLI extends Observable<ClientController> implements View {
     public void askNickname() {
 
          singlePlayer = false;
-        terminal.printRequest("Type here your nickname:");
+        terminal.printRequest("Type here your nickname (empty for default: random nickname):");
 
         String nickname = "";
         do {
             nickname = input.readLine();
             //System.out.println("length: "+nickname.length());
+            if(nickname.length() == 0)
+            {
+                byte[] array = new byte[7]; // length is bounded by 7
+                new Random().nextBytes(array);
+                nickname  = new String(array, Charset.forName("UTF-8"));
+
+            }
             if(nickname.length() < 3) terminal.printWarning("Nickname too short, minimum 3 letters");
         }while(nickname.length() < 3 );
 
