@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class LeaderWhiteCard extends LeaderCard {
+public class LeaderWhiteCard extends LeaderCard{
 
     public LeaderWhiteCard(List<Resource> cost, List<PrerequisiteCard> cardPrequisite, int victoryPoints, ResourceType type) {
         super(cost,cardPrequisite, victoryPoints, type);
@@ -27,7 +27,6 @@ public class LeaderWhiteCard extends LeaderCard {
         p.addBonusball(this.getType());
     }
 
-    @Override
     public Packet updateMiniModel(Player p,int index)
     {
         return new LeaderWhiteUpdate((ResourceType[]) p.getBonusball().toArray(),index);

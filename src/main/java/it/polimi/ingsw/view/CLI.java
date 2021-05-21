@@ -773,23 +773,22 @@ public class CLI extends Observable<ClientController> implements View {
     public void askLeaders(LeaderCard[] cards)
     {
         this.terminal.printLeaders(cards);
-        int count = 0;
+
         LeaderCard[] leaderCards = new LeaderCard[2];
-        do {
 
-            int in = this.askInt("Which of those leaders you want to draw? (1-4)","wrong input range",1,ConstantValues.leaderCardsToDraw);
-            in--;
-            leaderCards[count] = cards[in];
-            count++;
-        }while(count != 2);
+        int l1 = this.askInt("Which of those leaders you want to draw? (1-4)","wrong input range",1,ConstantValues.leaderCardsToDraw) -1;
+        leaderCards[0] = cards[l1];
 
-        this.notifyObserver(controller -> {controller.sendLeader(leaderCards);});
+        int l2 = this.askIntExept("Which of those leaders you want to draw? (1-4)","wrong input range","already selected leader",1,ConstantValues.leaderCardsToDraw,l1) -1;
+        leaderCards[1] = cards[l2];
+
+        this.notifyObserver(controller -> {controller.sendLeader(leaderCards,l1,l2);});
     }
 
     @Override
     public void askLeaderActivation() {
 
-        int pos = askInt("Which leader you want to activate? (1-2)","wrong input range",1,2);
+        int pos = askInt("Which leader you want to activate? (1-2)","wrong input range",1,2)-1;
         if(isInputCancelled(pos))return;
 
         this.notifyObserver(controller -> controller.activateLeader(pos));
@@ -798,7 +797,7 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askDiscardLeader() {
-        int pos = askInt("Which leader you want to discard? (1-2)","wrong input range",1,2);
+        int pos = askInt("Which leader you want to discard? (1-2)","wrong input range",1,2)-1;
         if(isInputCancelled(pos))return;
 
         this.notifyObserver(controller -> controller.discardLeader(pos));
@@ -945,7 +944,13 @@ public class CLI extends Observable<ClientController> implements View {
                 }
                 //System.out.println("TREAD VIVO ");
 
-                this.helpCommands(this.input.readLine(),"");
+                String exit = this.helpCommands(this.input.readLine(),"");
+
+                if(isInputCancelled(exit))
+                {
+                    DebugMessages.printError("Funziona finalmente");
+                    return;
+                }
 
             }
         }catch (InterruptedException | IOException e)
@@ -1121,7 +1126,7 @@ public class CLI extends Observable<ClientController> implements View {
             }
             Avoidable  = true;
             actionDone = false;
-            //DebugMessages.printWarning("Turn executed");
+            DebugMessages.printWarning("Turn executed");
     }
 
 }

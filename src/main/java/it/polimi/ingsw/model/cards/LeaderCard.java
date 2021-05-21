@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.controller.packets.ACK;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.exceptions.NotSoddisfedPrerequisite;
@@ -11,13 +12,14 @@ import it.polimi.ingsw.view.utils.CliColors;
 
 import java.util.List;
 
-public class
-LeaderCard extends Card{
+public class LeaderCard extends Card {
 
     private boolean      active;
     private ResourceType type;
     private List<PrerequisiteCard> cardPrequisite;
     private String cliRappresentation = "Leader";
+
+    transient Packet updateMinimodel;
 
     public LeaderCard(List<Resource> cost,List<PrerequisiteCard> cardPrequisite, int victoryPoints, ResourceType type) {
         super(cost, victoryPoints);
@@ -53,7 +55,7 @@ LeaderCard extends Card{
             }
         }
         //Check card prerequisite if necessary
-        if(cardPrequisite !=null)
+        if(this.cardPrequisite !=null && !this.cardPrequisite.isEmpty())
             cardRequisite     = p.getDashboard().checkCardPresence(cardPrequisite);
 
 
@@ -96,6 +98,6 @@ LeaderCard extends Card{
 
     public Packet updateMiniModel(Player p,int index)
     {
-        return null;
+        return new ACK(0);
     }
 }

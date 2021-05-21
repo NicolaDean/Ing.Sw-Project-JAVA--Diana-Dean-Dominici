@@ -277,11 +277,9 @@ public class Dashboard {
         for(PrerequisiteCard requirement:requirements)
         {
             int quantity = 0;
-            //foreach stack and foreach card in it check if it match the prerequisite (if true return true)
+            //foreach stack and foreach card init check if it match the prerequisite (if true return true)
             for(Stack<ProductionCard> s:this.producionCards)
             {
-
-
                 //For each card of the stack
                 for(ProductionCard card:s)
                 {

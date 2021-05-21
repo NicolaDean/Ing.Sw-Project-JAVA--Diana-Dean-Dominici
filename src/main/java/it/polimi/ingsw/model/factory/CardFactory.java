@@ -1,8 +1,10 @@
 package it.polimi.ingsw.model.factory;
 
 import com.google.gson.*;
+import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.enumeration.CardType;
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.PrerequisiteCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
@@ -168,10 +170,10 @@ public class CardFactory {
         List<PrerequisiteCard> requirmentCard = buildPrerequisiteCardListFromJsonArray(card.get("requirementsCard").getAsJsonArray());
         List<Resource> requirment = buildResourceListFromJsonArray(card.get("requirementsResource").getAsJsonArray());
 
-        String cardType = card.get("cardType").getAsString();
+        String cardType = card.get("cardType").getAsString().toUpperCase(Locale.ROOT);
 
         LeaderCard leaderCard = null;
-        switch (cardType) {
+        switch (cardType.toUpperCase(Locale.ROOT)) {
             case "WHITE":
                 leaderCard = new LeaderWhiteCard(requirment,requirmentCard, victoryPoint, type);
                 break;
@@ -185,7 +187,7 @@ public class CardFactory {
                 leaderCard =  new DepositBonus(requirment,requirmentCard, victoryPoint, type);
                 break;
             default:
-                leaderCard =  new LeaderCard(requirment,requirmentCard, victoryPoint, type);
+                //leaderCard =  new LeaderCard(requirment,requirmentCard, victoryPoint, type);
                 break;
         }
         leaderCard.setCliRappresentation(cardType);
@@ -218,6 +220,11 @@ public class CardFactory {
 
             Collections.shuffle(leaders);
             LeaderCard [] out = new LeaderCard[size];
+
+            //Player p = new Player();
+            //p.setLeaders(leaders.toArray(out));
+
+            //Packet a =p.getLeaderCardUpdate(1,0);
 
             return leaders.toArray(out);
         }
