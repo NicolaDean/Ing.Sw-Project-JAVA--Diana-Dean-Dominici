@@ -453,10 +453,13 @@ public class ServerController{
             if(action)
             {
                 p.activateLeader(pos);
+                Packet update = p.getLeaderCardUpdate(pos,this.clients.get(player).getRealPlayerIndex());
+                this.broadcastMessage(-1,update);
             }
             else
             {
                 p.discardLeader(pos);
+                //TODO send leaderUpdate with discarded leader
             }
 
             return new ACK(0);

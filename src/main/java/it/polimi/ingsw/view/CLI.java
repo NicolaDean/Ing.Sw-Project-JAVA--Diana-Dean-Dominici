@@ -116,6 +116,14 @@ public class CLI extends Observable<ClientController> implements View {
                 DebugMessages.printError("-exit command not available yet");
                 if(Avoidable)
                 {
+                    if(actionDone)
+                    {
+                        this.notifyObserver(ClientController::askEndTurn);
+                    }
+                    else
+                    {
+                        this.askTurnType();
+                    }
                     return InputReaderValidation.exitCodeString;
                 }
                 return "";
@@ -336,7 +344,7 @@ public class CLI extends Observable<ClientController> implements View {
         if(isExit(pos+1)) return;
 
         this.notifyObserver(controller -> controller.sendBuyCard(row,col,pos));
-        actionDone = true;
+
     }
 
     @Override
@@ -345,7 +353,7 @@ public class CLI extends Observable<ClientController> implements View {
         //SHOW DASHBOARD
         this.terminal.printRequest("Activate a production card on your dashboard");
 
-        int pos = askInt("Select a card to activate (1-3) or type 4 for the basic " + "production","wrong index",1,ConstantValues.productionSpaces + 1)  -1;
+        int pos = askInt("Select a card to activate (1-3) or type 4 for the basic " + "production","wrong index",1,ConstantValues.productionSpaces + 3)  -1;
 
         if (pos == 3) {
 
@@ -353,9 +361,16 @@ public class CLI extends Observable<ClientController> implements View {
             this.askBasicProduction();
             return;
         }
+
+        if(pos ==4 || pos == 5)
+        {
+            this.askBonusProduction();
+            return;
+        }
+
         this.notifyObserver(controller -> controller.sendProduction(pos));
 
-        actionDone = true;
+
     }
 
     @Override
@@ -402,8 +417,6 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askMarketExtraction()  {
-        Avoidable = false;
-
         String msg = "\nInsert \"col\" or \"row\" to select the extraction mode";
         boolean direction = false;
         String in = "";
@@ -442,7 +455,6 @@ public class CLI extends Observable<ClientController> implements View {
         boolean finalDirection = direction;
         this.notifyObserver(controller -> {controller.sendMarketExtraction(finalDirection,num);});
         actionDone = true;
-        Avoidable = true;
     }
 
     @Override
@@ -540,7 +552,7 @@ public class CLI extends Observable<ClientController> implements View {
      */
     @Override
     public void askResourceInsertion(List<Resource> resourceList) {
-
+        actionDone = true;
         Avoidable = false;
         this.notifyObserver(ClientController::showStorage);
 
@@ -636,7 +648,8 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askResourceExtraction(List<Resource> resourceList) {
-        canEndTurn = false;
+        actionDone = true;
+        Avoidable = false;
         this.notifyObserver(ClientController::showStorage);
 
         this.terminal.printSeparator();
@@ -703,7 +716,7 @@ public class CLI extends Observable<ClientController> implements View {
         {
             this.notifyObserver(controller -> controller.sendResourceExtraction(false,extractions));
         }
-
+        Avoidable = false;
     }
 
     @Override
@@ -964,26 +977,6 @@ public class CLI extends Observable<ClientController> implements View {
         this.terminal.printLeaders(leaderCards);
     }
 
-    public void changeTurnType()
-    {
-        if(!actionDone)
-        {
-            //askTurnType
-            DebugMessages.printError("This function will COMING SOON,non ready yet");
-        }
-    }
-    public void helpEndTurn()
-    {
-        if(canEndTurn)
-        {
-            this.askEndTurn();
-        }
-        else
-        {
-            terminal.printError("You cant end turn now, you probably have pending cost to pay or resources to insert");
-        }
-    }
-
     /**
      * Called ONLY by operationCompleted packet (if want to call in help use helpEndTurn())
      */
@@ -998,7 +991,6 @@ public class CLI extends Observable<ClientController> implements View {
         }
 
         canEndTurn = true;
-        actionDone = true;
         terminal.printGoodMessages("Your last action has been successfully completed");
         //terminal.printRequest("Do you want to end turn? (yes or no)");
         String in = null;
@@ -1089,6 +1081,8 @@ public class CLI extends Observable<ClientController> implements View {
                 default:
                     break;
             }
+            Avoidable  = true;
+            actionDone = false;
             //DebugMessages.printWarning("Turn executed");
     }
 

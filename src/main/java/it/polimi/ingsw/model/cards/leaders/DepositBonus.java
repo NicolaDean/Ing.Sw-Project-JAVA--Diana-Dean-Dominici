@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.cards.leaders;
 
+import it.polimi.ingsw.controller.packets.Packet;
+import it.polimi.ingsw.controller.packets.StorageUpdate;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.exceptions.NotSoddisfedPrerequisite;
 import it.polimi.ingsw.model.Player;
@@ -25,6 +27,12 @@ public class DepositBonus extends LeaderCard {
         super.activate(player);
         player.getDashboard().getStorage().initializeBonusDeposit(this.getType());
 
+    }
+
+    @Override
+    public Packet updateMiniModel(Player p,int index)
+    {
+        return new StorageUpdate(p.getDashboard().getStorage().getDeposits(),index);
     }
 }
 

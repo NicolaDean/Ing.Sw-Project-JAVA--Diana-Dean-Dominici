@@ -218,6 +218,11 @@ public class Player {
         this.leaders[position].activate(this);
     }
 
+    public Packet getLeaderCardUpdate(int position,int playerIndex)
+    {
+        return this.leaders[position].updateMiniModel(this,playerIndex);
+    }
+
     /**
      *  Add resource to chest
      * @param resource resource to add

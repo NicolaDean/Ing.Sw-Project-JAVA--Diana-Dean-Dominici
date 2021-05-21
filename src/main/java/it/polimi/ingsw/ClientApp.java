@@ -40,7 +40,6 @@ public class ClientApp {
     public void start() throws IOException {
 
 
-
         this.controller.startGame();
 
         this.controller.starttolisten();
@@ -60,56 +59,9 @@ public class ClientApp {
 
     }
 
-    public String nicknamerequest() throws IOException {
-        System.out.println("\ninserisci il tuo nickname");
-        BufferedReader reader =
-                new BufferedReader(new InputStreamReader(System.in));
-        return  reader.readLine();
-
-    }
-
-    public static void main(String[] args) throws IOException {
-        ClientApp app = new ClientApp();
-        app.setViewType(true);//CLI poi il bool verra caricato da args
-
-
-        app.start();
-
-    }
 
 
 
-    public static String iprequest() throws IOException {
-        System.out.println("inserisci l'indirizzo del server a cui vuoi collegarti (\"0\" per localhost)");
-        BufferedReader reader =
-                new BufferedReader(new InputStreamReader(System.in));
-        String address = reader.readLine();
-        if(address.equals("0"))
-            address = "127.0.0.1";
-
-        if (isValidInet4Address(address))
-            return address;
-        else {
-            System.out.println("indirizzo ip non valido. \n");
-            return "0";
-        }
-
-
-
-    }
-
-    public static int portrequest() throws IOException {
-        System.out.println("\ninserisci la porta a cui vuoi collegarti (\"0\" per 1234)");
-        BufferedReader reader =
-                new BufferedReader(new InputStreamReader(System.in));
-
-        String port123 = reader.readLine();
-        if(port123.equals("0"))
-            port123 = "1234";
-        int port = Integer.parseInt(port123);
-        return port;
-
-    }
 
     public static boolean isValidInet4Address(String ip)
     {
@@ -132,5 +84,25 @@ public class ClientApp {
         }
     }
 
+    public static void main(String[] args) throws IOException {
+        ClientApp app = new ClientApp();
+
+        int i=0;
+        boolean viewType = true;
+
+        for(String arg: args)
+        {
+            if(arg.equals("-cli")||arg.equals("-c"))
+            {
+                //viewType = true;
+            }
+            i++;
+        }
+
+
+        app.setViewType(viewType);//CLI poi il bool verra caricato da args
+        app.start();
+
+    }
 
 }

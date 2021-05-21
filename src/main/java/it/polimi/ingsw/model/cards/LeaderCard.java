@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.exceptions.NotSoddisfedPrerequisite;
 import it.polimi.ingsw.model.Player;
@@ -93,4 +94,8 @@ LeaderCard extends Card{
         return this.active;
     }
 
+    public Packet updateMiniModel(Player p,int index)
+    {
+        return null;
+    }
 }
