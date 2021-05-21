@@ -56,7 +56,7 @@ public class LeaderTradeCard extends LeaderCard implements BonusProductionInterf
     @Override
     public Packet updateMiniModel(Player p,int index)
     {
-        return new LeaderTradeUpdate(this,index);
+        return new LeaderTradeUpdate(p.getBonusProduductions(),index);
     }
 
 }

@@ -8,6 +8,7 @@ import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniModel;
@@ -428,7 +429,47 @@ public class ClientController implements Runnable{
 
     public void showMarketResult(List<Resource>res,int whiteBalls)
     {
-        this.view.showMarketExtraction(res,whiteBalls);
+        ResourceType[] resourceTypes = this.model.getPersonalPlayer().getWhiteBalls();
+        this.view.showMarketExtraction(res,whiteBalls,resourceTypes);
+    }
+
+    public void askBonusProductions()
+    {
+        this.view.askBonusProduction(this.model.getPersonalPlayer().getTrade());
+    }
+
+    public void showDiscount()
+    {
+        this.view.showDiscount(this.model.getPersonalPlayer().getDiscount());
+    }
+    /**
+     * update minimodel by adding discount to indedx player
+     * @param discount new discount
+     * @param index    player index
+     */
+    public void updateDiscount(List<Resource> discount,int index)
+    {
+        this.model.getPlayers()[index].setDiscount(discount);
+    }
+
+    /**
+     * Update minimodel by adding trade bonus to index player
+     * @param bonus trade bonus new
+     * @param index player index
+     */
+    public void updateTrade(BonusProductionInterface[] bonus, int index)
+    {
+        this.model.getPlayers()[index].setTrade(bonus);
+    }
+
+    /**
+     * update minimodel by change white balls behaviour of a specific player
+     * @param whiteBalls different type of resource i can chose for white baals
+     * @param index      player index
+     */
+    public void updateWhiteBalls(ResourceType[] whiteBalls,int index)
+    {
+        this.model.getPlayers()[index].setWhiteBalls(whiteBalls);
     }
 
     public void showDecks()

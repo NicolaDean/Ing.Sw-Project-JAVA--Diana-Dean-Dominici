@@ -6,9 +6,9 @@ import it.polimi.ingsw.model.resources.Resource;
 
 public class LeaderWhiteUpdate   extends Packet<ClientController> implements PacketManager<ClientController> {
 
-    ResourceType resourceType;
+    ResourceType[] resourceType;
     int index;
-    public LeaderWhiteUpdate(ResourceType resourceType,int index) {
+    public LeaderWhiteUpdate(ResourceType [] resourceType,int index) {
         super("LeaderWhiteUpdate");
 
         this.resourceType = resourceType;
@@ -18,6 +18,7 @@ public class LeaderWhiteUpdate   extends Packet<ClientController> implements Pac
     @Override
     public Packet analyze(ClientController controller)
     {
+        controller.updateWhiteBalls(this.resourceType,index);
         return null;
     }
 

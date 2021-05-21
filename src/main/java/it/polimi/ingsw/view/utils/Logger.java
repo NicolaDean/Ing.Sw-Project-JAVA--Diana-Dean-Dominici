@@ -10,14 +10,17 @@ import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.factory.MapFactory;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.CurrentOS;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.utils.DebugMessages;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import static it.polimi.ingsw.enumeration.ResourceType.COIN;
 import static it.polimi.ingsw.utils.ConstantValues.*;
 
 public class Logger {
@@ -483,17 +486,28 @@ public class Logger {
         System.out.print("╔");
         for(LeaderCard card:cards)
         {
-            String header = card.getHeader();
+            String header = CliColors.RED_TEXT + "Discarded" ;
 
-            int padding   = 24 - card.getPadding();
-            padding = padding/2 + padding%2 -2;
+            int headerSize = 9;
+            int padding = 24 - headerSize;
 
-            for(int i=0;i<padding;i++) System.out.print("═");
-            this.out.print(header);
-            this.reset();
-            if(card.getPadding()%2 == 0) padding = padding+1;
-            for(int i=0;i<padding;i++) System.out.print("═");
-            System.out.print("╦╦");
+            if(card !=null)
+            {
+                 header = card.getHeader();
+                 headerSize = card.getPadding();
+                 padding   = 24 - card.getPadding();
+            }
+
+
+                padding = padding/2 + padding%2 -2;
+
+                for(int i=0;i<padding;i++) System.out.print("═");
+                this.out.print(header);
+                this.reset();
+                if(headerSize%2 == 0) padding = padding+1;
+                for(int i=0;i<padding;i++) System.out.print("═");
+                System.out.print("╦╦");
+
         }
 
         this.out.println("");
@@ -501,15 +515,25 @@ public class Logger {
         for(LeaderCard card:cards)
         {
             this.out.print("║");
-            spacer(6);
-            if(card.isActive())
+            if(card == null)
             {
-                this.out.printColored("Active",CliColors.RED_TEXT);
-                spacer(3);
+                spacer(21);
             }
-            else  this.out.printColored("Disactive",CliColors.RED_TEXT);
-            spacer(6);
+            else
+            {
+
+                spacer(6);
+                if(card.isActive())
+                {
+                    this.out.printColored("Active",CliColors.RED_TEXT);
+                    spacer(3);
+                }
+                else  this.out.printColored("Disactive",CliColors.RED_TEXT);
+                spacer(6);
+
+            }
             this.out.print("║");
+
         }
         this.out.println("");
         for(LeaderCard card:cards)
@@ -526,7 +550,12 @@ public class Logger {
         {
             for(LeaderCard card:cards)
             {
-                List<PrerequisiteCard> prerequisites = card.getCardPrequisite();
+                List<PrerequisiteCard> prerequisites = new ArrayList<>();
+                if(card!= null)
+                {
+                    prerequisites = card.getCardPrequisite();
+                }
+
 
 
                 this.out.print("║");
@@ -556,7 +585,12 @@ public class Logger {
 
         for(LeaderCard card:cards)
         {
-            List<Resource> resourceList = card.getCost();
+            List<Resource> resourceList = new ResourceList();
+            if(card!= null)
+            {
+                resourceList = card.getCost();
+            }
+
             this.out.print("║");
             if(!ResourceOperator.isEmpty(resourceList))
             {
@@ -603,13 +637,25 @@ public class Logger {
         out.printlnColored(content,this.goodMessage,this.istructionBackground);
     }
 
+    public void printResourceTypeSelection(ResourceType[] resourceTypes)
+    {
+        int i=1;
+        for(ResourceType t:resourceTypes)
+        {
+            if(t == COIN) out.printColored("  "+i+" - SHIELD\n",      CliColors.BLUE_TEXT);
+            if(t == COIN) out.printColored("  "+i+" - ROCK\n",         CliColors.WHITE_TEXT);
+            if(t == COIN) out.printColored("  "+i+" - COIN\n",         CliColors.YELLOW_TEXT);
+            if(t == COIN) out.printColored("  "+i+" - SERVANT\n",      CliColors.MAGENTA_TEXT);
+            i++;
+        }
+    }
     public void printResourceTypeSelection()
     {
 
         System.out.println("\nRESOURCE TYPES:");
-        out.printColored("  1 - SHIELD\n", CliColors.BLUE_TEXT);
-        out.printColored("  2 - ROCK\n", CliColors.WHITE_TEXT);
-        out.printColored("  3 - COIN\n", CliColors.YELLOW_TEXT);
+        out.printColored("  1 - SHIELD\n",    CliColors.BLUE_TEXT);
+        out.printColored("  2 - ROCK\n",      CliColors.WHITE_TEXT);
+        out.printColored("  3 - COIN\n",      CliColors.YELLOW_TEXT);
         out.printColored("  4 - SERVANT\n\n", CliColors.MAGENTA_TEXT);
 
         //printGoodMessages("1 - SHIELD\n2 - ROCK\n3 - COIN\n4 - SERVANT ");

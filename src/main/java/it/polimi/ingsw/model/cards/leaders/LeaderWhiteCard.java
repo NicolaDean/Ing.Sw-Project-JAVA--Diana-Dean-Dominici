@@ -11,6 +11,8 @@ import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.market.balls.ResourceBall;
 import it.polimi.ingsw.model.resources.Resource;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LeaderWhiteCard extends LeaderCard {
@@ -28,6 +30,6 @@ public class LeaderWhiteCard extends LeaderCard {
     @Override
     public Packet updateMiniModel(Player p,int index)
     {
-        return new LeaderWhiteUpdate(this.getType(),index);
+        return new LeaderWhiteUpdate((ResourceType[]) p.getBonusball().toArray(),index);
     }
 }

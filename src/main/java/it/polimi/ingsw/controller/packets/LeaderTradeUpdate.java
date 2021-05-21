@@ -6,9 +6,9 @@ import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 public class LeaderTradeUpdate extends Packet<ClientController> implements PacketManager<ClientController> {
 
 
-    BonusProductionInterface production;
+    BonusProductionInterface[] production;
     int index;
-    public LeaderTradeUpdate(BonusProductionInterface production,int index) {
+    public LeaderTradeUpdate(BonusProductionInterface[] production,int index) {
         super("LeaderBonusUpdate");
         this.production = production;
         this.index = index;
@@ -17,6 +17,7 @@ public class LeaderTradeUpdate extends Packet<ClientController> implements Packe
     @Override
     public Packet analyze(ClientController controller)
     {
+        controller.updateTrade(this.production,index);
         return null;
     }
 

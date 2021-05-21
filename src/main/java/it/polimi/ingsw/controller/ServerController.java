@@ -459,6 +459,7 @@ public class ServerController{
             else
             {
                 p.discardLeader(pos);
+                this.broadcastMessage(-1,new UpdateLeaders(p.getLeaders(),this.clients.get(player).getRealPlayerIndex()));
                 //TODO send leaderUpdate with discarded leader
             }
 

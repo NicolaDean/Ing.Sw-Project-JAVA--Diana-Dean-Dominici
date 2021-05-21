@@ -7,6 +7,7 @@ import it.polimi.ingsw.controller.packets.InsertionInstruction;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
@@ -332,6 +333,8 @@ public class CLI extends Observable<ClientController> implements View {
 
         }
         this.notifyObserver(ClientController::showDecks);
+        this.notifyObserver(ClientController::showDiscount);
+
         this.terminal.printRequest("Buy a card");
 
         int col = askInt("Insert Column coordinate (1-4) of the card you want to buy","wrong index",1,ConstantValues.colDeck) -1;
@@ -354,6 +357,7 @@ public class CLI extends Observable<ClientController> implements View {
         this.terminal.printRequest("Activate a production card on your dashboard");
 
         int pos = askInt("Select a card to activate (1-3) or type 4 for the basic " + "production","wrong index",1,ConstantValues.productionSpaces + 3)  -1;
+        if(isExit(pos)) return;
 
         if (pos == 3) {
 
@@ -364,7 +368,7 @@ public class CLI extends Observable<ClientController> implements View {
 
         if(pos ==4 || pos == 5)
         {
-            this.askBonusProduction();
+            this.notifyObserver(ClientController::askBonusProductions);
             return;
         }
 
@@ -374,7 +378,18 @@ public class CLI extends Observable<ClientController> implements View {
     }
 
     @Override
-    public void askBonusProduction() {
+    public void askBonusProduction(BonusProductionInterface[] bonus) {
+
+    }
+
+    @Override
+    public void showDiscount(List<Resource> resourceList) {
+
+        if(resourceList!=null && !ResourceOperator.isEmpty(resourceList))
+        {
+            this.terminal.printWarning("You have the following discount on cards");
+            this.terminal.printResourceList(resourceList);
+        }
 
     }
 
@@ -384,8 +399,14 @@ public class CLI extends Observable<ClientController> implements View {
 
         this.terminal.printResourceTypeSelection();
         int type = askInt("Select the first resource to discard.","wrong index",1,4)  -1;
+        if(isExit(type)) return;
+
         int type2 = askInt("Select the second resource to discard.","wrong index",1,4)  -1;
+        if(isExit(type2)) return;
+
         int type3 = askInt("Select the resource you want to obtain.","wrong index",1,4)  -1;
+        if(isExit(type3)) return;
+
         ResourceType res1 = ResourceInterpreter(type);
         ResourceType res2 = ResourceInterpreter(type2);
         ResourceType res3 = ResourceInterpreter(type3);
@@ -788,6 +809,27 @@ public class CLI extends Observable<ClientController> implements View {
     }
 
     @Override
+    public List<Resource> askWhiteBalls(ResourceType[] resourceTypes,int num) {
+
+
+        this.terminal.printRequest("You extracted "+num+" white balls and you can choose beetween one of those resources");
+        this.terminal.printResourceTypeSelection(resourceTypes);
+        List<Resource> chosen = new ResourceList();
+        for(int i=0;i<num;i++)
+        {
+            int res = this.askInt("You have "+num+" to choose","wrong input range",1,resourceTypes.length) -1;
+            int qty =1;
+
+            if(num>1) qty = this.askInt("How many balls you want to convert with this type?","wrong input range",1,num) -1;
+            chosen.add(new Resource(resourceTypes[res],qty));
+            num=num-(qty-1);
+        }
+
+        return chosen;
+
+    }
+
+    @Override
     public void askInitialResoruce(int number) {
 
         if(number == 0)
@@ -951,13 +993,19 @@ public class CLI extends Observable<ClientController> implements View {
     }
 
     @Override
-    public void showMarketExtraction(List<Resource> resourceList, int whiteballs) {
+    public void showMarketExtraction(List<Resource> resourceList, int whiteballs, ResourceType[] types) {
         terminal.printGoodMessages("You extracted the following resources from market");
         terminal.printResourceList(resourceList);
 
-        //TODO CHIEDERE PRIMA COME CONVERTIRE LE PALLINE BIANCHE, AGGIUNGERE LE NUOVE PALLINE ALLA RESOURCE LIST
-        //this.askWhiteBalls();
-        this.askResourceInsertion(resourceList);
+        List<Resource> out = new ResourceList();
+
+        out.addAll(resourceList);
+        if(whiteballs>0)
+        {
+            out.addAll(this.askWhiteBalls(types,whiteballs));
+        }
+
+        this.askResourceInsertion(out);
 
     }
 

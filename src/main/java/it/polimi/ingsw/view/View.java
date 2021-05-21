@@ -1,8 +1,10 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
@@ -74,8 +76,10 @@ public interface View {
     /**
      * ask the user what bonus producton card he want activate
      */
-    public void askBonusProduction();
+    public void askBonusProduction(BonusProductionInterface[] bonus);
 
+
+    public void showDiscount(List<Resource> resourceList);
     /**
      * ask user what kind of basic production he want
      */
@@ -133,20 +137,68 @@ public interface View {
      */
     public void askCommand();
 
+    /**
+     * Ask user which of the 4 initial leaders he want (he can chose 2 of them)
+     * @param cards 4 leaders drawed
+     */
     public void askLeaders(LeaderCard[] cards);
+
+    /**
+     * ask user which leader he want to activate
+     */
     public void askLeaderActivation();
+
+    /**
+     * ask user wich leader he want to discard
+     */
     public void askDiscardLeader();
+
+    public List<Resource> askWhiteBalls(ResourceType[] resourceTypes,int num) ;
+    /**
+     * Show user his initial resources (called only the first turn)
+     * he can chose "number" quantity of resource of his choice
+     * @param number number of resources to select
+     */
     public void askInitialResoruce(int number);
+
+    /**
+     * display "Game started" message
+     */
     public void showGameStarted();
 
+    /**
+     * Function of cli that abort help command wait loop when notifyturn is recived
+     * (Avoid input blocking thread)
+     * */
     public void abortHelp();
-    public void showMarketExtraction(List<Resource> resourceList,int whiteballs);
 
+    /**
+     * Show result of extraction from market
+     * @param resourceList list of resources gained
+     * @param whiteballs   number of white ball extracted (only if user has 2 white leader)
+     */
+    public void showMarketExtraction(List<Resource> resourceList, int whiteballs, ResourceType[] types);
+
+    /**
+     * show storage and chest
+     * @param deposits storage deposits
+     * @param chest    chest
+     */
     public void showStorage(Deposit[] deposits,List<Resource> chest);
+
+    /**
+     * show user dashboard
+     * @param deposits      Deposit of this user
+     * @param chest         chest of this user
+     * @param cards         production cards
+     * @param leaderCards   leaders he own
+     */
     public void showDashboard(Deposit[] deposits, List<Resource> chest, ProductionCard[] cards,LeaderCard[] leaderCards);
 
+    /**
+     * ask user if he want end turn or continue with his turn type
+     */
     public void askEndTurn();
-    //Other methods
 
     /**
      * notify user that a new user logged the game

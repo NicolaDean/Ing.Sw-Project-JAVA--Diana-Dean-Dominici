@@ -18,6 +18,7 @@ public class LeaderDiscountUpdate  extends Packet<ClientController> implements P
     @Override
     public Packet analyze(ClientController controller)
     {
+        controller.updateDiscount(this.discount,index);
         return null;
     }
 

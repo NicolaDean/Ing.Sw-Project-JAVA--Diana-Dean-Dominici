@@ -356,7 +356,10 @@ public class Player {
             throw  new WrongPosition("Not existing bonus card");
         }
     }
-
+    public BonusProductionInterface[] getBonusProduductions()
+    {
+        return (BonusProductionInterface[]) this.bonusProductions.toArray();
+    }
     public void setControllerIndex(int controllerIndex) {
         this.controllerIndex = controllerIndex;
     }
