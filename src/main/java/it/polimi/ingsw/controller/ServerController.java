@@ -556,12 +556,12 @@ public class ServerController{
         }
 
         if(this.game.getMarket().getRedBallExtracted()){
-            this.broadcastMessage(-1,new ExtreactedRedBall(1,player));
+            this.broadcastMessage(-1,new ExtreactedRedBall(1,clients.get(player).getRealPlayerIndex()));
         }
 
         List <Resource> res = m.getPendingResourceExtracted();
         int white           = m.getWhiteCount();
-        this.broadcastMessage(-1,new UpdateMiniMarket(direction,pos)); //col 1 estrate su col 2 , mentre row 1 estrae su row 2 ma al contrario
+        this.broadcastMessage(-1,new UpdateMiniMarket(direction,pos));
         return  new MarketResult(res,white);
 
     }
