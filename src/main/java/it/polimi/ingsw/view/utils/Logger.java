@@ -446,7 +446,6 @@ public class Logger {
         System.out.print("╚");
         for(ProductionCard card: row)
         {
-
             for(int i=0;i<24;i++) System.out.print("═");
             System.out.print("╩╩");
         }

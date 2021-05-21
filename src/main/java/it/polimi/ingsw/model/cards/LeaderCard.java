@@ -63,7 +63,9 @@ LeaderCard extends Card{
             this.active = true;
         }
         else
-            throw new NotSoddisfedPrerequisite("");
+        {
+            throw  new NotSoddisfedPrerequisite("");
+        }
     }
 
     public String getHeader()
