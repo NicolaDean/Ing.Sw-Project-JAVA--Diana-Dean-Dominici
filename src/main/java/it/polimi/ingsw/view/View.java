@@ -200,6 +200,8 @@ public interface View {
      */
     public void askEndTurn();
 
+    public void connectionfailed();
+
     /**
      * notify user that a new user logged the game
      * @param nickname nickname of new player

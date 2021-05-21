@@ -163,6 +163,13 @@ public class ServerController{
             for(Player player:this.game.getPlayers()) player.setObserver(this); //set observer for papal space
 
             if (!this.isStarted) {
+
+                if(this.game.getPlayers().size()==1 && !isSinglePlayer)
+                {
+                    this.sendMessage(new ACK(12), 0);
+                    return;
+                }
+
                 this.isStarted = true;
 
                 this.warning("\n-----------Game " + this.getIdpartita() + " avviato---------- \n");

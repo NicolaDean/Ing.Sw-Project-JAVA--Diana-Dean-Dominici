@@ -67,6 +67,8 @@ public class ClientController implements Runnable{
         return index;
     }
 
+
+
     /*
      * set all initial information into miniMarted
      */
@@ -267,15 +269,18 @@ public class ClientController implements Runnable{
         try {
             this.interpreter = new JsonInterpreterClient(this);
             this.server = new Socket(ip,port);
+
             initializeReader(server);
             initializeWriter(server);
+
             new Thread(this);//create input messages manager thread
             setConnected(true);
             this.pongController = new PongController(index, output);
 
         } catch (IOException e) {
             setConnected(false);
-            view.askServerData("Connection failed, try insert new server data:");
+            view.connectionfailed();
+            return;
         }
     }
 
