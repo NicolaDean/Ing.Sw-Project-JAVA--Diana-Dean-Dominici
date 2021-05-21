@@ -277,6 +277,7 @@ public class Logger {
      */
     public void printStorage(Deposit[] deposits,List<Resource> chest,boolean dash)
     {
+        System.out.println("");
 
         if(deposits == null)
         {

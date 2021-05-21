@@ -375,10 +375,6 @@ public class CLI extends Observable<ClientController> implements View {
         ResourceType res2 = ResourceInterpreter(type2);
         ResourceType res3 = ResourceInterpreter(type3);
 
-        System.out.println("res 1: "+res1);
-        System.out.println("res 2: "+res2);
-        System.out.println("res 3: "+res3);
-
         this.notifyObserver(controller -> controller.sendBasicProduction(res1, res2, res3));
 
 
@@ -786,17 +782,18 @@ public class CLI extends Observable<ClientController> implements View {
 
         boolean flag = number == 2;
         List<Resource> wantedRes = new ResourceList();
-        this.terminal.printRequest("This is your first turn and you have the right to chose "+number+" of your choice");
+        this.terminal.printRequest("This is your first turn and you have the right to choose "+number+" resources of your choice");
         for(int i=0;i<number;i++)
         {
             this.terminal.printRequest("Resource types:");
             int j=0;
-            for(ResourceType resourceType:ResourceType.values())
+            terminal.printResourceTypeSelection();
+            /*for(ResourceType resourceType:ResourceType.values())
             {
                 j++;
                 String color = ConstantValues.resourceRappresentation.getColorRappresentation(resourceType);
                 this.terminal.out.printlnColored(j + " - " + resourceType.toString(),color);
-            }
+            }*/
             int num = this.askInt("Insert a number rappresenting the resource you want:","Input not in range",1,ResourceType.values().length);
 
             ResourceType type = null;
