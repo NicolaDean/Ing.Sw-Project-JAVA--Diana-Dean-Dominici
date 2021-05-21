@@ -9,5 +9,7 @@
 
 # Maven
 log/
+out/
+/out/
 target/
 /target/

@@ -373,9 +373,9 @@ public class Logger {
             }
             else
             {
-                for(int i=0;i<13;i++) System.out.print("═");
+                for(int i=0;i<10;i++) System.out.print("═");
                 this.out.printColored("EMPTY",CliColors.RED_TEXT);
-                for(int i=0;i<13;i++) System.out.print("═");
+                for(int i=0;i<9;i++) System.out.print("═");
                 System.out.print("╦╦");
             }
 
@@ -394,7 +394,7 @@ public class Logger {
             }
             else
             {
-                this.spacer(31);
+                this.spacer(24);
             }
 
             this.out.print("║");
@@ -413,7 +413,7 @@ public class Logger {
             }
             else
             {
-                this.spacer(31);
+                this.spacer(24);
             }
             this.out.print("║");
         }
@@ -432,13 +432,13 @@ public class Logger {
 
                 if( faith !=0)
                 {   padding = padding-3;
-                    this.out.printColored(" "+faith+ " ",CliColors.BLACK_TEXT,CliColors.WHITE_BACKGROUND);
+                    this.out.printColored(" "+faith+ " ",CliColors.BLACK_TEXT,CliColors.RED_BACKGROUND);
                 }
                 this.spacer(padding);
             }
             else
             {
-                this.spacer(31);
+                this.spacer(24);
             }
             this.out.print("║");
         }
@@ -446,7 +446,6 @@ public class Logger {
         System.out.print("╚");
         for(ProductionCard card: row)
         {
-
             for(int i=0;i<24;i++) System.out.print("═");
             System.out.print("╩╩");
         }
@@ -474,6 +473,7 @@ public class Logger {
         this.reset();
         this.out.println("");
         this.printCardRow(productionCards);
+
     }
 
 
@@ -483,38 +483,102 @@ public class Logger {
         System.out.print("╔");
         for(LeaderCard card:cards)
         {
-            for(int i=0;i<4;i++) System.out.print("═");
-            this.out.print(card.getHeader());
+            String header = card.getHeader();
+
+            int padding   = 24 - card.getPadding();
+            padding = padding/2 + padding%2 -2;
+
+            for(int i=0;i<padding;i++) System.out.print("═");
+            this.out.print(header);
             this.reset();
-            for(int i=0;i<4;i++) System.out.print("═");
+            if(card.getPadding()%2 == 0) padding = padding+1;
+            for(int i=0;i<padding;i++) System.out.print("═");
             System.out.print("╦╦");
         }
 
         this.out.println("");
 
-/*
-        for(int i=0;i<3;i++)
+        for(LeaderCard card:cards)
+        {
+            this.out.print("║");
+            spacer(6);
+            if(card.isActive())
+            {
+                this.out.printColored("Active",CliColors.RED_TEXT);
+                spacer(3);
+            }
+            else  this.out.printColored("Disactive",CliColors.RED_TEXT);
+            spacer(6);
+            this.out.print("║");
+        }
+        this.out.println("");
+        for(LeaderCard card:cards)
+        {
+            this.out.print("║");
+            this.spacer(4);
+            this.out.printColored("Requirements:", CliColors.YELLOW_TEXT);
+            this.spacer(4);
+            this.out.print("║");
+
+        }
+        this.out.println("");
+        for(int i=0;i<2;i++)
         {
             for(LeaderCard card:cards)
             {
                 List<PrerequisiteCard> prerequisites = card.getCardPrequisite();
-                if(prerequisites.size() == i+1)
+
+
+                this.out.print("║");
+                if(prerequisites.size() >= i+1)
                 {
-                    this.out.print("║");
-                    this.out.print(prerequisites.get(i).getCliRappresentation());
+
+                    PrerequisiteCard prerequisiteCard = prerequisites.get(i);
+                    int lv  = prerequisiteCard.getLevel();
+                    int qty = prerequisiteCard.getQuantity();
+
+                    this.spacer(7);
+                    this.out.print(prerequisiteCard.getCliRappresentation() + CliColors.BLACK_TEXT + CliColors.BOLD);
+                    if(lv == -1 )this.spacer(1);
+                    else this.out.print("L:" +lv);
+                    this.out.print(" Q:" + prerequisiteCard.getQuantity());
+                    if(lv == -1 )this.spacer(2);
                     this.reset();
+                    this.spacer(7);
+
                 }
+                else this.spacer(21);
+                this.out.print("║");
 
             }
             this.out.println("");
         }
-*/
 
+        for(LeaderCard card:cards)
+        {
+            List<Resource> resourceList = card.getCost();
+            this.out.print("║");
+            if(!ResourceOperator.isEmpty(resourceList))
+            {
+                this.spacer(6);
+                this.out.printColored("Res:",CliColors.YELLOW_TEXT);
+                this.printInlineResourceList(resourceList);
+
+                int padding = 9 - 3 * ResourceOperator.getTypeCounter(resourceList);
+                this.spacer(padding);
+                this.spacer(2);
+            }
+            else
+            {
+                this.spacer(21);
+            }
+            this.out.print("║");
+        }
         System.out.println("");
         System.out.print("╚");
         for(LeaderCard card:cards)
         {
-            for(int i=0;i<14;i++) System.out.print("═");
+            for(int i=0;i<21;i++) System.out.print("═");
             System.out.print("╩╩");
         }
 

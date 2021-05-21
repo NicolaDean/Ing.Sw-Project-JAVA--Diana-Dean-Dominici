@@ -36,12 +36,11 @@ public class PrerequisiteCard {
     {
         if(!CurrentOS.IsWindows())
         {
-            return ConstantValues.resourceRappresentation.getCardTypeColorRappresentation(type) +
-                    " L:" + this.level + " Q:"+this.quantity;
+            return ConstantValues.resourceRappresentation.getCardTypeColorRappresentation(type);
         }
         else
         {
-            return " L:" + this.level + " Q:"+this.quantity + " T:" + "";//T:tipo
+            return "";
         }
     }
 }

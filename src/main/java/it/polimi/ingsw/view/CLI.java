@@ -7,10 +7,6 @@ import it.polimi.ingsw.controller.packets.InsertionInstruction;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
-import it.polimi.ingsw.model.cards.leaders.DepositBonus;
-import it.polimi.ingsw.model.cards.leaders.LeaderDiscountCard;
-import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
-import it.polimi.ingsw.model.cards.leaders.LeaderWhiteCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
@@ -46,10 +42,9 @@ public class CLI extends Observable<ClientController> implements View {
     private BasicBall       miniMarketDiscardedResouce;
     boolean canEndTurn;
     boolean actionDone;
-    boolean Avoidable = true;
-    boolean firstTurn = true;
+    boolean Avoidable = true;  //TO DO EXIT COMMAND
+    boolean firstTurn = true;  //LEADER SELECTION AND INITIAL RESOURCE
     int index;
-
     public CLI(int index)
     {
         this.index=index;
@@ -133,6 +128,7 @@ public class CLI extends Observable<ClientController> implements View {
             case "-shop":
                 this.notifyObserver(ClientController::showDecks);
                 return customRead(message);
+            case "-swap":
             case "-swapdeposit": //cancel case
                 //System.out.println("index di questa cli: "+this.index);
                 this.askSwapDeposit(this.index);
@@ -140,7 +136,12 @@ public class CLI extends Observable<ClientController> implements View {
             case "-spy": //cancel case
                 this.askSpyPlayer();
                 return customRead(message);
-
+            case "-activateleader":
+                this.askLeaderActivation();
+                return customRead(message);
+            case "-discardleader":
+                this.askDiscardLeader();
+                return customRead(message);
             default:
                 //System.out.println("opzione di default, cmd vale "+cmd);
                 return cmd;
@@ -272,8 +273,6 @@ public class CLI extends Observable<ClientController> implements View {
         boolean finalSinglePlayer = singlePlayer;
         this.notifyObserver(controller -> controller.setNickname(validNickname, finalSinglePlayer));
 
-        //Example set action to do in case of NACK on Login command
-        //this.notifyObserver(controller -> controller.setAckManagmentAction(View::askNickname));
     }
 
     @Override
@@ -318,11 +317,6 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askBuy() {
-        /*try {
-            TimeUnit.MILLISECONDS.sleep(100);
-        } catch (InterruptedException e) {
-
-        }*/
 
         try {
             TimeUnit.MILLISECONDS.sleep(100);
@@ -760,25 +754,95 @@ public class CLI extends Observable<ClientController> implements View {
         }while(count != 2);
 
         this.notifyObserver(controller -> {controller.sendLeader(leaderCards);});
-        firstTurn = false;
     }
+
+    @Override
+    public void askLeaderActivation() {
+
+        int pos = askInt("Which leader you want to activate? (1-2)","wrong input range",1,2);
+        if(isInputCancelled(pos))return;
+
+        this.notifyObserver(controller -> controller.activateLeader(pos));
+
+    }
+
+    @Override
+    public void askDiscardLeader() {
+        int pos = askInt("Which leader you want to discard? (1-2)","wrong input range",1,2);
+        if(isInputCancelled(pos))return;
+
+        this.notifyObserver(controller -> controller.discardLeader(pos));
+    }
+
+    @Override
+    public void askInitialResoruce(int number) {
+
+        if(number == 0)
+        {
+            firstTurn = false;
+            this.askTurnType();
+            return;
+        }
+
+        boolean flag = number == 2;
+        List<Resource> wantedRes = new ResourceList();
+        this.terminal.printRequest("This is your first turn and you have the right to chose "+number+" of your choice");
+        for(int i=0;i<number;i++)
+        {
+            this.terminal.printRequest("Resource types:");
+            int j=0;
+            for(ResourceType resourceType:ResourceType.values())
+            {
+                j++;
+                String color = ConstantValues.resourceRappresentation.getColorRappresentation(resourceType);
+                this.terminal.out.printlnColored(j + " - " + resourceType.toString(),color);
+            }
+            int num = this.askInt("Insert a number rappresenting the resource you want:","Input not in range",1,ResourceType.values().length);
+
+            ResourceType type = null;
+            j=0;
+            //FIND RESOURCE TYPE
+            for(ResourceType resourceType:ResourceType.values())
+            {
+                if(resourceType.ordinal() == num-1) type = resourceType;
+            }
+
+            num = 1;
+            //ONLY FOR FIRST RESOURCE (avoid asking again type if user want 2 equal resource
+            if(flag)
+            {
+                num = this.askInt("How much of this resource you want? 1 or 2?:","Input not in range",1,2);
+                flag = false;
+                if(num == 2) number = -1;//EXIT CICLE;
+            }
+
+            wantedRes.add(new Resource(type,num));
+        }
+
+        //Ask user where to insert them
+        this.askResourceInsertion(wantedRes);
+    }
+
     @Override
     public void askTurnType() {
 
         try {
-            Thread.sleep(200);
+            Thread.sleep(50);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         if(firstTurn)
         {
             this.notifyObserver(ClientController::askLeaders);
+            this.notifyObserver(ClientController::askInitialResoruce);
+
+            return;
         }
         boolean valid = false;
         String cmd = null;
-       // System.out.println("valid vale "+ valid);
         this.terminal.printTurnTypesHelp();
-       // System.out.println("valid vale "+ valid);
+
         while(!valid) {
             //System.out.println("about to call customread");
             cmd = customRead("select what type of turn you want to perform!\n\"1\" to buy a card\n\"2\" to extract from market\n\"3\" to activate production\n\"4\" to skip the turn");
@@ -812,11 +876,11 @@ public class CLI extends Observable<ClientController> implements View {
         this.notifyObserver(controller -> {controller.spyPlayer(finalIndex);});
     }
     @Override
-    public void showPlayer(Deposit[]deposits, List<Resource> chest, ProductionCard[] cards,String name) {
+    public void showPlayer(Deposit[]deposits, List<Resource> chest, ProductionCard[] cards,LeaderCard[] leaderCards,String name) {
 
         this.terminal.printSeparator();
         this.terminal.out.printColored("THIS IS "+ name+ " Dashboard",CliColors.GREEN_TEXT);
-        this.showDashboard(deposits,chest,cards);
+        this.showDashboard(deposits,chest,cards,leaderCards);
     }
 
     /**
@@ -890,13 +954,14 @@ public class CLI extends Observable<ClientController> implements View {
     }
 
     @Override
-    public void showStorage(Deposit[] deposits) {
-        this.terminal.printStorage(deposits,null,false);
+    public void showStorage(Deposit[] deposits,List<Resource>chest) {
+        this.terminal.printStorage(deposits,chest,true);
     }
 
     @Override
-    public void showDashboard(Deposit[] deposits, List<Resource> chest, ProductionCard[] cards) {
+    public void showDashboard(Deposit[] deposits, List<Resource> chest, ProductionCard[] cards,LeaderCard[] leaderCards) {
         this.terminal.printDashboard(deposits,chest,cards);
+        this.terminal.printLeaders(leaderCards);
     }
 
     public void changeTurnType()
@@ -924,6 +989,14 @@ public class CLI extends Observable<ClientController> implements View {
      */
     @Override
     public void askEndTurn() {
+
+        if(firstTurn)
+        {
+            firstTurn = false;
+            this.askTurnType();
+            return;
+        }
+
         canEndTurn = true;
         actionDone = true;
         terminal.printGoodMessages("Your last action has been successfully completed");
@@ -1016,6 +1089,7 @@ public class CLI extends Observable<ClientController> implements View {
                 default:
                     break;
             }
+            //DebugMessages.printWarning("Turn executed");
     }
 
 }

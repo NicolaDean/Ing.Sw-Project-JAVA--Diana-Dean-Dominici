@@ -460,9 +460,8 @@ public class ServerController{
             }
 
             return new ACK(0);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ACK(1);
+        } catch (AckManager err) {
+            return err.getAck();
         }
     }
 
@@ -481,9 +480,8 @@ public class ServerController{
         try {
             p.bonusProduction(pos,obt);
             return new ACK(0);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ACK(1);
+        } catch (AckManager err) {
+            return err.getAck();
         }
     }
 
@@ -513,19 +511,16 @@ public class ServerController{
             sendStorageUpdate(p.getControllerIndex());
             return null;
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            //System.out.println("ack con code 1 inviatoo\n\n");
-            return new ACK(8);
+        } catch (AckManager err) {
+            return err.getAck();
         }
 
     }
 
-    public Packet discardResource(int quantity)
+    public Packet discardResource(int quantity,int index)
     {
         this.game.discardResource(quantity);
-
-        this.broadcastMessage(-1,new UpdatePosition(quantity,this.game.getCurrentPlayerIndex()));
+        this.broadcastMessage(-1,new UpdatePosition(quantity,this.clients.get(index).getRealPlayerIndex()));
         return new ACK(0);
     }
 

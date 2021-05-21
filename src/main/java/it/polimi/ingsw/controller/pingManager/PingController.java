@@ -52,6 +52,7 @@ public class PingController extends GenericPing<ServerController>{
         DebugMessages.printWarning("\nIl client "+ index + " Si  è disconnesso, nessun pong ricevuto\n");
 
         if(!gameStarted) notifyObserver(controller -> {controller.removeClient(this.index);});
+        else notifyObserver(ServerController::endGame); //IF SOMEONE DISCONNECT END GAME
         //else -> interrompi la partita
 
     }

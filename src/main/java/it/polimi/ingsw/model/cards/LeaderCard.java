@@ -6,15 +6,17 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.view.utils.CliColors;
 
 import java.util.List;
 
 public class
 LeaderCard extends Card{
 
+    private boolean      active;
     private ResourceType type;
     private List<PrerequisiteCard> cardPrequisite;
-
+    private String cliRappresentation = "Leader";
 
     public LeaderCard(List<Resource> cost,List<PrerequisiteCard> cardPrequisite, int victoryPoints, ResourceType type) {
         super(cost, victoryPoints);
@@ -37,6 +39,7 @@ LeaderCard extends Card{
      * @return true if activation goes well
      */
     public void activate(Player p) throws NotSoddisfedPrerequisite {
+
         boolean resourceRequisite = true;
         boolean cardRequisite = true;
 
@@ -55,18 +58,39 @@ LeaderCard extends Card{
 
         boolean out = resourceRequisite && cardRequisite;
         if(out)
+        {
             p.increaseScore(this.getVictoryPoints());
+            this.active = true;
+        }
         else
-            throw new NotSoddisfedPrerequisite("");
+        {
+            throw  new NotSoddisfedPrerequisite("");
+        }
     }
 
     public String getHeader()
     {
-        return ConstantValues.resourceRappresentation.getColorRappresentation(this.type) + "Leader";
+        return ConstantValues.resourceRappresentation.getColorRappresentation(this.type) + CliColors.BLACK_TEXT + this.cliRappresentation;
     }
 
     public List<PrerequisiteCard> getCardPrequisite()
     {
         return this.cardPrequisite;
     }
+
+    public void setCliRappresentation(String cliRappresentation)
+    {
+        this.cliRappresentation = cliRappresentation;
+    }
+
+    public int getPadding()
+    {
+        return this.cliRappresentation.length();
+    }
+
+    public boolean isActive()
+    {
+        return this.active;
+    }
+
 }
