@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.cards.leaders;
 
+import it.polimi.ingsw.controller.packets.LeaderDiscountUpdate;
+import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.exceptions.NotSoddisfedPrerequisite;
 import it.polimi.ingsw.model.Player;
@@ -21,7 +23,11 @@ public class LeaderDiscountCard extends LeaderCard {
     public void activate(Player p) throws NotSoddisfedPrerequisite {
         super.activate(p);
         p.addDiscount(new Resource(this.getType(), 1));
+    }
 
-
+    @Override
+    public Packet updateMiniModel(Player p,int index)
+    {
+        return new LeaderDiscountUpdate(p.getDashboard().getDiscount(),index);
     }
 }

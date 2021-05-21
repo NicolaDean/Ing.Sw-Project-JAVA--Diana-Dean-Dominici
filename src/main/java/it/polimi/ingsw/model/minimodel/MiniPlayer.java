@@ -1,7 +1,9 @@
 package it.polimi.ingsw.model.minimodel;
 
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.dashboard.Storage;
 import it.polimi.ingsw.model.resources.Resource;
@@ -10,13 +12,15 @@ import it.polimi.ingsw.model.resources.ResourceList;
 import java.util.List;
 
 public class MiniPlayer {
-    private List<Resource> chest;
-    private LeaderCard[] leaderCards;
-    private ProductionCard[] decks;
-    private int position;
-    private String nickname;
-    private Deposit[] storage;
-
+    private List<Resource>              chest;
+    private LeaderCard[]                leaderCards;
+    private ProductionCard[]            decks;
+    private int                         position;
+    private String                      nickname;
+    private Deposit[]                   storage;
+    private List<Resource>              discount;
+    private ResourceType []             whiteBalls;
+    private BonusProductionInterface[]  trade;
 
     public MiniPlayer(String nickname) {
         this.position = 0;
@@ -74,5 +78,32 @@ public class MiniPlayer {
     public void updateChest(List<Resource> chest)
     {
         this.chest = chest;
+    }
+
+    public void setDiscount(List<Resource> discount)
+    {
+        this.discount = discount;
+    }
+
+    public void setTrade(BonusProductionInterface[] bonusProductionInterfaces)
+    {
+        this.trade = bonusProductionInterfaces;
+    }
+    public void setWhiteBalls(ResourceType[] resourceTypes)
+    {
+        this.whiteBalls = resourceTypes;
+    }
+    public List<Resource> getDiscount()
+    {
+        return this.discount;
+    }
+    public ResourceType[] getWhiteBalls()
+    {
+        return this.whiteBalls;
+    }
+
+    public BonusProductionInterface[] getTrade()
+    {
+        return this.trade;
     }
 }

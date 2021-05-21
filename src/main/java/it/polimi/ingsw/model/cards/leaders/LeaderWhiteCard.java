@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.cards.leaders;
 
+import it.polimi.ingsw.controller.packets.LeaderWhiteUpdate;
+import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.exceptions.NotSoddisfedPrerequisite;
 import it.polimi.ingsw.model.Player;
@@ -9,6 +11,8 @@ import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.market.balls.ResourceBall;
 import it.polimi.ingsw.model.resources.Resource;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LeaderWhiteCard extends LeaderCard {
@@ -21,5 +25,11 @@ public class LeaderWhiteCard extends LeaderCard {
     public void activate(Player p) throws NotSoddisfedPrerequisite {
         super.activate(p);
         p.addBonusball(this.getType());
+    }
+
+    @Override
+    public Packet updateMiniModel(Player p,int index)
+    {
+        return new LeaderWhiteUpdate((ResourceType[]) p.getBonusball().toArray(),index);
     }
 }

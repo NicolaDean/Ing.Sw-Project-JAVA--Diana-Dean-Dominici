@@ -218,6 +218,11 @@ public class Player {
         this.leaders[position].activate(this);
     }
 
+    public Packet getLeaderCardUpdate(int position,int playerIndex)
+    {
+        return this.leaders[position].updateMiniModel(this,playerIndex);
+    }
+
     /**
      *  Add resource to chest
      * @param resource resource to add
@@ -351,7 +356,10 @@ public class Player {
             throw  new WrongPosition("Not existing bonus card");
         }
     }
-
+    public BonusProductionInterface[] getBonusProduductions()
+    {
+        return (BonusProductionInterface[]) this.bonusProductions.toArray();
+    }
     public void setControllerIndex(int controllerIndex) {
         this.controllerIndex = controllerIndex;
     }

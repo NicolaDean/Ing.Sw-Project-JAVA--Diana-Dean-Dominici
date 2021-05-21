@@ -23,7 +23,10 @@ public class MiniModel
     }
 
 
-
+    public MiniPlayer getPersonalPlayer()
+    {
+        return this.players[persanalIndex];
+    }
     public void updateCard(ProductionCard newCard,int x,int y,int dashboardPos,int index)
     {
         players[index].getDecks()[dashboardPos] = decks[x][y];

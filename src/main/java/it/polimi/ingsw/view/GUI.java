@@ -1,8 +1,10 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
@@ -80,7 +82,12 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
-    public void askBonusProduction() {
+    public void askBonusProduction(BonusProductionInterface[] bonus) {
+
+    }
+
+    @Override
+    public void showDiscount(List<Resource> resourceList) {
 
     }
 
@@ -150,6 +157,11 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
+    public List<Resource> askWhiteBalls(ResourceType[] resourceTypes,int num)  {
+        return null;
+    }
+
+    @Override
     public void askInitialResoruce(int number) {
 
     }
@@ -166,7 +178,7 @@ public class GUI extends Observable<ClientController> implements View{
 
 
     @Override
-    public void showMarketExtraction(List<Resource> resourceList, int whiteballs) {
+    public void showMarketExtraction(List<Resource> resourceList, int whiteballs, ResourceType[] types) {
         
     }
 

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.cards.leaders;
 
+import it.polimi.ingsw.controller.packets.LeaderTradeUpdate;
+import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.exceptions.NotEnoughResource;
 import it.polimi.ingsw.exceptions.NotSoddisfedPrerequisite;
@@ -51,5 +53,10 @@ public class LeaderTradeCard extends LeaderCard implements BonusProductionInterf
         return new Resource(this.getType(),1);
     }
 
+    @Override
+    public Packet updateMiniModel(Player p,int index)
+    {
+        return new LeaderTradeUpdate(p.getBonusProduductions(),index);
+    }
 
 }
