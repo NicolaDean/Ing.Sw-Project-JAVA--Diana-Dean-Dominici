@@ -460,9 +460,8 @@ public class ServerController{
             }
 
             return new ACK(0);
-        } catch (AckManager e) {
-            e.printStackTrace();
-            return new ACK(1);
+        } catch (AckManager err) {
+            return err.getAck();
         }
     }
 
@@ -481,9 +480,8 @@ public class ServerController{
         try {
             p.bonusProduction(pos,obt);
             return new ACK(0);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ACK(1);
+        } catch (AckManager err) {
+            return err.getAck();
         }
     }
 
@@ -513,10 +511,8 @@ public class ServerController{
             sendStorageUpdate(p.getControllerIndex());
             return null;
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            //System.out.println("ack con code 1 inviatoo\n\n");
-            return new ACK(8);
+        } catch (AckManager err) {
+            return err.getAck();
         }
 
     }
@@ -557,12 +553,12 @@ public class ServerController{
         }
 
         if(this.game.getMarket().getRedBallExtracted()){
-            this.broadcastMessage(-1,new ExtreactedRedBall(1,player));
+            this.broadcastMessage(-1,new ExtreactedRedBall(1,clients.get(player).getRealPlayerIndex()));
         }
 
         List <Resource> res = m.getPendingResourceExtracted();
         int white           = m.getWhiteCount();
-        this.broadcastMessage(-1,new UpdateMiniMarket(direction,pos)); //col 1 estrate su col 2 , mentre row 1 estrae su row 2 ma al contrario
+        this.broadcastMessage(-1,new UpdateMiniMarket(direction,pos));
         return  new MarketResult(res,white);
 
     }

@@ -10,7 +10,7 @@ public class ExtreactedRedBall extends Packet<ClientController> implements Packe
 
     public ExtreactedRedBall(int pos,int playerIndex)
     {
-        super("UpdatePosition");
+        super("ExtreactedRedBall");
         this.position          = pos;
         this.player            = playerIndex;
     }
@@ -18,6 +18,7 @@ public class ExtreactedRedBall extends Packet<ClientController> implements Packe
     @Override
     public Packet analyze(ClientController controller)
     {
+        DebugMessages.printWarning(controller.getMiniModel().getPlayers()[player].getNickname()+" goes "+position+" cells forward");
         controller.incrementPositionPlayer(player,position);
         return null;
     }
