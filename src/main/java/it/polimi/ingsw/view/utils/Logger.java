@@ -111,6 +111,7 @@ public class Logger {
             nOfPlayerWhitComunCell=0;
             for (int j = 0; j < numberOfPlayer; j++) {
                 for (k = 0; k < numberOfPlayer; k++) {
+                    //System.out.println("numero di player:" +numberOfPlayer);
                     if((players[j].getPosition()==players[k].getPosition())&&(j!=k)&&(players[j].getPosition()==i)) {
                         nOfPlayerWhitComunCell++;
                     }

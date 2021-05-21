@@ -296,7 +296,7 @@ public class CLI extends Observable<ClientController> implements View {
             if(nickname.length() < 3) terminal.printWarning("Nickname too short, minimum 3 letters");
         }while(nickname.length() < 3 );
 
-        terminal.printRequest("If you want single player type \"single\" else anything");
+        terminal.printRequest("If you want single player type \"single\", for the multiplayer type anything else.");
 
         String single = input.readLine();
 
