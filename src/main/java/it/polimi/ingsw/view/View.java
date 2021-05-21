@@ -208,6 +208,8 @@ public interface View {
      */
     public void playerLogged(String nickname);
 
+
+
     /**
      * Set a controller as observer of this view
      * @param controller client controller
