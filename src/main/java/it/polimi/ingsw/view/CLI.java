@@ -330,6 +330,13 @@ public class CLI extends Observable<ClientController> implements View {
     }
 
     @Override
+    public void connectionfailed()
+    {
+        terminal.printError("connection failed, try again.");
+        this.askServerData();
+    }
+
+    @Override
     public void askServerData(String error) {
         this.terminal.printWarning(error);
         this.input.console.nextLine();
