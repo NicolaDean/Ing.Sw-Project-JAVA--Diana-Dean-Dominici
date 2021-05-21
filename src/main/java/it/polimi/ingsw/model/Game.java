@@ -182,6 +182,18 @@ public class Game {
         }
 
         players.get(0).setInkwell();
+
+        //First turn advantage
+        if(players.size() >2)
+        {
+            players.get(2).incrementPosition();
+        }
+        if(players.size() >3)
+        {
+            players.get(3).incrementPosition();
+        }
+
+
         currentPlayer = 0;
         gamestarted=true;
         //return players.get(currentPlayer);

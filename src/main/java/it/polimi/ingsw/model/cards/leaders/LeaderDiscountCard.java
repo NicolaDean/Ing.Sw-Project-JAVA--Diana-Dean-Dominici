@@ -14,6 +14,7 @@ public class LeaderDiscountCard extends LeaderCard {
 
     public LeaderDiscountCard(List<Resource> cost, List<PrerequisiteCard> cardPrequisite, int victoryPoints, ResourceType type) {
         super(cost,cardPrequisite, victoryPoints, type);
+
     }
 
     @Override

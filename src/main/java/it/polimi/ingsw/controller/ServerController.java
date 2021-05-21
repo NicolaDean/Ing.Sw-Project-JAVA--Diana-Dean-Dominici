@@ -460,7 +460,7 @@ public class ServerController{
             }
 
             return new ACK(0);
-        } catch (Exception e) {
+        } catch (AckManager e) {
             e.printStackTrace();
             return new ACK(1);
         }
@@ -521,11 +521,10 @@ public class ServerController{
 
     }
 
-    public Packet discardResource(int quantity)
+    public Packet discardResource(int quantity,int index)
     {
         this.game.discardResource(quantity);
-
-        this.broadcastMessage(-1,new UpdatePosition(quantity,this.game.getCurrentPlayerIndex()));
+        this.broadcastMessage(-1,new UpdatePosition(quantity,this.clients.get(index).getRealPlayerIndex()));
         return new ACK(0);
     }
 

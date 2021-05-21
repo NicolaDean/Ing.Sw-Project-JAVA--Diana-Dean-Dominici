@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterServer;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.pingManager.PingController;
+import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.utils.CliColors;
 
 import java.io.IOException;
@@ -35,6 +36,17 @@ public class ClientHandler implements Runnable {
 
     }
 
+    public void disconnect()
+    {
+        this.input.close();
+        this.output.close();
+
+        try {
+            this.socket.close();
+        } catch (IOException e) {
+            DebugMessages.printWarning("Client aborted for endgame");
+        }
+    }
     public PingController getPingController()
     {
         return this.pingController;

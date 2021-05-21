@@ -170,18 +170,26 @@ public class CardFactory {
 
         String cardType = card.get("cardType").getAsString();
 
+        LeaderCard leaderCard = null;
         switch (cardType) {
             case "WHITE":
-                return new LeaderWhiteCard(requirment,requirmentCard, victoryPoint, type);
+                leaderCard = new LeaderWhiteCard(requirment,requirmentCard, victoryPoint, type);
+                break;
             case "DISCOUNT":
-                return new LeaderDiscountCard(requirment,requirmentCard, victoryPoint, type);
+                leaderCard =  new LeaderDiscountCard(requirment,requirmentCard, victoryPoint, type);
+                break;
             case "TRADE":
-                return new LeaderTradeCard(requirment,requirmentCard, victoryPoint, type);
+                leaderCard =  new LeaderTradeCard(requirment,requirmentCard, victoryPoint, type);
+                break;
             case "DEPOSIT":
-                return new DepositBonus(requirment,requirmentCard, victoryPoint, type);
+                leaderCard =  new DepositBonus(requirment,requirmentCard, victoryPoint, type);
+                break;
             default:
-                return new LeaderCard(requirment,requirmentCard, victoryPoint, type);
+                leaderCard =  new LeaderCard(requirment,requirmentCard, victoryPoint, type);
+                break;
         }
+        leaderCard.setCliRappresentation(cardType);
+        return leaderCard;
     }
 
 
