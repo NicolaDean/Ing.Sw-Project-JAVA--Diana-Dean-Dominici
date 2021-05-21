@@ -877,13 +877,6 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askTurnType() {
-
-        try {
-            Thread.sleep(50);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         if(firstTurn)
         {
             this.notifyObserver(ClientController::askLeaders);
@@ -957,10 +950,10 @@ public class CLI extends Observable<ClientController> implements View {
             }
         }catch (InterruptedException | IOException e)
         {
-            DebugMessages.printError("OPSS");
+            //DebugMessages.printError("OPSS");
         }
 
-        DebugMessages.printError("Waiting thread help aborted");
+        //DebugMessages.printError("Waiting thread help aborted");
     }
     @Override
     public void askCommand() {
@@ -982,7 +975,7 @@ public class CLI extends Observable<ClientController> implements View {
     public void abortHelp() {
         if(helpThread!=null)
         {
-            DebugMessages.printError("HELP ABORTED");
+            //DebugMessages.printError("HELP ABORTED");
             helpThread.interrupt();
             helpThread = null;
             waiting   =false;
