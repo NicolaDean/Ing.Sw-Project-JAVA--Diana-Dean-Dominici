@@ -27,7 +27,7 @@ public class Logger {
 
     public CliColors out;
 
-    public static String istructionText = CliColors.CYAN_TEXT;
+    public static String istructionText = CliColors.WHITE_TEXT;
     public String istructionBackground  = CliColors.BLACK_TEXT;
 
     public String warningColor          = CliColors.YELLOW_TEXT;

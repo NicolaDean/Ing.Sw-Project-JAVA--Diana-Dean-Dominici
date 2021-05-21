@@ -820,6 +820,7 @@ public class CLI extends Observable<ClientController> implements View {
 
     public void askLeaders(LeaderCard[] cards)
     {
+        this.terminal.out.clear();
         this.terminal.printLeaders(cards);
 
         LeaderCard[] leaderCards = new LeaderCard[2];
