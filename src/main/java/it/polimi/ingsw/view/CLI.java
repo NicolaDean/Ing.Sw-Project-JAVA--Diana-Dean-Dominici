@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.packets.EndTurn;
 import it.polimi.ingsw.controller.packets.ExtractionInstruction;
@@ -18,6 +19,7 @@ import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.utils.CliColors;
+import it.polimi.ingsw.view.utils.ErrorManager;
 import it.polimi.ingsw.view.utils.InputReaderValidation;
 import it.polimi.ingsw.view.utils.Logger;
 
@@ -25,11 +27,10 @@ import it.polimi.ingsw.view.utils.Logger;
 import static it.polimi.ingsw.model.resources.ResourceOperator.*;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
@@ -258,6 +259,21 @@ public class CLI extends Observable<ClientController> implements View {
         this.terminal.out.print("\033[H\033[2J");
     }
 
+    public String getRandomNickname()
+    {
+        List<String> errors;
+        Reader reader = new InputStreamReader(ErrorManager.class.getClassLoader().getResourceAsStream("json/nickNames.json"));
+        Gson gson = new Gson();
+        String [] tmp = gson.fromJson(reader,String[].class);
+        errors = Arrays.asList(tmp);
+        Random rand = new Random();
+        Integer random_int = rand.nextInt(errors.size()-1);
+        String nickName = errors.get(random_int);
+        random_int = rand.nextInt(999);
+        String num = random_int.toString();
+        return nickName+num;
+    }
+
     @Override
     public void askNickname() {
 
@@ -270,9 +286,10 @@ public class CLI extends Observable<ClientController> implements View {
             //System.out.println("length: "+nickname.length());
             if(nickname.length() == 0)
             {
-                byte[] array = new byte[7]; // length is bounded by 7
+                /*byte[] array = new byte[7]; // length is bounded by 7
                 new Random().nextBytes(array);
-                nickname  = new String(array, Charset.forName("UTF-8"));
+                nickname  = new String(array, Charset.forName("UTF-8"));*/
+                nickname=this.getRandomNickname();
 
             }
             if(nickname.length() < 3) terminal.printWarning("Nickname too short, minimum 3 letters");
