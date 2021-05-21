@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.lorenzo.LorenzoGame;
 import it.polimi.ingsw.utils.DebugMessages;
 
 import javax.swing.plaf.metal.MetalBorders;
+import java.util.concurrent.TimeUnit;
 
 public class LorenzoServerController extends ServerController{
 
@@ -57,11 +58,6 @@ public class LorenzoServerController extends ServerController{
         try {
             this.game.startGame();
             this.clients.get(0).sendToClient(this.generateGameStartedPacket(this.generateMiniPlayer(),0));
-            try {
-                Thread.sleep(100); //Single player was crushing due to "long" time updating
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
             this.clients.get(0).sendToClient(new TurnNotify());
         } catch (NotEnoughPlayers notEnoughPlayers) {

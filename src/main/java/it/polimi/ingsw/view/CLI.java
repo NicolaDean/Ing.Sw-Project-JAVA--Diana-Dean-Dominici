@@ -43,6 +43,7 @@ public class CLI extends Observable<ClientController> implements View {
     private BasicBall       miniMarketDiscardedResouce;
     boolean canEndTurn;
     boolean actionDone;
+    boolean singlePlayer = false;
     boolean Avoidable = true;  //TO DO EXIT COMMAND
     boolean firstTurn = true;  //LEADER SELECTION AND INITIAL RESOURCE
     int index;
@@ -258,7 +259,7 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void askNickname() {
 
-        boolean singlePlayer = false;
+         singlePlayer = false;
         terminal.printRequest("Type here your nickname:");
 
         String nickname = "";
@@ -290,7 +291,8 @@ public class CLI extends Observable<ClientController> implements View {
         terminal.printRequest("Insert a valid server IP: ( empty for default: localhost ) ");
 
         String ip =".";
-        int port = -1;
+        String port = "-1";
+        int realport = -1;
 
         do {
             ip= this.input.readLine();
@@ -299,19 +301,31 @@ public class CLI extends Observable<ClientController> implements View {
         }
         while(!this.input.validateIP(ip));
 
-        terminal.printRequest("Insert server port: ( 0 for default: 1234 ) ");
+        terminal.printRequest("Insert server port: ( empty for default: 1234 ) ");
 
         do {
-            port = this.input.readInt();
-            if(port == 0) port = 1234;
-            if(!this.input.validatePortNumber(port)) terminal.printWarning(port + " is not valid a valid port number, insert a value between 1 and 65535");
+            port = this.input.readLine();
+
+            boolean check = false;
+            try{
+            realport=Integer.parseInt(port);}
+            catch (Exception e)
+            {
+                terminal.printWarning(port + " is not valid a valid port number, insert a value between 1 and 65535");
+                check = true;
+            }
+
+            if(port == "0" || port.length()==0)
+                realport = 1234;
+            if(!check)
+                if(!this.input.validatePortNumber(realport)) terminal.printWarning(realport + " is not valid a valid port number, insert a value between 1 and 65535");
         }
-        while (!this.input.validatePortNumber(port));
+        while (!this.input.validatePortNumber(realport));
 
         String validIp = ip;
-        int validPort = port;
+        int validPort = realport;
 
-        this.terminal.printGoodMessages("Trying to connect to "+ ip + " : "+ port +"\n");
+        this.terminal.printGoodMessages("Trying to connect to "+ ip + " : "+ realport +"\n");
         this.notifyObserver(controller -> controller.connectToServer(validIp, validPort));
     }
 
@@ -878,6 +892,11 @@ public class CLI extends Observable<ClientController> implements View {
     public void askTurnType() {
         if(firstTurn)
         {
+            try {
+                TimeUnit.MILLISECONDS.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             this.notifyObserver(ClientController::askLeaders);
             this.notifyObserver(ClientController::askInitialResoruce);
 
@@ -1046,7 +1065,8 @@ public class CLI extends Observable<ClientController> implements View {
         in = in.toLowerCase(Locale.ROOT);
         if(in.equals("yes") || in.equals("y")) {
             this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
-            this.waitturn();
+            if(!this.singlePlayer)
+                this.waitturn();
         }
         else
         {

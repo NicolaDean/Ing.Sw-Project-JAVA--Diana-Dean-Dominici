@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.utils;
 import com.google.gson.Gson;
 import it.polimi.ingsw.utils.DebugMessages;
 
+
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
@@ -26,8 +27,10 @@ public class ErrorManager {
      */
     public void getErrorMessageFromCode(int code)
     {
-        if(code != 0)
-            System.out.println("Error code: " + errors.get(code));
+        if(code != 0) {
+            Logger l = new Logger();
+            l.printError( errors.get(code));
+        }
         //else
             //System.out.println("ack received");
     }

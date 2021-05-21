@@ -161,6 +161,13 @@ public class ServerController{
         //Se game non ha abbastanza giocatori lancia eccezione e manda NACK
         synchronized (this.lock) {
             if (!this.isStarted) {
+
+                if(this.game.getPlayers().size()==1 && !isSinglePlayer)
+                {
+                    this.sendMessage(new ACK(12), 0);
+                    return;
+                }
+
                 this.isStarted = true;
 
                 this.warning("\n-----------Game " + this.getIdpartita() + " avviato---------- \n");
