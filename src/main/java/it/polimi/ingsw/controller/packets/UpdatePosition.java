@@ -21,7 +21,7 @@ public class UpdatePosition extends Packet<ClientController> implements PacketMa
     @Override
     public Packet analyze(ClientController controller)
     {
-        DebugMessages.printWarning("Player " + this.player + " discarded " + this.position + "resources so you incrementr your position by " + this.position);
+        DebugMessages.printWarning("Player " + controller.getMiniModel().getPlayers()[player].getNickname() + " discarded a resource");
         controller.incrementPositionPlayersWithOut(player,position);
         return null;
     }
