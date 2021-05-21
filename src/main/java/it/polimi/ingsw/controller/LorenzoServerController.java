@@ -70,4 +70,13 @@ public class LorenzoServerController extends ServerController{
 
     }
 
+    /**
+     * check papalspace position and ad point
+     */
+    @Override
+    public void checkPapalSpaceActivation(){
+        //TODO
+    }
+
+
 }

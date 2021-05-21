@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.UpdateCardBuyed;
 import it.polimi.ingsw.enumeration.ResourceType;
@@ -10,11 +12,12 @@ import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.view.observer.Observable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
+public class Player extends Observable<ServerController> {
 
     private String nickname;
     private boolean connectionState;
@@ -150,6 +153,7 @@ public class Player {
     public void incrementPosition()
     {
         this.position++;
+        this.notifyObserver(ServerController::checkPapalSpaceActivation);
     }
 
     /**

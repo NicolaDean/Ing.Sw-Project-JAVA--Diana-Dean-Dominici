@@ -4,8 +4,6 @@ import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
 import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.controller.pingManager.PongController;
 import it.polimi.ingsw.enumeration.ResourceType;
-import it.polimi.ingsw.exceptions.WrongPosition;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
@@ -14,7 +12,6 @@ import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniModel;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
-import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.utils.DebugMessages;
@@ -30,8 +27,7 @@ import java.util.Scanner;
 import java.util.Stack;
 import java.util.function.Consumer;
 
-import static it.polimi.ingsw.utils.ConstantValues.marketCol;
-import static it.polimi.ingsw.utils.ConstantValues.marketRow;
+import static it.polimi.ingsw.utils.ConstantValues.*;
 
 public class ClientController implements Runnable{
 
