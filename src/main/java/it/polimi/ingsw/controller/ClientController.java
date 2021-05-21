@@ -83,6 +83,7 @@ public class ClientController implements Runnable{
         DebugMessages.printWarning("INDEX : " + index);
 
         int i=0;
+        DebugMessages.printWarning("Turn order:");
         for(MiniPlayer p: this.model.getPlayers())
         {
             DebugMessages.printWarning(p.getNickname() + " -> "+ i);
