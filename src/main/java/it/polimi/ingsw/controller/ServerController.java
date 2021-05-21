@@ -160,6 +160,8 @@ public class ServerController{
         // o inizi il game prima che un giocatore venga rimosso
         //Se game non ha abbastanza giocatori lancia eccezione e manda NACK
         synchronized (this.lock) {
+            for(Player player:this.game.getPlayers()) player.setObserver(this); //set observer for papal space
+
             if (!this.isStarted) {
 
                 if(this.game.getPlayers().size()==1 && !isSinglePlayer)
@@ -235,6 +237,36 @@ public class ServerController{
             i++;
         }
         return players;
+    }
+
+    /**
+     * check papalspace position and ad point
+     */
+    public void checkPapalSpaceActivation(){
+        int nOfplayer= this.game.getPlayers().size();
+        int[] tmp_score = new int[nOfplayer];
+        for (int i = 0; i < nOfplayer; i++) { //save score to check if someone activate a papal cell
+                tmp_score[i]=this.game.getPlayers().get(i).getScore();
+        }
+
+        this.game.papalSpaceCheck();  //increment point
+
+        int index=0;
+        boolean out=false;
+        for (int i = 0; i < nOfplayer; i++) { //check if someone have activated papal space
+            if(tmp_score[i]!=this.game.getPlayers().get(i).getScore()){
+                out=true;
+            }
+        }
+
+        for (int j = 0; j < nOfplayer-1; j++) { //found player that activate papal cell
+            if(this.game.getPlayers().get(j).getScore()>this.game.getPlayers().get(j+1).getScore())
+                index=j;
+        }
+
+        if(out){
+            this.broadcastMessage(-1, new PapalScoreActiveted(index));
+        }
     }
 
     /**
