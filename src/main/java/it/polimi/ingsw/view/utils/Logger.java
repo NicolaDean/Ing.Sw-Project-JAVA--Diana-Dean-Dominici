@@ -437,13 +437,12 @@ public class Logger {
      */
     public void printCardsResources(ProductionCard[] cards)
     {
-        List<Resource>[] out = new ResourceList[cards.length];
         int i=0;
         System.out.println("");
         for(ProductionCard card:cards)
         {
             if(card!=null)
-                printPaddedCost(card.getRawMaterials(),"Cost",0);
+                printPaddedCost(card.getCost(),"Cost",0);
             else
                 printEmptyCard();
         }

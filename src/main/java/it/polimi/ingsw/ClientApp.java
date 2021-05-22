@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.viewtest.Appp;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -88,13 +89,15 @@ public class ClientApp {
 
             if(arg.equals("-gui")||arg.equals("-g"))
             {
+                Appp.main(args);
                 viewType = false;
+                return;
             }
             i++;
         }
-
         app.setViewType(viewType);//CLI poi il bool verra caricato da args
         app.start();
+
 
 
 
