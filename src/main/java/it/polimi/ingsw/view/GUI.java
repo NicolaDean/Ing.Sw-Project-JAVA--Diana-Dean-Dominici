@@ -28,12 +28,7 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void printWelcomeScreen() {
-        System.out.println("Home");
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public void setSingleplayer() {

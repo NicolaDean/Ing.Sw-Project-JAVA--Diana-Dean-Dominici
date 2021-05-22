@@ -328,6 +328,8 @@ public class ClientController implements Runnable{
             sendMessage(new LoginSinglePlayer(nickname));
         else
             sendMessage(new Login(nickname));
+
+        this.starttolisten();
     }
 
     public void askSwap (int d1, int d2, int index)

@@ -28,22 +28,7 @@ public class ClientApp {
      * Show welcome page
      */
     public void start() throws IOException {
-
-
         this.controller.startGame();
-
-        this.controller.starttolisten();
-
-        //System.out.println("Click enter to start");
-
-
-
-        try {
-            TimeUnit.SECONDS.sleep(2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
 
     }
 
