@@ -249,13 +249,7 @@ public class ClientController implements Runnable{
     }
     public void startGame()
     {
-
-        //0System.out.println("Start Game");
         view.printWelcomeScreen();
-        view.askServerData();
-        view.askNickname();
-
-
 
         this.printHelp();
     }
@@ -288,6 +282,7 @@ public class ClientController implements Runnable{
             setConnected(true);
             this.pongController = new PongController(index, output);
 
+            this.view.askNickname();
         } catch (IOException e) {
             setConnected(false);
             view.connectionfailed();
@@ -365,13 +360,18 @@ public class ClientController implements Runnable{
     public void showDashboard(){
         MiniPlayer p = this.model.getPersonalPlayer();
 
-        this.view.showPapalCell(this.model.getPlayers());
-        this.view.showDashboard(
-                p.getStorage(),
-                p.getChest(),
-                p.getPlayerCards(),
-                p.getLeaderCards()
-        );
+
+        if(p!=null)
+        {
+            this.view.showPapalCell(this.model.getPlayers());
+            this.view.showDashboard(
+                    p.getStorage(),
+                    p.getChest(),
+                    p.getPlayerCards(),
+                    p.getLeaderCards()
+            );
+        }
+
     }
     /**
      * send packet to server

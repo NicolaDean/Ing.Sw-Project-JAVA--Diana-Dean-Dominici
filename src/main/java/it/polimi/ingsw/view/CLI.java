@@ -242,6 +242,8 @@ public class CLI extends Observable<ClientController> implements View {
         this.terminal.printLogo();
         this.terminal.out.setBackgroundColor(CliColors.BLACK_BACKGROUND);
         this.clickEnter();
+
+        this.askServerData();
     }
 
     @Override
@@ -307,6 +309,7 @@ public class CLI extends Observable<ClientController> implements View {
         boolean finalSinglePlayer = singlePlayer;
         this.notifyObserver(controller -> controller.setNickname(validNickname, finalSinglePlayer));
 
+        this.askCommand();
     }
 
     @Override
@@ -351,6 +354,8 @@ public class CLI extends Observable<ClientController> implements View {
 
         this.terminal.printGoodMessages("Trying to connect to "+ ip + " : "+ realport +"\n");
         this.notifyObserver(controller -> controller.connectToServer(validIp, validPort));
+
+
     }
 
     @Override

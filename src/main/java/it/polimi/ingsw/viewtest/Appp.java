@@ -1,5 +1,8 @@
 package it.polimi.ingsw.viewtest;
 
+import it.polimi.ingsw.App;
+import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.view.GUI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -19,7 +22,7 @@ import java.io.IOException;
 public class Appp extends Application {
 
     private static Scene scene;
-
+    private static GUI   gui;
 
     @Override
     public void start(Stage primaryStage) {
@@ -59,6 +62,10 @@ public class Appp extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
+
+
+        gui.askNickname();
+        gui.notifyObserver(ClientController::endGame);
     }
 
 
@@ -81,7 +88,7 @@ public class Appp extends Application {
         group.getChildren().add(imageView);
         //canvas.drawImage(image,50 + padding*210,25,200,400);
     }
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
@@ -92,8 +99,10 @@ public class Appp extends Application {
         return loader.load();
     }
 
-    public static void main(String[] args) {
+    public static void main(GUI g) {
+        gui = g;
         launch();
+
     }
 
 }

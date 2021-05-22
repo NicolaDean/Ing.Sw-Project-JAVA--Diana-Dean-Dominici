@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.viewtest.Appp;
 
+import java.io.IOException;
 import java.util.List;
 
 public class GUI extends Observable<ClientController> implements View{
@@ -19,14 +20,18 @@ public class GUI extends Observable<ClientController> implements View{
     Thread gui;
     public GUI()
     {
-        gui = new Thread(()->{Appp.main(null);});
+        gui = new Thread(()->{Appp.main(this);});
         gui.start();
-
     }
 
     @Override
     public void printWelcomeScreen() {
         System.out.println("Home");
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -66,7 +71,11 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void askNickname() {
-
+        try {
+            Appp.setRoot("login");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
