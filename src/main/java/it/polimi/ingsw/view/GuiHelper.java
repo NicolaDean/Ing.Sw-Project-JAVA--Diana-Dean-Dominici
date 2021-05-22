@@ -51,6 +51,7 @@ public class GuiHelper extends Application {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Appp.class.getResource("/fxml/"+fxml+".fxml"));
+        // loader.getController(); //TODO QUESTO METODO PERMETTE DI ACCEDERE AL JAVA DELLA SCENA APPENA CARICATA (SI POTREBBE USCARE PER RENDERLO VISIBILE ALLA GUI IN QUALCHE MODO)
         return loader.load();
     }
 
