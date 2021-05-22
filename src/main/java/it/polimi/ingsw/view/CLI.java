@@ -290,7 +290,7 @@ public class CLI extends Observable<ClientController> implements View {
                 new Random().nextBytes(array);
                 nickname  = new String(array, Charset.forName("UTF-8"));*/
                 nickname=this.getRandomNickname();
-                terminal.printGoodMessages("You random nickname is "+nickname+".");
+                terminal.printGoodMessages("Your random nickname is "+nickname+".\n");
 
             }
             if(nickname.length() < 3) terminal.printWarning("Nickname too short, minimum 3 letters");
@@ -885,6 +885,7 @@ public class CLI extends Observable<ClientController> implements View {
 
         boolean flag = number == 2;
         List<Resource> wantedRes = new ResourceList();
+        terminal.out.clear();
         this.terminal.printRequest("This is your first turn and you have the right to choose "+number+" resources of your choice");
         for(int i=0;i<number;i++)
         {
