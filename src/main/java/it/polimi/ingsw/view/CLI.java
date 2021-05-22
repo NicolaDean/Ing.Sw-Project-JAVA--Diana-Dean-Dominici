@@ -764,8 +764,7 @@ public class CLI extends Observable<ClientController> implements View {
 
                             if(tmp == null)
                             {
-                                tmp = res;
-                                payed.add(tmp);
+                                payed.add(res);
                             }
 
                             if(pos == -1) extractions.add(new ExtractionInstruction(tmp));
