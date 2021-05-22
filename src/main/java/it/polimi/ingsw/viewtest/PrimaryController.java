@@ -13,7 +13,7 @@ public class PrimaryController {
 
     @FXML
     private void switchToSecondary() throws IOException {
-        Appp.setRoot("secondary.fxml");
+        Appp.setRoot("secondary");
         if(opacity ==0) opacity = 1;
         else opacity =0;
 
