@@ -57,6 +57,10 @@ public class MiniPlayer {
         return storage;
     }
 
+    public ProductionCard[] getPlayerCards()
+    {
+        return this.decks;
+    }
     public void setStorage(Deposit[] storage) {
         this.storage = storage;
     }
@@ -106,4 +110,5 @@ public class MiniPlayer {
     {
         return this.trade;
     }
+
 }

@@ -357,13 +357,16 @@ public class ClientController implements Runnable{
         this.view.showStorage(this.model.getStorage(),this.model.getChest());
     }
 
+
     public void showDashboard(){
+        MiniPlayer p = this.model.getPersonalPlayer();
+
         this.view.showPapalCell(this.model.getPlayers());
         this.view.showDashboard(
-                this.model.getStorage(),
-                this.model.getPlayers()[this.model.getPersanalIndex()].getChest(),
-                this.model.getPlayerCards(),
-                this.model.getPlayers()[this.model.getPersanalIndex()].getLeaderCards()
+                p.getStorage(),
+                p.getChest(),
+                p.getPlayerCards(),
+                p.getLeaderCards()
         );
     }
     /**

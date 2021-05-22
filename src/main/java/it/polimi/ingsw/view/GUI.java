@@ -78,7 +78,6 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void askProduction() {
-
     }
 
     @Override

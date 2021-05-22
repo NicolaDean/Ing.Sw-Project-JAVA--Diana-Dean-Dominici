@@ -167,10 +167,7 @@ public class CLI extends Observable<ClientController> implements View {
      * @return wanted input
      */
     public synchronized String customRead()  {
-        //System.out.println("!!!!!!!!!!!!!!!!!!!");
         String s = this.input.readLine();
-        //System.out.println("???????????????????");
-       // System.out.println("s vale: "+s);
         s = helpCommands(s,"");
         return s;
     }
@@ -401,6 +398,8 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void askProduction() {
 
+        notifyObserver(ClientController::showDashboard);
+
         //SHOW DASHBOARD
         this.terminal.printRequest("Activate a production card on your dashboard");
 
@@ -408,8 +407,6 @@ public class CLI extends Observable<ClientController> implements View {
         if(isExit(pos)) return;
 
         if (pos == 3) {
-
-
             this.askBasicProduction();
             return;
         }
@@ -421,12 +418,22 @@ public class CLI extends Observable<ClientController> implements View {
         }
 
         this.notifyObserver(controller -> controller.sendProduction(pos));
-
-
     }
 
     @Override
     public void askBonusProduction(BonusProductionInterface[] bonus) {
+
+        if(bonus != null)
+        {
+            this.terminal.printRequest("This is your bonus productions");
+            this.terminal.printBonusCards(bonus);
+        }
+        else
+        {
+            this.terminal.printError("You dont have bonus cards");
+        }
+
+
 
     }
 
@@ -443,7 +450,7 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askBasicProduction() {
-        notifyObserver(ClientController::showStorage);
+        notifyObserver(ClientController::showDashboard);
 
         this.terminal.printResourceTypeSelection();
         int type = askInt("Select the first resource to discard.","wrong index",1,4)  -1;
@@ -1084,6 +1091,7 @@ public class CLI extends Observable<ClientController> implements View {
         if(firstTurn)
         {
             firstTurn = false;
+            actionDone = false;
             this.askTurnType();
             return;
         }
@@ -1095,6 +1103,7 @@ public class CLI extends Observable<ClientController> implements View {
         if(turnSelected == 2) {
             this.terminal.printWarning("you completed the action and the turn automatically ended.");
             in = "y";
+            actionDone = false;
         }
         else
             in = this.customRead("\nDo you want to end the turn? (yes or no)");
