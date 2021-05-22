@@ -37,8 +37,6 @@ public class ClientApp {
         //System.out.println("Click enter to start");
 
 
-        this.controller.printHelp();
-
 
         try {
             TimeUnit.SECONDS.sleep(2);
@@ -89,12 +87,11 @@ public class ClientApp {
 
             if(arg.equals("-gui")||arg.equals("-g"))
             {
-                Appp.main(args);
                 viewType = false;
-                return;
             }
             i++;
         }
+
         app.setViewType(viewType);//CLI poi il bool verra caricato da args
         app.start();
 

@@ -10,15 +10,23 @@ import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.observer.Observable;
+import it.polimi.ingsw.viewtest.Appp;
 
 import java.util.List;
 
 public class GUI extends Observable<ClientController> implements View{
 
+    Thread gui;
+    public GUI()
+    {
+        gui = new Thread(()->{Appp.main(null);});
+        gui.start();
+
+    }
 
     @Override
     public void printWelcomeScreen() {
-
+        System.out.println("Home");
     }
 
     @Override

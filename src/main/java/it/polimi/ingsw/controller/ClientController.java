@@ -254,6 +254,10 @@ public class ClientController implements Runnable{
         view.printWelcomeScreen();
         view.askServerData();
         view.askNickname();
+
+
+
+        this.printHelp();
     }
 
 
