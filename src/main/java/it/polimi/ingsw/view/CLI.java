@@ -54,6 +54,7 @@ public class CLI extends Observable<ClientController> implements View {
         terminal = new Logger();
         turnSelected = -1;
         canEndTurn = false;
+        actionDone = false;
     }
 
     /**
@@ -114,7 +115,6 @@ public class CLI extends Observable<ClientController> implements View {
 
                 //Idea creare un thread per i 3 tipi di turni e se lutente non ha fatto azioni questo thread permette di killarlo
             case "-exit": //cancel case
-                DebugMessages.printError("-exit command not available yet");
                 if(Avoidable)
                 {
                     if(actionDone)
@@ -947,7 +947,7 @@ public class CLI extends Observable<ClientController> implements View {
                 }
                 //System.out.println("TREAD VIVO ");
 
-                String exit = this.helpCommands(this.input.readLine(),"");
+                String exit = this.helpCommands(this.input.interruptableInput(),"");
 
                 if(isInputCancelled(exit))
                 {
@@ -958,10 +958,10 @@ public class CLI extends Observable<ClientController> implements View {
             }
         }catch (InterruptedException | IOException e)
         {
-            //DebugMessages.printError("OPSS");
+            DebugMessages.printError("OPSS");
         }
 
-        //DebugMessages.printError("Waiting thread help aborted");
+        DebugMessages.printError("Waiting thread help aborted");
     }
     @Override
     public void askCommand() {
@@ -1048,6 +1048,7 @@ public class CLI extends Observable<ClientController> implements View {
             in = this.customRead("\nDo you want to end the turn? (yes or no)");
         in = in.toLowerCase(Locale.ROOT);
         if(in.equals("yes") || in.equals("y")) {
+            actionDone = false;
             this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
             this.waitturn();
         }
@@ -1059,6 +1060,7 @@ public class CLI extends Observable<ClientController> implements View {
             }
             else if(turnSelected == 2)
             {
+                actionDone = false;
                 this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
             }
             else if(turnSelected == 3)
@@ -1071,6 +1073,7 @@ public class CLI extends Observable<ClientController> implements View {
             }
             else
             {
+                actionDone = false;
                 this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
             }
         }

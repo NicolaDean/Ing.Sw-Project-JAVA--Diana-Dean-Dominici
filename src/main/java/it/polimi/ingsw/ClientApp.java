@@ -1,19 +1,8 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.ClientController;
-import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
-import it.polimi.ingsw.controller.packets.Login;
-import it.polimi.ingsw.controller.packets.StartGame;
-import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.view.utils.Logger;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
@@ -94,14 +83,22 @@ public class ClientApp {
         {
             if(arg.equals("-cli")||arg.equals("-c"))
             {
-                //viewType = true;
+                viewType = true;
+            }
+
+            if(arg.equals("-gui")||arg.equals("-g"))
+            {
+                viewType = false;
             }
             i++;
         }
 
-
         app.setViewType(viewType);//CLI poi il bool verra caricato da args
         app.start();
+
+
+
+
 
     }
 
