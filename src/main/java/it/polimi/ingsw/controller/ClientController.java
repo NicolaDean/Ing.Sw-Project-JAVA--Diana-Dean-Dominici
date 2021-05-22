@@ -1,9 +1,11 @@
 package it.polimi.ingsw.controller;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
 import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.controller.pingManager.PongController;
 import it.polimi.ingsw.enumeration.ResourceType;
+import java.util.Random;
 import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.LeaderCard;
@@ -14,7 +16,6 @@ import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniModel;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
-import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.utils.DebugMessages;
@@ -23,15 +24,17 @@ import it.polimi.ingsw.view.CLI;
 import it.polimi.ingsw.view.View;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.function.Consumer;
 
-import static it.polimi.ingsw.utils.ConstantValues.marketCol;
-import static it.polimi.ingsw.utils.ConstantValues.marketRow;
+import static it.polimi.ingsw.utils.ConstantValues.*;
 
 public class ClientController implements Runnable{
 
@@ -70,6 +73,8 @@ public class ClientController implements Runnable{
     public int getIndex() {
         return index;
     }
+
+
 
     /*
      * set all initial information into miniMarted
@@ -271,15 +276,18 @@ public class ClientController implements Runnable{
         try {
             this.interpreter = new JsonInterpreterClient(this);
             this.server = new Socket(ip,port);
+
             initializeReader(server);
             initializeWriter(server);
+
             new Thread(this);//create input messages manager thread
             setConnected(true);
             this.pongController = new PongController(index, output);
 
         } catch (IOException e) {
             setConnected(false);
-            view.askServerData("Connection failed, try insert new server data:");
+            view.connectionfailed();
+            return;
         }
     }
 

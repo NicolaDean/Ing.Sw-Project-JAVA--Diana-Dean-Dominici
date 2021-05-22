@@ -11,5 +11,6 @@
     "This swap is not possible, you are probably trying to swap deposit with incompatible dimension or a Bonus deposit",
     "This deposit is already full or different type, insertion failed",
     "This deposit is empty or different type, extraction failed",
-    "Leader already activated or discarted"
+    "Leader already activated or discarted",
+    "Wait for other players before starting! Or select the single player mode."
   ]

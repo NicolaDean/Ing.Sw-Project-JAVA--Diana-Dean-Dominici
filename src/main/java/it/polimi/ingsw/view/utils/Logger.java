@@ -27,7 +27,7 @@ public class Logger {
 
     public CliColors out;
 
-    public static String istructionText = CliColors.CYAN_TEXT;
+    public static String istructionText = CliColors.WHITE_TEXT;
     public String istructionBackground  = CliColors.BLACK_TEXT;
 
     public String warningColor          = CliColors.YELLOW_TEXT;
@@ -57,11 +57,12 @@ public class Logger {
         List<PapalSpace> papalSpaces= MapFactory.loadPapalSpacesFromJsonFile();
         int dim=(papalSpaces.get(papalSpaces.size()-1).getFinalPosition()+1);
         boolean controll=false;
-        String[] colorCLI= new String[numberOfPlayer];
+        int nOfPlayer=players.length;
+        String[] colorCLI= new String[nOfPlayer];
 
         printPapalPositionLegend(players);
 
-        for (int i = 0; i < numberOfPlayer; i++) {
+        for (int i = 0; i < nOfPlayer; i++) {
             if(i==0) colorCLI[i]=CliColors.BLUE_TEXT;
             if(i==1) colorCLI[i]=CliColors.MAGENTA_TEXT;
             if(i==2) colorCLI[i]=CliColors.YELLOW_TEXT;
@@ -109,8 +110,8 @@ public class Logger {
         for (int i = 0; i < dim; i++) {
             controll=false;
             nOfPlayerWhitComunCell=0;
-            for (int j = 0; j < numberOfPlayer; j++) {
-                for (k = 0; k < numberOfPlayer; k++) {
+            for (int j = 0; j < nOfPlayer; j++) {
+                for (k = 0; k < nOfPlayer; k++) {
                     if((players[j].getPosition()==players[k].getPosition())&&(j!=k)&&(players[j].getPosition()==i)) {
                         nOfPlayerWhitComunCell++;
                     }
@@ -123,7 +124,7 @@ public class Logger {
                     break;
                 }
                 if ((nOfPlayerWhitComunCell==1)&&(players[j].getPosition() == i)) { // 2 player
-                    for (k = 0; k < numberOfPlayer; k++) { if((players[j].getPosition()==players[k].getPosition())&&(j!=k)&&(players[j].getPosition()==i)) { break; } }
+                    for (k = 0; k < nOfPlayer; k++) { if((players[j].getPosition()==players[k].getPosition())&&(j!=k)&&(players[j].getPosition()==i)) { break; } }
 
                     this.out.printColored(" ⚑", colorCLI[j]);
                     this.out.printColored("⚑", colorCLI[k]);
@@ -135,7 +136,7 @@ public class Logger {
 
                 if ((nOfPlayerWhitComunCell==2)&&(players[j].getPosition() == i)) { // 3 player
 
-                    for (k = 0; k < numberOfPlayer; k++) { if((players[j].getPosition()==players[k].getPosition())&&(j!=k)&&(players[j].getPosition()==i)) { break; } }
+                    for (k = 0; k < nOfPlayer; k++) { if((players[j].getPosition()==players[k].getPosition())&&(j!=k)&&(players[j].getPosition()==i)) { break; } }
 
                     for (l = k; l < nOfPlayerWhitComunCell; l++) { if((players[j].getPosition()==players[l].getPosition())&&(j!=l)&&(l!=k)&&(players[j].getPosition()==i)) { break; } }
 
@@ -150,7 +151,7 @@ public class Logger {
 
                 if ((nOfPlayerWhitComunCell==3)&&(players[j].getPosition() == i)) { // 4 player
 
-                    for (k = 0; k < numberOfPlayer; k++) { if((players[j].getPosition()==players[k].getPosition())&&(j!=k)&&(players[j].getPosition()==i)) { break; } }
+                    for (k = 0; k < nOfPlayer; k++) { if((players[j].getPosition()==players[k].getPosition())&&(j!=k)&&(players[j].getPosition()==i)) { break; } }
 
                     for (l = k; l < nOfPlayerWhitComunCell; l++) { if((players[j].getPosition()==players[l].getPosition())&&(j!=l)&&(l!=k)&&(players[j].getPosition()==i)) { break; } }
 
@@ -194,20 +195,19 @@ public class Logger {
         for (int i = 0; i < dim-1; i++) System.out.print("════╩");
 
         System.out.println("════╝");
-        numberOfPlayer=4;
     }
 
     public void printPapalPositionLegend(MiniPlayer[] players){
-        numberOfPlayer=players.length;
-        String[] colorCLI= new String[numberOfPlayer];
-        for (int i = 0; i < numberOfPlayer; i++) {
+        int nOfPlayer=players.length;
+        String[] colorCLI= new String[nOfPlayer];
+        for (int i = 0; i < nOfPlayer; i++) {
             if(i==0) colorCLI[i]=CliColors.BLUE_TEXT;
             if(i==1) colorCLI[i]=CliColors.MAGENTA_TEXT;
             if(i==2) colorCLI[i]=CliColors.YELLOW_TEXT;
             if(i==3) colorCLI[i]=CliColors.GREEN_TEXT;
         }
-        System.out.println(numberOfPlayer);
-        for (int i = 0; i < numberOfPlayer; i++) {
+        System.out.println(nOfPlayer);
+        for (int i = 0; i < nOfPlayer; i++) {
             System.out.print(players[i].getNickname()+": ");
             out.printColored("⚑  ",colorCLI[i]);
         }
@@ -280,6 +280,7 @@ public class Logger {
      */
     public void printStorage(Deposit[] deposits,List<Resource> chest,boolean dash)
     {
+        System.out.println("");
 
         if(deposits == null)
         {

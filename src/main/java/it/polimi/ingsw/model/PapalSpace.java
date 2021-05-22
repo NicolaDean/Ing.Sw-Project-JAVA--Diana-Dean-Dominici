@@ -10,13 +10,14 @@ public class PapalSpace {
     private int initialPosition;
     private int finalPosition;
     private int score;
-
+    private boolean isAlreadyActivate;
 
     public PapalSpace(int start,int finish,int score)
     {
         this.initialPosition = start;
         this.finalPosition = finish;
         this.score = score;
+        isAlreadyActivate=false;
     }
 
     public int getInitialPosition() {
@@ -76,8 +77,9 @@ public class PapalSpace {
     {
         boolean out = checkPlayersPositions(players);
 
-        if(out)
+        if(out && !isAlreadyActivate)
         {
+            isAlreadyActivate=true;
             for(Player p:players)
             {
                 if(this.checkPlayerInsidePapalSpace(p))
@@ -96,6 +98,7 @@ public class PapalSpace {
 
         if(out)
         {
+            isAlreadyActivate=true;
             for(Player p:players)
             {
                 if(this.checkPlayerInsidePapalSpace(p))

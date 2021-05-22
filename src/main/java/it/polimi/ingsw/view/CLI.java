@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.packets.EndTurn;
 import it.polimi.ingsw.controller.packets.ExtractionInstruction;
@@ -18,6 +19,7 @@ import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.utils.CliColors;
+import it.polimi.ingsw.view.utils.ErrorManager;
 import it.polimi.ingsw.view.utils.InputReaderValidation;
 import it.polimi.ingsw.view.utils.Logger;
 
@@ -25,9 +27,10 @@ import it.polimi.ingsw.view.utils.Logger;
 import static it.polimi.ingsw.model.resources.ResourceOperator.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
@@ -43,6 +46,7 @@ public class CLI extends Observable<ClientController> implements View {
     private BasicBall       miniMarketDiscardedResouce;
     boolean canEndTurn;
     boolean actionDone;
+    boolean singlePlayer = false;
     boolean Avoidable = true;  //TO DO EXIT COMMAND
     boolean firstTurn = true;  //LEADER SELECTION AND INITIAL RESOURCE
     int index;
@@ -255,20 +259,44 @@ public class CLI extends Observable<ClientController> implements View {
         this.terminal.out.print("\033[H\033[2J");
     }
 
+    public String getRandomNickname()
+    {
+        List<String> errors;
+        Reader reader = new InputStreamReader(ErrorManager.class.getClassLoader().getResourceAsStream("json/nickNames.json"));
+        Gson gson = new Gson();
+        String [] tmp = gson.fromJson(reader,String[].class);
+        errors = Arrays.asList(tmp);
+        Random rand = new Random();
+        Integer random_int = rand.nextInt(errors.size()-1);
+        String nickName = errors.get(random_int);
+        random_int = rand.nextInt(999);
+        String num = random_int.toString();
+        return nickName+num;
+    }
+
     @Override
     public void askNickname() {
 
-        boolean singlePlayer = false;
-        terminal.printRequest("Type here your nickname:");
+         singlePlayer = false;
+        terminal.printRequest("Type here your nickname (empty for default: random nickname):");
 
         String nickname = "";
         do {
             nickname = input.readLine();
             //System.out.println("length: "+nickname.length());
+            if(nickname.length() == 0)
+            {
+                /*byte[] array = new byte[7]; // length is bounded by 7
+                new Random().nextBytes(array);
+                nickname  = new String(array, Charset.forName("UTF-8"));*/
+                nickname=this.getRandomNickname();
+                terminal.printGoodMessages("Your random nickname is "+nickname+".\n");
+
+            }
             if(nickname.length() < 3) terminal.printWarning("Nickname too short, minimum 3 letters");
         }while(nickname.length() < 3 );
 
-        terminal.printRequest("If you want single player type \"single\" else anything");
+        terminal.printRequest("If you want single player type \"single\", for the multiplayer type anything else.");
 
         String single = input.readLine();
 
@@ -290,7 +318,8 @@ public class CLI extends Observable<ClientController> implements View {
         terminal.printRequest("Insert a valid server IP: ( empty for default: localhost ) ");
 
         String ip =".";
-        int port = -1;
+        String port = "-1";
+        int realport = -1;
 
         do {
             ip= this.input.readLine();
@@ -299,20 +328,39 @@ public class CLI extends Observable<ClientController> implements View {
         }
         while(!this.input.validateIP(ip));
 
-        terminal.printRequest("Insert server port: ( 0 for default: 1234 ) ");
+        terminal.printRequest("Insert server port: ( empty for default: 1234 ) ");
 
         do {
-            port = this.input.readInt();
-            if(port == 0) port = 1234;
-            if(!this.input.validatePortNumber(port)) terminal.printWarning(port + " is not valid a valid port number, insert a value between 1 and 65535");
+            port = this.input.readLine();
+
+            boolean check = false;
+            try{
+            realport=Integer.parseInt(port);}
+            catch (Exception e)
+            {
+                terminal.printWarning(port + " is not valid a valid port number, insert a value between 1 and 65535");
+                check = true;
+            }
+
+            if(port == "0" || port.length()==0)
+                realport = 1234;
+            if(!check)
+                if(!this.input.validatePortNumber(realport)) terminal.printWarning(realport + " is not valid a valid port number, insert a value between 1 and 65535");
         }
-        while (!this.input.validatePortNumber(port));
+        while (!this.input.validatePortNumber(realport));
 
         String validIp = ip;
-        int validPort = port;
+        int validPort = realport;
 
-        this.terminal.printGoodMessages("Trying to connect to "+ ip + " : "+ port +"\n");
+        this.terminal.printGoodMessages("Trying to connect to "+ ip + " : "+ realport +"\n");
         this.notifyObserver(controller -> controller.connectToServer(validIp, validPort));
+    }
+
+    @Override
+    public void connectionfailed()
+    {
+        terminal.printError("connection failed, try again.");
+        this.askServerData();
     }
 
     @Override
@@ -410,10 +458,6 @@ public class CLI extends Observable<ClientController> implements View {
         ResourceType res1 = ResourceInterpreter(type);
         ResourceType res2 = ResourceInterpreter(type2);
         ResourceType res3 = ResourceInterpreter(type3);
-
-        System.out.println("res 1: "+res1);
-        System.out.println("res 2: "+res2);
-        System.out.println("res 3: "+res3);
 
         this.notifyObserver(controller -> controller.sendBasicProduction(res1, res2, res3));
 
@@ -776,6 +820,7 @@ public class CLI extends Observable<ClientController> implements View {
 
     public void askLeaders(LeaderCard[] cards)
     {
+        this.terminal.out.clear();
         this.terminal.printLeaders(cards);
 
         LeaderCard[] leaderCards = new LeaderCard[2];
@@ -840,17 +885,19 @@ public class CLI extends Observable<ClientController> implements View {
 
         boolean flag = number == 2;
         List<Resource> wantedRes = new ResourceList();
-        this.terminal.printRequest("This is your first turn and you have the right to chose "+number+" of your choice");
+        terminal.out.clear();
+        this.terminal.printRequest("This is your first turn and you have the right to choose "+number+" resources of your choice");
         for(int i=0;i<number;i++)
         {
             this.terminal.printRequest("Resource types:");
             int j=0;
-            for(ResourceType resourceType:ResourceType.values())
+            terminal.printResourceTypeSelection();
+            /*for(ResourceType resourceType:ResourceType.values())
             {
                 j++;
                 String color = ConstantValues.resourceRappresentation.getColorRappresentation(resourceType);
                 this.terminal.out.printlnColored(j + " - " + resourceType.toString(),color);
-            }
+            }*/
             int num = this.askInt("Insert a number rappresenting the resource you want:","Input not in range",1,ResourceType.values().length);
 
             ResourceType type = null;
@@ -881,6 +928,11 @@ public class CLI extends Observable<ClientController> implements View {
     public void askTurnType() {
         if(firstTurn)
         {
+            try {
+                TimeUnit.MILLISECONDS.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             this.notifyObserver(ClientController::askLeaders);
             this.notifyObserver(ClientController::askInitialResoruce);
 
@@ -1050,7 +1102,8 @@ public class CLI extends Observable<ClientController> implements View {
         if(in.equals("yes") || in.equals("y")) {
             actionDone = false;
             this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
-            this.waitturn();
+            if(!this.singlePlayer)
+                this.waitturn();
         }
         else
         {
