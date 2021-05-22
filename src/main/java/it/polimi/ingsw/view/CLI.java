@@ -261,14 +261,14 @@ public class CLI extends Observable<ClientController> implements View {
 
     public String getRandomNickname()
     {
-        List<String> errors;
+        List<String> names;
         Reader reader = new InputStreamReader(ErrorManager.class.getClassLoader().getResourceAsStream("json/nickNames.json"));
         Gson gson = new Gson();
         String [] tmp = gson.fromJson(reader,String[].class);
-        errors = Arrays.asList(tmp);
+        names = Arrays.asList(tmp);
         Random rand = new Random();
-        Integer random_int = rand.nextInt(errors.size()-1);
-        String nickName = errors.get(random_int);
+        Integer random_int = rand.nextInt(names.size()-1);
+        String nickName = names.get(random_int);
         random_int = rand.nextInt(999);
         String num = random_int.toString();
         return nickName+num;

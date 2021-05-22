@@ -21,7 +21,7 @@ public class PapalScoreActiveted extends Packet<ClientController> implements Pac
     {
         List<PapalSpace> papalSpaces= MapFactory.loadPapalSpacesFromJsonFile();
 
-        DebugMessages.printWarning(controller.getMiniModel().getPlayers()[player].getNickname() + " rich a papal space");
+        DebugMessages.printWarning(controller.getMiniModel().getPlayers()[player].getNickname() + " Reach a papal space");
         for(PapalSpace ps: papalSpaces)
             if((controller.getMiniModel().getPlayers()[player].getPosition() >= ps.getInitialPosition()) && (controller.getMiniModel().getPlayers()[player].getPosition() <= ps.getFinalPosition()) )
                 DebugMessages.printWarning("you got "+ps.getScore()+" VP for being in the papal space");

@@ -42,6 +42,7 @@ public class ClientApp {
 
         this.controller.startGame();
 
+
         this.controller.starttolisten();
 
         //System.out.println("Click enter to start");
@@ -58,9 +59,6 @@ public class ClientApp {
 
 
     }
-
-
-
 
 
     public static boolean isValidInet4Address(String ip)
