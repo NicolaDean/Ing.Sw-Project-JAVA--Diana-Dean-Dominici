@@ -10,6 +10,7 @@ public class WaitingStartScene {
 
     public void startGame()
     {
-        GuiHelper.getGui().notifyObserver(ClientController::startGame);
+        System.out.println("StartGame");
+        GuiHelper.getGui().notifyObserver(ClientController::sendStartCommand);
     }
 }

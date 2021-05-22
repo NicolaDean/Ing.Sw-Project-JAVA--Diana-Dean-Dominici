@@ -66,7 +66,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button layoutX="252.0" layoutY="210.0" mnemonicParsing="false" onAction="#startGame" prefHeight="53.0" prefWidth="136.0" text="Start Game">
+            <Button layoutX="252.0" layoutY="210.0" mnemonicParsing="false" onAction="#startGame" prefHeight="53.0" prefWidth="136.0" text="Start Game" >
                <font>
                   <Font size="17.0" />
                </font>
