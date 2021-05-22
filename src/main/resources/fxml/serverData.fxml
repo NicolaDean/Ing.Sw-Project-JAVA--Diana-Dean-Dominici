@@ -42,7 +42,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.LoginScene">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.AskServerData">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" styleClass="root" stylesheets="@../css/HomeScreen.css" VBox.vgrow="ALWAYS">
          <children>
@@ -67,8 +67,8 @@
                   </LinearGradient>
                </textFill>
             </Label>
-            <TextField layoutX="199.0" layoutY="136.0" prefHeight="35.0" prefWidth="242.0" /><TextField layoutX="199.0" layoutY="136.0" prefHeight="35.0" prefWidth="242.0" />
-            <Button layoutX="252.0" layoutY="210.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="136.0" text="Connect">
+            <TextField fx:id="ip" layoutX="199.0" layoutY="136.0" prefHeight="35.0" prefWidth="242.0" promptText="Insert IP address of server" />
+            <Button layoutX="252.0" layoutY="276.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="136.0" text="Connect" onAction="#tryConnection">
                <font>
                   <Font size="26.0" />
                </font>
@@ -89,7 +89,7 @@
                   </LinearGradient>
                </textFill>
             </Button>
-            <Label layoutX="242.0" layoutY="146.0" prefHeight="88.0" prefWidth="224.0" text="(default: localhost 1234)">
+            <Label layoutX="234.0" layoutY="216.0" prefHeight="88.0" prefWidth="224.0" text="(default: localhost 1234)">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -110,6 +110,7 @@
                   </LinearGradient>
                </textFill>
             </Label>
+            <TextField fx:id="port" layoutX="199.0" layoutY="190.0" prefHeight="35.0" prefWidth="242.0" promptText="Insert serever port (1-65655)" />
          </children>
     </AnchorPane>
   </children>

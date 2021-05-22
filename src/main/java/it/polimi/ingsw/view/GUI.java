@@ -17,10 +17,12 @@ import java.util.List;
 
 public class GUI extends Observable<ClientController> implements View{
 
+    boolean singleplayer;
+
     Thread gui;
     public GUI()
     {
-        gui = new Thread(()->{Appp.main(this);});
+        gui = new Thread(()->{GuiHelper.main(this);});
         gui.start();
     }
 
@@ -32,6 +34,10 @@ public class GUI extends Observable<ClientController> implements View{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setSingleplayer() {
+        this.singleplayer = true;
     }
 
     @Override
@@ -72,7 +78,7 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askNickname() {
         try {
-            Appp.setRoot("login");
+            GuiHelper.setRoot("login");
         } catch (IOException e) {
             e.printStackTrace();
         }

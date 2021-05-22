@@ -37,21 +37,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.HomeScene">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="it.polimi.ingsw.view.scenes.HomeScene">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" styleClass="root" stylesheets="@../css/HomeScreen.css" VBox.vgrow="ALWAYS">
       <children>
-            <Button id="singleButton" layoutX="224.0" layoutY="91.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="193.0" text="Single Player" textAlignment="CENTER">
+            <Button id="singleButton" layoutX="224.0" layoutY="91.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="193.0" text="Single Player" textAlignment="CENTER" onAction="#singlePlayerCall">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button id="multiButton" layoutX="224.0" layoutY="145.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="193.0" text="Multi Player" textAlignment="CENTER">
+            <Button id="multiButton" layoutX="224.0" layoutY="145.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="193.0" text="Multi Player" textAlignment="CENTER" onAction="#multiplayerCall">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button id="reconnectButton" layoutX="224.0" layoutY="199.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="193.0" text="Try to Reconnect" textAlignment="CENTER">
+            <Button id="reconnectButton" layoutX="224.0" layoutY="199.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="193.0" text="Try to Reconnect" textAlignment="CENTER" onAction="#reconnectCall">
                <font>
                   <Font size="14.0" />
                </font>

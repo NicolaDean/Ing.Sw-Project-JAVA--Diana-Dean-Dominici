@@ -39,7 +39,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.LoginScene">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="it.polimi.ingsw.view.scenes.LoginScene">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" styleClass="root" stylesheets="@../css/HomeScreen.css" VBox.vgrow="ALWAYS">
          <children>
@@ -48,8 +48,8 @@
                   <Font name="System Bold" size="69.0" />
                </font>
             </Label>
-            <TextField layoutX="199.0" layoutY="136.0" prefHeight="35.0" prefWidth="242.0" />
-            <Button layoutX="252.0" layoutY="210.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="136.0" text="Play">
+            <TextField fx:id="nickname" layoutX="199.0" layoutY="136.0" prefHeight="35.0" prefWidth="242.0" />
+            <Button layoutX="252.0" layoutY="210.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="136.0" text="Play" onAction="#login">
                <font>
                   <Font size="26.0" />
                </font>
