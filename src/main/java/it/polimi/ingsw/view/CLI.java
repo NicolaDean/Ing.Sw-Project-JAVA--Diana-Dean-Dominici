@@ -58,6 +58,7 @@ public class CLI extends Observable<ClientController> implements View {
         terminal = new Logger();
         turnSelected = -1;
         canEndTurn = false;
+        actionDone = false;
     }
 
     /**
@@ -118,7 +119,6 @@ public class CLI extends Observable<ClientController> implements View {
 
                 //Idea creare un thread per i 3 tipi di turni e se lutente non ha fatto azioni questo thread permette di killarlo
             case "-exit": //cancel case
-                DebugMessages.printError("-exit command not available yet");
                 if(Avoidable)
                 {
                     if(actionDone)
@@ -290,7 +290,7 @@ public class CLI extends Observable<ClientController> implements View {
                 new Random().nextBytes(array);
                 nickname  = new String(array, Charset.forName("UTF-8"));*/
                 nickname=this.getRandomNickname();
-                terminal.printGoodMessages("You random nickname is "+nickname+".");
+                terminal.printGoodMessages("Your random nickname is "+nickname+".\n");
 
             }
             if(nickname.length() < 3) terminal.printWarning("Nickname too short, minimum 3 letters");
@@ -820,6 +820,7 @@ public class CLI extends Observable<ClientController> implements View {
 
     public void askLeaders(LeaderCard[] cards)
     {
+        this.terminal.out.clear();
         this.terminal.printLeaders(cards);
 
         LeaderCard[] leaderCards = new LeaderCard[2];
@@ -827,7 +828,7 @@ public class CLI extends Observable<ClientController> implements View {
         int l1 = this.askInt("Which of those leaders you want to draw? (1-4)","wrong input range",1,ConstantValues.leaderCardsToDraw) -1;
         leaderCards[0] = cards[l1];
 
-        int l2 = this.askIntExept("Which of those leaders you want to draw? (1-4)","wrong input range","already selected leader",1,ConstantValues.leaderCardsToDraw,l1) -1;
+        int l2 = this.askIntExept("Which of those leaders you want to draw? (1-4)","wrong input range","already selected leader",1,ConstantValues.leaderCardsToDraw,l1+1) -1;
         leaderCards[1] = cards[l2];
 
         this.notifyObserver(controller -> {controller.sendLeader(leaderCards,l1,l2);});
@@ -884,6 +885,7 @@ public class CLI extends Observable<ClientController> implements View {
 
         boolean flag = number == 2;
         List<Resource> wantedRes = new ResourceList();
+        terminal.out.clear();
         this.terminal.printRequest("This is your first turn and you have the right to choose "+number+" resources of your choice");
         for(int i=0;i<number;i++)
         {
@@ -997,7 +999,7 @@ public class CLI extends Observable<ClientController> implements View {
                 }
                 //System.out.println("TREAD VIVO ");
 
-                String exit = this.helpCommands(this.input.readLine(),"");
+                String exit = this.helpCommands(this.input.interruptableInput(),"");
 
                 if(isInputCancelled(exit))
                 {
@@ -1008,10 +1010,10 @@ public class CLI extends Observable<ClientController> implements View {
             }
         }catch (InterruptedException | IOException e)
         {
-            //DebugMessages.printError("OPSS");
+            DebugMessages.printError("OPSS");
         }
 
-        //DebugMessages.printError("Waiting thread help aborted");
+        DebugMessages.printError("Waiting thread help aborted");
     }
     @Override
     public void askCommand() {
@@ -1098,6 +1100,7 @@ public class CLI extends Observable<ClientController> implements View {
             in = this.customRead("\nDo you want to end the turn? (yes or no)");
         in = in.toLowerCase(Locale.ROOT);
         if(in.equals("yes") || in.equals("y")) {
+            actionDone = false;
             this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
             if(!this.singlePlayer)
                 this.waitturn();
@@ -1110,6 +1113,7 @@ public class CLI extends Observable<ClientController> implements View {
             }
             else if(turnSelected == 2)
             {
+                actionDone = false;
                 this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
             }
             else if(turnSelected == 3)
@@ -1122,6 +1126,7 @@ public class CLI extends Observable<ClientController> implements View {
             }
             else
             {
+                actionDone = false;
                 this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
             }
         }

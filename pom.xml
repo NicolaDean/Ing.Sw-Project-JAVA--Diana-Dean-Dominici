@@ -31,6 +31,9 @@
       <version>2.8.5</version>
       <scope>compile</scope>
     </dependency>
+
+    <!--//JAVAFX-->
+
   </dependencies>
 
   <build>

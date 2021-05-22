@@ -27,7 +27,7 @@ public class Logger {
 
     public CliColors out;
 
-    public static String istructionText = CliColors.CYAN_TEXT;
+    public static String istructionText = CliColors.WHITE_TEXT;
     public String istructionBackground  = CliColors.BLACK_TEXT;
 
     public String warningColor          = CliColors.YELLOW_TEXT;
@@ -720,6 +720,8 @@ public class Logger {
         this.out.println(" \"-exit\" to exit the turntype you selected (only if you haven't already played) ");
         this.out.println(" \"-startgame\" to start the game");
         this.out.println(" \"-dashboard\" to show the Dashboard");
+        this.out.println(" \"-activateleader\" to activate a leader");
+        this.out.println(" \"-discardleader\" to discard a leader");
         this.out.println(" \"-swapdeposit\" to enter the deposit swapping function");
         this.out.println(" \"-shop\" to show the cards that can be bought");
         this.out.println(" \"-spy\" to spy the dashboard of other players");
