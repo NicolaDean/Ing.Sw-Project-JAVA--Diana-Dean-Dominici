@@ -56,8 +56,6 @@ public class ClientApp {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-
     }
 
 
