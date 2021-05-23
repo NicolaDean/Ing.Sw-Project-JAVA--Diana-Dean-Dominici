@@ -332,7 +332,7 @@ public class Logger {
             {
                 if(dep>=3)
                     //if(t == COIN) out.printColored("  "+i+" - SHIELD\n",      CliColors.BLUE_TEXT);
-                    this.out.printColored("→"+CliColors.BOLD,color);
+                    this.out.printColored(" →  "+CliColors.BOLD,color);
                     else
                 this.spacer(4);
             }

@@ -572,6 +572,7 @@ public class ServerController{
             //System.out.println("\n postswap d1: "+ p.getDashboard().getStorage().getStorage()[0].getResource().getType());
             //System.out.println(" postswap d2: "+ p.getDashboard().getStorage().getStorage()[1].getResource().getType()+"\n");
             sendStorageUpdate(p.getControllerIndex());
+
             return null;
 
         } catch (AckManager err) {
@@ -587,6 +588,7 @@ public class ServerController{
         p.getDashboard().getStorage().moveResource(pos1,pos2,q);
         Deposit[] tmp = (p.getDashboard().getStorage().getDeposits());
         sendStorageUpdate(p.getControllerIndex());
+
         return null;}
 
         catch (AckManager err) {
