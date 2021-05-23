@@ -22,7 +22,7 @@ public class AskMove extends Packet<ServerController> implements PacketManager<S
         {
             if(p.getType().equals("ACK"))
             {
-                //controller.sendMessage(new SwapFailed(this.d1, this.d2),this.getPlayerIndex());
+                controller.sendMessage(new MoveFailed(),this.getClientIndex());
                 return p;
             }}
         return p;
