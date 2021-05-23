@@ -1,9 +1,16 @@
 package it.polimi.ingsw.view.scenes;
 
 import it.polimi.ingsw.model.dashboard.Deposit;
+import it.polimi.ingsw.view.GUI;
+import it.polimi.ingsw.view.GuiHelper;
 
-public interface BasicSceneUpdater {
+public class BasicSceneUpdater {
 
-    public void update(Deposit[] storage);
+    protected GUI gui= GuiHelper.getGui();
+
+    public void init()
+    {
+
+    }
 
 }

@@ -1,16 +1,10 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.controller.ClientController;
-import it.polimi.ingsw.model.dashboard.Deposit;
-import it.polimi.ingsw.utils.DebugMessages;
-import it.polimi.ingsw.view.events.StorageUpdateEvent;
-import it.polimi.ingsw.view.scenes.WaitingStartScene;
+import it.polimi.ingsw.view.events.GenericMessage;
+import it.polimi.ingsw.view.scenes.BasicSceneUpdater;
 import it.polimi.ingsw.view.utils.FXMLpaths;
 import it.polimi.ingsw.viewtest.Appp;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -64,29 +58,34 @@ public class GuiHelper extends Application {
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
-/*
-    private static<T> Parent loadFXML(String f,int a)
-    {
-
-    }
-
- */
 
     /**
      * Send an event containing miniStorage to the current Scene (if it has a Listener of this type it will update the view)
-     * @param a a message
+     * @param msg a message
      */
-    public static void storageUpdate(String a)
+    public static void sendMessage(String msg)
     {
-        stage.fireEvent(new StorageUpdateEvent(StorageUpdateEvent.ANY,a));
+        stage.fireEvent(new GenericMessage(GenericMessage.ANY,msg));
+    }
+
+    public static void sendError(String msg)
+    {
+        stage.fireEvent(new GenericMessage(GenericMessage.ERROR,msg));
+    }
+    public static void chestUpdate()
+    {
+
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Appp.class.getResource("/fxml/"+fxml+".fxml"));
-        // loader.getController(); //TODO QUESTO METODO PERMETTE DI ACCEDERE AL JAVA DELLA SCENA APPENA CARICATA (SI POTREBBE USCARE PER RENDERLO VISIBILE ALLA GUI IN QUALCHE MODO)
-        return loader.load();
+
+        Parent out = loader.load();
+        BasicSceneUpdater b = loader.getController();
+        b.init();//initialize components (eg hide label... show card..)
+        return out;
     }
 
     public static void main(GUI g) {

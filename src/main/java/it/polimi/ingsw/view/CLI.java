@@ -256,7 +256,7 @@ public class CLI extends Observable<ClientController> implements View {
     }
 
     @Override
-    public void showError() {
+    public void showError(String error) {
 
     }
 

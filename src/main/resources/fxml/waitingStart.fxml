@@ -66,11 +66,31 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button layoutX="252.0" layoutY="210.0" fx:id="start" mnemonicParsing="false" onAction="#startGame" prefHeight="53.0" prefWidth="136.0" text="Start Game" >
+            <Button fx:id="start" layoutX="252.0" layoutY="210.0" mnemonicParsing="false" onAction="#startGame" prefHeight="53.0" prefWidth="136.0" text="Start Game">
                <font>
                   <Font size="17.0" />
                </font>
             </Button>
+            <Label fx:id="first_user" layoutX="496.0" layoutY="183.0" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #ccffcc;" text="Nicola">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label fx:id="second_user" layoutX="496.0" layoutY="222.0" prefHeight="30.0" prefWidth="119.0" style="-fx-background-color: #ccffcc;" text="Riccardo">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label fx:id="third_user" layoutX="496.0" layoutY="263.0" prefHeight="30.0" prefWidth="119.0" style="-fx-background-color: #ccffcc;" text="Federico">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label fx:id="fourth_user" layoutX="496.0" layoutY="302.0" prefHeight="30.0" prefWidth="119.0" style="-fx-background-color: #ccffcc;" text="Leonardo">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
          </children>
     </AnchorPane>
   </children>

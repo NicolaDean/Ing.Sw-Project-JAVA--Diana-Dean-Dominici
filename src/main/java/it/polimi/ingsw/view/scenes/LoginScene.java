@@ -7,11 +7,16 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-public class LoginScene {
+public class LoginScene extends BasicSceneUpdater{
 
     @FXML
     TextField nickname;
 
+
+    public LoginScene()
+    {
+
+    }
     public void login()
     {
         if(!nickname.getText().equals("")) GuiHelper.getGui().notifyObserver(controller -> controller.setNickname(nickname.getText(),false));
