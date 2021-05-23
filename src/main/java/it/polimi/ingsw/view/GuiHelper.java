@@ -19,8 +19,15 @@ import java.io.IOException;
 
 public class GuiHelper extends Application {
 
-    private static Scene scene;
-    private static GUI   gui;
+    private static Scene        scene;
+    private static GUI          gui;
+    private static GuiHelper    guiHelper;
+
+
+    public GuiHelper()
+    {
+        guiHelper = this;
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -43,10 +50,17 @@ public class GuiHelper extends Application {
     }
 
 
+    //TODO CREARE DEI SETROOT PERSONALIZZATI PER I DIVERSI TIPI DI VISTA (esempio passare pezzi di minimodel) usare loader.getController() per passare i parametri tramite dei setter
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
+/*
+    private static<T> Parent loadFXML(String f,int a)
+    {
 
+    }
+
+ */
     private static Parent loadFXML(String fxml) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();

@@ -250,8 +250,6 @@ public class ClientController implements Runnable{
     public void startGame()
     {
         view.printWelcomeScreen();
-
-        this.printHelp();
     }
 
 
@@ -528,6 +526,7 @@ public class ClientController implements Runnable{
 
     public void sendResourceInsertion(List<InsertionInstruction> instructions)
     {
+        DebugMessages.printError("Inviato");
         this.sendMessage(new StorageMassInsertion(instructions));
     }
     public void sendResourceExtraction(boolean buyturn,List<ExtractionInstruction> instructions)

@@ -22,7 +22,17 @@ import java.io.IOException;
 public class Appp extends Application {
 
     private static Scene scene;
-    private static GUI   gui;
+    private GUI   gui;
+
+    public Appp(GUI g)
+    {
+        gui = g;
+    }
+
+    public GUI getGui()
+    {
+        return gui;
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -99,8 +109,8 @@ public class Appp extends Application {
         return loader.load();
     }
 
-    public static void main(GUI g) {
-        gui = g;
+    public static void main() {
+
         launch();
 
     }

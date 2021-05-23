@@ -13,13 +13,37 @@ public class InputReaderValidation {
     public static String    exitCodeString = "#EXIT#";
     public static int       exitCode       = -1111;
     public static int       cancellInt     = -1234;
+    private Object          inputLock = new Object();
     public Scanner          console;
     BufferedReader          console2 = new BufferedReader(new InputStreamReader(System.in));
+
+    boolean resetted        = false;
     public InputReaderValidation()
     {
         //console = new Scanner(System.in);
     }
 
+    public boolean isResetted()
+    {
+        return resetted;
+    }
+
+    public void interrupt() {
+        synchronized (inputLock)
+        {
+            resetted = true;//TODO
+        }
+
+    }
+
+    public void restart()
+    {
+        synchronized (inputLock)
+        {
+            resetted = false;
+        }
+
+    }
 
     /**
      * Wait for enter key
@@ -43,8 +67,14 @@ public class InputReaderValidation {
         try {
             while(!this.bufferReady())
             {
+                if(resetted)
+                {
+                    DebugMessages.printError("gsfs");
+                    return cancellString;
+                }
                 Thread.sleep(100);
             }
+
             return this.console2.readLine();
         } catch (IOException e) {
             DebugMessages.printError("read line cancelled");
@@ -102,6 +132,7 @@ public class InputReaderValidation {
     }
 
     public boolean bufferReady() throws IOException {
+
         return this.console2.ready();
     }
 

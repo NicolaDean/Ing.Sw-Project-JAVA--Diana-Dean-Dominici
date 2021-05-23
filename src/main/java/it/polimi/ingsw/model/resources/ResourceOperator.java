@@ -127,7 +127,8 @@ public class ResourceOperator {
     }
 
     /**
-     * list A - list B (UNSAFE, dosnt check if A hase more resource then B)
+     * list A - list B (UNSAFE!!, dosnt check if A hase more resource then B) if that happen quantity is setted to 0 to avoid infinite loop
+     * used only in cli resource insertion/extraction to check if he completed the payment
      * @param a op1
      * @param b op2
      * @return a list with subtracted qwuantity
@@ -141,6 +142,9 @@ public class ResourceOperator {
         {
             int qty = extractQuantityOf(res1.getType(),b);
                 qty = res1.getQuantity() - qty;
+
+                //if(qty<0) qty = 0;//Resolve eventual "negative" quantity resources bug
+
             out.add(new Resource(res1.getType(),qty));
         }
         return out;
@@ -149,7 +153,7 @@ public class ResourceOperator {
     public static boolean isEmpty(List<Resource> resources)
     {
         for(Resource res1 : resources) {
-            if(res1.getQuantity()!=0)return false;
+            if(res1.getQuantity()>0)return false; //Resolve eventual "negative" quantity resources bug
         }
         return true;
 

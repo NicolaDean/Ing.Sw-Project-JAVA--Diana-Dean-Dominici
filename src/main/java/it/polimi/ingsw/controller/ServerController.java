@@ -14,12 +14,15 @@ import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.utils.CliColors;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static it.polimi.ingsw.enumeration.ResourceType.*;
 
 public class ServerController{
 
@@ -228,12 +231,25 @@ public class ServerController{
     public MiniPlayer[] generateMiniPlayer(){
         MiniPlayer[] players= new MiniPlayer[game.getNofplayers()];
         int i=0;
+
+        List<Resource> resources = new ResourceList();
+        if(DebugMessages.infiniteResources)
+        {
+            resources.add(new Resource(COIN,100));
+            resources.add(new Resource(SERVANT,100));
+            resources.add(new Resource(SHIELD,100));
+            resources.add(new Resource(ROCK,100));
+        }
         for (Player p:game.getPlayers()){
             players[i]=new MiniPlayer(p.getNickname());
             players[i].setStorage(p.getDashboard().getStorage().getDeposits());
+            players[i].updateChest(resources);
             LeaderCard[] leaderCards = this.game.get4leaders();
             players[i].setLeaderCards(leaderCards);
             p.setLeaders(leaderCards);
+            if(DebugMessages.infiniteResources) {
+                p.chestInsertion(resources);
+            }
             i++;
         }
         return players;
