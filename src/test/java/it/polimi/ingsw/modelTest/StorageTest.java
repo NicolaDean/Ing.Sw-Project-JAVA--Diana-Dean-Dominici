@@ -192,7 +192,7 @@ public class StorageTest {
      * @throws Exception
      */
     @Test
-    public void TestBonusStorageSub() throws FullDepositException, NoBonusDepositOwned, WrongPosition, EmptyDeposit, NotSoddisfedPrerequisite {
+    public void TestBonusStorageSub() throws FullDepositException, NoBonusDepositOwned, WrongPosition, EmptyDeposit, NotSoddisfedPrerequisite, LeaderActivated {
 
         Player player = new Player();
         Resource a = new Resource(SHIELD, 1);

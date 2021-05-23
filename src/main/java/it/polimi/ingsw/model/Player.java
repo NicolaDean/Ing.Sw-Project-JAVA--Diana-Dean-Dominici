@@ -227,8 +227,9 @@ public class Player extends Observable<ServerController> {
      * @param position position leader
      * @return true if it's active
      */
-    public void activateLeader(int position) throws NotSoddisfedPrerequisite {
+    public void activateLeader(int position) throws NotSoddisfedPrerequisite, LeaderActivated {
         positionLeaderActive = position;
+        if(this.leaders[position] == null) throw new LeaderActivated("");
         this.leaders[position].activate(this);
     }
 
