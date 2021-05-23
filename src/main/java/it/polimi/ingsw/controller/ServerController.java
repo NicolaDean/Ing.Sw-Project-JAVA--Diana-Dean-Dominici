@@ -505,13 +505,15 @@ public class ServerController{
     {
         if(!isRightPlayer(player)) return this.notYourTurn();
 
-        Player p = this.game.getCurrentPlayer();
+        Player p = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex());
         try {
             if(action)
             {
                 p.activateLeader(pos);
                 Packet update = p.getLeaderCardUpdate(pos,this.clients.get(player).getRealPlayerIndex());
                 this.broadcastMessage(-1,update);
+
+                this.sendLeaderUpdate(player);
             }
             else
             {
