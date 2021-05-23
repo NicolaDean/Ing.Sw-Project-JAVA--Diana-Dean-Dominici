@@ -1,6 +1,12 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.dashboard.Deposit;
+import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.view.events.ChestEvent;
+import it.polimi.ingsw.view.events.DecksEvent;
 import it.polimi.ingsw.view.events.GenericMessage;
+import it.polimi.ingsw.view.events.StorageEvent;
 import it.polimi.ingsw.view.scenes.BasicSceneUpdater;
 import it.polimi.ingsw.view.utils.FXMLpaths;
 import it.polimi.ingsw.viewtest.Appp;
@@ -11,6 +17,7 @@ import javafx.scene.Scene;
 
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.List;
 
 public class GuiHelper extends Application {
 
@@ -72,9 +79,20 @@ public class GuiHelper extends Application {
     {
         stage.fireEvent(new GenericMessage(GenericMessage.ERROR,msg));
     }
-    public static void chestUpdate()
-    {
 
+    public static void storageUpdate(Deposit[] deposits)
+    {
+        stage.fireEvent(new StorageEvent(StorageEvent.STORAGE,deposits));
+    }
+
+    public static void storageUpdate(List<Resource> chest)
+    {
+        stage.fireEvent(new ChestEvent(ChestEvent.CHEST,chest));
+    }
+
+    public static void decksUpdate(ProductionCard[][] cards)
+    {
+        stage.fireEvent(new DecksEvent(DecksEvent.DECKS,cards));
     }
 
     private static Parent loadFXML(String fxml) throws IOException {

@@ -96,11 +96,14 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void askBuy() {
+
         try {
-            GuiHelper.setRoot("buy");
+            GuiHelper.setRoot(FXMLpaths.buy);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        this.notifyObserver(ClientController::showDecks);
     }
 
     @Override
@@ -133,8 +136,8 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
-    public void showDecks(ProductionCard[][] ProductionCards) {
-
+    public void showDecks(ProductionCard[][] productionCards) {
+        Platform.runLater(()->{GuiHelper.decksUpdate(productionCards);});
     }
 
     @Override
