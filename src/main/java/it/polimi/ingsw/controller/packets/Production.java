@@ -20,7 +20,7 @@ public class Production extends Packet<ServerController> implements PacketManage
     @Override
     public Packet analyze(ServerController controller) {
 
-        return controller.production(this.position,this.getPlayerIndex());
+        return controller.production(this.position,this.getClientIndex());
     }
 
 }

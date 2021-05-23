@@ -21,7 +21,7 @@ public class SelectLeader extends Packet<ServerController> implements PacketMana
             @Override
             public Packet analyze(ServerController controller) {
 
-            return  controller.setLeaders(this.leaders, l1, l2,this.getPlayerIndex());
+            return  controller.setLeaders(this.leaders, l1, l2,this.getClientIndex());
             }
 
 }

@@ -149,6 +149,10 @@ public class CLI extends Observable<ClientController> implements View {
                 //System.out.println("index di questa cli: "+this.index);
                 this.askSwapDeposit(this.index);
                 return customRead(message);
+            case "-moveresources": //cancel case
+                //System.out.println("index di questa cli: "+this.index);
+                this.askMoveResources();
+                return customRead(message);
             case "-spy": //cancel case
                 this.askSpyPlayer();
                 return customRead(message);
@@ -811,12 +815,12 @@ public class CLI extends Observable<ClientController> implements View {
         this.notifyObserver(ClientController::showStorage);
 
         //ASK FIRST DEPOSIT (while insert a number in range)
-        d1 = askInt("\nselect the first deposit you want to swap. (1-3) for normal (4-5) for bonus (6) to quit the swap","invalid input! retry please. \n",1,6);
+        d1 = askInt("\nselect the first deposit you want to swap. (1-3) for normal (4-5) for bonus (6) to quit the action","invalid input! retry please. \n",1,6);
         if(isInputCancelled(d1)) return; //cancelled input
         if(d1 == 6 ) return;             //6 mean exit
 
         //ASK SECOND DEPOSIT (while insert a number in range different from d1)
-        d2 = askIntExept("\nselect the first deposit you want to swap. (1-3) for normal (4-5) for bonus (6) to quit the swap","invalid input! retry please. \n","You cant swap a deposit with itself",1,6,d1);
+        d2 = askIntExept("\nselect the first deposit you want to swap. (1-3) for normal (4-5) for bonus (6) to quit the action","invalid input! retry please. \n","You cant swap a deposit with itself",1,6,d1);
         if(isInputCancelled(d1)) return; //cancelled input
         if(d2 == 6 ) return;             //6 mean exit
 
@@ -832,6 +836,34 @@ public class CLI extends Observable<ClientController> implements View {
         }
         this.notifyObserver(ClientController::showStorage);
 
+
+    }
+
+    @Override
+    public void askMoveResources()
+    {
+        this.notifyObserver(ClientController::showStorage);
+
+        int d1 = askInt("\nselect the deposit from where you want to take the resources. (1-3) for normal (4-5) for bonus (6) to quit the action","invalid input! retry please. \n",1,6);
+        if(isInputCancelled(d1)) return; //cancelled input
+        if(d1 == 6 ) return;             //6 mean exit
+
+        int d2 = askIntExept("\nselect the deposit from where you want to take the resources. (1-3) for normal (4-5) for bonus (6) to quit the action","invalid input! retry please. \n","You selected the same deposit two times!",1,6,d1);
+        if(isInputCancelled(d1)) return; //cancelled input
+        if(d2 == 6 ) return;             //6 mean exit
+
+        int q = askInt("\nselect the quantity you want to move. Type 4 to quit the action","invalid input! retry please. \n",1,4);
+        if(isInputCancelled(q)) return; //cancelled input
+        if(q == 6 ) return;             //6 mean exit
+
+        this.notifyObserver(controller -> controller.askMove(d1-1, d2-1, q));
+
+        try {
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        this.notifyObserver(ClientController::showStorage);
 
     }
 

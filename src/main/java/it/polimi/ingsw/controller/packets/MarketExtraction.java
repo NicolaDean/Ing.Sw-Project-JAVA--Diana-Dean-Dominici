@@ -18,6 +18,6 @@ public class MarketExtraction  extends Packet<ServerController> implements Packe
 
     @Override
     public Packet analyze(ServerController controller) {
-        return controller.marketExtraction(this.direction,this.pos,this.getPlayerIndex());
+        return controller.marketExtraction(this.direction,this.pos,this.getClientIndex());
     }
 }

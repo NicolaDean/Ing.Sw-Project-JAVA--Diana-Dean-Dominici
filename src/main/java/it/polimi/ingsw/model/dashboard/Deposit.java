@@ -102,9 +102,14 @@ public class Deposit {
     public void setNewDeposit(ResourceType Rtype, int Rquantity )
     {
         resource = new Resource(Rtype, Rquantity);
-        if (Rquantity == 0) {
+        if (Rquantity == -1) {
             resource = null;
         }
+    }
+    public void setNewBonusDeposit(ResourceType Rtype, int Rquantity )
+    {
+        resource = new Resource(Rtype, Rquantity);
+
     }
 
 }

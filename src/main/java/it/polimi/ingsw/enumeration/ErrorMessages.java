@@ -12,5 +12,8 @@ public enum ErrorMessages {
     IllegalSwap,
     InsertionFailed,
     ExtractionFailed,
-    LeaderActivated
+    LeaderActivated,
+    NotEnoughPlayers,
+    IllegalResourceMove
+
 }

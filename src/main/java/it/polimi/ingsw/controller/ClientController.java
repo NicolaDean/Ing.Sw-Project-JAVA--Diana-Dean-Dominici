@@ -336,6 +336,12 @@ public class ClientController implements Runnable{
 
     }
 
+    public void askMove (int d1, int d2, int quantity)
+    {
+        this.sendMessage(new AskMove(d1, d2, quantity));
+
+    }
+
     public void sendResourceDiscard(int quantity)
     {
         this.sendMessage(new DiscardResource(quantity));
