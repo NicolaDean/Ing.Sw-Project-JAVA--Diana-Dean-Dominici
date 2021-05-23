@@ -209,8 +209,7 @@ public class Storage {
                 if(storage[pos2].getResource().getType()!=storage[pos1].getResource().getType())
                     throw new IllegalResourceMove("You can't insert this type of resource in this deposit.");
             }
-            resource = storage[pos1].getResource();
-            resource.setQuantity(q);
+            resource = new Resource(storage[pos1].getResource().getType(), q);
             try {
                 storage[pos1].safeSubtraction(resource);
                 storage[pos2].safeInsertion(resource);
@@ -231,8 +230,7 @@ public class Storage {
             if(storage[pos1].getResource().getType() != storage[pos2].getResource().getType())
                 throw new IllegalResourceMove("The two bonus deposits are of different resource types!");
 
-            resource = storage[pos1].getResource();
-            resource.setQuantity(q);
+            resource = new Resource(storage[pos1].getResource().getType(), q);
             try {
                 storage[pos1].safeSubtraction(resource);
                 storage[pos2].safeInsertion(resource);
