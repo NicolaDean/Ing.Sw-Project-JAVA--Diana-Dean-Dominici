@@ -204,7 +204,6 @@ public interface View {
 
     public void connectionfailed();
 
-    public void setTerminated();
 
     /**
      * notify user that a new user logged the game
