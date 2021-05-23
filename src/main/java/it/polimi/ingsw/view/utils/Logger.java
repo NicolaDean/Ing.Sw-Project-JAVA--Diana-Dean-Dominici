@@ -304,6 +304,8 @@ public class Logger {
             }
             System.out.println("");
         }
+
+        int dep=0;
         for(Deposit d:deposits)
         {
             if(d == null) break;
@@ -326,7 +328,13 @@ public class Logger {
 
 
             if(size==1) this.spacer(8);
-            if(size==2) this.spacer(4);
+            if(size==2)
+            {
+                if(dep>=3)
+                    this.out.printColored("BON:"+CliColors.BOLD,color);
+                    else
+                this.spacer(4);
+            }
 
             for(int i=0;i<size;i++)
             {
@@ -353,7 +361,7 @@ public class Logger {
 
 
             System.out.println("");
-
+            dep++;
         }
     }
 

@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.cards;
 import it.polimi.ingsw.controller.packets.ACK;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.exceptions.LeaderActivated;
 import it.polimi.ingsw.exceptions.NotSoddisfedPrerequisite;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.resources.Resource;
@@ -41,7 +42,10 @@ public class LeaderCard extends Card {
      * @param p player who own the card
      * @return true if activation goes well
      */
-    public void activate(Player p) throws NotSoddisfedPrerequisite {
+    public void activate(Player p) throws NotSoddisfedPrerequisite, LeaderActivated {
+
+
+        if(active) throw new LeaderActivated("");
 
         boolean resourceRequisite = true;
         boolean cardRequisite = true;

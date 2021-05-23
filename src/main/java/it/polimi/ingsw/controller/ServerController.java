@@ -490,7 +490,7 @@ public class ServerController{
     {
         if(!isRightPlayer(player)) return this.notYourTurn();
 
-        Player p = this.game.getCurrentPlayer();
+        Player p = this.game.getPlayers().get(this.clients.get(player).getRealPlayerIndex());
         p.payChestResource(resource);
         return  null;
     }
@@ -505,13 +505,15 @@ public class ServerController{
     {
         if(!isRightPlayer(player)) return this.notYourTurn();
 
-        Player p = this.game.getCurrentPlayer();
+        Player p = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex());
         try {
             if(action)
             {
                 p.activateLeader(pos);
                 Packet update = p.getLeaderCardUpdate(pos,this.clients.get(player).getRealPlayerIndex());
                 this.broadcastMessage(-1,update);
+
+                this.sendLeaderUpdate(player);
             }
             else
             {
@@ -655,7 +657,7 @@ public class ServerController{
 
     public void sendChestUpdate(int index)
     {
-        List<Resource>chest = this.game.getPlayer(this.clients.get(index).getRealPlayerIndex() ).getDashboard().getChest();
+        List<Resource>chest = this.game.getPlayer(this.clients.get(index).getRealPlayerIndex()).getDashboard().getChest();
         this.broadcastMessage(-1,new ChestUpdate(chest,this.clients.get(index).getRealPlayerIndex()));
     }
     /**
@@ -704,10 +706,11 @@ public class ServerController{
 
     public void sendMessage(Packet p,int index)
     {
-        for(ClientHandler c: clients )
+        this.clients.get(index).sendToClient(p);
+        /*for(ClientHandler c: clients )
         {
             if(c.getRealPlayerIndex() == index) c.sendToClient(p);
-        }
+        }*/
     }
 
 

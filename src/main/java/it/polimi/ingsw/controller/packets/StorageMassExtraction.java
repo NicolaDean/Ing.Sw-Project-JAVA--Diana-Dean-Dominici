@@ -31,7 +31,6 @@ public class StorageMassExtraction extends Packet<ServerController> implements P
                 packet = instruction.apply(controller,this.getClientIndex());
                 if(packet!=null)
                 {
-                    //TODO invert packet(NACK) and Pending gain
                     failed = true;
                     remaining.add(instruction.getResource());
                 }
@@ -42,6 +41,7 @@ public class StorageMassExtraction extends Packet<ServerController> implements P
             }
         }
 
+        //TODO provarle tutte e rimandare indietro solo se "remaining" non è vuota
         if(failed)
         {
             controller.sendMessage(packet,this.getClientIndex());
