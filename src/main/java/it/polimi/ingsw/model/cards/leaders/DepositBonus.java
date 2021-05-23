@@ -24,10 +24,8 @@ public class DepositBonus extends LeaderCard{
      * @param player the player whom the deposit bonus needs to be initialized
      */
     public void activate(Player player) throws NotSoddisfedPrerequisite, LeaderActivated {
-
         super.activate(player);
         player.getDashboard().getStorage().initializeBonusDeposit(this.getType());
-
     }
 
     public Packet updateMiniModel(Player p,int index)

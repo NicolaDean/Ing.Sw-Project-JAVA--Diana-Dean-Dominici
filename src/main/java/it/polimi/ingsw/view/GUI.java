@@ -62,7 +62,9 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void setMarket(BasicBall[][] balls, BasicBall discarted) {
+        System.out.println("Market set");
 
+        GuiHelper.storageUpdate("UN BEL MESSAGGIo");
     }
 
     @Override
