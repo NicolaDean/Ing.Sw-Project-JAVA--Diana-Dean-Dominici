@@ -66,6 +66,7 @@ public class StorageTest {
         List<Resource> list = player.getDashboard().getStorage().getStorageAsList();
         DepositBonus bonus = new DepositBonus(list,new ArrayList<PrerequisiteCard>(), 3, ROCK);
         bonus.activate(player);
+        //System.out.println(player.getDashboard().getStorage().getStorage()[3].getResource().getType());
         player.getDashboard().getStorage().safeInsertion(d, 3);
         testStorage.swapDeposit(2,3);
 

@@ -206,6 +206,8 @@ public class GUI extends Observable<ClientController> implements View{
 
     }
 
+
+
     @Override
     public void showDashboard(Deposit[] deposits, List<Resource> chest, ProductionCard[] cards,LeaderCard[] leaderCards) {
 
@@ -213,6 +215,11 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void askEndTurn() {
+
+    }
+
+    @Override
+    public void askMoveResources() {
 
     }
 

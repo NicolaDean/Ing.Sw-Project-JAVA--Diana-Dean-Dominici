@@ -25,6 +25,7 @@ public class DepositBonus extends LeaderCard{
      */
     public void activate(Player player) throws NotSoddisfedPrerequisite, LeaderActivated {
         super.activate(player);
+        //System.out.println(this.getType());
         player.getDashboard().getStorage().initializeBonusDeposit(this.getType());
     }
 

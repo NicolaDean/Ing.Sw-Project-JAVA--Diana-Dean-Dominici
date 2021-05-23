@@ -200,6 +200,8 @@ public interface View {
      */
     public void askEndTurn();
 
+    public void askMoveResources();
+
     public void connectionfailed();
 
     /**

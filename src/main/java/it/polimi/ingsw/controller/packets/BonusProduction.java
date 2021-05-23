@@ -20,6 +20,6 @@ public class BonusProduction   extends Packet<ServerController> implements Packe
 
     @Override
     public Packet analyze(ServerController controller) {
-        return controller.bonusProduction(this.position,this.obt,this.getPlayerIndex());
+        return controller.bonusProduction(this.position,this.obt,this.getClientIndex());
     }
 }

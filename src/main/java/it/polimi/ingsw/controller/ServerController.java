@@ -552,7 +552,7 @@ public class ServerController{
     {
         //if(!isRightPlayer(player)) return this.notYourTurn();
 
-        System.out.println("\n" +player +"\n");
+        //System.out.println("\n" +player +"\n");
         Player p = this.game.getPlayer(player);
         //System.out.println(player + "!!!!\n\n\n");
 
@@ -575,6 +575,21 @@ public class ServerController{
             return null;
 
         } catch (AckManager err) {
+            return err.getAck();
+        }
+
+    }
+
+    public Packet MoveResources(int pos1,int pos2,int q, int player)
+    {
+        Player p = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex());
+        try{
+        p.getDashboard().getStorage().moveResource(pos1,pos2,q);
+        Deposit[] tmp = (p.getDashboard().getStorage().getDeposits());
+        sendStorageUpdate(p.getControllerIndex());
+        return null;}
+
+        catch (AckManager err) {
             return err.getAck();
         }
 
@@ -697,6 +712,7 @@ public class ServerController{
             if(c.getRealPlayerIndex() == index) c.sendToClient(p);
         }*/
     }
+
 
 
 }

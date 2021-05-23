@@ -15,6 +15,6 @@ public class DiscardResource extends Packet<ServerController> implements PacketM
 
     @Override
     public Packet analyze(ServerController controller) {
-        return controller.discardResource(this.quantity,this.getPlayerIndex());
+        return controller.discardResource(this.quantity,this.getClientIndex());
     }
 }

@@ -8,9 +8,10 @@
     "You dont have enough resources to do this action, please select another one or wait next turn",
     "You dont have the prerequisite to activate this leader",
     "Wrong Input position",
-    "This swap is not possible, you are probably trying to swap deposit with incompatible dimension or a Bonus deposit",
+    "This swap is not possible, you are probably trying to swap deposit with incompatible dimensions",
     "This deposit is already full or different type, insertion failed",
     "This deposit is empty or different type, extraction failed",
     "Leader already activated or discarted",
-    "Wait for other players before starting! Or select the single player mode."
+    "Wait for other players before starting! Or select the single player mode.",
+    "You can't do this move."
   ]

@@ -22,11 +22,11 @@ public class BuyCard  extends Packet<ServerController> implements PacketManager<
     @Override
     public Packet analyze(ServerController controller)
     {
-        Packet p = controller.buyCard(this.x,this.y,this.position,this.getPlayerIndex());
+        Packet p = controller.buyCard(this.x,this.y,this.position,this.getClientIndex());
 
         if(p.getType().equals("ACK"))
         {
-            controller.sendMessage(new BuyFailed(),this.getPlayerIndex());
+            controller.sendMessage(new BuyFailed(),this.getClientIndex());
             return p;
         }
        return p;

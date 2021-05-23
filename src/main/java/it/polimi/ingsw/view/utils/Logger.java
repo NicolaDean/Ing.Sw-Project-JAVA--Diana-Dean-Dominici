@@ -331,7 +331,8 @@ public class Logger {
             if(size==2)
             {
                 if(dep>=3)
-                    this.out.printColored("BON:"+CliColors.BOLD,color);
+                    //if(t == COIN) out.printColored("  "+i+" - SHIELD\n",      CliColors.BLUE_TEXT);
+                    this.out.printColored("→"+CliColors.BOLD,color);
                     else
                 this.spacer(4);
             }
@@ -785,6 +786,7 @@ public class Logger {
         this.out.println(" \"-activateleader\" to activate a leader");
         this.out.println(" \"-discardleader\" to discard a leader");
         this.out.println(" \"-swapdeposit\" to enter the deposit swapping function");
+        this.out.println(" \"-moveresources\" to move resources between deposits (allowed only if at least one of the two deposits is a bonus deposit");
         this.out.println(" \"-shop\" to show the cards that can be bought");
         this.out.println(" \"-spy\" to spy the dashboard of other players");
         this.out.println("------------------------------------------");
