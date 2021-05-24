@@ -153,6 +153,7 @@ public class Player extends Observable<ServerController> {
     public void incrementPosition()
     {
         this.position++;
+        this.notifyObserver(controller -> {controller.sendPositionUpdate(1,controllerIndex);});
         try { this.notifyObserver(ServerController::checkPapalSpaceActivation); }catch(Exception e){ }
     }
 
@@ -163,6 +164,9 @@ public class Player extends Observable<ServerController> {
     public void incrementPosition(int numberOfCell)
     {
         this.position+=numberOfCell;
+        this.notifyObserver(controller -> {controller.sendPositionUpdate(numberOfCell,numberOfCell);});
+        try { this.notifyObserver(ServerController::checkPapalSpaceActivation); }catch(Exception e){ }
+
     }
     /**
      * True if Online

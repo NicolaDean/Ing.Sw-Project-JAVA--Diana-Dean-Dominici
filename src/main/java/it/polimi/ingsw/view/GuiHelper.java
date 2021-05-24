@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
@@ -35,7 +36,7 @@ public class GuiHelper extends Application {
     public void start(Stage primaryStage) {
 
         stage = primaryStage;
-
+        stage.getIcons().add(new Image(GuiHelper.class.getResourceAsStream("/images/dashboard/calamaio.png")));
         primaryStage.setTitle("Lorenzo The Game");
 
         try {
@@ -62,6 +63,7 @@ public class GuiHelper extends Application {
         return stage;
     }
     //TODO CREARE DEI SETROOT PERSONALIZZATI PER I DIVERSI TIPI DI VISTA (esempio passare pezzi di minimodel) usare loader.getController() per passare i parametri tramite dei setter
+
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }

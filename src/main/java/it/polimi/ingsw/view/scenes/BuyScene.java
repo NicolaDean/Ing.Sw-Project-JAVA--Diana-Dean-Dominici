@@ -43,7 +43,6 @@ public class BuyScene extends BasicSceneUpdater{
         deckUpdate();
 
         click.setOpacity(0);
-
     }
 
     public void deckUpdate()
@@ -61,7 +60,6 @@ public class BuyScene extends BasicSceneUpdater{
 
     public void drawCard(ProductionCard card,int x,int y)
     {
-
         //Creating an image
         Image image = new Image(Appp.class.getResourceAsStream("/images/cards/leader/" +(x*y+1)+".jpg"));
 
@@ -78,7 +76,7 @@ public class BuyScene extends BasicSceneUpdater{
             DebugMessages.printError("Clicked card -> " + x + " - " + y);
 
             click.setText((x + 1) + " - " + (y + 1));
-            setCardPos(x,y,900,200);
+            setCardPos(x,y,2,200);
         });
 
         if(y==0) Row1.getChildren().add(this.cards[x][y]);
@@ -98,6 +96,9 @@ public class BuyScene extends BasicSceneUpdater{
 
     public void setCardPos(int x,int y,int newPosx,int newPosy)
     {
+        //DONT WORK
+
+        DebugMessages.printError("move");
         this.cards[x][y].setX(newPosx);
         this.cards[x][y].setY(newPosy);
     }
