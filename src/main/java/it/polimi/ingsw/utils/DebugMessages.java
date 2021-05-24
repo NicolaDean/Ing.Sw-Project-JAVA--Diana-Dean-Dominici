@@ -4,6 +4,7 @@ import it.polimi.ingsw.view.utils.Logger;
 
 public  class DebugMessages {
 
+    public static boolean infiniteResources = true;
     public static boolean enableError = true;
     public static boolean enableWarning = true;
     public static boolean enableNetwork= false;

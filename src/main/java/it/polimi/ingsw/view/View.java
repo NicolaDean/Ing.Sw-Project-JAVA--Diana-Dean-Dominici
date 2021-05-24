@@ -43,7 +43,7 @@ public interface View {
      */
     public BasicBall getMiniMarketDiscardedResouce();
 
-    public void showError();
+    public void showError(String error);
     /**
      * ask user a valid nickname
      */
@@ -200,7 +200,10 @@ public interface View {
      */
     public void askEndTurn();
 
+    public void askMoveResources();
+
     public void connectionfailed();
+
 
     /**
      * notify user that a new user logged the game

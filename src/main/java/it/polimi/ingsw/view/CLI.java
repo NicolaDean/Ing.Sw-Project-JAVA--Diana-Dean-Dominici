@@ -46,9 +46,12 @@ public class CLI extends Observable<ClientController> implements View {
     private BasicBall       miniMarketDiscardedResouce;
     boolean canEndTurn;
     boolean actionDone;
-    boolean singlePlayer = false;
-    boolean Avoidable = true;  //TO DO EXIT COMMAND
-    boolean firstTurn = true;  //LEADER SELECTION AND INITIAL RESOURCE
+    boolean singlePlayer= false;
+    boolean Avoidable   = true;  //TO DO EXIT COMMAND
+    boolean firstTurn   = true;  //LEADER SELECTION AND INITIAL RESOURCE
+    boolean helpAborted = false;
+
+    Object lockHelp     = new Object();
     int index;
     public CLI(int index)
     {
@@ -146,6 +149,10 @@ public class CLI extends Observable<ClientController> implements View {
                 //System.out.println("index di questa cli: "+this.index);
                 this.askSwapDeposit(this.index);
                 return customRead(message);
+            case "-moveresources": //cancel case
+                //System.out.println("index di questa cli: "+this.index);
+                this.askMoveResources();
+                return customRead(message);
             case "-spy": //cancel case
                 this.askSpyPlayer();
                 return customRead(message);
@@ -167,10 +174,8 @@ public class CLI extends Observable<ClientController> implements View {
      * @return wanted input
      */
     public synchronized String customRead()  {
-        //System.out.println("!!!!!!!!!!!!!!!!!!!");
+        if(this.input.isResetted()) return InputReaderValidation.cancellString;
         String s = this.input.readLine();
-        //System.out.println("???????????????????");
-       // System.out.println("s vale: "+s);
         s = helpCommands(s,"");
         return s;
     }
@@ -193,7 +198,7 @@ public class CLI extends Observable<ClientController> implements View {
      */
     public boolean isInputCancelled(String str)
     {
-        return str.toLowerCase(Locale.ROOT).equals(InputReaderValidation.cancellString.toLowerCase(Locale.ROOT));
+        return str.toLowerCase(Locale.ROOT).equals(InputReaderValidation.cancellString.toLowerCase(Locale.ROOT)) || this.input.isResetted();
     }
 
     /**
@@ -203,7 +208,7 @@ public class CLI extends Observable<ClientController> implements View {
      */
     public boolean isInputCancelled(int num)
     {
-        return num == InputReaderValidation.cancellInt;
+        return num == InputReaderValidation.cancellInt || this.input.isResetted();
     }
 
 
@@ -213,6 +218,7 @@ public class CLI extends Observable<ClientController> implements View {
      * @return input wanted
      */
     public String customRead(String message) {
+        if(this.input.isResetted()) return InputReaderValidation.cancellString;
         try {
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException e) {
@@ -245,10 +251,12 @@ public class CLI extends Observable<ClientController> implements View {
         this.terminal.printLogo();
         this.terminal.out.setBackgroundColor(CliColors.BLACK_BACKGROUND);
         this.clickEnter();
+
+        this.askServerData();
     }
 
     @Override
-    public void showError() {
+    public void showError(String error) {
 
     }
 
@@ -310,6 +318,7 @@ public class CLI extends Observable<ClientController> implements View {
         boolean finalSinglePlayer = singlePlayer;
         this.notifyObserver(controller -> controller.setNickname(validNickname, finalSinglePlayer));
 
+        this.askCommand();
     }
 
     @Override
@@ -354,6 +363,8 @@ public class CLI extends Observable<ClientController> implements View {
 
         this.terminal.printGoodMessages("Trying to connect to "+ ip + " : "+ realport +"\n");
         this.notifyObserver(controller -> controller.connectToServer(validIp, validPort));
+
+
     }
 
     @Override
@@ -401,6 +412,8 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void askProduction() {
 
+        notifyObserver(ClientController::showDashboard);
+
         //SHOW DASHBOARD
         this.terminal.printRequest("Activate a production card on your dashboard");
 
@@ -408,8 +421,6 @@ public class CLI extends Observable<ClientController> implements View {
         if(isExit(pos)) return;
 
         if (pos == 3) {
-
-
             this.askBasicProduction();
             return;
         }
@@ -421,12 +432,22 @@ public class CLI extends Observable<ClientController> implements View {
         }
 
         this.notifyObserver(controller -> controller.sendProduction(pos));
-
-
     }
 
     @Override
     public void askBonusProduction(BonusProductionInterface[] bonus) {
+
+        if(bonus != null)
+        {
+            this.terminal.printRequest("This is your bonus productions");
+            this.terminal.printBonusCards(bonus);
+        }
+        else
+        {
+            this.terminal.printError("You dont have bonus cards");
+        }
+
+
 
     }
 
@@ -443,7 +464,7 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askBasicProduction() {
-        notifyObserver(ClientController::showStorage);
+        notifyObserver(ClientController::showDashboard);
 
         this.terminal.printResourceTypeSelection();
         int type = askInt("Select the first resource to discard.","wrong index",1,4)  -1;
@@ -697,7 +718,7 @@ public class CLI extends Observable<ClientController> implements View {
                 }
             }
             resourceList = listSubtraction(resourceList,removed);
-
+        DebugMessages.printError("aaaaaa");
         }while(!isEmpty(resourceList));
 
         this.notifyObserver(controller -> {controller.sendResourceInsertion(insertions);});
@@ -730,8 +751,9 @@ public class CLI extends Observable<ClientController> implements View {
             for(Resource res:resourceList)
             {
                 String in="";
-                if(res.getQuantity()!=0)
+                if(res.getQuantity()>0)
                 {
+                    flag = false;
                     do {
                         this.terminal.printResource(res);
                         in = customRead("Where you want to pick this resources? options ->(storage-chest)");
@@ -757,8 +779,7 @@ public class CLI extends Observable<ClientController> implements View {
 
                             if(tmp == null)
                             {
-                                tmp = res;
-                                payed.add(tmp);
+                                payed.add(res);
                             }
 
                             if(pos == -1) extractions.add(new ExtractionInstruction(tmp));
@@ -794,12 +815,12 @@ public class CLI extends Observable<ClientController> implements View {
         this.notifyObserver(ClientController::showStorage);
 
         //ASK FIRST DEPOSIT (while insert a number in range)
-        d1 = askInt("\nselect the first deposit you want to swap. (1-3) for normal (4-5) for bonus (6) to quit the swap","invalid input! retry please. \n",1,6);
+        d1 = askInt("\nselect the first deposit you want to swap. (1-3) for normal (4-5) for bonus (6) to quit the action","invalid input! retry please. \n",1,6);
         if(isInputCancelled(d1)) return; //cancelled input
         if(d1 == 6 ) return;             //6 mean exit
 
         //ASK SECOND DEPOSIT (while insert a number in range different from d1)
-        d2 = askIntExept("\nselect the first deposit you want to swap. (1-3) for normal (4-5) for bonus (6) to quit the swap","invalid input! retry please. \n","You cant swap a deposit with itself",1,6,d1);
+        d2 = askIntExept("\nselect the first deposit you want to swap. (1-3) for normal (4-5) for bonus (6) to quit the action","invalid input! retry please. \n","You cant swap a deposit with itself",1,6,d1);
         if(isInputCancelled(d1)) return; //cancelled input
         if(d2 == 6 ) return;             //6 mean exit
 
@@ -818,6 +839,34 @@ public class CLI extends Observable<ClientController> implements View {
 
     }
 
+    @Override
+    public void askMoveResources()
+    {
+        this.notifyObserver(ClientController::showStorage);
+
+        int d1 = askInt("\nselect the deposit from where you want to take the resources. (1-3) for normal (4-5) for bonus (6) to quit the action","invalid input! retry please. \n",1,6);
+        if(isInputCancelled(d1)) return; //cancelled input
+        if(d1 == 6 ) return;             //6 mean exit
+
+        int d2 = askIntExept("\nselect the deposit from where you want to take the resources. (1-3) for normal (4-5) for bonus (6) to quit the action","invalid input! retry please. \n","You selected the same deposit two times!",1,6,d1);
+        if(isInputCancelled(d1)) return; //cancelled input
+        if(d2 == 6 ) return;             //6 mean exit
+
+        int q = askInt("\nselect the quantity you want to move. Type 4 to quit the action","invalid input! retry please. \n",1,4);
+        if(isInputCancelled(q)) return; //cancelled input
+        if(q == 6 ) return;             //6 mean exit
+
+        this.notifyObserver(controller -> controller.askMove(d1-1, d2-1, q));
+
+        try {
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        this.notifyObserver(ClientController::showStorage);
+
+    }
+
     public void askLeaders(LeaderCard[] cards)
     {
         this.terminal.out.clear();
@@ -826,6 +875,12 @@ public class CLI extends Observable<ClientController> implements View {
         LeaderCard[] leaderCards = new LeaderCard[2];
 
         int l1 = this.askInt("Which of those leaders you want to draw? (1-4)","wrong input range",1,ConstantValues.leaderCardsToDraw) -1;
+
+        if(isInputCancelled(l1+1))
+        {
+            this.askLeaders(cards);
+            return;
+        }
         leaderCards[0] = cards[l1];
 
         int l2 = this.askIntExept("Which of those leaders you want to draw? (1-4)","wrong input range","already selected leader",1,ConstantValues.leaderCardsToDraw,l1+1) -1;
@@ -926,6 +981,23 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void askTurnType() {
+
+
+
+        /*//Wait help commands to be completed (eg. if user was already in a input blocking operation as swap,spy,activateleader)
+        while(!getHelpStatus())
+        {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            }
+        }*/
+        setHelpKill(false);
+        this.input.restart();
+        DebugMessages.printError("Input resetted");
+
+
         if(firstTurn)
         {
             try {
@@ -933,6 +1005,7 @@ public class CLI extends Observable<ClientController> implements View {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            this.input.restart();
             this.notifyObserver(ClientController::askLeaders);
             this.notifyObserver(ClientController::askInitialResoruce);
 
@@ -1003,6 +1076,8 @@ public class CLI extends Observable<ClientController> implements View {
 
                 if(isInputCancelled(exit))
                 {
+                    this.input.restart();
+                    setHelpKill(true);
                     DebugMessages.printError("Funziona finalmente");
                     return;
                 }
@@ -1010,7 +1085,10 @@ public class CLI extends Observable<ClientController> implements View {
             }
         }catch (InterruptedException | IOException e)
         {
+            setHelpKill(true);
             DebugMessages.printError("OPSS");
+            this.input.restart();
+
         }
 
         DebugMessages.printError("Waiting thread help aborted");
@@ -1031,12 +1109,36 @@ public class CLI extends Observable<ClientController> implements View {
         return terminal;
     }
 
+    public synchronized void setHelpKill(boolean value)
+    {
+        synchronized (this.lockHelp)
+        {
+            this.helpAborted = value;
+        }
+
+    }
+
+    public synchronized boolean getHelpStatus()
+    {
+        synchronized (this.lockHelp)
+        {
+            return this.helpAborted;
+        }
+    }
     @Override
     public void abortHelp() {
         if(helpThread!=null)
         {
+
+            setHelpKill(false);
             //DebugMessages.printError("HELP ABORTED");
             helpThread.interrupt();
+
+            //I close input stream to avoid Input blocking issue of help thread (stream arent reopened until thread help is dead)
+
+            this.input.interrupt();
+
+
             helpThread = null;
             waiting   =false;
         }
@@ -1084,6 +1186,7 @@ public class CLI extends Observable<ClientController> implements View {
         if(firstTurn)
         {
             firstTurn = false;
+            actionDone = false;
             this.askTurnType();
             return;
         }
@@ -1095,6 +1198,7 @@ public class CLI extends Observable<ClientController> implements View {
         if(turnSelected == 2) {
             this.terminal.printWarning("you completed the action and the turn automatically ended.");
             in = "y";
+            actionDone = false;
         }
         else
             in = this.customRead("\nDo you want to end the turn? (yes or no)");

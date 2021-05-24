@@ -43,7 +43,7 @@ public abstract class   Packet<T> implements PacketManager<T>
         return packet.toJson();
     }
 
-    public int getPlayerIndex() {
+    public int getClientIndex() {
         return playerIndex;
     }
 

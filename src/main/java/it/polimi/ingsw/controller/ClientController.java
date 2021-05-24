@@ -249,11 +249,7 @@ public class ClientController implements Runnable{
     }
     public void startGame()
     {
-
-        //0System.out.println("Start Game");
         view.printWelcomeScreen();
-        view.askServerData();
-        view.askNickname();
     }
 
 
@@ -284,6 +280,7 @@ public class ClientController implements Runnable{
             setConnected(true);
             this.pongController = new PongController(index, output);
 
+            this.view.askNickname();
         } catch (IOException e) {
             setConnected(false);
             view.connectionfailed();
@@ -329,11 +326,19 @@ public class ClientController implements Runnable{
             sendMessage(new LoginSinglePlayer(nickname));
         else
             sendMessage(new Login(nickname));
+
+        this.starttolisten();
     }
 
     public void askSwap (int d1, int d2, int index)
     {
         this.sendMessage(new AskSwap(d1, d2, this.getMiniModel().getPersanalIndex()));
+
+    }
+
+    public void askMove (int d1, int d2, int quantity)
+    {
+        this.sendMessage(new AskMove(d1, d2, quantity));
 
     }
 
@@ -357,14 +362,22 @@ public class ClientController implements Runnable{
         this.view.showStorage(this.model.getStorage(),this.model.getChest());
     }
 
+
     public void showDashboard(){
-        this.view.showPapalCell(this.model.getPlayers());
-        this.view.showDashboard(
-                this.model.getStorage(),
-                this.model.getPlayers()[this.model.getPersanalIndex()].getChest(),
-                this.model.getPlayerCards(),
-                this.model.getPlayers()[this.model.getPersanalIndex()].getLeaderCards()
-        );
+        MiniPlayer p = this.model.getPersonalPlayer();
+
+
+        if(p!=null)
+        {
+            this.view.showPapalCell(this.model.getPlayers());
+            this.view.showDashboard(
+                    p.getStorage(),
+                    p.getChest(),
+                    p.getPlayerCards(),
+                    p.getLeaderCards()
+            );
+        }
+
     }
     /**
      * send packet to server
@@ -519,6 +532,7 @@ public class ClientController implements Runnable{
 
     public void sendResourceInsertion(List<InsertionInstruction> instructions)
     {
+        DebugMessages.printError("Inviato");
         this.sendMessage(new StorageMassInsertion(instructions));
     }
     public void sendResourceExtraction(boolean buyturn,List<ExtractionInstruction> instructions)

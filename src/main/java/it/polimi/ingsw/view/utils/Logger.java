@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.PapalSpace;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.PrerequisiteCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.factory.MapFactory;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
@@ -303,6 +304,8 @@ public class Logger {
             }
             System.out.println("");
         }
+
+        int dep=0;
         for(Deposit d:deposits)
         {
             if(d == null) break;
@@ -325,7 +328,14 @@ public class Logger {
 
 
             if(size==1) this.spacer(8);
-            if(size==2) this.spacer(4);
+            if(size==2)
+            {
+                if(dep>=3)
+                    //if(t == COIN) out.printColored("  "+i+" - SHIELD\n",      CliColors.BLUE_TEXT);
+                    this.out.printColored(" →  "+CliColors.BOLD,color);
+                    else
+                this.spacer(4);
+            }
 
             for(int i=0;i<size;i++)
             {
@@ -352,13 +362,125 @@ public class Logger {
 
 
             System.out.println("");
-
+            dep++;
         }
     }
 
+    public void printPaddedCost(List<Resource> resourceList,String fieldname,int faith)
+    {
+            this.out.print("║");
+            this.out.printColored(fieldname+": ",CliColors.WHITE_TEXT);
+            this.spacer(9-fieldname.length());
+            if(resourceList!= null &&  !ResourceOperator.isEmpty(resourceList))
+            {
+                this.printInlineResourceList(resourceList);
+                int padding = 13 - 3* ResourceOperator.getTypeCounter(resourceList);
+                if( faith !=0)
+                {   padding = padding-3;
+                    this.out.printColored(" "+faith+ " ",CliColors.BLACK_TEXT,CliColors.RED_BACKGROUND);
+                }
+
+                this.spacer(padding);
+            }
+            else if(faith!=0)
+            {
+                this.out.printColored(" " + faith + " ", CliColors.BLACK_TEXT, CliColors.RED_BACKGROUND);
+                this.spacer(10);
+            }
+            else
+            {
+                this.spacer(24);
+            }
+
+            this.out.print("║");
+    }
+
+    public void printEmptyCard()
+    {
+        this.out.print("║");
+        this.spacer(24);
+        this.out.print("║");
+    }
+
+
+    public void printBonusCards(BonusProductionInterface[] bonusProductionInterface)
+    {
+        this.out.print("╔");
+        for(BonusProductionInterface bonus:bonusProductionInterface)
+        {
+            for(int i=0;i<9;i++) System.out.print("═");
+            String color = ConstantValues.resourceRappresentation.getColorRappresentation(bonus.getProdCost().getType());
+            this.out.printColored("TRADE" + CliColors.BOLD,CliColors.BLACK_TEXT,color);
+            for(int i=0;i<9;i++) System.out.print("═");
+            this.out.print("╦╦");
+        }
+        this.out.println("");
+
+        for(BonusProductionInterface bonus:bonusProductionInterface)
+        {
+            this.out.print("║");
+            spacer(4);
+            this.printResource(bonus.getProdCost());
+            this.out.print(" = ");
+            this.out.printColored(" ¿ "+CliColors.BOLD,CliColors.BLACK_TEXT,CliColors.R_WHITE_BACKGROUND);
+            this.out.print(" + ");
+            this.out.printColored(" "+1+ " ",CliColors.BLACK_TEXT,CliColors.RED_BACKGROUND);
+            spacer(4);
+            this.out.print("║");
+        }
+        this.out.println("");
+        //FOOTER
+        System.out.print("╚");
+        for(BonusProductionInterface bonus:bonusProductionInterface)
+        {
+            for(int i=0;i<23;i++) System.out.print("═");
+            System.out.print("╩╩");
+        }
+
+        System.out.println("");
+    }
+
+    /**
+     * print the body of the production cards (print all cost,rawmat,obt mat)
+     * @param cards cards to which print the body
+     */
+    public void printCardsResources(ProductionCard[] cards)
+    {
+        int i=0;
+        System.out.println("");
+        for(ProductionCard card:cards)
+        {
+            if(card!=null)
+                printPaddedCost(card.getCost(),"Cost",0);
+            else
+                printEmptyCard();
+        }
+        System.out.println("");
+        for(ProductionCard card:cards)
+        {
+            if(card!=null)
+                printPaddedCost(card.getRawMaterials(),"Raw mat",0);
+            else
+                printEmptyCard();
+        }
+        System.out.println("");
+        for(ProductionCard card:cards)
+        {
+            if(card != null)
+                printPaddedCost(card.getObtainedMaterials(),"Obt mat",card.getObtainedFaith());
+            else
+                printEmptyCard();
+        }
+        System.out.println("");
+    }
+
+    /**
+     * print a row of production cards
+     * @param row row of cards to print
+     */
     public void printCardRow(ProductionCard[] row)
     {
-        //31
+        //HEADER
         System.out.print("╔");
         for(ProductionCard card: row) {
             if(card!=null)
@@ -385,68 +507,10 @@ public class Logger {
 
         }
 
-        System.out.println("");
-        for(ProductionCard card: row)
-        {
-            this.out.print("║");
-            if(card != null)
-            {
-                this.out.printColored("Cost     : ",CliColors.WHITE_TEXT);
-                this.printInlineResourceList(card.getCost());
-                int padding = 13 - 3* ResourceOperator.getTypeCounter(card.getCost());
-                this.spacer(padding);
-            }
-            else
-            {
-                this.spacer(24);
-            }
+        //Print 3 rows with cost,rawmat,obtmat
+        this.printCardsResources(row);
 
-            this.out.print("║");
-        }
-        System.out.println("");
-        for(ProductionCard card: row)
-        {
-            this.out.print("║");
-            if(card != null)
-            {
-                this.out.printColored("Raw  mat : ", CliColors.WHITE_TEXT);
-                this.printInlineResourceList(card.getRawMaterials());
-
-                int padding = 13 - 3 * ResourceOperator.getTypeCounter(card.getRawMaterials());
-                this.spacer(padding);
-            }
-            else
-            {
-                this.spacer(24);
-            }
-            this.out.print("║");
-        }
-        System.out.println("");
-        for(ProductionCard card: row)
-        {
-
-            this.out.print("║");
-            if(card != null)
-            {
-                int faith =card.getObtainedFaith();
-                this.out.printColored("Obt mat  : ",CliColors.WHITE_TEXT);
-                this.printInlineResourceList(card.getObtainedMaterials());
-
-                int padding = 13 - 3* ResourceOperator.getTypeCounter(card.getObtainedMaterials());
-
-                if( faith !=0)
-                {   padding = padding-3;
-                    this.out.printColored(" "+faith+ " ",CliColors.BLACK_TEXT,CliColors.RED_BACKGROUND);
-                }
-                this.spacer(padding);
-            }
-            else
-            {
-                this.spacer(24);
-            }
-            this.out.print("║");
-        }
-        System.out.println("");
+        //FOOTER
         System.out.print("╚");
         for(ProductionCard card: row)
         {
@@ -618,7 +682,6 @@ public class Logger {
         }
 
         System.out.println("");
-        this.out.print("║");
     }
     /**
      * Print a colored message corresponding to "warnings"
@@ -723,6 +786,7 @@ public class Logger {
         this.out.println(" \"-activateleader\" to activate a leader");
         this.out.println(" \"-discardleader\" to discard a leader");
         this.out.println(" \"-swapdeposit\" to enter the deposit swapping function");
+        this.out.println(" \"-moveresources\" to move resources between deposits (allowed only if at least one of the two deposits is a bonus deposit");
         this.out.println(" \"-shop\" to show the cards that can be bought");
         this.out.println(" \"-spy\" to spy the dashboard of other players");
         this.out.println("------------------------------------------");

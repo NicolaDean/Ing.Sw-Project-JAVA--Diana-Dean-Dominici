@@ -1,0 +1,9 @@
+.root{
+    -fx-background-image: url("../images/dashboard/dashboard-back.jpg");
+    -fx-background-size: cover;
+}
+
+userEntredMsg
+{
+    -fx-background-color: #F2F;
+}

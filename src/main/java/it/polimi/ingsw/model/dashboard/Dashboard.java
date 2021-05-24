@@ -196,7 +196,7 @@ public class Dashboard {
 
     public void applyChestCosts(List<Resource> res)
     {
-        this.pendingCost.retainAll(res);
+        this.pendingCost.removeAll(res);
         this.chest.removeAll(res);
     }
 

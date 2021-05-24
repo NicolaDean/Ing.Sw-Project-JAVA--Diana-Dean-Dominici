@@ -23,7 +23,7 @@ public class AskSwap extends Packet<ServerController> implements PacketManager<S
         {
         if(p.getType().equals("ACK"))
         {
-            controller.sendMessage(new SwapFailed(this.d1, this.d2),index);
+            //controller.sendMessage(new SwapFailed(this.d1, this.d2),index);
             return p;
         }}
         return p;

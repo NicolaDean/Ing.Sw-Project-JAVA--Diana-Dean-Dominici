@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.cards.leaders;
 import it.polimi.ingsw.controller.packets.LeaderTradeUpdate;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.enumeration.ResourceType;
+import it.polimi.ingsw.exceptions.LeaderActivated;
 import it.polimi.ingsw.exceptions.NotEnoughResource;
 import it.polimi.ingsw.exceptions.NotSoddisfedPrerequisite;
 import it.polimi.ingsw.model.Player;
@@ -25,7 +26,7 @@ public class LeaderTradeCard extends LeaderCard implements BonusProductionInterf
 
 
     @Override
-    public void activate(Player p) throws NotSoddisfedPrerequisite {
+    public void activate(Player p) throws NotSoddisfedPrerequisite, LeaderActivated {
         super.activate(p);
         p.addTradeBonus(this);
     }

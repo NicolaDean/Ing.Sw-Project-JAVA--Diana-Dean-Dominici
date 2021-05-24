@@ -13,6 +13,7 @@ import java.util.List;
 
 public class ProductionCard extends Card {
 
+    //private int id;
     private CardType type;
     private int level;
     private int obtainedFaith;

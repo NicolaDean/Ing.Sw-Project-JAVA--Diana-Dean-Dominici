@@ -14,12 +14,15 @@ import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.utils.CliColors;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static it.polimi.ingsw.enumeration.ResourceType.*;
 
 public class ServerController{
 
@@ -228,12 +231,25 @@ public class ServerController{
     public MiniPlayer[] generateMiniPlayer(){
         MiniPlayer[] players= new MiniPlayer[game.getNofplayers()];
         int i=0;
+
+        List<Resource> resources = new ResourceList();
+        if(DebugMessages.infiniteResources)
+        {
+            resources.add(new Resource(COIN,100));
+            resources.add(new Resource(SERVANT,100));
+            resources.add(new Resource(SHIELD,100));
+            resources.add(new Resource(ROCK,100));
+        }
         for (Player p:game.getPlayers()){
             players[i]=new MiniPlayer(p.getNickname());
             players[i].setStorage(p.getDashboard().getStorage().getDeposits());
+            players[i].updateChest(resources);
             LeaderCard[] leaderCards = this.game.get4leaders();
             players[i].setLeaderCards(leaderCards);
             p.setLeaders(leaderCards);
+            if(DebugMessages.infiniteResources) {
+                p.chestInsertion(resources);
+            }
             i++;
         }
         return players;
@@ -474,7 +490,7 @@ public class ServerController{
     {
         if(!isRightPlayer(player)) return this.notYourTurn();
 
-        Player p = this.game.getCurrentPlayer();
+        Player p = this.game.getPlayers().get(this.clients.get(player).getRealPlayerIndex());
         p.payChestResource(resource);
         return  null;
     }
@@ -489,13 +505,15 @@ public class ServerController{
     {
         if(!isRightPlayer(player)) return this.notYourTurn();
 
-        Player p = this.game.getCurrentPlayer();
+        Player p = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex());
         try {
             if(action)
             {
                 p.activateLeader(pos);
                 Packet update = p.getLeaderCardUpdate(pos,this.clients.get(player).getRealPlayerIndex());
                 this.broadcastMessage(-1,update);
+
+                this.sendLeaderUpdate(player);
             }
             else
             {
@@ -534,7 +552,7 @@ public class ServerController{
     {
         //if(!isRightPlayer(player)) return this.notYourTurn();
 
-        System.out.println("\n" +player +"\n");
+        //System.out.println("\n" +player +"\n");
         Player p = this.game.getPlayer(player);
         //System.out.println(player + "!!!!\n\n\n");
 
@@ -554,9 +572,26 @@ public class ServerController{
             //System.out.println("\n postswap d1: "+ p.getDashboard().getStorage().getStorage()[0].getResource().getType());
             //System.out.println(" postswap d2: "+ p.getDashboard().getStorage().getStorage()[1].getResource().getType()+"\n");
             sendStorageUpdate(p.getControllerIndex());
+
             return null;
 
         } catch (AckManager err) {
+            return err.getAck();
+        }
+
+    }
+
+    public Packet MoveResources(int pos1,int pos2,int q, int player)
+    {
+        Player p = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex());
+        try{
+        p.getDashboard().getStorage().moveResource(pos1,pos2,q);
+        Deposit[] tmp = (p.getDashboard().getStorage().getDeposits());
+        sendStorageUpdate(p.getControllerIndex());
+
+        return null;}
+
+        catch (AckManager err) {
             return err.getAck();
         }
 
@@ -624,7 +659,7 @@ public class ServerController{
 
     public void sendChestUpdate(int index)
     {
-        List<Resource>chest = this.game.getPlayer(this.clients.get(index).getRealPlayerIndex() ).getDashboard().getChest();
+        List<Resource>chest = this.game.getPlayer(this.clients.get(index).getRealPlayerIndex()).getDashboard().getChest();
         this.broadcastMessage(-1,new ChestUpdate(chest,this.clients.get(index).getRealPlayerIndex()));
     }
     /**
@@ -673,11 +708,13 @@ public class ServerController{
 
     public void sendMessage(Packet p,int index)
     {
-        for(ClientHandler c: clients )
+        this.clients.get(index).sendToClient(p);
+        /*for(ClientHandler c: clients )
         {
             if(c.getRealPlayerIndex() == index) c.sendToClient(p);
-        }
+        }*/
     }
+
 
 
 }

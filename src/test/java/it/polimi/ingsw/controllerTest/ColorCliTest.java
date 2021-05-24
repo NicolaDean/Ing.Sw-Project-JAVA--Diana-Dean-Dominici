@@ -7,6 +7,8 @@ import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
+import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.dashboard.Storage;
 import it.polimi.ingsw.model.resources.Resource;
@@ -131,6 +133,12 @@ public class ColorCliTest {
         Game g = new Game();
         LeaderCard[] leaders= g.get4leaders();
         logger.printLeaders(leaders);
+
+
+        BonusProductionInterface []b = new LeaderTradeCard[2];
+         b[0] = new LeaderTradeCard(null,null,1,COIN);
+         b[1] = new LeaderTradeCard(null,null,1,SERVANT);
+        logger.printBonusCards(b);
     }
 
 

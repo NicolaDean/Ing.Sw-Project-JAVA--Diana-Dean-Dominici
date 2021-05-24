@@ -1,0 +1,4 @@
+.root{
+    -fx-background-image: url("../images/dashboard/dashboard-front.jpg");
+    -fx-background-size: cover;
+}

@@ -28,10 +28,9 @@ public class StorageMassExtraction extends Packet<ServerController> implements P
         {
             if(!failed)
             {
-                packet = instruction.apply(controller,this.getPlayerIndex());
+                packet = instruction.apply(controller,this.getClientIndex());
                 if(packet!=null)
                 {
-                    //TODO invert packet(NACK) and Pending gain
                     failed = true;
                     remaining.add(instruction.getResource());
                 }
@@ -42,19 +41,20 @@ public class StorageMassExtraction extends Packet<ServerController> implements P
             }
         }
 
+        //TODO provarle tutte e rimandare indietro solo se "remaining" non è vuota
         if(failed)
         {
-            controller.sendMessage(packet,this.getPlayerIndex());
-            controller.sendStorageUpdate(this.getPlayerIndex());
-            controller.sendChestUpdate(this.getPlayerIndex());
+            controller.sendMessage(packet,this.getClientIndex());
+            controller.sendStorageUpdate(this.getClientIndex());
+            controller.sendChestUpdate(this.getClientIndex());
             return new PendingCost(remaining);
         }
         else
         {
-            controller.sendMessage(new ACK(0),this.getPlayerIndex());
-            controller.sendStorageUpdate(this.getPlayerIndex());
-            controller.sendChestUpdate(this.getPlayerIndex());
-            if(buyturn) controller.sendPendingCard(this.getPlayerIndex());
+            controller.sendMessage(new ACK(0),this.getClientIndex());
+            controller.sendStorageUpdate(this.getClientIndex());
+            controller.sendChestUpdate(this.getClientIndex());
+            if(buyturn) controller.sendPendingCard(this.getClientIndex());
 
             return new OperationCompleted();
         }
