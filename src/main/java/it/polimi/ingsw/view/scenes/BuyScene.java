@@ -71,16 +71,14 @@ public class BuyScene extends BasicSceneUpdater{
         this.cards[x][y].setFitHeight(200);
         this.cards[x][y].setFitWidth(130);
 
-        this.cards[x][y].setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                click.setOpacity(1);
-                setCol(x);
-                setRow(y);
-                DebugMessages.printError("Clicked card -> " + x + " - "+ y);
+        this.cards[x][y].setOnMouseClicked(event -> {
+            click.setOpacity(1);
+            setCol(x);
+            setRow(y);
+            DebugMessages.printError("Clicked card -> " + x + " - " + y);
 
-                click.setText((x+1) + " - " + (y+1));
-            }
+            click.setText((x + 1) + " - " + (y + 1));
+            setCardPos(x,y,900,200);
         });
 
         if(y==0) Row1.getChildren().add(this.cards[x][y]);
@@ -98,5 +96,10 @@ public class BuyScene extends BasicSceneUpdater{
         this.col = y;
     }
 
+    public void setCardPos(int x,int y,int newPosx,int newPosy)
+    {
+        this.cards[x][y].setX(newPosx);
+        this.cards[x][y].setY(newPosy);
+    }
 
 }

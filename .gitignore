@@ -13,4 +13,6 @@ out/
 /out/
 target/
 /target/
+/shade/
+
 /src/main/resources/META-INF/
