@@ -27,6 +27,10 @@ public class GUI extends Observable<ClientController> implements View{
         gui.start();
     }
 
+    public ClientController getObserver(ClientController controller)
+    {
+        return this.getObserver();
+    }
     @Override
     public void printWelcomeScreen() {
 

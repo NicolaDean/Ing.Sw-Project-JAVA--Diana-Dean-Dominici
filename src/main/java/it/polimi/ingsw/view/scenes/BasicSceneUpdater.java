@@ -12,11 +12,11 @@ import java.util.List;
 
 public class BasicSceneUpdater extends Observable<ClientController> {
 
-    protected GUI gui= GuiHelper.getGui();
 
     public void init()
     {
-
+        //Subscribe clientController as an observer to itselt
+        this.setObserver(GuiHelper.getGui().getObserver());
     }
 
     public void updateStorage(Deposit[] storage)

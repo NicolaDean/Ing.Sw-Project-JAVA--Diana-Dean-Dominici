@@ -38,11 +38,19 @@ public class BuyScene extends BasicSceneUpdater{
     @Override
     public void init()
     {
+        super.init();
         //root.addEventFilter(DecksEvent.DECKS,this::deckUpdate);
         this.cards = new ImageView[4][3];
         deckUpdate();
 
         click.setOpacity(0);
+    }
+
+    @Override
+    public void updateDeckCard(ProductionCard card,int x,int y)
+    {
+        Image image = new Image(BuyScene.class.getResourceAsStream("/images/cards/productions/" +3+".jpg"));
+        this.cards[x][y].setImage(image);
     }
 
     public void deckUpdate()
@@ -61,7 +69,7 @@ public class BuyScene extends BasicSceneUpdater{
     public void drawCard(ProductionCard card,int x,int y)
     {
         //Creating an image
-        Image image = new Image(Appp.class.getResourceAsStream("/images/cards/leader/" +(x*y+1)+".jpg"));
+        Image image = new Image(BuyScene.class.getResourceAsStream("/images/cards/leader/" +(x*y+1)+".jpg"));
 
         this.cards[x][y] = new ImageView(image);
 

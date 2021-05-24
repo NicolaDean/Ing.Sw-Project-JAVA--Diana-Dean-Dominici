@@ -100,11 +100,17 @@ public class GuiHelper extends Application {
     private static Parent loadFXML(String fxml) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Appp.class.getResource("/fxml/"+fxml+".fxml"));
+        loader.setLocation(GuiHelper.class.getResource("/fxml/"+fxml+".fxml"));
 
+        //Load fxml
         Parent out = loader.load();
+        //Get current scene controller
         BasicSceneUpdater b = loader.getController();
-        b.init();//initialize components (eg hide label... show card..)
+        //initialize components (eg hide label... show card..)
+        b.init();
+
+        //SET THIS SCENE AS THE CURRENT MINIMODEL OBSERVER
+        gui.notifyObserver(controller -> controller.addModelObserver(b));
         return out;
     }
 

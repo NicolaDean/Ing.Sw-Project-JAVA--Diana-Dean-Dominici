@@ -45,8 +45,8 @@ public class WaitingStartScene extends BasicSceneUpdater{
 
     public void startGame()
     {
-        this.gui.notifyObserver(ClientController::sendStartCommand);
-        this.gui.notifyObserver(ClientController::askBuy);
+        this.notifyObserver(ClientController::sendStartCommand);
+        this.notifyObserver(ClientController::askBuy);
     }
 
     public void userEntered(GenericMessage event)

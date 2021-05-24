@@ -1,13 +1,9 @@
 package it.polimi.ingsw.controller;
 
-import com.google.gson.Gson;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
 import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.controller.pingManager.PongController;
 import it.polimi.ingsw.enumeration.ResourceType;
-import java.util.Random;
-import it.polimi.ingsw.exceptions.WrongPosition;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
@@ -19,16 +15,14 @@ import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.utils.DebugMessages;
+import it.polimi.ingsw.view.scenes.BasicSceneUpdater;
 import it.polimi.ingsw.view.utils.ErrorManager;
 import it.polimi.ingsw.view.CLI;
 import it.polimi.ingsw.view.View;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.Reader;
 import java.net.Socket;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
@@ -177,6 +171,11 @@ public class ClientController implements Runnable{
 
     public PongController getPongController() {
         return pongController;
+    }
+
+    public void addModelObserver(BasicSceneUpdater currScene)
+    {
+        this.model.setModelObserver(currScene);
     }
 
     public void sendBuyCard(int x,int y,int pos)
