@@ -1,19 +1,25 @@
 package it.polimi.ingsw.view.scenes;
 
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GuiHelper;
 import it.polimi.ingsw.view.events.DecksEvent;
+import it.polimi.ingsw.view.utils.FXMLpaths;
 import it.polimi.ingsw.viewtest.Appp;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 
 
 public class BuyScene extends BasicSceneUpdater{
@@ -30,68 +36,103 @@ public class BuyScene extends BasicSceneUpdater{
 
     @FXML
     public Label click;
+    @FXML
+    public ImageView selectedCard;
+
+
+
 
     private ImageView[][] cards;
+
+    //Server request data
     private int col;
     private int row;
+    private int pos;
+
 
     @Override
     public void init()
     {
         super.init();
-        //root.addEventFilter(DecksEvent.DECKS,this::deckUpdate);
-        this.cards = new ImageView[4][3];
-        deckUpdate();
+
+        this.cards = new ImageView[ConstantValues.rowDeck][ConstantValues.colDeck];
 
         click.setOpacity(0);
+
+        GuiHelper.getStage().setWidth(2000);
+        GuiHelper.getStage().setWidth(800);
+        GuiHelper.getStage().show();
+        //DRAW DECK
+        this.notifyObserver(controller ->{
+            DebugMessages.printError("Buy Scene initialized");
+            this.deckUpdate(controller.getMiniModel().getDecks());
+        });
     }
 
+    /**
+     * when a new card is buyed this function is called by minimodel observable to update cards inside the decks
+     * @param card new card
+     * @param x    x pos of card buyed
+     * @param y    y pos of card buyed
+     */
     @Override
     public void updateDeckCard(ProductionCard card,int x,int y)
     {
-        Image image = new Image(BuyScene.class.getResourceAsStream("/images/cards/productions/" +3+".jpg"));
-        this.cards[x][y].setImage(image);
+        Image image = loadImage("/images/cards/productions/" +card.getId()+".jpg");;
+        this.cards[y][x].setImage(image);
     }
 
-    public void deckUpdate()
+    /**
+     * print all deck (called only during initlialize then update single card)
+     * @param deck 12 decks of shop
+     */
+    public void deckUpdate(ProductionCard [][] deck)
     {
-        //ProductionCard[][] cards= event.getCards();
+        System.out.println("CARDS " + cards.length);
 
-        for(int i=0;i<4;i++)
+        for(int i=0;i<ConstantValues.rowDeck;i++)
         {
-            for(int j=0;j<3;j++)
+            for(int j=0;j<ConstantValues.colDeck;j++)
             {
-                drawCard(null,i,j);
+                drawCard(deck[i][j],j,i);
             }
         }
     }
 
+    /**
+     * print cards on screen and add them click event to select them
+     * @param card
+     * @param x
+     * @param y
+     */
     public void drawCard(ProductionCard card,int x,int y)
     {
         //Creating an image
-        Image image = new Image(BuyScene.class.getResourceAsStream("/images/cards/leader/" +(x*y+1)+".jpg"));
+        Image image = loadImage("/images/cards/productions/" +card.getId()+".jpg");
 
-        this.cards[x][y] = new ImageView(image);
+        this.cards[y][x] = new ImageView(image);
 
         //setting the fit height and width of the image view
-        this.cards[x][y].setFitHeight(200);
-        this.cards[x][y].setFitWidth(130);
+        this.cards[y][x].setFitHeight(200);
+        this.cards[y][x].setFitWidth(130);
 
-        this.cards[x][y].setOnMouseClicked(event -> {
-            click.setOpacity(1);
-            setCol(x);
-            setRow(y);
-            DebugMessages.printError("Clicked card -> " + x + " - " + y);
-
-            click.setText((x + 1) + " - " + (y + 1));
-            setCardPos(x,y,2,200);
+        this.cards[y][x].setOnMouseClicked(event -> {
+            this.clickFunction(x,y);
         });
 
-        if(y==0) Row1.getChildren().add(this.cards[x][y]);
-        if(y==1) Row2.getChildren().add(this.cards[x][y]);
-        if(y==2) Row3.getChildren().add(this.cards[x][y]);
+        if(y==0) Row1.getChildren().add(this.cards[y][x]);
+        if(y==1) Row2.getChildren().add(this.cards[y][x]);
+        if(y==2) Row3.getChildren().add(this.cards[y][x]);
     }
 
+    public void clickFunction(int x,int y)
+    {
+        click.setOpacity(1);
+        DebugMessages.printError("Clicked card -> " + x + " - " + y);
+
+        click.setText((x + 1) + " - " + (y + 1));
+        setSelectedCard(x,y);
+    }
     public void setCol(int x)
     {
         this.col = x;
@@ -99,16 +140,25 @@ public class BuyScene extends BasicSceneUpdater{
 
     public void setRow(int y)
     {
-        this.col = y;
+        this.row = y;
     }
 
-    public void setCardPos(int x,int y,int newPosx,int newPosy)
+    /**
+     * save inside col,row variable the selected card
+     * @param x col
+     * @param y row
+     */
+    public void setSelectedCard(int x,int y)
     {
-        //DONT WORK
+        setCol(x);
+        setRow(y);
+        Image currCard = this.cards[y][x].getImage();
 
-        DebugMessages.printError("move");
-        this.cards[x][y].setX(newPosx);
-        this.cards[x][y].setY(newPosy);
+        DebugMessages.printError("Image setted");
+        selectedCard.setImage(currCard);
     }
 
+    public void buyButton(ActionEvent actionEvent) {
+        loadDialog(FXMLpaths.prodDialog);
+    }
 }

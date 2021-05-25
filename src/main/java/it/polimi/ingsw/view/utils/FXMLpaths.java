@@ -10,5 +10,6 @@ public class FXMLpaths {
     public static String payment       = "pendingCost";
     public static String insertions    = "buy";
     public static String market        = "market";
+    public static String prodDialog    = "dialogProduction";
 
 }

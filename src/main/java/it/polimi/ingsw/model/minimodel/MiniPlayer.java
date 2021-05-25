@@ -14,6 +14,8 @@ import it.polimi.ingsw.view.scenes.BasicSceneUpdater;
 import java.util.List;
 
 public class MiniPlayer extends Observable<BasicSceneUpdater> {
+
+    private int index;
     private List<Resource>              chest;
     private LeaderCard[]                leaderCards;
     private ProductionCard[]            decks;
@@ -30,9 +32,14 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
         this.chest = new ResourceList();
         decks = new ProductionCard[3];
     }
+    public void setIndex(int index)
+    {
+        this.index = index;
+    }
 
     public void incrementPosition(int position) {
         this.position += position;
+        this.notifyObserver(scene -> scene.updatePlayerPosition(index,position));
     }
 
     public void setDecks(ProductionCard[] decks) {
@@ -65,6 +72,7 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
     }
     public void setStorage(Deposit[] storage) {
         this.storage = storage;
+        this.notifyObserver(scene -> scene.updateStorage(storage));
     }
 
     public ProductionCard[] getCards()
@@ -84,6 +92,7 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
     public void updateChest(List<Resource> chest)
     {
         this.chest = chest;
+        this.notifyObserver(scene -> scene.updateChest(chest));
     }
 
     public void setDiscount(List<Resource> discount)
