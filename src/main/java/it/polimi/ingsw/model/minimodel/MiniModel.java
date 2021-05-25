@@ -15,7 +15,7 @@ public class MiniModel extends Observable<BasicSceneUpdater>
 {
 
     private int persanalIndex = 0;
-
+    private boolean isLoaded = false;
     private MiniPlayer[] players;
 
     private ProductionCard [][] decks;
@@ -56,9 +56,13 @@ public class MiniModel extends Observable<BasicSceneUpdater>
             i++;
         }
         DebugMessages.printError("set finisched loading");
-
+        isLoaded = true;
     }
 
+    public boolean isLoaded()
+    {
+        return isLoaded;
+    }
     public void setModelObserver(BasicSceneUpdater currScene)
     {
         for(MiniPlayer p:players)

@@ -51,27 +51,28 @@ public class BuyScene extends BasicSceneUpdater{
         GuiHelper.getStage().show();
         //DRAW DECK
         this.notifyObserver(controller ->{
-
-            while(controller.getMiniModel().getDecks() == null)
-            {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            DebugMessages.printError("Initialized");
+            DebugMessages.printError("Buy Scene initialized");
             this.deckUpdate(controller.getMiniModel().getDecks());
         });
     }
 
+    /**
+     * when a new card is buyed this function is called by minimodel observable to update cards inside the decks
+     * @param card new card
+     * @param x    x pos of card buyed
+     * @param y    y pos of card buyed
+     */
     @Override
     public void updateDeckCard(ProductionCard card,int x,int y)
     {
-        Image image = new Image(BuyScene.class.getResourceAsStream("/images/cards/productions/" +card.getId()+".jpg"));
+        Image image = loadImage("/images/cards/productions/" +card.getId()+".jpg");;
         this.cards[x][y].setImage(image);
     }
 
+    /**
+     * print all deck (called only during initlialize then update single card)
+     * @param deck 12 decks of shop
+     */
     public void deckUpdate(ProductionCard [][] deck)
     {
         System.out.println("CARDS " + cards.length);
@@ -85,10 +86,16 @@ public class BuyScene extends BasicSceneUpdater{
         }
     }
 
+    /**
+     * print cards on screen and add them click event to select them
+     * @param card
+     * @param x
+     * @param y
+     */
     public void drawCard(ProductionCard card,int x,int y)
     {
         //Creating an image
-        Image image = new Image(BuyScene.class.getResourceAsStream("/images/cards/productions/" +card.getId()+".jpg"));
+        Image image = loadImage("/images/cards/productions/" +card.getId()+".jpg");
 
         this.cards[x][y] = new ImageView(image);
 
@@ -97,13 +104,7 @@ public class BuyScene extends BasicSceneUpdater{
         this.cards[x][y].setFitWidth(130);
 
         this.cards[x][y].setOnMouseClicked(event -> {
-            click.setOpacity(1);
-            setCol(x);
-            setRow(y);
-            DebugMessages.printError("Clicked card -> " + x + " - " + y);
-
-            click.setText((x + 1) + " - " + (y + 1));
-            setSelectedCard(x,y);
+            this.clickFunction(x,y);
         });
 
         if(x==0) Row1.getChildren().add(this.cards[x][y]);
@@ -111,6 +112,16 @@ public class BuyScene extends BasicSceneUpdater{
         if(x==2) Row3.getChildren().add(this.cards[x][y]);
     }
 
+    public void clickFunction(int x,int y)
+    {
+        click.setOpacity(1);
+        setCol(x);
+        setRow(y);
+        DebugMessages.printError("Clicked card -> " + x + " - " + y);
+
+        click.setText((x + 1) + " - " + (y + 1));
+        setSelectedCard(x,y);
+    }
     public void setCol(int x)
     {
         this.col = x;

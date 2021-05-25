@@ -7,8 +7,10 @@ import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.view.GuiHelper;
 import it.polimi.ingsw.view.observer.Observable;
+import javafx.scene.image.Image;
 
 import java.util.List;
+import java.util.Objects;
 
 public class BasicSceneUpdater extends Observable<ClientController> {
 
@@ -20,6 +22,11 @@ public class BasicSceneUpdater extends Observable<ClientController> {
     }
 
 
+    public Image loadImage(String path)
+    {
+        Image image = new Image(Objects.requireNonNull(BasicSceneUpdater.class.getResourceAsStream(path)));
+        return image;
+    }
     public void reciveError(String msg)
     {
 

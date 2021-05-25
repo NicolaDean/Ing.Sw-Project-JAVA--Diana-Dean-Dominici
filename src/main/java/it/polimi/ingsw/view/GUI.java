@@ -105,14 +105,38 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askBuy() {
 
+        //wait until model is loaded
+        waitMiniModelLoading();
+
         try {
             GuiHelper.setRoot(FXMLpaths.buy);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.notifyObserver(ClientController::showDecks);
+
+        //this.notifyObserver(ClientController::showDecks);
     }
 
+    /**
+     * To avoid scene to try acces minimodel before its loading is finisched
+     * this function allow us to wait until then to load the scene (this problem occure only during first turn)
+     */
+    public void waitMiniModelLoading()
+    {
+        this.notifyObserver(controller -> {
+            if(controller.getMiniModel().isLoaded()) return;
+
+            //Loop until model is loaded
+            while(controller.getMiniModel().isLoaded())
+            {
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
     @Override
     public void askProduction() {
         try {
@@ -144,7 +168,7 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void showDecks(ProductionCard[][] productionCards) {
-        Platform.runLater(()->{GuiHelper.decksUpdate(productionCards);});
+
     }
 
     @Override
