@@ -7,13 +7,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class AskServerData {
+public class AskServerData extends BasicSceneUpdater{
 
     @FXML
     TextField ip;
 
     @FXML
     TextField port;
+
+
+    public AskServerData()
+    {
+
+    }
 
     public void tryConnection()
     {
@@ -28,6 +34,6 @@ public class AskServerData {
         int finalPort = port;
         String finalIp = ip;
 
-        GuiHelper.getGui().notifyObserver(controller -> controller.connectToServer(finalIp, finalPort));
+        this.notifyObserver(controller -> controller.connectToServer(finalIp, finalPort));
     }
 }

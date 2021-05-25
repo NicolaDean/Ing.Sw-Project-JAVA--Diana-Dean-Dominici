@@ -10,7 +10,8 @@ import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.observer.Observable;
-import it.polimi.ingsw.viewtest.Appp;
+import it.polimi.ingsw.view.utils.FXMLpaths;
+import javafx.application.Platform;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,6 +27,10 @@ public class GUI extends Observable<ClientController> implements View{
         gui.start();
     }
 
+    public ClientController getObserver(ClientController controller)
+    {
+        return this.getObserver();
+    }
     @Override
     public void printWelcomeScreen() {
 
@@ -62,20 +67,18 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void setMarket(BasicBall[][] balls, BasicBall discarted) {
-        System.out.println("Market set");
 
-        GuiHelper.storageUpdate("UN BEL MESSAGGIo");
     }
 
     @Override
-    public void showError() {
-
+    public void showError(String error) {
+        Platform.runLater(()->{GuiHelper.sendError(error);});
     }
 
     @Override
     public void askNickname() {
         try {
-            GuiHelper.setRoot("login");
+            GuiHelper.setRoot(FXMLpaths.askNickname);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -83,7 +86,11 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void askServerData() {
-
+        try {
+            GuiHelper.setRoot(FXMLpaths.askServerData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -94,10 +101,22 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askBuy() {
 
+        try {
+            GuiHelper.setRoot(FXMLpaths.buy);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        this.notifyObserver(ClientController::showDecks);
     }
 
     @Override
     public void askProduction() {
+        try {
+            GuiHelper.setRoot("production");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -121,8 +140,8 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
-    public void showDecks(ProductionCard[][] ProductionCards) {
-
+    public void showDecks(ProductionCard[][] productionCards) {
+        Platform.runLater(()->{GuiHelper.decksUpdate(productionCards);});
     }
 
     @Override
@@ -232,6 +251,7 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void playerLogged(String nickname) {
+        Platform.runLater(()->GuiHelper.sendMessage(nickname));
 
     }
 }

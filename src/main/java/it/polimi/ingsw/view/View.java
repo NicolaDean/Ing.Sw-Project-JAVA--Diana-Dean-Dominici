@@ -43,7 +43,7 @@ public interface View {
      */
     public BasicBall getMiniMarketDiscardedResouce();
 
-    public void showError();
+    public void showError(String error);
     /**
      * ask user a valid nickname
      */

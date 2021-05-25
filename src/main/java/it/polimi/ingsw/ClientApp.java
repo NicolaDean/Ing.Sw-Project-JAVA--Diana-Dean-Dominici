@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.view.GuiHelper;
 import it.polimi.ingsw.viewtest.Appp;
 
 import java.io.IOException;
@@ -61,7 +62,7 @@ public class ClientApp {
         ClientApp app = new ClientApp();
 
         int i=0;
-        boolean viewType = true;
+        boolean viewType = false;
 
         for(String arg: args)
         {
@@ -79,11 +80,6 @@ public class ClientApp {
 
         app.setViewType(viewType);//CLI poi il bool verra caricato da args
         app.start();
-
-
-
-
-
 
     }
 

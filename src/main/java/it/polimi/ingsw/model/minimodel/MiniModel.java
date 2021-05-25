@@ -4,11 +4,13 @@ import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.view.observer.Observable;
+import it.polimi.ingsw.view.scenes.BasicSceneUpdater;
 
 import java.util.List;
 import java.util.Stack;
 
-public class MiniModel
+public class MiniModel extends Observable<BasicSceneUpdater>
 {
 
     private int persanalIndex = 0;
@@ -32,7 +34,10 @@ public class MiniModel
         players[index].getDecks()[dashboardPos] = decks[x][y];
         decks[x][y] = newCard;
         System.out.println("Dash updated");
+
+        this.notifyObserver(scene -> scene.updateDeckCard(newCard,x,y));
     }
+
     public void setDeck(Stack<ProductionCard>[][] decks)
     {
         //this.decks = new ProductionCard[ConstantValues.colDeck][ConstantValues.rowDeck];
@@ -50,6 +55,17 @@ public class MiniModel
             i++;
         }
 
+    }
+
+    public void setModelObserver(BasicSceneUpdater currScene)
+    {
+        for(MiniPlayer p:players)
+        {
+            if(p!=null)
+                p.setObserver(currScene);
+        }
+
+        this.setObserver(currScene);
     }
 
     public void setPlayers(MiniPlayer[] players) { this.players = players; }

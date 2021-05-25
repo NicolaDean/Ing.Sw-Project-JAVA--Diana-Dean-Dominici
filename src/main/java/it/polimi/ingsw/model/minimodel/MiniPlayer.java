@@ -8,10 +8,12 @@ import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.dashboard.Storage;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.view.observer.Observable;
+import it.polimi.ingsw.view.scenes.BasicSceneUpdater;
 
 import java.util.List;
 
-public class MiniPlayer {
+public class MiniPlayer extends Observable<BasicSceneUpdater> {
     private List<Resource>              chest;
     private LeaderCard[]                leaderCards;
     private ProductionCard[]            decks;
