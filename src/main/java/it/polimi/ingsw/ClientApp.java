@@ -80,11 +80,6 @@ public class ClientApp {
         app.setViewType(viewType);//CLI poi il bool verra caricato da args
         app.start();
 
-
-
-
-
-
     }
 
 }

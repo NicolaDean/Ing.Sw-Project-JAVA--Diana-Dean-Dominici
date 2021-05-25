@@ -232,7 +232,7 @@ public class ClientController implements Runnable{
 
     public void showLeaders()
     {
-        //TODO
+        //TODO showLeaders
     }
     public void activateLeader(int pos)
     {
@@ -496,7 +496,6 @@ public class ClientController implements Runnable{
 
     public void showDecks()
     {
-
         view.showDecks(this.model.getDecks());
     }
 

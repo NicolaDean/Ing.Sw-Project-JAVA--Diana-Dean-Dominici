@@ -37,7 +37,7 @@ public class LorenzoServerController extends ServerController{
 
     }
     /**
-     *
+     * nextTurn
      * @return Packet to send at client with
      */
     @Override
@@ -71,7 +71,7 @@ public class LorenzoServerController extends ServerController{
      */
     @Override
     public void checkPapalSpaceActivation(){
-        //TODO
+        //TODO checkPapalSpaceActivation
     }
 
 
