@@ -19,7 +19,10 @@ public class ExtreactedRedBall extends Packet<ClientController> implements Packe
     public Packet analyze(ClientController controller)
     {
         DebugMessages.printWarning(controller.getMiniModel().getPlayers()[player].getNickname()+" goes "+position+" cells forward");
-        controller.incrementPositionPlayer(player,position);
+        //controller.incrementPositionPlayer(player,position);
+
+        //Commented becouse now is done by increment position packet
+        // (if decomented player will be incremented 2 times in the minimodel but only one in the server)
         return null;
     }
 

@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
@@ -35,7 +36,7 @@ public class GuiHelper extends Application {
     public void start(Stage primaryStage) {
 
         stage = primaryStage;
-
+        stage.getIcons().add(new Image(GuiHelper.class.getResourceAsStream("/images/dashboard/calamaio.png")));
         primaryStage.setTitle("Lorenzo The Game");
 
         try {
@@ -62,6 +63,7 @@ public class GuiHelper extends Application {
         return stage;
     }
     //TODO CREARE DEI SETROOT PERSONALIZZATI PER I DIVERSI TIPI DI VISTA (esempio passare pezzi di minimodel) usare loader.getController() per passare i parametri tramite dei setter
+
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
@@ -98,11 +100,17 @@ public class GuiHelper extends Application {
     private static Parent loadFXML(String fxml) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Appp.class.getResource("/fxml/"+fxml+".fxml"));
+        loader.setLocation(GuiHelper.class.getResource("/fxml/"+fxml+".fxml"));
 
+        //Load fxml
         Parent out = loader.load();
+        //Get current scene controller
         BasicSceneUpdater b = loader.getController();
-        b.init();//initialize components (eg hide label... show card..)
+        //initialize components (eg hide label... show card..)
+        b.init();
+
+        //SET THIS SCENE AS THE CURRENT MINIMODEL OBSERVER
+        gui.notifyObserver(controller -> controller.addModelObserver(b));
         return out;
     }
 

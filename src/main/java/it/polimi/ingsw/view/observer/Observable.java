@@ -6,16 +6,22 @@ import java.util.function.Consumer;
 
 public abstract class Observable<T> {
 
-    T controller;
+    transient T controller;
 
     public void setObserver(T controller)
     {
         this.controller = controller;
     }
 
+
     public void notifyObserver(Consumer<T> action)
     {
-        action.accept(this.controller);
+        if(this.controller!=null)
+            action.accept(this.controller);
     }
 
+    public T getObserver()
+    {
+        return this.controller;
+    }
 }

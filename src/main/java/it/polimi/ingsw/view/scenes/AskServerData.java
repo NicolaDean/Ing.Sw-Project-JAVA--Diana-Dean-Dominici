@@ -20,6 +20,7 @@ public class AskServerData extends BasicSceneUpdater{
     {
 
     }
+
     public void tryConnection()
     {
         String ip   = this.ip.getText();
@@ -33,6 +34,6 @@ public class AskServerData extends BasicSceneUpdater{
         int finalPort = port;
         String finalIp = ip;
 
-        GuiHelper.getGui().notifyObserver(controller -> controller.connectToServer(finalIp, finalPort));
+        this.notifyObserver(controller -> controller.connectToServer(finalIp, finalPort));
     }
 }
