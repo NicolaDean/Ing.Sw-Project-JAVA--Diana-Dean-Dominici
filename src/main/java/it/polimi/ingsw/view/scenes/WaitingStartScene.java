@@ -30,7 +30,7 @@ public class WaitingStartScene extends BasicSceneUpdater{
 
     public WaitingStartScene()
     {
-        Stage root = GuiHelper.getStage();
+
     }
 
     @Override
@@ -51,7 +51,7 @@ public class WaitingStartScene extends BasicSceneUpdater{
     public void setUser(Label label,String name)
     {
         label.setOpacity(1);
-        label.setText(name + " joined");
+        label.setText(name);
     }
 
     @Override
