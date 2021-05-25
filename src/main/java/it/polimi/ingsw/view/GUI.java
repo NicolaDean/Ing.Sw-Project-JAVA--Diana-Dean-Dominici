@@ -19,6 +19,8 @@ import java.util.List;
 public class GUI extends Observable<ClientController> implements View{
 
     boolean singleplayer;
+    private BasicBall[][]   miniMarketBalls;
+    private BasicBall       miniMarketDiscardedResouce;
 
     Thread gui;
     public GUI()
@@ -31,6 +33,33 @@ public class GUI extends Observable<ClientController> implements View{
     {
         return this.getObserver();
     }
+
+    /**
+     * set mini model of market in the view
+     * @param balls balls
+     * @param discarted ball discarted
+     */
+    public void setMarket(BasicBall[][] balls, BasicBall discarted){
+        miniMarketBalls=balls;
+        miniMarketDiscardedResouce=discarted;
+    }
+
+    /**
+     *
+     * @return the matrix of balls in the market
+     */
+    public BasicBall[][] getMiniMarketBalls() {
+        return miniMarketBalls;
+    }
+
+    /**
+     *
+     * @return discarded ball
+     */
+    public BasicBall getMiniMarketDiscardedResouce() {
+        return miniMarketDiscardedResouce;
+    }
+
     @Override
     public void printWelcomeScreen() {
 
@@ -50,25 +79,16 @@ public class GUI extends Observable<ClientController> implements View{
 
     }
 
-    @Override
-    public BasicBall[][] getMiniMarketBalls() {
-        return null;
-    }
-
-    @Override
-    public BasicBall getMiniMarketDiscardedResouce() {
-        return null;
-    }
 
     @Override
     public void showMarket(){
-
+        try {
+            GuiHelper.setRoot(FXMLpaths.market);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void setMarket(BasicBall[][] balls, BasicBall discarted) {
-
-    }
 
     @Override
     public void showError(String error) {
