@@ -95,24 +95,26 @@ public class CardFactory {
 
 
         //GET LEVEL,VictoryPoint,faith, and type of card
-        int level = currCard.get("level").getAsInt();
-        int victoryPoints = currCard.get("victoryPoints").getAsInt();
-        int obtainedFaith = currCard.get("obtainedFaith").getAsInt();
-        CardType type = CardType.valueOf(currCard.get("type").getAsString());
+        int level            = currCard.get("level").getAsInt();
+        int id               = currCard.get("id").getAsInt();
+        int victoryPoints    = currCard.get("victoryPoints").getAsInt();
+        int obtainedFaith    = currCard.get("obtainedFaith").getAsInt();
+        CardType type        = CardType.valueOf(currCard.get("type").getAsString());
 
         //LOAD COST
         JsonArray lists = currCard.getAsJsonArray("cost");
-        cost = buildResourceListFromJsonArray(lists);
+        cost            = buildResourceListFromJsonArray(lists);
 
         //LOAD RAW MAT
-        lists = currCard.getAsJsonArray("rawMaterials");
-        raw = buildResourceListFromJsonArray(lists);
+        lists   = currCard.getAsJsonArray("rawMaterials");
+        raw     = buildResourceListFromJsonArray(lists);
 
         //LOAD OBTAINED MAT
-        lists = currCard.getAsJsonArray("obtainedMaterials");
+        lists    = currCard.getAsJsonArray("obtainedMaterials");
         obtained = buildResourceListFromJsonArray(lists);
 
         ProductionCard c = new ProductionCard(cost,raw,obtained,victoryPoints,level,obtainedFaith,type);
+        c.setId(id);
         return c;
     }
     /**

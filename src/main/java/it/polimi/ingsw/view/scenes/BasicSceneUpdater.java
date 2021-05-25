@@ -19,6 +19,16 @@ public class BasicSceneUpdater extends Observable<ClientController> {
         this.setObserver(GuiHelper.getGui().getObserver());
     }
 
+
+    public void reciveError(String msg)
+    {
+
+    }
+    public void reciveMessage(String msg)
+    {
+
+    }
+
     public void updateStorage(Deposit[] storage)
     {
 

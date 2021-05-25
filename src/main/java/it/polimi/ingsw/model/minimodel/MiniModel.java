@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.scenes.BasicSceneUpdater;
 
@@ -54,6 +55,7 @@ public class MiniModel extends Observable<BasicSceneUpdater>
             }
             i++;
         }
+        DebugMessages.printError("set finisched loading");
 
     }
 

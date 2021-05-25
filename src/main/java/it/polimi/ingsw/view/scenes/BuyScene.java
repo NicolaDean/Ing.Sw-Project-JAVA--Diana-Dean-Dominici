@@ -30,6 +30,8 @@ public class BuyScene extends BasicSceneUpdater{
 
     @FXML
     public Label click;
+    @FXML
+    public ImageView selectedCard;
 
     private ImageView[][] cards;
     private int col;
@@ -40,28 +42,45 @@ public class BuyScene extends BasicSceneUpdater{
     {
         super.init();
         //root.addEventFilter(DecksEvent.DECKS,this::deckUpdate);
-        this.cards = new ImageView[4][3];
-        deckUpdate();
+        this.cards = new ImageView[3][4];
 
         click.setOpacity(0);
+
+        GuiHelper.getStage().setWidth(2000);
+        GuiHelper.getStage().setWidth(800);
+        GuiHelper.getStage().show();
+        //DRAW DECK
+        this.notifyObserver(controller ->{
+
+            while(controller.getMiniModel().getDecks() == null)
+            {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            DebugMessages.printError("Initialized");
+            this.deckUpdate(controller.getMiniModel().getDecks());
+        });
     }
 
     @Override
     public void updateDeckCard(ProductionCard card,int x,int y)
     {
-        Image image = new Image(BuyScene.class.getResourceAsStream("/images/cards/productions/" +3+".jpg"));
+        Image image = new Image(BuyScene.class.getResourceAsStream("/images/cards/productions/" +card.getId()+".jpg"));
         this.cards[x][y].setImage(image);
     }
 
-    public void deckUpdate()
+    public void deckUpdate(ProductionCard [][] deck)
     {
-        //ProductionCard[][] cards= event.getCards();
+        System.out.println("CARDS " + cards.length);
 
-        for(int i=0;i<4;i++)
+        for(int i=0;i<3;i++)
         {
-            for(int j=0;j<3;j++)
+            for(int j=0;j<4;j++)
             {
-                drawCard(null,i,j);
+                drawCard(deck[i][j],i,j);
             }
         }
     }
@@ -69,7 +88,7 @@ public class BuyScene extends BasicSceneUpdater{
     public void drawCard(ProductionCard card,int x,int y)
     {
         //Creating an image
-        Image image = new Image(BuyScene.class.getResourceAsStream("/images/cards/leader/" +(x*y+1)+".jpg"));
+        Image image = new Image(BuyScene.class.getResourceAsStream("/images/cards/productions/" +card.getId()+".jpg"));
 
         this.cards[x][y] = new ImageView(image);
 
@@ -84,12 +103,12 @@ public class BuyScene extends BasicSceneUpdater{
             DebugMessages.printError("Clicked card -> " + x + " - " + y);
 
             click.setText((x + 1) + " - " + (y + 1));
-            setCardPos(x,y,2,200);
+            setSelectedCard(x,y);
         });
 
-        if(y==0) Row1.getChildren().add(this.cards[x][y]);
-        if(y==1) Row2.getChildren().add(this.cards[x][y]);
-        if(y==2) Row3.getChildren().add(this.cards[x][y]);
+        if(x==0) Row1.getChildren().add(this.cards[x][y]);
+        if(x==1) Row2.getChildren().add(this.cards[x][y]);
+        if(x==2) Row3.getChildren().add(this.cards[x][y]);
     }
 
     public void setCol(int x)
@@ -102,13 +121,12 @@ public class BuyScene extends BasicSceneUpdater{
         this.col = y;
     }
 
-    public void setCardPos(int x,int y,int newPosx,int newPosy)
+    public void setSelectedCard(int x,int y)
     {
-        //DONT WORK
+        Image currCard = this.cards[x][y].getImage();
 
-        DebugMessages.printError("move");
-        this.cards[x][y].setX(newPosx);
-        this.cards[x][y].setY(newPosy);
+        DebugMessages.printError("Image setted");
+        selectedCard.setImage(currCard);
     }
 
 }

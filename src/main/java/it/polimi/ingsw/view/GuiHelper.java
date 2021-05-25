@@ -22,11 +22,11 @@ import java.util.List;
 
 public class GuiHelper extends Application {
 
-    private static Scene        scene;
-    private static GUI          gui;
-    private static GuiHelper    guiHelper;
-    private static Stage        stage;
-
+    private static Scene                scene;
+    private static GUI                  gui;
+    private static GuiHelper            guiHelper;
+    private static Stage                stage;
+    private static BasicSceneUpdater    currentScene;
     public GuiHelper()
     {
         guiHelper = this;
@@ -53,10 +53,6 @@ public class GuiHelper extends Application {
         return gui;
     }
 
-    public static void updateRoot()
-    {
-
-    }
 
     public static Stage getStage()
     {
@@ -74,24 +70,18 @@ public class GuiHelper extends Application {
      */
     public static void sendMessage(String msg)
     {
+        currentScene.reciveMessage(msg);
         stage.fireEvent(new GenericMessage(GenericMessage.ANY,msg));
     }
 
     public static void sendError(String msg)
     {
+        currentScene.reciveError(msg);
         stage.fireEvent(new GenericMessage(GenericMessage.ERROR,msg));
     }
 
-    public static void storageUpdate(Deposit[] deposits)
-    {
-        stage.fireEvent(new StorageEvent(StorageEvent.STORAGE,deposits));
-    }
 
-    public static void storageUpdate(List<Resource> chest)
-    {
-        stage.fireEvent(new ChestEvent(ChestEvent.CHEST,chest));
-    }
-
+    //TODO remove this event
     public static void decksUpdate(ProductionCard[][] cards)
     {
         stage.fireEvent(new DecksEvent(DecksEvent.DECKS,cards));
@@ -109,6 +99,7 @@ public class GuiHelper extends Application {
         //initialize components (eg hide label... show card..)
         b.init();
 
+        currentScene = b;
         //SET THIS SCENE AS THE CURRENT MINIMODEL OBSERVER
         gui.notifyObserver(controller -> controller.addModelObserver(b));
         return out;

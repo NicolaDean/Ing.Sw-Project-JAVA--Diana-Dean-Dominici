@@ -31,7 +31,6 @@ public class WaitingStartScene extends BasicSceneUpdater{
     public WaitingStartScene()
     {
         Stage root = GuiHelper.getStage();
-        root.addEventFilter(GenericMessage.ANY,this::userEntered);
     }
 
     @Override
@@ -46,25 +45,24 @@ public class WaitingStartScene extends BasicSceneUpdater{
     public void startGame()
     {
         this.notifyObserver(ClientController::sendStartCommand);
-        this.notifyObserver(ClientController::askBuy);
-    }
-
-    public void userEntered(GenericMessage event)
-    {
-        System.out.println();
-
-        if(userMsgPadding == 0) setUser(first_user,event.getMsg());
-        if(userMsgPadding == 1) setUser(second_user,event.getMsg());
-        if(userMsgPadding == 2) setUser(third_user,event.getMsg());
-        if(userMsgPadding == 3) setUser(fourth_user,event.getMsg());
-
-        userMsgPadding++;
+        //this.notifyObserver(ClientController::askBuy);
     }
 
     public void setUser(Label label,String name)
     {
         label.setOpacity(1);
         label.setText(name + " joined");
+    }
+
+    @Override
+    public void reciveMessage(String msg)
+    {
+        if(userMsgPadding == 0) setUser(first_user,msg);
+        if(userMsgPadding == 1) setUser(second_user,msg);
+        if(userMsgPadding == 2) setUser(third_user,msg);
+        if(userMsgPadding == 3) setUser(fourth_user,msg);
+
+        userMsgPadding++;
     }
 
 

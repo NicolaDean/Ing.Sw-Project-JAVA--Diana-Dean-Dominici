@@ -33,19 +33,20 @@
 -->
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/" fx:controller="it.polimi.ingsw.view.scenes.BuyScene">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.BuyScene">
    <children>
       <VBox layoutX="168.0" layoutY="47.0" prefHeight="700.0" prefWidth="900.0">
          <children>
             <HBox prefHeight="233.0" prefWidth="900.0">
                <children>
-                  <FlowPane fx:id="Row1" prefHeight="200.0" prefWidth="900.0" />
+                  <FlowPane fx:id="Row1" prefHeight="233.0" prefWidth="901.0" />
                </children>
             </HBox>
             <HBox prefHeight="233.0" prefWidth="900.0">
@@ -66,5 +67,6 @@
             <Font size="20.0" />
          </font>
       </Label>
+      <ImageView fx:id="selectedCard" fitHeight="150.0" fitWidth="200.0" layoutX="825.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="590.0" AnchorPane.leftAnchor="825.0" AnchorPane.rightAnchor="175.0" AnchorPane.topAnchor="60.0" />
    </children>
 </AnchorPane>
