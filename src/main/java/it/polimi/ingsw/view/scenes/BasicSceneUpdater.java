@@ -14,6 +14,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,19 +32,27 @@ public class BasicSceneUpdater extends Observable<ClientController> {
     }
 
 
-    public void loadDialog(String path)
+    public int loadDialog(String path)
     {
         try {
-            DialogPane         pane = (DialogPane) GuiHelper.loadFXML(path,new DialogProductionScene());
-            Dialog<ButtonType> dialog  =  new Dialog<>();
+
+            DialogProductionScene result = new DialogProductionScene();
+            DialogPane          pane = (DialogPane) GuiHelper.loadFXML(path,result);
+            Dialog<ButtonType>  dialog  =  new Dialog<>();
             dialog.setDialogPane(pane);
-            dialog.setTitle("lol");
+            dialog.setTitle("Chose card positioning");
 
             Optional<ButtonType> options = dialog.showAndWait();
+            if(options.get() == ButtonType.OK)
+            {
+                return result.getPos();
+            }
+            else return -1;
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return -1;
     }
     public static Image loadImage(String path)
     {
