@@ -108,11 +108,15 @@ public class GUI extends Observable<ClientController> implements View{
         //wait until model is loaded
         waitMiniModelLoading();
 
-        try {
-            GuiHelper.setRoot(FXMLpaths.buy);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Platform.runLater(()->{
+            try {
+                GuiHelper.setRoot(FXMLpaths.buy);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
+
 
         //this.notifyObserver(ClientController::showDecks);
     }
@@ -127,7 +131,7 @@ public class GUI extends Observable<ClientController> implements View{
             if(controller.getMiniModel().isLoaded()) return;
 
             //Loop until model is loaded
-            while(controller.getMiniModel().isLoaded())
+            while(!controller.getMiniModel().isLoaded())
             {
                 try {
                     Thread.sleep(200);
@@ -197,13 +201,7 @@ public class GUI extends Observable<ClientController> implements View{
     public void askTurnType()
     {
 
-            Platform.runLater(()-> {
-                try {
-                    GuiHelper.setRoot(FXMLpaths.buy);
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-            });
+        askBuy();
     }
 
     @Override

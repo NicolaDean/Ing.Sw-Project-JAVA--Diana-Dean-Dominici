@@ -41,7 +41,6 @@ public class BuyScene extends BasicSceneUpdater{
     public void init()
     {
         super.init();
-        //root.addEventFilter(DecksEvent.DECKS,this::deckUpdate);
         this.cards = new ImageView[3][4];
 
         click.setOpacity(0);
@@ -66,7 +65,7 @@ public class BuyScene extends BasicSceneUpdater{
     public void updateDeckCard(ProductionCard card,int x,int y)
     {
         Image image = loadImage("/images/cards/productions/" +card.getId()+".jpg");;
-        this.cards[x][y].setImage(image);
+        this.cards[y][x].setImage(image);
     }
 
     /**
@@ -81,7 +80,7 @@ public class BuyScene extends BasicSceneUpdater{
         {
             for(int j=0;j<4;j++)
             {
-                drawCard(deck[i][j],i,j);
+                drawCard(deck[i][j],j,i);
             }
         }
     }
@@ -97,26 +96,24 @@ public class BuyScene extends BasicSceneUpdater{
         //Creating an image
         Image image = loadImage("/images/cards/productions/" +card.getId()+".jpg");
 
-        this.cards[x][y] = new ImageView(image);
+        this.cards[y][x] = new ImageView(image);
 
         //setting the fit height and width of the image view
-        this.cards[x][y].setFitHeight(200);
-        this.cards[x][y].setFitWidth(130);
+        this.cards[y][x].setFitHeight(200);
+        this.cards[y][x].setFitWidth(130);
 
-        this.cards[x][y].setOnMouseClicked(event -> {
+        this.cards[y][x].setOnMouseClicked(event -> {
             this.clickFunction(x,y);
         });
 
-        if(x==0) Row1.getChildren().add(this.cards[x][y]);
-        if(x==1) Row2.getChildren().add(this.cards[x][y]);
-        if(x==2) Row3.getChildren().add(this.cards[x][y]);
+        if(y==0) Row1.getChildren().add(this.cards[y][x]);
+        if(y==1) Row2.getChildren().add(this.cards[y][x]);
+        if(y==2) Row3.getChildren().add(this.cards[y][x]);
     }
 
     public void clickFunction(int x,int y)
     {
         click.setOpacity(1);
-        setCol(x);
-        setRow(y);
         DebugMessages.printError("Clicked card -> " + x + " - " + y);
 
         click.setText((x + 1) + " - " + (y + 1));
@@ -129,12 +126,19 @@ public class BuyScene extends BasicSceneUpdater{
 
     public void setRow(int y)
     {
-        this.col = y;
+        this.row = y;
     }
 
+    /**
+     * save inside col,row variable the selected card
+     * @param x col
+     * @param y row
+     */
     public void setSelectedCard(int x,int y)
     {
-        Image currCard = this.cards[x][y].getImage();
+        setCol(x);
+        setRow(y);
+        Image currCard = this.cards[y][x].getImage();
 
         DebugMessages.printError("Image setted");
         selectedCard.setImage(currCard);

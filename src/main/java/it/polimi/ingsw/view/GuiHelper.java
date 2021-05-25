@@ -40,7 +40,7 @@ public class GuiHelper extends Application {
     public void start(Stage primaryStage) {
 
         stage = primaryStage;
-        stage.getIcons().add(new Image(GuiHelper.class.getResourceAsStream("/images/dashboard/calamaio.png")));
+        stage.getIcons().add(BasicSceneUpdater.loadImage("/images/dashboard/calamaio.png"));
         primaryStage.setTitle("Lorenzo The Game");
 
         try {
@@ -69,7 +69,6 @@ public class GuiHelper extends Application {
     {
         return stage;
     }
-    //TODO CREARE DEI SETROOT PERSONALIZZATI PER I DIVERSI TIPI DI VISTA (esempio passare pezzi di minimodel) usare loader.getController() per passare i parametri tramite dei setter
 
     /**
      * load new scene
@@ -109,13 +108,6 @@ public class GuiHelper extends Application {
     {
         currentScene.reciveError(msg);
         stage.fireEvent(new GenericMessage(GenericMessage.ERROR,msg));
-    }
-
-
-    //TODO remove this event
-    public static void decksUpdate(ProductionCard[][] cards)
-    {
-        stage.fireEvent(new DecksEvent(DecksEvent.DECKS,cards));
     }
 
     /**

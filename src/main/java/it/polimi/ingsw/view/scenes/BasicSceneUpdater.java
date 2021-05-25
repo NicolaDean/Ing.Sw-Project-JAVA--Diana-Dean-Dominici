@@ -22,10 +22,9 @@ public class BasicSceneUpdater extends Observable<ClientController> {
     }
 
 
-    public Image loadImage(String path)
+    public static Image loadImage(String path)
     {
-        Image image = new Image(Objects.requireNonNull(BasicSceneUpdater.class.getResourceAsStream(path)));
-        return image;
+        return new Image(Objects.requireNonNull(BasicSceneUpdater.class.getResourceAsStream(path)));
     }
     public void reciveError(String msg)
     {
