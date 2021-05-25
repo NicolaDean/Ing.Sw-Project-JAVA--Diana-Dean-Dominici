@@ -159,6 +159,13 @@ public class BuyScene extends BasicSceneUpdater{
     }
 
     public void buyButton(ActionEvent actionEvent) {
-        loadDialog(FXMLpaths.prodDialog);
+        int pos = loadDialog(FXMLpaths.prodDialog);
+
+        if(pos != -1)
+        {
+            this.pos = pos;
+            this.notifyObserver(controller -> controller.sendBuyCard(this.row,this.col,this.pos));
+        }
+
     }
 }

@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.scenes;
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.view.GuiHelper;
 import it.polimi.ingsw.view.events.GenericMessage;
+import it.polimi.ingsw.view.utils.FXMLpaths;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
