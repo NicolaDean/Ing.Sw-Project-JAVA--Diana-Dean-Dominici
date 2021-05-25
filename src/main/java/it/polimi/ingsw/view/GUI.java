@@ -39,6 +39,10 @@ public class GUI extends Observable<ClientController> implements View{
     public void setSingleplayer() {
         this.singleplayer = true;
     }
+    public boolean isSingleplayer()
+    {
+        return this.singleplayer;
+    }
 
     @Override
     public void showPapalCell(MiniPlayer[] p) {
@@ -101,15 +105,42 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askBuy() {
 
-        try {
-            GuiHelper.setRoot(FXMLpaths.buy);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //wait until model is loaded
+        waitMiniModelLoading();
 
-        this.notifyObserver(ClientController::showDecks);
+        Platform.runLater(()->{
+            try {
+                GuiHelper.setRoot(FXMLpaths.buy);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
+
+
+        //this.notifyObserver(ClientController::showDecks);
     }
 
+    /**
+     * To avoid scene to try acces minimodel before its loading is finisched
+     * this function allow us to wait until then to load the scene (this problem occure only during first turn)
+     */
+    public void waitMiniModelLoading()
+    {
+        this.notifyObserver(controller -> {
+            if(controller.getMiniModel().isLoaded()) return;
+
+            //Loop until model is loaded
+            while(!controller.getMiniModel().isLoaded())
+            {
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
     @Override
     public void askProduction() {
         try {
@@ -136,12 +167,12 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void askMarketExtraction() {
-
+        //TODO send to market scene
     }
 
     @Override
     public void showDecks(ProductionCard[][] productionCards) {
-        Platform.runLater(()->{GuiHelper.decksUpdate(productionCards);});
+
     }
 
     @Override
@@ -152,6 +183,8 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askResourceInsertion(List<Resource> resourceList) {
 
+        //TODO change controller of dashbard view to insetion controller
+        //TODO add dinamicly controller update to GUIHELPER
     }
 
     @Override
@@ -165,18 +198,20 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
-    public void askTurnType() {
+    public void askTurnType()
+    {
 
+        askBuy();
     }
 
     @Override
     public void showPlayer(Deposit[]deposits, List<Resource> chest, ProductionCard[] cards,LeaderCard[] leaderCards,String name) {
-
+        //Spy scene
     }
 
     @Override
     public void askCommand() {
-
+        //trurn chosing scene
     }
 
     @Override
@@ -196,6 +231,8 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public List<Resource> askWhiteBalls(ResourceType[] resourceTypes,int num)  {
+
+        //Display a message showing the 2 resource type between he can chose
         return null;
     }
 
@@ -206,7 +243,8 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void showGameStarted() {
-
+        //TODO show a "TOAST" message with "game started"
+        this.askCommand();
     }
 
     @Override
@@ -252,6 +290,5 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void playerLogged(String nickname) {
         Platform.runLater(()->GuiHelper.sendMessage(nickname));
-
     }
 }

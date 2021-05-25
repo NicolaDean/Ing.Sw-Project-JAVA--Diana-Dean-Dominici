@@ -248,6 +248,7 @@ public class ServerController{
             players[i]=new MiniPlayer(p.getNickname());
             players[i].setStorage(p.getDashboard().getStorage().getDeposits());
             players[i].updateChest(resources);
+            players[i].setIndex(i);
             LeaderCard[] leaderCards = this.game.get4leaders();
             players[i].setLeaderCards(leaderCards);
             p.setLeaders(leaderCards);

@@ -22,7 +22,7 @@ public class LoginScene extends BasicSceneUpdater{
     {
         if(!nickname.getText().equals(""))
         {
-            this.notifyObserver(controller -> controller.setNickname(nickname.getText(),false));
+            this.notifyObserver(controller -> controller.setNickname(nickname.getText(),GuiHelper.getGui().isSingleplayer()));
             try {
                 GuiHelper.setRoot(FXMLpaths.waitingStart);
             } catch (IOException e) {

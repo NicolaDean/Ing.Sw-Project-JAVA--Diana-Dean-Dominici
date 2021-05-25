@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ProductionCard extends Card {
 
-    //private int id;
+    private int id;
     private CardType type;
     private int level;
     private int obtainedFaith;
@@ -32,6 +32,8 @@ public class ProductionCard extends Card {
         this.obtainedFaith = obtainedFaith;
     }
 
+
+
     public ProductionCard(List<Resource> cost, int victoryPoints,int level) {
         super(cost, victoryPoints);
         this.level = level;
@@ -45,7 +47,15 @@ public class ProductionCard extends Card {
         this.obtainedMaterials =  obt;
     }
 
+    public void setId(int id)
+    {
+        this.id = id;
+    }
 
+    public int getId()
+    {
+        return this.id;
+    }
 
     public int getLevel() {
         return level;
