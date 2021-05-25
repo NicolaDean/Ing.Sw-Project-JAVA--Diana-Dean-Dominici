@@ -32,6 +32,8 @@ public class GuiHelper extends Application {
         guiHelper = this;
     }
 
+
+
     /**
      * load the first scene and initialize variable usefull during GuiHelper life (and other scenes life)
      * @param primaryStage stage generated from JavaFx at "launch" function
@@ -108,6 +110,7 @@ public class GuiHelper extends Application {
     {
         currentScene.reciveError(msg);
         stage.fireEvent(new GenericMessage(GenericMessage.ERROR,msg));
+
     }
 
     /**
@@ -117,7 +120,7 @@ public class GuiHelper extends Application {
      * @return              loaded Scene
      * @throws IOException  somting goes wrong in loading
      */
-    private static Parent loadFXML(String fxml,BasicSceneUpdater sceneUpdater) throws IOException {
+    public static Parent loadFXML(String fxml, BasicSceneUpdater sceneUpdater) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GuiHelper.class.getResource("/fxml/"+fxml+".fxml"));
 
@@ -132,7 +135,7 @@ public class GuiHelper extends Application {
      * @return              loaded Scene
      * @throws IOException  somting goes wrong in loading
      */
-    private static Parent loadFXML(String fxml) throws IOException {
+    public static Parent loadFXML(String fxml) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GuiHelper.class.getResource("/fxml/"+fxml+".fxml"));

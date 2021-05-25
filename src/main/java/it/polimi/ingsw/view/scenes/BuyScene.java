@@ -1,19 +1,25 @@
 package it.polimi.ingsw.view.scenes;
 
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GuiHelper;
 import it.polimi.ingsw.view.events.DecksEvent;
+import it.polimi.ingsw.view.utils.FXMLpaths;
 import it.polimi.ingsw.viewtest.Appp;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 
 
 public class BuyScene extends BasicSceneUpdater{
@@ -33,15 +39,23 @@ public class BuyScene extends BasicSceneUpdater{
     @FXML
     public ImageView selectedCard;
 
+
+
+
     private ImageView[][] cards;
+
+    //Server request data
     private int col;
     private int row;
+    private int pos;
+
 
     @Override
     public void init()
     {
         super.init();
-        this.cards = new ImageView[3][4];
+
+        this.cards = new ImageView[ConstantValues.rowDeck][ConstantValues.colDeck];
 
         click.setOpacity(0);
 
@@ -76,9 +90,9 @@ public class BuyScene extends BasicSceneUpdater{
     {
         System.out.println("CARDS " + cards.length);
 
-        for(int i=0;i<3;i++)
+        for(int i=0;i<ConstantValues.rowDeck;i++)
         {
-            for(int j=0;j<4;j++)
+            for(int j=0;j<ConstantValues.colDeck;j++)
             {
                 drawCard(deck[i][j],j,i);
             }
@@ -144,4 +158,7 @@ public class BuyScene extends BasicSceneUpdater{
         selectedCard.setImage(currCard);
     }
 
+    public void buyButton(ActionEvent actionEvent) {
+        loadDialog(FXMLpaths.prodDialog);
+    }
 }
