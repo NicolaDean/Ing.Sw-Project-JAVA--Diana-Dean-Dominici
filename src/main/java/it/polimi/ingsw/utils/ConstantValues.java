@@ -25,6 +25,6 @@ public class ConstantValues {
     public static int                       numGrayBall             = 2;
     public static int                       numVioletBall           = 2;
 
-    public static int                       guiWidth                = 1080;
-    public static int                       guiHeight               = 720;
+    public static double                    guiWidth                = 1280;
+    public static double                    guiHeight               = 720;
 }
