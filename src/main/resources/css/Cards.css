@@ -1,0 +1,13 @@
+#production_card{
+    -fx-margin-left: 30px;
+}
+
+#production_card:hover
+{
+    -fx-effect: dropshadow(gaussian, #f2e0d6, 20, 0.3, 0, 0);
+    -fx-alignment: center;
+    -fx-cursor: hand;
+    -fx-fit-to-height: 220px;
+    -fx-fit-to-width : 150px;
+
+}

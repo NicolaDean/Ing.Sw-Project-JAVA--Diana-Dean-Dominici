@@ -18,10 +18,7 @@ import it.polimi.ingsw.model.resources.ResourceOperator;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.observer.Observable;
-import it.polimi.ingsw.view.utils.CliColors;
-import it.polimi.ingsw.view.utils.ErrorManager;
-import it.polimi.ingsw.view.utils.InputReaderValidation;
-import it.polimi.ingsw.view.utils.Logger;
+import it.polimi.ingsw.view.utils.*;
 
 
 import static it.polimi.ingsw.model.resources.ResourceOperator.*;
@@ -267,20 +264,6 @@ public class CLI extends Observable<ClientController> implements View {
         this.terminal.out.print("\033[H\033[2J");
     }
 
-    public String getRandomNickname()
-    {
-        List<String> names;
-        Reader reader = new InputStreamReader(ErrorManager.class.getClassLoader().getResourceAsStream("json/nickNames.json"));
-        Gson gson = new Gson();
-        String [] tmp = gson.fromJson(reader,String[].class);
-        names = Arrays.asList(tmp);
-        Random rand = new Random();
-        Integer random_int = rand.nextInt(names.size()-1);
-        String nickName = names.get(random_int);
-        random_int = rand.nextInt(999);
-        String num = random_int.toString();
-        return nickName+num;
-    }
 
     @Override
     public void askNickname() {
@@ -297,7 +280,7 @@ public class CLI extends Observable<ClientController> implements View {
                 /*byte[] array = new byte[7]; // length is bounded by 7
                 new Random().nextBytes(array);
                 nickname  = new String(array, Charset.forName("UTF-8"));*/
-                nickname=this.getRandomNickname();
+                nickname= RandomNicks.getRandomNickname();
                 terminal.printGoodMessages("Your random nickname is "+nickname+".\n");
 
             }

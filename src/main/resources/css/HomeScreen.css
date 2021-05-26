@@ -7,3 +7,8 @@ userEntredMsg
 {
     -fx-background-color: #F2F;
 }
+
+#centered
+{
+    -fx-alignment: center;
+}

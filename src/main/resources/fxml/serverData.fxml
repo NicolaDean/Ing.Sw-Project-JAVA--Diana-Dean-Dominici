@@ -36,82 +36,83 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="it.polimi.ingsw.view.scenes.AskServerData">
-  <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" styleClass="root" stylesheets="@../css/HomeScreen.css" VBox.vgrow="ALWAYS">
-         <children>
-            <Label layoutX="199.0" layoutY="58.0" prefHeight="88.0" prefWidth="224.0" text="Insert Server Data:">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-               <textFill>
-                  <LinearGradient endX="1.0" endY="0.7380952380952381" startX="0.46190476190476193" startY="0.06666666666666665">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color red="0.2368421107530594" green="0.05701754242181778" blue="0.05701754242181778" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </textFill>
-            </Label>
-            <TextField fx:id="ip" layoutX="199.0" layoutY="136.0" prefHeight="35.0" prefWidth="242.0" promptText="Insert IP address of server" />
-            <Button layoutX="252.0" layoutY="276.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="136.0" text="Connect" onAction="#tryConnection">
-               <font>
-                  <Font size="26.0" />
-               </font>
-               <textFill>
-                  <LinearGradient endX="1.0" endY="0.7380952380952381" startX="0.46190476190476193" startY="0.06666666666666665">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color red="0.2368421107530594" green="0.05701754242181778" blue="0.05701754242181778" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </textFill>
-            </Button>
-            <Label layoutX="234.0" layoutY="216.0" prefHeight="88.0" prefWidth="224.0" text="(default: localhost 1234)">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-               <textFill>
-                  <LinearGradient endX="1.0" endY="1.0" startX="0.9380952380952381" startY="0.20476190476190476">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="0.5" green="0.20601852238178253" blue="0.20601852238178253" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </textFill>
-            </Label>
-            <TextField fx:id="port" layoutX="199.0" layoutY="190.0" prefHeight="35.0" prefWidth="242.0" promptText="Insert serever port (1-65655)" />
-         </children>
-    </AnchorPane>
-  </children>
-</VBox>
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="600.0" prefWidth="800.0" styleClass="root" stylesheets="@../css/HomeScreen.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.AskServerData">
+   <children>
+      <Label layoutX="231.0" layoutY="66.0" prefHeight="88.0" prefWidth="403.0" text="Insert Server Data:">
+         <font>
+            <Font name="System Bold" size="37.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="0.7380952380952381" startX="0.46190476190476193" startY="0.06666666666666665">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.2368421107530594" green="0.05701754242181778" blue="0.05701754242181778" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <TextField fx:id="ip" layoutX="248.0" layoutY="154.0" prefHeight="50.0" prefWidth="300.0" promptText="Insert IP address of server">
+         <font>
+            <Font size="18.0" />
+         </font></TextField>
+      <Button layoutX="330.0" layoutY="366.0" mnemonicParsing="false" onAction="#tryConnection" prefHeight="53.0" prefWidth="136.0" text="Connect">
+         <font>
+            <Font size="26.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="0.7380952380952381" startX="0.46190476190476193" startY="0.06666666666666665">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.2368421107530594" green="0.05701754242181778" blue="0.05701754242181778" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Button>
+      <Label layoutX="310.0" layoutY="300.0" prefHeight="88.0" prefWidth="224.0" text="(default: localhost 1234)">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0" startX="0.9380952380952381" startY="0.20476190476190476">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.5" green="0.20601852238178253" blue="0.20601852238178253" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <TextField fx:id="port" layoutX="248.0" layoutY="241.0" prefHeight="50.0" prefWidth="300.0" promptText="Insert serever port (1-65655)">
+         <font>
+            <Font size="18.0" />
+         </font></TextField>
+   </children>
+</AnchorPane>

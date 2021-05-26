@@ -3,10 +3,8 @@ package it.polimi.ingsw.view;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.resources.Resource;
-import it.polimi.ingsw.view.events.ChestEvent;
-import it.polimi.ingsw.view.events.DecksEvent;
-import it.polimi.ingsw.view.events.GenericMessage;
-import it.polimi.ingsw.view.events.StorageEvent;
+
+import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.view.scenes.BasicSceneUpdater;
 import it.polimi.ingsw.view.utils.FXMLpaths;
 import it.polimi.ingsw.viewtest.Appp;
@@ -51,9 +49,20 @@ public class GuiHelper extends Application {
             e.printStackTrace();
         }
         primaryStage.setScene(scene);
+        primaryStage.setWidth(ConstantValues.guiWidth);
+        primaryStage.setHeight(ConstantValues.guiHeight);
+        primaryStage.setResizable(false);
+        GuiHelper.resize(800,600);
         primaryStage.show();
     }
 
+
+    public static void resize(int width,int height)
+    {
+        GuiHelper.getStage().setWidth(width);
+        GuiHelper.getStage().setHeight(height);
+
+    }
     /**
      *
      * @return the Gui class
@@ -99,7 +108,6 @@ public class GuiHelper extends Application {
     public static void sendMessage(String msg)
     {
         currentScene.reciveMessage(msg);
-        stage.fireEvent(new GenericMessage(GenericMessage.ANY,msg));
     }
 
     /**
@@ -109,7 +117,6 @@ public class GuiHelper extends Application {
     public static void sendError(String msg)
     {
         currentScene.reciveError(msg);
-        stage.fireEvent(new GenericMessage(GenericMessage.ERROR,msg));
 
     }
 
@@ -145,6 +152,8 @@ public class GuiHelper extends Application {
 
     /**
      * Generate and initialize the Scene to be setted by subscribing it to model observer
+     * this function allow to load only scene that use "basicSceneUpdater" children as controller
+     * since this method call BasicSceneUpdater.init() (a function containing initializzation of components of a scene)
      * @param loader fxml to load
      * @return loaded scene
      * @throws IOException  loading failed (not existing file)
@@ -163,6 +172,10 @@ public class GuiHelper extends Application {
         return out;
     }
 
+    /**
+     * Main which launch Javafx application
+     * @param g
+     */
     public static void main(GUI g) {
         gui = g;
         launch();

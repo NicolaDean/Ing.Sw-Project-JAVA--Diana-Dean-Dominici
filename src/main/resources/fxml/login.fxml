@@ -36,25 +36,24 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="it.polimi.ingsw.view.scenes.LoginScene">
-  <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" styleClass="root" stylesheets="@../css/HomeScreen.css" VBox.vgrow="ALWAYS">
-         <children>
-            <Label layoutX="208.0" layoutY="14.0" prefHeight="88.0" prefWidth="224.0" text="LOGIN" textFill="#973131">
-               <font>
-                  <Font name="System Bold" size="69.0" />
-               </font>
-            </Label>
-            <TextField fx:id="nickname" layoutX="199.0" layoutY="136.0" prefHeight="35.0" prefWidth="242.0" />
-            <Button layoutX="252.0" layoutY="210.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="136.0" text="Play" onAction="#login">
-               <font>
-                  <Font size="26.0" />
-               </font>
-            </Button>
-         </children>
-    </AnchorPane>
-  </children>
-</VBox>
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="600.0" prefWidth="800.0" styleClass="root" stylesheets="@../css/HomeScreen.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.LoginScene">
+   <children>
+      <Label alignment="CENTER" layoutX="118.0" layoutY="80.0" prefHeight="164.0" prefWidth="565.0" text="LOGIN" textFill="#973131">
+         <font>
+            <Font name="System Bold" size="96.0" />
+         </font>
+      </Label>
+      <TextField id="centered" fx:id="nickname" alignment="TOP_CENTER" layoutX="227.0" layoutY="263.0" maxHeight="72.0" maxWidth="-Infinity" minHeight="57.0" minWidth="-Infinity" prefHeight="57.0" prefWidth="347.0" promptText="Insert username" stylesheets="@../css/HomeScreen.css">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </TextField>
+      <Button alignment="CENTER" layoutX="335.0" layoutY="357.0" maxHeight="104.0" maxWidth="233.0" minHeight="77.0" minWidth="130.0" mnemonicParsing="false" onAction="#login" prefHeight="77.0" prefWidth="130.0" stylesheets="@../css/HomeScreen.css" text="Play">
+         <font>
+            <Font size="37.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
