@@ -21,6 +21,10 @@ public class PingController extends GenericPing<ServerController>{
         //System.out.println("Ping sended");
     }
 
+    /**
+     * awake the ping thread causing the ping to be sended back
+     * called when pong is recived
+     */
     public void setPinged()
     {
         synchronized (this)
@@ -32,6 +36,10 @@ public class PingController extends GenericPing<ServerController>{
 
     }
 
+    /**
+     * a boolean that rappresent the game status, if game is not started when user disconnect is removed both from model and controller
+     * if a user disconnect when this boolean is true the player inside the model will NOT be removed (instead his handler will)
+     */
     public void setGameStarted()
     {
         this.gameStarted = true;

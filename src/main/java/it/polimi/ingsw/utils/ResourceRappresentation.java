@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
 
+
 public class ResourceRappresentation {
 
     private final HashMap<ResourceType,String> colorRappresentation             = new HashMap<ResourceType,String>();

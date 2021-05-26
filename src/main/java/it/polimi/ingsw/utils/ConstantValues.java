@@ -1,5 +1,8 @@
 package it.polimi.ingsw.utils;
 
+/**
+ * constant class to contain all constant values
+ */
 public class ConstantValues {
 
 

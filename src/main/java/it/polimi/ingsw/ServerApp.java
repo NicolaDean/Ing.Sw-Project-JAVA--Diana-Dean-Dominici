@@ -19,7 +19,6 @@ public class ServerApp {
     private ServerSocket            serverSocket;
     List<ServerController>          availableControllers;
 
-    //Potrei mantenere il client in una "waitingRoom" finche non arriva un messaggio di login
     public ServerApp(int port)
     {
         this.executor= Executors.newCachedThreadPool();

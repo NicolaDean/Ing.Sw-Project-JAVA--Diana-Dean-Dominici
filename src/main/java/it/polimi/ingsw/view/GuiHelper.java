@@ -52,7 +52,13 @@ public class GuiHelper extends Application {
         primaryStage.setWidth(ConstantValues.guiWidth);
         primaryStage.setHeight(ConstantValues.guiHeight);
         primaryStage.setResizable(false);
-        GuiHelper.resize(800,600);
+
+        primaryStage.setWidth(1280d);
+        primaryStage.setHeight(720d);
+        primaryStage.setResizable(false);
+        primaryStage.setMaximized(true);
+        primaryStage.setFullScreen(true);
+        //GuiHelper.resize(800,600);
         primaryStage.show();
     }
 

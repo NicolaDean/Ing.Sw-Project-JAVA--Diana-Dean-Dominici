@@ -32,31 +32,42 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import java.net.URL?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.HomeScene">
-  <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" styleClass="root" stylesheets="@../css/HomeScreen.css" VBox.vgrow="ALWAYS">
-      <children>
-            <Button id="singleButton" layoutX="250.0" layoutY="135.0" mnemonicParsing="false" onAction="#singlePlayerCall" prefHeight="80.0" prefWidth="300.0" text="Single Player" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="25.0" />
-               </font>
-            </Button>
-            <Button id="multiButton" layoutX="250.0" layoutY="241.0" mnemonicParsing="false" onAction="#multiplayerCall" prefHeight="80.0" prefWidth="300.0" text="Multi Player" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="25.0" />
-               </font>
-            </Button>
-            <Button id="reconnectButton" layoutX="250.0" layoutY="348.0" mnemonicParsing="false" onAction="#reconnectCall" prefHeight="80.0" prefWidth="300.0" text="Try to Reconnect" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="25.0" />
-               </font>
-            </Button>
-      </children>
-    </AnchorPane>
-  </children>
-</VBox>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.HomeScene">
+   <children>
+      <Group>
+         <children>
+            <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="600.0" prefWidth="800.0">
+               <children>
+                  <Button id="singleButton" layoutX="250.0" layoutY="135.0" mnemonicParsing="false" onAction="#singlePlayerCall" prefHeight="80.0" prefWidth="300.0" text="Single Player" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                  </Button>
+                  <Button id="multiButton" layoutX="250.0" layoutY="241.0" mnemonicParsing="false" onAction="#multiplayerCall" prefHeight="80.0" prefWidth="300.0" text="Multi Player" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                  </Button>
+                  <Button id="reconnectButton" layoutX="250.0" layoutY="348.0" mnemonicParsing="false" onAction="#reconnectCall" prefHeight="80.0" prefWidth="300.0" text="Try to Reconnect" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </Group>
+   </children>
+   <stylesheets>
+      <URL value="@../css/Background.css" />
+      <URL value="@../css/HomeScreen.css" />
+   </stylesheets>
+</StackPane>

@@ -385,7 +385,7 @@ public class ServerController{
     /**
      * production of a player
      * @param pos which card i wanna use
-     * @param player player who wand to do an action
+     * @param player client index
      */
     public Packet production(int pos,int player)
     {
@@ -411,7 +411,7 @@ public class ServerController{
      * @param res1 first spended resource
      * @param res2 second spended resource
      * @param obt  wanted resource
-     * @param player packet sender
+     * @param player client index
      */
     public Packet basicProduction(ResourceType res1,ResourceType res2, ResourceType obt, int player)
     {
@@ -451,7 +451,13 @@ public class ServerController{
         }
     }
 
-
+    /**
+     * allow to insert resources into a specific player storage
+     * @param resource resourtce to insert
+     * @param pos      deposit to select
+     * @param player   client index
+     * @return         true
+     */
     public Packet storageInsertion(Resource resource,int pos, int player)
     {
         if(!isRightPlayer(player)) return this.notYourTurn();
@@ -470,7 +476,7 @@ public class ServerController{
      * Extract resource from the storage
      * @param resource resource to remove
      * @param pos      deposit selected
-     * @param player   packet sender
+     * @param player   client index
      * @return Ack or Nack
      */
     public Packet storageExtraction(Resource resource, int pos, int player)
@@ -553,6 +559,13 @@ public class ServerController{
         }
     }
 
+    /**
+     * execute swap on a specific player storage
+     * @param pos1    first deposit
+     * @param pos2    destination deposit
+     * @param player  client index
+     * @return
+     */
     public Packet swapDeposit(int pos1,int pos2,int player)
     {
         //if(!isRightPlayer(player)) return this.notYourTurn();
@@ -586,6 +599,14 @@ public class ServerController{
 
     }
 
+    /**
+     * same as swap but allow to transfer a specific resource quantity from a deposit A to a deposit B
+     * @param pos1   start deposit
+     * @param pos2   dest deposit
+     * @param q      quantity to move
+     * @param player client index
+     * @return
+     */
     public Packet MoveResources(int pos1,int pos2,int q, int player)
     {
         Player p = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex());
@@ -602,6 +623,12 @@ public class ServerController{
 
     }
 
+    /**
+     * called when a speecific user discard market resource
+     * @param quantity  quantity discarded
+     * @param index     client index
+     * @return
+     */
     public Packet discardResource(int quantity,int index)
     {
         this.game.discardResource(quantity);
@@ -649,19 +676,30 @@ public class ServerController{
     }
 
 
-
+    /**
+     * send to clients the information a specific player updated his leaders
+     * @param index client index
+     */
     public void sendLeaderUpdate(int index)
     {
         LeaderCard[] leaderCards = this.game.getPlayer(this.clients.get(index).getRealPlayerIndex() ).getLeaders();
         this.broadcastMessage(-1,new UpdateLeaders(leaderCards,this.clients.get(index).getRealPlayerIndex()));
     }
 
+    /**
+     * send to clients the information a specific player updated his storage
+     * @param index client index
+     */
     public void sendStorageUpdate(int index)
     {
         Deposit[] tmp = this.game.getPlayer(this.clients.get(index).getRealPlayerIndex() ).getDashboard().getStorage().getDeposits();
         this.broadcastMessage(-1,new StorageUpdate(tmp,this.clients.get(index).getRealPlayerIndex()));
     }
 
+    /**
+     * send to clients the information a specific player updated his chest
+     * @param index client index
+     */
     public void sendChestUpdate(int index)
     {
         List<Resource>chest = this.game.getPlayer(this.clients.get(index).getRealPlayerIndex()).getDashboard().getChest();
