@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.scenes.InitialResources;
 import it.polimi.ingsw.view.utils.FXMLpaths;
@@ -169,6 +170,8 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askMarketExtraction() {
         //TODO send to market scene
+
+
     }
 
     @Override
@@ -184,6 +187,8 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askResourceInsertion(List<Resource> resourceList) {
 
+        //show resource obtained in a dialog with only OK button
+        //
         //TODO change controller of dashbard view to insetion controller
         //TODO add dinamicly controller update to GUIHELPER
     }
@@ -236,7 +241,7 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void askLeaderActivation() {
-
+            //si puo usare per mostrare un dialog "do you want to activate,discard this leader? ACTIVE DISCARD CANCEL"
     }
 
     @Override
@@ -244,11 +249,18 @@ public class GUI extends Observable<ClientController> implements View{
 
     }
 
+    /**
+     * show a dialog showing white balls convertion options and Drag & drop selection
+     * @param resourceTypes  possible convertions
+     * @param num            numbers of resources to choose
+     * @return a list of resources corresponding to balls convertion
+     */
     @Override
     public List<Resource> askWhiteBalls(ResourceType[] resourceTypes,int num)  {
 
-        //Display a message showing the 2 resource type between he can chose
-        return null;
+        InitialResources dialog = new InitialResources(resourceTypes,num);
+        GuiHelper.loadDialog(FXMLpaths.initialResource,"Chose " + num + "of those resources",dialog);
+        return dialog.getResources();
     }
 
     @Override
@@ -264,7 +276,7 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void showGameStarted() {
-        //TODO show a "TOAST" message with "game started"
+        GuiHelper.sendMessage("Game Started");
         this.askCommand();
     }
 
@@ -276,7 +288,17 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void showMarketExtraction(List<Resource> resourceList, int whiteballs, ResourceType[] types) {
-        
+
+        List<Resource> out  = new ResourceList();
+        out.addAll(resourceList);
+
+        //if whiteballs is >0 ask user how he want to convert them
+        if(whiteballs>0)
+        {
+            out.addAll(this.askWhiteBalls(types,whiteballs));
+        }
+
+        this.askResourceInsertion(out);
     }
 
     @Override
@@ -293,7 +315,7 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void askEndTurn() {
-
+        //Dialog "Do you want to end turn? YES NO
     }
 
 
@@ -305,7 +327,7 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void connectionfailed() {
-
+        GuiHelper.sendError("Connection failed, Try again");
     }
 
     @Override

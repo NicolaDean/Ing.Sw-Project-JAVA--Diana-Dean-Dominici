@@ -32,6 +32,7 @@ public class InitialResources extends BasicSceneUpdater{
 
     public Button btOk;
 
+    ResourceType[] resourceTypes = null;
     List<Resource> out;
     int numOfChoices;
     int numOfInserted;
@@ -41,6 +42,11 @@ public class InitialResources extends BasicSceneUpdater{
         this.numOfChoices = numOfChoices;
     }
 
+    public InitialResources(ResourceType[] resourceTypes,int numOfChoices)
+    {
+        this.numOfChoices  = numOfChoices;
+        this.resourceTypes = resourceTypes;
+    }
 
     @Override
     public void init() {
@@ -49,7 +55,9 @@ public class InitialResources extends BasicSceneUpdater{
         this.btOk = (Button) dialog.lookupButton(ButtonType.OK);
 
         this.out = new ResourceList();
-        for(ResourceType resourceType : ResourceType.values())
+
+        if(resourceTypes == null) resourceTypes = ResourceType.values();
+        for(ResourceType resourceType : resourceTypes)
         {
             int name = resourceType.ordinal() + 1;
             ImageView img = loadImage("/images/resources/" +name  + ".png",100,100);
