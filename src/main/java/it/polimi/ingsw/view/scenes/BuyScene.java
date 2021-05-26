@@ -89,7 +89,6 @@ public class BuyScene extends BasicSceneUpdater{
     public void deckUpdate(ProductionCard [][] deck)
     {
         System.out.println("CARDS " + cards.length);
-
         for(int i=0;i<ConstantValues.rowDeck;i++)
         {
             for(int j=0;j<ConstantValues.colDeck;j++)
@@ -107,14 +106,9 @@ public class BuyScene extends BasicSceneUpdater{
      */
     public void drawCard(ProductionCard card,int x,int y)
     {
-        //Creating an image
-        Image image = loadImage("/images/cards/productions/" +card.getId()+".jpg");
 
-        this.cards[y][x] = new ImageView(image);
-
-        //setting the fit height and width of the image view
-        this.cards[y][x].setFitHeight(200);
-        this.cards[y][x].setFitWidth(130);
+        //Loading image
+        this.cards[y][x] = loadImage("/images/cards/productions/" +card.getId()+".jpg",200,130);
 
         this.cards[y][x].setOnMouseClicked(event -> {
             this.clickFunction(x,y);

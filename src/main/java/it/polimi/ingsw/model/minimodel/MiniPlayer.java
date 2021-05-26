@@ -72,7 +72,7 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
     }
     public void setStorage(Deposit[] storage) {
         this.storage = storage;
-        this.notifyObserver(scene -> scene.updateStorage(storage));
+        this.notifyObserver(scene -> scene.updateStorage(index,storage));
     }
 
     public ProductionCard[] getCards()
@@ -92,7 +92,7 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
     public void updateChest(List<Resource> chest)
     {
         this.chest = chest;
-        this.notifyObserver(scene -> scene.updateChest(chest));
+        this.notifyObserver(scene -> scene.updateChest(index,chest));
     }
 
     public void setDiscount(List<Resource> discount)
