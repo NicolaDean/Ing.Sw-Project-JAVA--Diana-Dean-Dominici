@@ -54,7 +54,7 @@ public class BuyScene extends BasicSceneUpdater{
     {
         super.init();
 
-        GuiHelper.resize(1280,720);
+        //GuiHelper.resize(1280,720);
         this.cards = new ImageView[ConstantValues.rowDeck][ConstantValues.colDeck];
 
         click.setOpacity(0);

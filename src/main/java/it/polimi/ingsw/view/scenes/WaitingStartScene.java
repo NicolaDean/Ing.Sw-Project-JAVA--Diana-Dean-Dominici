@@ -41,7 +41,7 @@ public class WaitingStartScene extends BasicSceneUpdater {
         second_user .setOpacity(0);
         third_user  .setOpacity(0);
         fourth_user .setOpacity(0);
-        GuiHelper.resize(800,600);
+        //GuiHelper.resize(800,600);
     }
 
     public void startGame()

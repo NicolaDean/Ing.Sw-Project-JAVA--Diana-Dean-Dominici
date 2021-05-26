@@ -38,7 +38,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="600.0" prefWidth="800.0" styleClass="root" stylesheets="@../css/HomeScreen.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.LoginScene">
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="600.0" prefWidth="800.0" styleClass="root" stylesheets="@../css/HomeScreen.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.LoginScene" >
    <children>
       <Label alignment="CENTER" layoutX="118.0" layoutY="80.0" prefHeight="164.0" prefWidth="565.0" text="LOGIN" textFill="#973131">
          <font>

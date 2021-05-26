@@ -47,53 +47,76 @@ public class ClientHandler implements Runnable {
             DebugMessages.printWarning("Client aborted for endgame");
         }
     }
+
+    /**
+     * get the ping controller (its needed to setPing)
+     * @return ping controller associated with this client controller
+     */
     public PingController getPingController()
     {
         return this.pingController;
     }
 
+    /**
+     *  comunicate to this client handler the index of its assigned player
+     * @param index the player index inside "players" model inside GAME class
+     */
     public void setRealPlayerIndex(int index)
     {
         //this.interpreter.setPlayerIndex(index);
         this.realPlayerIndex = index;
     }
+
+    /**
+     *
+     * @return the player index inside "players" model inside GAME class
+     */
     public int getRealPlayerIndex() {
         return realPlayerIndex;
     }
 
+    /**
+     * initialize pingController class by setting ServerController  as an observer
+     * @param controller sererController that contain this clientHandler
+     * @return
+     */
     public PingController initializePingController(ServerController controller)
     {
         this.pingController = new PingController(index,output);
         this.pingController.setObserver(controller);
         return this.pingController;
     }
-    public void warning(String msg)
-    {
-        CliColors c = new CliColors(System.out);
-        c.printlnColored(msg,CliColors.YELLOW_TEXT);
-    }
-    public boolean isPing() {
-        return ping;
-    }
 
-    public boolean setPing() {
-        return ping = false;
-    }
-
+    /**
+     * set the index of this client inside serverController list
+     * @param index
+     */
     public void setIndex(int index) {
         this.interpreter.setPlayerIndex(index);
         if(this.pingController!=null) this.pingController.setIndex(index);
         this.index = index;
     }
 
+    /**
+     *
+     * @return the client index inside "clients" list of serverController
+     */
     public int getIndex() {
         return index;
     }
 
+    /**
+     *
+     * @return the json interpreter working inside this client
+     */
     public JsonInterpreterServer getInterpreter() {
         return interpreter;
     }
 
+    /**
+     *
+     * @return client socket
+     */
     public Socket getSocket() {
         return socket;
     }
@@ -197,6 +220,10 @@ public class ClientHandler implements Runnable {
     }
 
 
+    /**
+     * send a message to this specific client
+     * @param p packet to send
+     */
     public void sendToClient(Packet p)
     {
 

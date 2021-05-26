@@ -19,7 +19,7 @@ public class HomeScene  extends BasicSceneUpdater {
     @Override
     public void init() {
         super.init();
-        GuiHelper.resize(800,600);
+        //GuiHelper.resize(800,600);
     }
 
     public void singlePlayerCall()

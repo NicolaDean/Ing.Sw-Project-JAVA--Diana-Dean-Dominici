@@ -29,7 +29,7 @@ public class BasicSceneUpdater extends Observable<ClientController> {
     {
         //Subscribe clientController as an observer to itselt
         this.setObserver(GuiHelper.getGui().getObserver());
-        GuiHelper.resize(1280,720);
+        //GuiHelper.resize(1280,720);
     }
 
 
