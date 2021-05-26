@@ -57,7 +57,7 @@ public class GuiHelper extends Application {
     }
 
 
-    public static void resize(int width,int height)
+    public static void resize(double width,double height)
     {
         GuiHelper.getStage().setWidth(width);
         GuiHelper.getStage().setHeight(height);
