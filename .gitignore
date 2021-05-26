@@ -13,4 +13,5 @@ out/
 /out/
 target/
 /target/
+/src/main/java/META-INF/MANIFEST.MF
 /shade/
