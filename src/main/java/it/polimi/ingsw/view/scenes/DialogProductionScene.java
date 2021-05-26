@@ -37,13 +37,15 @@ public class DialogProductionScene extends BasicSceneUpdater{
         {
             //if(card[i-1] !=null) //TODO ADD EMPTY CARD DRAWING (print back of a card) and put card.getId instead of i
             this.cards[i-1] = new ImageView(loadImage("/images/cards/productions/"+i+".jpg"));
+            int finalI = i;
             this.cards[i-1].setOnMouseClicked(event -> {
-                setPos(i-1);
+                setPos(finalI -1);
                 //TODO ADD CSS STYLE FOR CARD SELECTED
             });
             this.cards[i-1].setFitHeight(200);
             this.cards[i-1].setFitWidth(130);
             this.productions.getChildren().add(this.cards[i-1]);
+            i++;
         }
     }
 
