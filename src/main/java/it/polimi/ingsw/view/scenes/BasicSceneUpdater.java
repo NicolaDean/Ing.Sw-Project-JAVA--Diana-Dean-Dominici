@@ -29,30 +29,32 @@ public class BasicSceneUpdater extends Observable<ClientController> {
     {
         //Subscribe clientController as an observer to itselt
         this.setObserver(GuiHelper.getGui().getObserver());
+        GuiHelper.resize(1280,720);
     }
 
 
-    public int loadDialog(String path)
+    public ButtonType loadDialog(String path,String title,BasicSceneUpdater controller)
     {
         try {
 
-            DialogProductionScene result = new DialogProductionScene();
-            DialogPane          pane = (DialogPane) GuiHelper.loadFXML(path,result);
+            DialogPane          pane = (DialogPane) GuiHelper.loadFXML(path,controller);
             Dialog<ButtonType>  dialog  =  new Dialog<>();
             dialog.setDialogPane(pane);
-            dialog.setTitle("Chose card positioning");
+            dialog.setTitle(title);
 
             Optional<ButtonType> options = dialog.showAndWait();
-            if(options.get() == ButtonType.OK)
-            {
-                return result.getPos();
-            }
-            else return -1;
+            return options.get();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return -1;
+        return ButtonType.CANCEL;
+    }
+
+
+    public void centerComponent()
+    {
+
     }
 
     /**

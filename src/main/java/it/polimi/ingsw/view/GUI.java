@@ -9,7 +9,6 @@ import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
-import it.polimi.ingsw.view.events.DashboardScene;
 import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.utils.FXMLpaths;
 import javafx.application.Platform;
@@ -111,8 +110,7 @@ public class GUI extends Observable<ClientController> implements View{
 
         Platform.runLater(()->{
             try {
-                //GuiHelper.setRoot(FXMLpaths.buy);
-                GuiHelper.setRoot("dashboard",new DashboardScene());
+                GuiHelper.setRoot(FXMLpaths.buy);
             } catch (IOException e) {
                 e.printStackTrace();
             }
