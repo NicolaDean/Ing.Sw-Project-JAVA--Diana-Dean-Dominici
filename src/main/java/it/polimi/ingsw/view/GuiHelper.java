@@ -13,10 +13,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class GuiHelper extends Application {
 
@@ -51,13 +55,13 @@ public class GuiHelper extends Application {
         primaryStage.setScene(scene);
         primaryStage.setWidth(ConstantValues.guiWidth);
         primaryStage.setHeight(ConstantValues.guiHeight);
-        primaryStage.setResizable(false);
+
 
         primaryStage.setWidth(1280d);
         primaryStage.setHeight(720d);
-        primaryStage.setResizable(false);
+
         primaryStage.setMaximized(true);
-        primaryStage.setFullScreen(true);
+        primaryStage.setFullScreen(false);
         //GuiHelper.resize(800,600);
         primaryStage.show();
     }
@@ -176,6 +180,24 @@ public class GuiHelper extends Application {
         //SET THIS SCENE AS THE CURRENT MINIMODEL OBSERVER
         gui.notifyObserver(controller -> controller.addModelObserver(b));
         return out;
+    }
+
+    public static ButtonType loadDialog(String path,String title,BasicSceneUpdater controller)
+    {
+        try {
+
+            DialogPane pane = (DialogPane) GuiHelper.loadFXML(path,controller);
+            Dialog<ButtonType> dialog  =  new Dialog<>();
+            dialog.setDialogPane(pane);
+            dialog.setTitle(title);
+
+            Optional<ButtonType> options = dialog.showAndWait();
+            return options.orElse(ButtonType.CANCEL);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ButtonType.CANCEL;
     }
 
     /**

@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.view.observer.Observable;
+import it.polimi.ingsw.view.scenes.InitialResources;
 import it.polimi.ingsw.view.utils.FXMLpaths;
 import javafx.application.Platform;
 
@@ -19,7 +20,7 @@ import java.util.List;
 public class GUI extends Observable<ClientController> implements View{
 
     boolean singleplayer;
-
+    boolean firstTurn = true;
     Thread gui;
     public GUI()
     {
@@ -200,7 +201,21 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askTurnType()
     {
+        waitMiniModelLoading();
 
+        if(firstTurn)
+        {
+            this.notifyObserver(ClientController::askLeaders);          //SHOW DIALOG with leaders
+            this.notifyObserver(ClientController::askInitialResoruce);  //SHOW DIALOG WHIT initial resources
+        }
+        else
+        {
+            //SHOW DASHBOARD BASE
+        }
+
+        //TODO find a way to detect automaticly the turn type
+        //LOAD DASHBOARD SCENE WITH "turnSelectionController" when user do concrete action controller swith
+        // to a specific controller that allow him to do only some actions
         askBuy();
     }
 
@@ -239,6 +254,12 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askInitialResoruce(int number) {
 
+        if(number == 0) return;
+
+        InitialResources dialog = new InitialResources(number);
+        GuiHelper.loadDialog(FXMLpaths.initialResource,"Chose " + number + "of those resources",dialog);
+
+        this.askResourceInsertion(dialog.getResources());
     }
 
     @Override
