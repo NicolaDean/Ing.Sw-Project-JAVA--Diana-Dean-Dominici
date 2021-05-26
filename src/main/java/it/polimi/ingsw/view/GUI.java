@@ -86,11 +86,8 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void showMarket(){
-        try {
-            GuiHelper.setRoot(FXMLpaths.market);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        waitMiniModelLoading();
+        Platform.runLater(() -> { try { GuiHelper.setRoot(FXMLpaths.market); }catch(Exception e){ e.printStackTrace();}});
     }
 
 
@@ -220,8 +217,8 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askTurnType()
     {
-
-        askBuy();
+        showMarket();
+        //askBuy();
     }
 
     @Override
