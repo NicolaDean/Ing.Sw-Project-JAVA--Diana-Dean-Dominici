@@ -2,6 +2,7 @@ package it.polimi.ingsw.utils;
 
 public class ConstantValues {
 
+
     public static int                       numberOfPlayer          = 4;
     public static int                       defaultServerPort       = 1234;
     public static String                    defaultIP               = "localhost";
@@ -18,9 +19,12 @@ public class ConstantValues {
     public static int                       cardsWinningCondition   = 7;
     public static int                       productionSpaces        = 3;
     public static ResourceRappresentation   resourceRappresentation = new ResourceRappresentation();
-    public static int       numWhiteBall          = 4;
-    public static int       numBlueBall           = 2;
-    public static int       numYellowBall         = 2;
-    public static int       numGrayBall           = 2;
-    public static int       numVioletBall         = 2;
+    public static int                       numWhiteBall            = 4;
+    public static int                       numBlueBall             = 2;
+    public static int                       numYellowBall           = 2;
+    public static int                       numGrayBall             = 2;
+    public static int                       numVioletBall           = 2;
+
+    public static int                       guiWidth                = 1280;
+    public static int                       guiHeight               = 720;
 }

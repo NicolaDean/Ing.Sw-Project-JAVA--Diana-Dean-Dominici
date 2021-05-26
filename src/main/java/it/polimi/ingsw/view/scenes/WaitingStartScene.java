@@ -2,7 +2,7 @@ package it.polimi.ingsw.view.scenes;
 
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.view.GuiHelper;
-import it.polimi.ingsw.view.events.GenericMessage;
+import it.polimi.ingsw.view.scenes.BasicSceneUpdater;
 import it.polimi.ingsw.view.utils.FXMLpaths;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 
 //TODO TROVARE UN MODO DI RENDERE I CONTROLLORI DELLE SCENE VISIBILI DALLE FUNZIONI DELLA GUI
-public class WaitingStartScene extends BasicSceneUpdater{
+public class WaitingStartScene extends BasicSceneUpdater {
 
     int userMsgPadding = 0;
 
@@ -41,6 +41,7 @@ public class WaitingStartScene extends BasicSceneUpdater{
         second_user .setOpacity(0);
         third_user  .setOpacity(0);
         fourth_user .setOpacity(0);
+        GuiHelper.resize(800,600);
     }
 
     public void startGame()

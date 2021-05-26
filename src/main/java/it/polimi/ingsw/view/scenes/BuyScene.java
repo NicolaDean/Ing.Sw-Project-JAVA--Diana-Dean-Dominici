@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GuiHelper;
-import it.polimi.ingsw.view.events.DecksEvent;
 import it.polimi.ingsw.view.utils.FXMLpaths;
 import it.polimi.ingsw.viewtest.Appp;
 import javafx.event.ActionEvent;
@@ -55,12 +54,11 @@ public class BuyScene extends BasicSceneUpdater{
     {
         super.init();
 
+        GuiHelper.resize(1280,720);
         this.cards = new ImageView[ConstantValues.rowDeck][ConstantValues.colDeck];
 
         click.setOpacity(0);
 
-        GuiHelper.getStage().setWidth(2000);
-        GuiHelper.getStage().setWidth(800);
         GuiHelper.getStage().show();
         //DRAW DECK
         this.notifyObserver(controller ->{
@@ -88,8 +86,6 @@ public class BuyScene extends BasicSceneUpdater{
      */
     public void deckUpdate(ProductionCard [][] deck)
     {
-        System.out.println("CARDS " + cards.length);
-
         for(int i=0;i<ConstantValues.rowDeck;i++)
         {
             for(int j=0;j<ConstantValues.colDeck;j++)
@@ -107,14 +103,10 @@ public class BuyScene extends BasicSceneUpdater{
      */
     public void drawCard(ProductionCard card,int x,int y)
     {
-        //Creating an image
-        Image image = loadImage("/images/cards/productions/" +card.getId()+".jpg");
+        //Loading image
+        this.cards[y][x] = loadImage("/images/cards/productions/" +card.getId()+".jpg",130,200);
 
-        this.cards[y][x] = new ImageView(image);
-
-        //setting the fit height and width of the image view
-        this.cards[y][x].setFitHeight(200);
-        this.cards[y][x].setFitWidth(130);
+        this.cards[y][x].setId("production_card");
 
         this.cards[y][x].setOnMouseClicked(event -> {
             this.clickFunction(x,y);
@@ -159,11 +151,13 @@ public class BuyScene extends BasicSceneUpdater{
     }
 
     public void buyButton(ActionEvent actionEvent) {
-        int pos = loadDialog(FXMLpaths.prodDialog);
+        DialogProductionScene dialog = new DialogProductionScene();
+        ButtonType result = loadDialog(FXMLpaths.prodDialog,"Chose dashboard position",dialog);
 
-        if(pos != -1)
+
+        if(result.equals(ButtonType.OK) && dialog.getPos()!= -1)
         {
-            this.pos = pos;
+            this.pos = dialog.getPos();
             this.notifyObserver(controller -> controller.sendBuyCard(this.row,this.col,this.pos));
         }
 
