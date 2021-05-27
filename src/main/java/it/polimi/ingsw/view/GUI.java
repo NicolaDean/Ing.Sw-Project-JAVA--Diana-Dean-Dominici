@@ -240,7 +240,7 @@ public class GUI extends Observable<ClientController> implements View{
         //TODO find a way to detect automaticly the turn type
         //LOAD DASHBOARD SCENE WITH "turnSelectionController" when user do concrete action controller swith
         // to a specific controller that allow him to do only some actions
-        askBuy();
+        //askBuy();
         showMarket();
     }
 
