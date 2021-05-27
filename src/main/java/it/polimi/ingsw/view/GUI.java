@@ -238,7 +238,8 @@ public class GUI extends Observable<ClientController> implements View{
         if(firstTurn)
         {
             this.notifyObserver(ClientController::askLeaders);          //SHOW DIALOG with leaders
-            this.notifyObserver(ClientController::askInitialResoruce);  //SHOW DIALOG WHIT initial resources
+            this.notifyObserver(ClientController::askInitialResoruce);
+            this.notifyObserver(ClientController::showDashboard);//SHOW DIALOG WHIT initial resources
         }
         else
         {
@@ -263,8 +264,9 @@ public class GUI extends Observable<ClientController> implements View{
     public void askCommand() {
         //trurn chosing scene
         //TODO da riumovere da qui perchè andra dove fede mette il pulzante
-        waitMiniModelLoading();
-        showMarket();
+        //waitMiniModelLoading();
+        //showMarket();
+        this.notifyObserver(ClientController::showDashboard);
     }
 
     @Override
