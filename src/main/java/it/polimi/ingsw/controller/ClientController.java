@@ -406,7 +406,6 @@ public class ClientController implements Runnable{
                 e.printStackTrace();
                 DebugMessages.printError("Not a json Message: "+ message);
             }
-
         });
         t.start();
     }
@@ -573,6 +572,7 @@ public class ClientController implements Runnable{
         tmp = view.getMiniMarketDiscardedResouce();
         view.setMiniMarketDiscardedResouce(view.getMiniMarketBalls()[pos][0]);
         view.getMiniMarketBalls()[pos][0] = tmp;
+        view.setMarket(null,null);
     }
 
     /**
@@ -590,6 +590,7 @@ public class ClientController implements Runnable{
         tmp = view.getMiniMarketDiscardedResouce();
         view.setMiniMarketDiscardedResouce( view.getMiniMarketBalls()[0][pos]);
         view.getMiniMarketBalls()[0][pos] = tmp;
+        view.setMarket(null,null);
     }
 
     /**

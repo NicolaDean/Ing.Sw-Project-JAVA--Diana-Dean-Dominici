@@ -13,8 +13,10 @@ import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.scenes.DialogLeader;
 import it.polimi.ingsw.view.scenes.InitialResources;
+import it.polimi.ingsw.view.scenes.MarketScene;
 import it.polimi.ingsw.view.utils.FXMLpaths;
 import javafx.application.Platform;
+import javafx.scene.control.ButtonType;
 
 import java.io.IOException;
 import java.util.List;
@@ -39,13 +41,18 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     /**
-     * set mini model of market in the view
+     * set mini model of market in the view if put balls and discartedBall null update images
      * @param balls balls
      * @param discarted ball discarted
      */
     public void setMarket(BasicBall[][] balls, BasicBall discarted){
-        miniMarketBalls=balls;
-        miniMarketDiscardedResouce=discarted;
+        if((balls != null)&&(discarted != null)) {
+            miniMarketBalls = balls;
+            miniMarketDiscardedResouce = discarted;
+        }else {
+            waitMiniModelLoading();
+            GuiHelper.updateMarket();
+        }
     }
 
     /**
@@ -84,7 +91,7 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void setMiniMarketDiscardedResouce(BasicBall miniMarketBall){
-
+        miniMarketDiscardedResouce=miniMarketBall;
     }
 
 
@@ -108,8 +115,6 @@ public class GUI extends Observable<ClientController> implements View{
             e.printStackTrace();
         }
     }
-
-
 
     @Override
     public void askServerData() {
@@ -232,13 +237,12 @@ public class GUI extends Observable<ClientController> implements View{
 
         if(firstTurn)
         {
-            //this.notifyObserver(ClientController::askLeaders);          //SHOW DIALOG with leaders
-            //this.notifyObserver(ClientController::askInitialResoruce);
-
+            this.notifyObserver(ClientController::askLeaders);          //SHOW DIALOG with leaders
+            this.notifyObserver(ClientController::askInitialResoruce);  //SHOW DIALOG WHIT initial resources
         }
         else
         {
-            this.notifyObserver(ClientController::showDashboard);
+            //SHOW DASHBOARD BASE
         }
 
         //TODO find a way to detect automaticly the turn type
@@ -258,6 +262,9 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askCommand() {
         //trurn chosing scene
+        //TODO da riumovere da qui perchè andra dove fede mette il pulzante
+        waitMiniModelLoading();
+        showMarket();
     }
 
     @Override
@@ -265,7 +272,14 @@ public class GUI extends Observable<ClientController> implements View{
 
         DialogLeader dialog = new DialogLeader(cards);
 
-        Platform.runLater(()->{GuiHelper.loadDialog(FXMLpaths.askLeaders,"Choose 2 of those leaders" ,dialog);});
+
+        //Continue until user press ok (if exit windows in other way (eg clicking X) it will recall dialog
+        Platform.runLater(()->{
+            ButtonType result = ButtonType.CANCEL;
+            do {
+                result = GuiHelper.loadDialog(FXMLpaths.askLeaders,"Choose 2 of those leaders" ,dialog);
+            }while (result.equals(ButtonType.CANCEL));
+        });
 
         while(!dialog.isReady())
         {
@@ -307,8 +321,6 @@ public class GUI extends Observable<ClientController> implements View{
 
         if(number == 0) return;
 
-        Platform.runLater(()->{
-
         InitialResources dialog = new InitialResources(number);
 
         Platform.runLater(()->{
@@ -324,7 +336,7 @@ public class GUI extends Observable<ClientController> implements View{
             }
         }
 
-        this.askResourceInsertion(dialog.getResources()); });
+        this.askResourceInsertion(dialog.getResources());
     }
 
     @Override

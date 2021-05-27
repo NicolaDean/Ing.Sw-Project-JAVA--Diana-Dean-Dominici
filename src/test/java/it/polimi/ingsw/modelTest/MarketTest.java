@@ -44,42 +44,42 @@ public class MarketTest {
         int b=0,y=0,w=0,r=0,g=0,v=0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
-                if(m.getResouces()[i][j].getColor()== Color.blue){
+                if(m.getResouces()[i][j].getColor()== "blue"){
                     b++;
                 }
-                if(m.getResouces()[i][j].getColor()== Color.yellow){
+                if(m.getResouces()[i][j].getColor()== "yellow"){
                     y++;
                 }
-                if(m.getResouces()[i][j].getColor()== Color.white){
+                if(m.getResouces()[i][j].getColor()== "white"){
                     w++;
                 }
-                if(m.getResouces()[i][j].getColor()== Color.red){
+                if(m.getResouces()[i][j].getColor()== "red"){
                     r++;
                 }
-                if(m.getResouces()[i][j].getColor()== Color.gray){
+                if(m.getResouces()[i][j].getColor()== "gray"){
                     g++;
                 }
-                if(m.getResouces()[i][j].getColor()== Color.magenta){
+                if(m.getResouces()[i][j].getColor()== "violet"){
                     v++;
                 }
             }
         }
-        if(m.getDiscardedResouce().getColor()== Color.blue){
+        if(m.getDiscardedResouce().getColor()== "blue"){
             b++;
         }
-        if(m.getDiscardedResouce().getColor()== Color.yellow){
+        if(m.getDiscardedResouce().getColor()== "yellow"){
             y++;
         }
-        if(m.getDiscardedResouce().getColor()== Color.white){
+        if(m.getDiscardedResouce().getColor()== "white"){
             w++;
         }
-        if(m.getDiscardedResouce().getColor()== Color.red){
+        if(m.getDiscardedResouce().getColor()== "red"){
             r++;
         }
-        if(m.getDiscardedResouce().getColor()== Color.gray){
+        if(m.getDiscardedResouce().getColor()== "gray"){
             g++;
         }
-        if(m.getDiscardedResouce().getColor()== Color.magenta){
+        if(m.getDiscardedResouce().getColor()== "violet"){
             v++;
         }
         assertTrue(b==2);
@@ -141,7 +141,7 @@ public class MarketTest {
         r.add(new Resource(COIN,10));
 
         Market m=new Market();
-        Color n[] = new Color[3],dis;
+        String n[] = new String[3],dis;
 
         List f=new ResourceList();
         for(int i=0;i<4;i++) {
@@ -194,7 +194,7 @@ public class MarketTest {
                 try {
                     tmpSeverant += (m.getResouces()[i][colonna].getType() == SERVANT) ? 1 : 0;
                 }catch (Exception e){ }
-                tmpfaith += (m.getResouces()[i][colonna].getColor() == Color.red) ? 1 : 0;
+                tmpfaith += (m.getResouces()[i][colonna].getColor() == "red") ? 1 : 0;
             }
 
         m.exstractColumn(colonna+1 , p );
@@ -227,7 +227,7 @@ public class MarketTest {
                 try {
                     tmpSeverant += (m.getResouces()[i][colonna].getType() == SERVANT) ? 1 : 0;
                 }catch (Exception e){ }
-                tmpfaith += (m.getResouces()[i][colonna].getColor() == Color.red) ? 1 : 0;
+                tmpfaith += (m.getResouces()[i][colonna].getColor() == "red") ? 1 : 0;
             }
 
             m.exstractColumn(colonna+1 , p );
@@ -262,8 +262,8 @@ public class MarketTest {
         int colonna=0;
 
         for (int i = 0; i < 3; i++) {
-                tmpCoin += (m.getResouces()[i][colonna].getColor() == Color.yellow) ? 1 : 0;
-                tmpWhite += (m.getResouces()[i][colonna].getColor()==Color.white) ? 1 : 0;
+                tmpCoin += (m.getResouces()[i][colonna].getColor() == "yellow") ? 1 : 0;
+                tmpWhite += (m.getResouces()[i][colonna].getColor()=="white") ? 1 : 0;
         }
 
         m.exstractColumn(colonna+1 , p );
@@ -288,7 +288,7 @@ public class MarketTest {
         int colonna=0;
 
         for (int i = 0; i < 3; i++) {
-            tmpWhite += (m.getResouces()[i][colonna].getColor()==Color.white) ? 1 : 0;
+            tmpWhite += (m.getResouces()[i][colonna].getColor()=="white") ? 1 : 0;
         }
 
         m.exstractColumn(colonna+1 , p );

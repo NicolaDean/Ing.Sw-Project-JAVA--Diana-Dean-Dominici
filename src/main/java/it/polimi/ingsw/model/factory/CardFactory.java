@@ -167,14 +167,16 @@ public class CardFactory {
      * @return a new leader
      */
     public static LeaderCard buildLeaderCardFromJsonObject(JsonObject card) {
-        ResourceType type = ResourceType.valueOf(card.get("resourceType").getAsString());
-        int victoryPoint = card.get("victoryPoints").getAsInt();
-        List<PrerequisiteCard> requirmentCard = buildPrerequisiteCardListFromJsonArray(card.get("requirementsCard").getAsJsonArray());
-        List<Resource> requirment = buildResourceListFromJsonArray(card.get("requirementsResource").getAsJsonArray());
+        ResourceType            type            = ResourceType.valueOf(card.get("resourceType").getAsString());
+        int                     victoryPoint    = card.get("victoryPoints").getAsInt();
+        List<PrerequisiteCard>  requirmentCard  = buildPrerequisiteCardListFromJsonArray(card.get("requirementsCard").getAsJsonArray());
+        List<Resource>          requirment      = buildResourceListFromJsonArray(card.get("requirementsResource").getAsJsonArray());
 
-        String cardType = card.get("cardType").getAsString().toUpperCase(Locale.ROOT);
+        String                  cardType        = card.get("cardType").getAsString().toUpperCase(Locale.ROOT);
+        int                     id              = card.get("id").getAsInt();
 
-        LeaderCard leaderCard = null;
+        LeaderCard              leaderCard      = null;
+
         switch (cardType.toUpperCase(Locale.ROOT)) {
             case "WHITE":
                 leaderCard = new LeaderWhiteCard(requirment,requirmentCard, victoryPoint, type);
@@ -193,6 +195,7 @@ public class CardFactory {
                 break;
         }
         leaderCard.setCliRappresentation(cardType);
+        leaderCard.setId(id);
         return leaderCard;
     }
 

@@ -1,6 +1,7 @@
 .root{
     -fx-background-image: url("../images/dashboard/market.png");
     -fx-background-size: cover;
+    -fx-background-color: transparent
 }
 
 .button{

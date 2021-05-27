@@ -52,8 +52,7 @@ public class InitialResources extends BasicDialog{
     public void init() {
         super.init();
 
-        this.btOk = (Button) dialog.lookupButton(ButtonType.OK);
-
+        this.btOk = getControlButton(ButtonType.OK);
         this.out = new ResourceList();
 
         if(resourceTypes == null) resourceTypes = ResourceType.values();
@@ -118,7 +117,7 @@ public class InitialResources extends BasicDialog{
                     if (!(this.numOfInserted >= this.numOfChoices)) {
                         System.out.println("You have to select "+ (this.numOfChoices-this.numOfInserted)+" Resources");
                         event.consume();
-                    }
+                    }else isReady = false;
                 }
         );
     }

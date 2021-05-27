@@ -8,10 +8,10 @@ import java.awt.*;
 
 public class ResourceBall  extends BasicBall {
     ResourceType type;
-    transient Color GUI;
+    String GUI;
     String CLI;
 
-    public ResourceBall(Color colorGUI, ResourceType type, String cliColors) {
+    public ResourceBall(String colorGUI, ResourceType type, String cliColors) {
         super();
         this.type = type;
         this.CLI=cliColors;
