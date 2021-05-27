@@ -4,6 +4,12 @@
     -fx-background-color: transparent
 }
 
+.grid{
+    -fx-background-color: black;
+    -fx-background-size: cover;
+    -fx-background-color: transparent
+}
+
 .button{
     -fx-border-color: transparent;
     -fx-border-width: 0;
@@ -12,7 +18,7 @@
 }
 
 .button:focused {
-    -fx-border-color: transparent, black;
+    -fx-border-color: transparent, transparent;
     -fx-border-width: 1, 1;
     -fx-border-style: solid, segments(1, 2);
     -fx-border-radius: 0, 0;
@@ -20,6 +26,6 @@
 }
 
 .button:pressed {
-    -fx-background-color: black;
+    -fx-background-color: transparent ;
     -fx-text-fill: white;
 }

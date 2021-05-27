@@ -5,10 +5,12 @@ import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.resources.Resource;
 
 import it.polimi.ingsw.utils.ConstantValues;
-import it.polimi.ingsw.view.scenes.BasicSceneUpdater;
+import it.polimi.ingsw.view.scenes.*;
 import it.polimi.ingsw.view.utils.FXMLpaths;
 import it.polimi.ingsw.viewtest.Appp;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,6 +20,8 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -64,9 +68,35 @@ public class GuiHelper extends Application {
         primaryStage.setFullScreen(false);
         //GuiHelper.resize(800,600);
         primaryStage.show();
+
+        primaryStage.setOnCloseRequest(this::onExit);
+
+    }
+
+    /**
+     * called when user close windows (voluntary or for error)
+     * @param event windows closing event
+     */
+    public void onExit(WindowEvent event){
+        System.out.println("Stage is closing");
+        if(YesNoDialog("EXIT","Are you sure to exit the game? "))
+        {
+            System.out.println("CLOSED");
+            System.exit(0);
+            return;
+        }
+        else
+        {
+            event.consume();
+            System.out.println("REOPEN");
+        }
     }
 
 
+    public static boolean YesNoDialog(String title,String msg)
+    {
+        return loadDialog(FXMLpaths.yesNo,title,new YesNoDialog(msg)).equals(ButtonType.YES);
+    }
     public static void resize(double width,double height)
     {
         GuiHelper.getStage().setWidth(width);

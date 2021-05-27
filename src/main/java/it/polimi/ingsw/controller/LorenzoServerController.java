@@ -21,6 +21,9 @@ public class LorenzoServerController extends ServerController{
     }
 
 
+    //TODO create a "lorenzoCardDrawedUpdate" (si puo mettere in Lorenzo game una lista di "drawedCard" come fa il player per BuycardUpdate)
+    //Stessa cosa per la position di lorenzo (lorenzoUpdatePosition) e inserire lorenzo nel minimodel
+
     @Override
     public Packet login(String nickname)
     {

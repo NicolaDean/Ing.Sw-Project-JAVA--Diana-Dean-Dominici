@@ -188,4 +188,9 @@ public class DialogLeader extends BasicDialog{
         }
         event.consume();
     }
+
+    public int[] getLeaders()
+    {
+        return this.out;
+    }
 }
