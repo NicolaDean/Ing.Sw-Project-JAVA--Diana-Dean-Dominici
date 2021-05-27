@@ -3,31 +3,32 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
 <StackPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/Background.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.MarketScene">
          <children>
             <Group>
-         <children>
-                  <AnchorPane fx:id="pane" prefHeight="600.0" prefWidth="464.0" styleClass="root" stylesheets="@../css/MarketScreen.css">
-                     <children>
-                        <Button fx:id="col1" layoutX="301.0" layoutY="351.0" mnemonicParsing="false" onAction="#exstractionCol" prefHeight="86.0" prefWidth="40.0" stylesheets="@../css/MarketScreen.css" userData="1" />
-                        <Button fx:id="col2" layoutX="247.0" layoutY="349.0" mnemonicParsing="false" onAction="#exstractionCol" prefHeight="86.0" prefWidth="40.0" stylesheets="@../css/MarketScreen.css" userData="2" />
-                        <Button fx:id="col3" layoutX="196.0" layoutY="351.0" mnemonicParsing="false" onAction="#exstractionCol" prefHeight="86.0" prefWidth="40.0" stylesheets="@../css/MarketScreen.css" userData="3" />
-                        <Button fx:id="col4" layoutX="143.0" layoutY="352.0" mnemonicParsing="false" onAction="#exstractionCol" prefHeight="86.0" prefWidth="40.0" stylesheets="@../css/MarketScreen.css" userData="4" />
-                  <GridPane fx:id="gpane" gridLinesVisible="true" layoutX="137.0" layoutY="139.0" prefHeight="158.0" prefWidth="206.0">
-                    <columnConstraints>
-                    </columnConstraints>
-                    <rowConstraints>
-
-                    </rowConstraints>
-                  </GridPane>
-                     </children>
+                <children>
+                    <AnchorPane fx:id="paneMain" prefHeight="600.0" prefWidth="464.0" styleClass="root" stylesheets="@../css/MarketScreen.css">
+                         <children>
+                            <Button fx:id="col1" layoutX="301.0" layoutY="351.0" mnemonicParsing="false" onAction="#exstractionCol" prefHeight="86.0" prefWidth="40.0" stylesheets="@../css/MarketScreen.css" userData="1" />
+                            <Button fx:id="col2" layoutX="247.0" layoutY="349.0" mnemonicParsing="false" onAction="#exstractionCol" prefHeight="86.0" prefWidth="40.0" stylesheets="@../css/MarketScreen.css" userData="2" />
+                            <Button fx:id="col3" layoutX="196.0" layoutY="351.0" mnemonicParsing="false" onAction="#exstractionCol" prefHeight="86.0" prefWidth="40.0" stylesheets="@../css/MarketScreen.css" userData="3" />
+                            <Button fx:id="col4" layoutX="143.0" layoutY="352.0" mnemonicParsing="false" onAction="#exstractionCol" prefHeight="86.0" prefWidth="40.0" styleClass="back_button" stylesheets="@../css/MarketScreen.css" userData="4" />
+                            <Button fx:id="back" layoutX="36.0" layoutY="392.0" mnemonicParsing="false" onAction="#comeBack" text="BACK" />
+                            <AnchorPane fx:id="paneBalls" layoutX="74.0" layoutY="73.0" prefHeight="266.0" prefWidth="318.0" styleClass="grid" stylesheets="@../css/MarketScreen.css">
+                                 <children>
+                                   <GridPane fx:id="gpaneBalls" gridLinesVisible="true" layoutX="56.0" layoutY="77.0" prefHeight="152.0" prefWidth="220.0" />
+                                   <GridPane fx:id="gpaneDiscardedBall" gridLinesVisible="true" layoutX="245.0" layoutY="6.0" prefHeight="62.0" prefWidth="68.0" />
+                                 </children>
+                            </AnchorPane>
+                            <Button fx:id="row1" layoutX="414.0" layoutY="251.0" mnemonicParsing="false" onAction="#exstractionRow" prefHeight="40.0" prefWidth="57.0" stylesheets="@../css/MarketScreen.css" userData="1" />
+                            <Button fx:id="row2" layoutX="416.0" layoutY="197.0" mnemonicParsing="false" onAction="#exstractionRow" prefHeight="40.0" prefWidth="57.0" stylesheets="@../css/MarketScreen.css" userData="2" />
+                            <Button fx:id="row3" layoutX="416.0" layoutY="149.0" mnemonicParsing="false" onAction="#exstractionRow" prefHeight="30.0" prefWidth="57.0" stylesheets="@../css/MarketScreen.css" userData="3" />
+                         </children>
                   </AnchorPane>
-         </children>
+                </children>
             </Group>
          </children>
-      </StackPane>
+</StackPane>

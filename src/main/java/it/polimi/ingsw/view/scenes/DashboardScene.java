@@ -20,14 +20,11 @@ import javafx.scene.paint.Color;
 
 public class DashboardScene extends BasicSceneUpdater{
 
-
     @FXML
     public AnchorPane root;
 
-
     @FXML
     public GridPane grid;
-
 
     @FXML
     public ImageView marketbutton;
