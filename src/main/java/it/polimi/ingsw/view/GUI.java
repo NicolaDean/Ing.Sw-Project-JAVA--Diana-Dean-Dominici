@@ -322,7 +322,7 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void showGameStarted() {
-        GuiHelper.sendMessage("Game Started");
+        Platform.runLater(()-> GuiHelper.sendMessage("Game Started"));
         this.askCommand();
     }
 
