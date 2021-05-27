@@ -51,7 +51,7 @@ public class GUI extends Observable<ClientController> implements View{
             miniMarketDiscardedResouce = discarted;
         }else {
             waitMiniModelLoading();
-            GuiHelper.updateMarket();
+            Platform.runLater(() -> { try { GuiHelper.updateMarket(); }catch(Exception e){ e.printStackTrace();}});
         }
     }
 
