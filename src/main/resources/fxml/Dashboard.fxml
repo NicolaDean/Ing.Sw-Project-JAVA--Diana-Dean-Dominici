@@ -51,6 +51,16 @@
                         <Font name="LillyBelle" size="22.0" />
                      </font>
                   </Text>
+                  <ImageView id="production_card" fx:id="endturn" fitHeight="97.0" fitWidth="213.0" layoutX="69.0" layoutY="273.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/interface/Button.png" />
+                     </image>
+                  </ImageView>
+                  <Text disable="true" fill="WHITE" layoutX="109.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="END TURN" textAlignment="CENTER" wrappingWidth="132.80088806152344">
+                     <font>
+                        <Font name="LillyBelle" size="22.0" />
+                     </font>
+                  </Text>
                </children>
             </AnchorPane>
          </children>
