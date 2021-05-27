@@ -35,20 +35,7 @@ public class BasicSceneUpdater extends Observable<ClientController> {
 
     public ButtonType loadDialog(String path,String title,BasicSceneUpdater controller)
     {
-        try {
-
-            DialogPane          pane = (DialogPane) GuiHelper.loadFXML(path,controller);
-            Dialog<ButtonType>  dialog  =  new Dialog<>();
-            dialog.setDialogPane(pane);
-            dialog.setTitle(title);
-
-            Optional<ButtonType> options = dialog.showAndWait();
-            return options.get();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ButtonType.CANCEL;
+       return GuiHelper.loadDialog(path,title,controller);
     }
 
 

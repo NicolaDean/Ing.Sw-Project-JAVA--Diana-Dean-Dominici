@@ -1,10 +1,12 @@
 package it.polimi.ingsw.view.scenes;
 
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GuiHelper;
 import it.polimi.ingsw.view.utils.FXMLpaths;
+import it.polimi.ingsw.view.utils.Logger;
 import it.polimi.ingsw.viewtest.Appp;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,6 +21,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+
+import java.util.List;
 
 
 public class BuyScene extends BasicSceneUpdater{
@@ -93,6 +97,13 @@ public class BuyScene extends BasicSceneUpdater{
                 drawCard(deck[i][j],j,i);
             }
         }
+        InitialResources dialog = new InitialResources(2);
+        this.loadDialog("dialogChoseResource","chose res",dialog);
+
+        List<Resource> res = dialog.getResources();
+
+        (new Logger()).printInlineResourceList(res);
+        System.out.println("");
     }
 
     /**
