@@ -5,14 +5,12 @@ import it.polimi.ingsw.model.cards.LeaderCard;
 
 public class SelectLeader extends Packet<ServerController> implements PacketManager<ServerController> {
 
-        LeaderCard[] leaders;
         int l1;
         int l2;
 
-        public SelectLeader(LeaderCard[] leaders,int l1,int l2)
+        public SelectLeader(int l1,int l2)
         {
             super("SelectLeader");
-            this.leaders = leaders;
             this.l1 = l1;
             this.l2 = l2;
             //this.playerIndex = playerIndex;
@@ -21,7 +19,7 @@ public class SelectLeader extends Packet<ServerController> implements PacketMana
             @Override
             public Packet analyze(ServerController controller) {
 
-            return  controller.setLeaders(this.leaders, l1, l2,this.getClientIndex());
+            return  controller.setLeaders(l1, l2,this.getClientIndex());
             }
 
 }

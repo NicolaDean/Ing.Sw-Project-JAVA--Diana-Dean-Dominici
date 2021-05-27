@@ -335,7 +335,7 @@ public class ServerController{
      * @param index
      * @return
      */
-    public Packet setLeaders(LeaderCard[] leaders,int pos1,int pos2, int index)
+    public Packet setLeaders(int pos1,int pos2, int index)
     {
         int playerIndex = this.clients.get(index).getRealPlayerIndex();
         //this.game.getCurrentPlayer().setLeaders(leaders);

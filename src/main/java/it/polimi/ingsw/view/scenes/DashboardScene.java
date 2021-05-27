@@ -32,6 +32,9 @@ public class DashboardScene extends BasicSceneUpdater{
     @FXML
     public ImageView shopbutton;
 
+    @FXML
+    public ImageView endturn;
+
     @Override
     public void init()
     {
@@ -45,6 +48,10 @@ public class DashboardScene extends BasicSceneUpdater{
 
         shopbutton.setOnMouseClicked(event -> {
             this.notifyObserver(controller -> controller.showshop());
+        });
+
+        endturn.setOnMouseClicked(event -> {
+            this.notifyObserver(controller -> controller.askEndTurn());
         });
 
 
@@ -80,16 +87,7 @@ public class DashboardScene extends BasicSceneUpdater{
         });
     }
 
-    public void gotomarket(ActionEvent actionEvent)
-    {
-        System.out.println("gotomarket");
-        this.notifyObserver(controller -> controller.showmarket());
-    }
 
-    public void gotoshop(ActionEvent actionEvent)
-    {
-        this.notifyObserver(controller -> controller.showshop());
-    }
 
 
 

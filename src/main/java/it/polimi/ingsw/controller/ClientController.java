@@ -219,9 +219,9 @@ public class ClientController implements Runnable{
         this.model.getPlayers()[index].setLeaderCards(leaderCard);
     }
 
-    public void sendLeader(LeaderCard[] leaderCards,int pos1,int pos2)
+    public void sendLeader(int pos1,int pos2)
     {
-        this.sendMessage(new SelectLeader(leaderCards,pos1,pos2));
+        this.sendMessage(new SelectLeader(pos1,pos2));
     }
     public void askLeaders()
     {

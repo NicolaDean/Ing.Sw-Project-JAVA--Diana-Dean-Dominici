@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.controller.packets.EndTurn;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
@@ -237,9 +238,10 @@ public class GUI extends Observable<ClientController> implements View{
 
         if(firstTurn)
         {
-            this.notifyObserver(ClientController::askLeaders);          //SHOW DIALOG with leaders
-            this.notifyObserver(ClientController::askInitialResoruce);
-            this.notifyObserver(ClientController::showDashboard);//SHOW DIALOG WHIT initial resources
+            Platform.runLater(()->this.notifyObserver(ClientController::askLeaders));;         //SHOW DIALOG with leaders
+            Platform.runLater(()->this.notifyObserver(ClientController::askInitialResoruce));  //SHOW DIALOG WHIT initial resources
+            this.notifyObserver(ClientController::showDashboard);
+            firstTurn = false;
         }
         else
         {
@@ -276,22 +278,16 @@ public class GUI extends Observable<ClientController> implements View{
 
 
         //Continue until user press ok (if exit windows in other way (eg clicking X) it will recall dialog
-        Platform.runLater(()->{
-            ButtonType result = ButtonType.CANCEL;
-            do {
-                result = GuiHelper.loadDialog(FXMLpaths.askLeaders,"Choose 2 of those leaders" ,dialog);
-            }while (result.equals(ButtonType.CANCEL));
-        });
+        ButtonType result = ButtonType.CANCEL;
+        do {
+            result = GuiHelper.loadDialog(FXMLpaths.askLeaders,"Choose 2 of those leaders" ,dialog);
+        }while (result.equals(ButtonType.CANCEL));
 
-        while(!dialog.isReady())
-        {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        //getResult
+        int out[] = dialog.getLeaders();
+
+        //Send to server Leader setting
+        this.notifyObserver(controller -> controller.sendLeader(out[0],out[1]));
+
     }
 
     @Override
@@ -326,19 +322,17 @@ public class GUI extends Observable<ClientController> implements View{
         InitialResources dialog = new InitialResources(number);
 
         Platform.runLater(()->{
-            GuiHelper.loadDialog(FXMLpaths.initialResource,"Chose " + number + "of those resources",dialog);
+
+            ButtonType result = ButtonType.CANCEL;
+            do {
+                result = GuiHelper.loadDialog(FXMLpaths.initialResource,"Chose " + number + "of those resources",dialog);
+            }while (result.equals(ButtonType.CANCEL));
+
+            this.askResourceInsertion(dialog.getResources());
         });
 
-        while(!dialog.isReady())
-        {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
 
-        this.askResourceInsertion(dialog.getResources());
+
     }
 
     @Override
@@ -392,7 +386,12 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void askEndTurn() {
-        //Dialog "Do you want to end turn? YES NO
+        Platform.runLater(()-> {
+            if(GuiHelper.YesNoDialog("End TURN","Do you want to end turn?"))
+            {
+                this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
+            }
+        });
     }
 
 

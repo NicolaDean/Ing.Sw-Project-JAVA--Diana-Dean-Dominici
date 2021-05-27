@@ -871,7 +871,7 @@ public class CLI extends Observable<ClientController> implements View {
         int l2 = this.askIntExept("Which of those leaders you want to draw? (1-4)","wrong input range","already selected leader",1,ConstantValues.leaderCardsToDraw,l1+1) -1;
         leaderCards[1] = cards[l2];
 
-        this.notifyObserver(controller -> {controller.sendLeader(leaderCards,l1,l2);});
+        this.notifyObserver(controller -> {controller.sendLeader(l1,l2);});
     }
 
     @Override
