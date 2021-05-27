@@ -11,6 +11,7 @@ public class FXMLpaths {
     public static String insertions      = "buy";
     public static String prodDialog      = "dialogProduction";
     public static String initialResource = "dialogChoseResource";
+    public static String askLeaders      = "dialogLeaderChose";
     public static String market        = "market";
     public static String dashboard        = "Dashboard";
 
