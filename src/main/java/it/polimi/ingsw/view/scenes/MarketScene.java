@@ -23,18 +23,20 @@ public class MarketScene extends BasicSceneUpdater{
     boolean isAlreadySetted=false;
 
     @FXML
-    AnchorPane pane;
+    GridPane gpaneBalls;
     @FXML
-    GridPane gpane;
+    GridPane gpaneDiscardedBall;
+    @FXML
+    Button back;
+
     @Override
     public void init() {
         super.init();
-        this.balls= new ImageView[ConstantValues.marketRow][ConstantValues.marketCol];
-        //Update
-        this.notifyObserver(controller ->{
-            this.fillMarket(controller.getView().getMiniMarketBalls(), controller.getView().getMiniMarketDiscardedResouce());
-        });
+        this.balls = new ImageView[ConstantValues.marketRow][ConstantValues.marketCol];
+        this.discartedBall = new ImageView();
+        updateMarket();
         isAlreadySetted=true;
+        back.setStyle("-fx-background-image: url('../images/interface/Button.png') no-repeat top left");
     }
 
     @Override
@@ -47,25 +49,41 @@ public class MarketScene extends BasicSceneUpdater{
     public void fillMarket(BasicBall[][] balls, BasicBall discarted){
             for(int i=0;i<ConstantValues.marketRow;i++)
                 for(int j=0;j<ConstantValues.marketCol;j++)
-                    drawBall(balls[i][j],i,j);
+                    drawBall(balls[i][j],i,j,gpaneBalls);
 
-                //TODO manca pallina scartata
+            drawBall(discarted,0,0,gpaneDiscardedBall);
     }
 
 
-    public void drawBall(BasicBall ball,int row,int col){
+    public void drawBall(BasicBall ball,int row,int col,GridPane gpaneBalls){
         if(!isAlreadySetted) {
             this.balls[row][col] = loadImage("/images/balls/" + ball.getColor() + ".png", 50, 50);
-            gpane.add(balls[row][col], ConstantValues.marketCol - col, ConstantValues.marketRow - row);
+            gpaneBalls.add(balls[row][col], ConstantValues.marketCol - col, ConstantValues.marketRow - row);
 
         }else{
             this.balls[row][col].setImage(loadImage("/images/balls/" + ball.getColor() + ".png"));
         }
     }
+
+    @FXML
+    public void exstractionRow(ActionEvent event){
+        int pos =Integer.parseInt((String) ((Node)event.getSource()).getUserData());
+        System.out.println("estratta riga in posizione "+pos);
+        //this.notifyObserver(ClientController::sendMarketExtraction(false,pos));
+        this.notifyObserver(clientController -> { clientController.exstractRow(pos); });
+    }
+
     @FXML
     public void exstractionCol(ActionEvent event){
         int pos =Integer.parseInt((String) ((Node)event.getSource()).getUserData());
-        System.out.println("estratto in posizione "+pos);
-        //this.notifyObserver(ClientController::exstractColumn(pos));
+        System.out.println("estratta colonna in posizione "+pos);
+        //this.notifyObserver(ClientController::sendMarketExtraction(true,pos));
+        this.notifyObserver(clientController -> { clientController.exstractColumn(pos); });
     }
+
+    @FXML
+    public void comeBack(ActionEvent event){
+        this.notifyObserver(ClientController::showDashboard);
+    }
+
 }
