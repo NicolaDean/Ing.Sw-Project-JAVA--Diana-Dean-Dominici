@@ -42,13 +42,9 @@ public class DashboardScene extends BasicSceneUpdater{
 
         //GuiHelper.resize(1280,720);
 
-        marketbutton.setOnMouseClicked(event -> {
-            this.notifyObserver(controller -> controller.showmarket());
-        });
+        marketbutton.setOnMouseClicked(event -> this.gotomarket());
 
-        shopbutton.setOnMouseClicked(event -> {
-            this.notifyObserver(controller -> controller.showshop());
-        });
+        shopbutton.setOnMouseClicked(event -> this.gotoshop());
 
 
         GuiHelper.getStage().show();
@@ -83,13 +79,12 @@ public class DashboardScene extends BasicSceneUpdater{
         });
     }
 
-    public void gotomarket(ActionEvent actionEvent)
+    public void gotomarket()
     {
-        System.out.println("gotomarket");
         this.notifyObserver(controller -> controller.showmarket());
     }
 
-    public void gotoshop(ActionEvent actionEvent)
+    public void gotoshop()
     {
         this.notifyObserver(controller -> controller.showshop());
     }
