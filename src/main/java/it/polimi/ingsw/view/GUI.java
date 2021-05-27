@@ -259,6 +259,7 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askCommand() {
         //trurn chosing scene
+        //TODO da riumovere da qui perchè andra dove fede mette il pulzante
         waitMiniModelLoading();
         showMarket();
     }
