@@ -15,6 +15,7 @@ public class MarketScene extends BasicSceneUpdater{
 
     private ImageView balls;
     private ImageView discartedBall;
+
     @FXML
     AnchorPane pane;
 

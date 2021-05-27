@@ -13,8 +13,10 @@ import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.scenes.DialogLeader;
 import it.polimi.ingsw.view.scenes.InitialResources;
+import it.polimi.ingsw.view.scenes.MarketScene;
 import it.polimi.ingsw.view.utils.FXMLpaths;
 import javafx.application.Platform;
+import javafx.scene.control.ButtonType;
 
 import java.io.IOException;
 import java.util.List;
@@ -260,7 +262,14 @@ public class GUI extends Observable<ClientController> implements View{
 
         DialogLeader dialog = new DialogLeader(cards);
 
-        Platform.runLater(()->{GuiHelper.loadDialog(FXMLpaths.askLeaders,"Choose 2 of those leaders" ,dialog);});
+
+        //Continue until user press ok (if exit windows in other way (eg clicking X) it will recall dialog
+        Platform.runLater(()->{
+            ButtonType result = ButtonType.CANCEL;
+            do {
+                result = GuiHelper.loadDialog(FXMLpaths.askLeaders,"Choose 2 of those leaders" ,dialog);
+            }while (result.equals(ButtonType.CANCEL));
+        });
 
         while(!dialog.isReady())
         {

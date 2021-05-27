@@ -1,6 +1,5 @@
 package it.polimi.ingsw.viewtest;
 
-import it.polimi.ingsw.App;
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.view.GUI;
 import javafx.application.Application;
@@ -82,7 +81,7 @@ public class Appp extends Application {
     static void drawLeadere(int id,int height,Group group,int padding)
     {
         //Creating an image
-        Image image = new Image(Appp.class.getResourceAsStream("/images/cards/leader/" +id+".jpg"));
+        Image image = new Image(Appp.class.getResourceAsStream("/images/cards/leaders/" +id+".jpg"));
 
         //Setting the image view
         ImageView imageView = new ImageView(image);
