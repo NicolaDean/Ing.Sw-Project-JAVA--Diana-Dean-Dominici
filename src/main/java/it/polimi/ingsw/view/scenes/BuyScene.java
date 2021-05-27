@@ -11,10 +11,7 @@ import it.polimi.ingsw.viewtest.Appp;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -22,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -41,8 +39,10 @@ public class BuyScene extends BasicSceneUpdater{
     public Label click;
     @FXML
     public ImageView selectedCard;
-
-
+    @FXML
+    public ImageView buyButton;
+    @FXML
+    public ImageView backButton;
 
 
     private ImageView[][] cards;
@@ -58,8 +58,16 @@ public class BuyScene extends BasicSceneUpdater{
     {
         super.init();
 
+        this.col = -1;
+        this.row = -1;
+
+        buyButton.setOnMouseClicked(this::buyButton);
+        backButton.setOnMouseClicked(this::goBack);
         //GuiHelper.resize(1280,720);
         this.cards = new ImageView[ConstantValues.rowDeck][ConstantValues.colDeck];
+
+        InitialResources dialog = new InitialResources(2);
+        ButtonType result = loadDialog(FXMLpaths.initialResource,"Chose dashboard position",dialog);
 
         click.setOpacity(0);
 
@@ -97,13 +105,6 @@ public class BuyScene extends BasicSceneUpdater{
                 drawCard(deck[i][j],j,i);
             }
         }
-        InitialResources dialog = new InitialResources(2);
-        this.loadDialog("dialogChoseResource","chose res",dialog);
-
-        List<Resource> res = dialog.getResources();
-
-        (new Logger()).printInlineResourceList(res);
-        System.out.println("");
     }
 
     /**
@@ -161,16 +162,34 @@ public class BuyScene extends BasicSceneUpdater{
         selectedCard.setImage(currCard);
     }
 
-    public void buyButton(ActionEvent actionEvent) {
+    public void buyButton(MouseEvent mouseEvent) {
+
+        if(this.row == -1 && this.col==-1)
+        {
+            System.out.println("Error no card selected");
+            return;
+        }
         DialogProductionScene dialog = new DialogProductionScene();
         ButtonType result = loadDialog(FXMLpaths.prodDialog,"Chose dashboard position",dialog);
-
 
         if(result.equals(ButtonType.OK) && dialog.getPos()!= -1)
         {
             this.pos = dialog.getPos();
             this.notifyObserver(controller -> controller.sendBuyCard(this.row,this.col,this.pos));
-        }
 
+            this.goBack(null);
+        }
+        else
+        {
+        }
+    }
+
+    public void goBack(MouseEvent mouseEvent)
+    {
+        try {
+            GuiHelper.setRoot(FXMLpaths.dashboard);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

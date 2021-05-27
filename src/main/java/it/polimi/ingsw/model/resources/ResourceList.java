@@ -118,7 +118,7 @@ public class ResourceList implements List
             {
                 if(res!= null)
                 {
-                    if(res.getType() == r.getType())
+                    if(res.getType().equals(r.getType()))
                     {
                         try {
                             if(res.getQuantity() >= r.getQuantity())
