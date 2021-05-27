@@ -38,20 +38,18 @@ public class Market {
                     resouces[i][j]=new WhiteBall();
                 }else if(nb>0){
                     nb--;
-                    resouces[i][j]= new ResourceBall(Color.blue,SHIELD, CliColors.BLUE_TEXT);
+                    resouces[i][j]= new ResourceBall("blue",SHIELD, CliColors.BLUE_TEXT);
                 }else if(ng>0){
                     ng--;
-                    resouces[i][j]= new ResourceBall(Color.gray,ROCK, CliColors.WHITE_TEXT);
+                    resouces[i][j]= new ResourceBall("gray",ROCK, CliColors.WHITE_TEXT);
                 }else if(ny>0){
                     ny--;
-                    resouces[i][j]= new ResourceBall(Color.yellow,COIN, CliColors.YELLOW_TEXT);
+                    resouces[i][j]= new ResourceBall("yellow",COIN, CliColors.YELLOW_TEXT);
                 }else if(nv>0){
                     nv--;
-                    resouces[i][j]= new ResourceBall(Color.magenta,SERVANT,CliColors.MAGENTA_TEXT);
+                    resouces[i][j]= new ResourceBall("violet",SERVANT,CliColors.MAGENTA_TEXT);
                 }
-
             }
-
         randomized();
     }
 

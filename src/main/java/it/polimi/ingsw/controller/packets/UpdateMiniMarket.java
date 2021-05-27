@@ -5,6 +5,7 @@ import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 import it.polimi.ingsw.utils.DebugMessages;
+import it.polimi.ingsw.view.GuiHelper;
 
 public class UpdateMiniMarket extends Packet<ClientController> implements PacketManager<ClientController>{
     Boolean dir;

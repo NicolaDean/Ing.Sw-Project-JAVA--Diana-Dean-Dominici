@@ -11,7 +11,7 @@ import java.beans.Transient;
 public class RedBall extends BasicBall{
 
     public RedBall() {
-        setColor(Color.red,CliColors.RED_TEXT);
+        setColor("red",CliColors.RED_TEXT);
     }
 
     /**
