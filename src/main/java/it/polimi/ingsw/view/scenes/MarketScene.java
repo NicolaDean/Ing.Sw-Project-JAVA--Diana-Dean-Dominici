@@ -68,14 +68,12 @@ public class MarketScene extends BasicSceneUpdater{
     @FXML
     public void exstractionRow(ActionEvent event){
         int pos =Integer.parseInt((String) ((Node)event.getSource()).getUserData());
-        System.out.println("estratta riga in posizione "+pos);
         this.notifyObserver(clientController -> { clientController.sendMarketExtraction(false,pos); });
     }
 
     @FXML
     public void exstractionCol(ActionEvent event){
         int pos =Integer.parseInt((String) ((Node)event.getSource()).getUserData());
-        System.out.println("estratta colonna in posizione "+pos);
         this.notifyObserver(clientController -> { clientController.sendMarketExtraction(true,pos); });
     }
 
