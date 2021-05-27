@@ -232,8 +232,8 @@ public class GUI extends Observable<ClientController> implements View{
 
         if(firstTurn)
         {
-            this.notifyObserver(ClientController::askLeaders);          //SHOW DIALOG with leaders
-            this.notifyObserver(ClientController::askInitialResoruce);
+            //this.notifyObserver(ClientController::askLeaders);          //SHOW DIALOG with leaders
+            //this.notifyObserver(ClientController::askInitialResoruce);
 
         }
         else

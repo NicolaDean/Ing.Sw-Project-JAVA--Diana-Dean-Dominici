@@ -2,3 +2,27 @@
     -fx-background-image: url("../images/dashboard/dashboard-front.jpg");
     -fx-background-size: cover;
 }
+
+#Button
+{
+
+
+}
+
+#production_card{
+    -fx-margin-left: 30px;
+    -fx-border-radius: 100 100 100 100;
+    -fx-background-radius: 100 100 100 100;
+}
+
+#production_card:hover
+{
+    -fx-effect: dropshadow(gaussian, #f2e0d6, 20, 0.3, 0, 0);
+    -fx-alignment: center;
+    -fx-cursor: hand;
+    -fx-fit-to-height: 220px;
+    -fx-fit-to-width : 150px;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+
+}

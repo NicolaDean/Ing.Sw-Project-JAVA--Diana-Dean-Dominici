@@ -454,6 +454,16 @@ public class ClientController implements Runnable{
         this.view.showMarketExtraction(res,whiteBalls,resourceTypes);
     }
 
+    public void showmarket()
+    {
+        this.view.showMarket();
+    }
+
+    public void showshop()
+    {
+        this.view.askBuy();
+    }
+
     public void askBonusProductions()
     {
         this.view.askBonusProduction(this.model.getPersonalPlayer().getTrade());
