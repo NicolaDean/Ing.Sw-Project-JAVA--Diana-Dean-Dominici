@@ -39,13 +39,18 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     /**
-     * set mini model of market in the view
+     * set mini model of market in the view if put balls and discartedBall null update images
      * @param balls balls
      * @param discarted ball discarted
      */
     public void setMarket(BasicBall[][] balls, BasicBall discarted){
-        miniMarketBalls=balls;
-        miniMarketDiscardedResouce=discarted;
+        if((balls != null)&&(discarted != null)) {
+            miniMarketBalls = balls;
+            miniMarketDiscardedResouce = discarted;
+        }else {
+            waitMiniModelLoading();
+            GuiHelper.updateMarket();
+        }
     }
 
     /**
@@ -84,7 +89,7 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void setMiniMarketDiscardedResouce(BasicBall miniMarketBall){
-
+        miniMarketDiscardedResouce=miniMarketBall;
     }
 
 
@@ -227,7 +232,7 @@ public class GUI extends Observable<ClientController> implements View{
     {
 
         waitMiniModelLoading();
-
+        /*
         if(firstTurn)
         {
             this.notifyObserver(ClientController::askLeaders);          //SHOW DIALOG with leaders
@@ -241,8 +246,9 @@ public class GUI extends Observable<ClientController> implements View{
         //TODO find a way to detect automaticly the turn type
         //LOAD DASHBOARD SCENE WITH "turnSelectionController" when user do concrete action controller swith
         // to a specific controller that allow him to do only some actions
-        //askBuy();
-        showMarket();
+        askBuy();
+
+         */
     }
 
     @Override
@@ -253,6 +259,8 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askCommand() {
         //trurn chosing scene
+        waitMiniModelLoading();
+        showMarket();
     }
 
     @Override
@@ -345,6 +353,8 @@ public class GUI extends Observable<ClientController> implements View{
         }
 
         this.askResourceInsertion(out);
+
+
     }
 
     @Override

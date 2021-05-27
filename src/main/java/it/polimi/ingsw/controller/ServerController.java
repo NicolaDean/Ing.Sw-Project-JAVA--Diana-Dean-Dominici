@@ -151,6 +151,7 @@ public class ServerController{
     {
         this.sendMessage(new IncrementPosition(pos,this.clients.get(clientIndex).getRealPlayerIndex()),clientIndex);
     }
+
     public Game getGame() {
         return game;
     }

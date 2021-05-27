@@ -67,8 +67,10 @@ public class CLI extends Observable<ClientController> implements View {
      * @param discarted ball discarted
      */
     public void setMarket(BasicBall[][] balls, BasicBall discarted){
-        miniMarketBalls=balls;
-        miniMarketDiscardedResouce=discarted;
+        if((balls != null)&&(discarted != null)) {
+            miniMarketBalls = balls;
+            miniMarketDiscardedResouce = discarted;
+        }
     }
 
     /**

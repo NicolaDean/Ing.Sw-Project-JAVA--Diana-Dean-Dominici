@@ -121,6 +121,13 @@ public class GuiHelper extends Application {
     }
 
     /**
+     * Update market
+     */
+    public static void updateMarket(){
+        currentScene.updateMarket();
+    }
+
+    /**
      * notify scene that en error occure
      * @param msg error message
      */
