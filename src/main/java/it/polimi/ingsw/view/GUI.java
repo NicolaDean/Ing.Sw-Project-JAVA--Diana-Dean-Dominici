@@ -108,6 +108,8 @@ public class GUI extends Observable<ClientController> implements View{
         }
     }
 
+
+
     @Override
     public void askServerData() {
         try {
@@ -230,18 +232,21 @@ public class GUI extends Observable<ClientController> implements View{
         if(firstTurn)
         {
             this.notifyObserver(ClientController::askLeaders);          //SHOW DIALOG with leaders
-            this.notifyObserver(ClientController::askInitialResoruce);  //SHOW DIALOG WHIT initial resources
+            this.notifyObserver(ClientController::askInitialResoruce);
+
         }
         else
         {
-            //SHOW DASHBOARD BASE
+            this.notifyObserver(ClientController::showDashboard);
         }
 
         //TODO find a way to detect automaticly the turn type
         //LOAD DASHBOARD SCENE WITH "turnSelectionController" when user do concrete action controller swith
         // to a specific controller that allow him to do only some actions
-        askBuy();
-        showMarket();
+        //askBuy();
+        //showMarket();
+        this.notifyObserver(ClientController::showDashboard);
+
     }
 
     @Override
@@ -288,10 +293,12 @@ public class GUI extends Observable<ClientController> implements View{
 
         if(number == 0) return;
 
+        Platform.runLater(()->{
+
         InitialResources dialog = new InitialResources(number);
         GuiHelper.loadDialog(FXMLpaths.initialResource,"Chose " + number + "of those resources",dialog);
 
-        this.askResourceInsertion(dialog.getResources());
+        this.askResourceInsertion(dialog.getResources()); });
     }
 
     @Override
@@ -331,6 +338,16 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void showDashboard(Deposit[] deposits, List<Resource> chest, ProductionCard[] cards,LeaderCard[] leaderCards) {
 
+        waitMiniModelLoading();
+
+        Platform.runLater(()->{
+            try {
+                GuiHelper.setRoot(FXMLpaths.dashboard);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
     }
 
     @Override
