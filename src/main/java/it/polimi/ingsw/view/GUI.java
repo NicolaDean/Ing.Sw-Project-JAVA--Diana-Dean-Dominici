@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.view.observer.Observable;
+import it.polimi.ingsw.view.scenes.DialogLeader;
 import it.polimi.ingsw.view.scenes.InitialResources;
 import it.polimi.ingsw.view.utils.FXMLpaths;
 import javafx.application.Platform;
@@ -237,6 +238,19 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askLeaders(LeaderCard[] cards) {
 
+        DialogLeader dialog = new DialogLeader(cards);
+
+        Platform.runLater(()->{GuiHelper.loadDialog(FXMLpaths.askLeaders,"Choose 2 of those leaders" ,dialog);});
+
+        while(!dialog.isReady())
+        {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        //getResult
     }
 
     @Override
@@ -269,7 +283,19 @@ public class GUI extends Observable<ClientController> implements View{
         if(number == 0) return;
 
         InitialResources dialog = new InitialResources(number);
-        GuiHelper.loadDialog(FXMLpaths.initialResource,"Chose " + number + "of those resources",dialog);
+
+        Platform.runLater(()->{
+            GuiHelper.loadDialog(FXMLpaths.initialResource,"Chose " + number + "of those resources",dialog);
+        });
+
+        while(!dialog.isReady())
+        {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
         this.askResourceInsertion(dialog.getResources());
     }
