@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.scenes;
 import it.polimi.ingsw.view.GuiHelper;
 import it.polimi.ingsw.view.scenes.BasicSceneUpdater;
 import it.polimi.ingsw.view.utils.FXMLpaths;
+import it.polimi.ingsw.view.utils.RandomNicks;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -38,7 +39,12 @@ public class LoginScene extends BasicSceneUpdater {
         }
         else
         {
-            //TODO show error "nickname to short"
+            this.notifyObserver(controller -> controller.setNickname(RandomNicks.getRandomNickname(),GuiHelper.getGui().isSingleplayer()));
+            try {
+                GuiHelper.setRoot(FXMLpaths.waitingStart);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }
