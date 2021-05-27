@@ -149,7 +149,10 @@ public class ServerController{
 
     public void sendPositionUpdate(int pos,int clientIndex)
     {
-        this.sendMessage(new IncrementPosition(pos,this.clients.get(clientIndex).getRealPlayerIndex()),clientIndex);
+        if(this.isStarted)
+        {
+            this.sendMessage(new IncrementPosition(pos,this.clients.get(clientIndex).getRealPlayerIndex()),clientIndex);
+        }
     }
 
     public Game getGame() {
@@ -178,7 +181,7 @@ public class ServerController{
                     return;
                 }
 
-                this.isStarted = true;
+
 
                 this.warning("\n-----------Game " + this.getIdpartita() + " avviato---------- \n");
 
@@ -203,7 +206,7 @@ public class ServerController{
                     i++;
                 }
 
-
+                this.isStarted = true;
                 TimeUnit.SECONDS.sleep(2);
                 //notify first player the is its turn
                 //this.clients.get(firstPlayer).sendToClient(new TurnNotify());
