@@ -83,18 +83,4 @@ public class DashboardScene extends BasicSceneUpdater{
         });
     }
 
-    public void gotomarket(ActionEvent actionEvent)
-    {
-        System.out.println("gotomarket");
-        this.notifyObserver(controller -> controller.showmarket());
-    }
-
-    public void gotoshop(ActionEvent actionEvent)
-    {
-        this.notifyObserver(controller -> controller.showshop());
-    }
-
-
-
-
 }
