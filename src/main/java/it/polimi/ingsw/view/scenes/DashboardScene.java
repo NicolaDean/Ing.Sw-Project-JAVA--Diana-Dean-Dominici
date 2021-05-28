@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GuiHelper;
-import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -37,12 +36,10 @@ public class DashboardScene extends BasicSceneUpdater{
     @FXML
     public ImageView endturn;
 
-
     @Override
     public void init()
     {
         super.init();
-
 
         //GuiHelper.resize(1280,720);
 
