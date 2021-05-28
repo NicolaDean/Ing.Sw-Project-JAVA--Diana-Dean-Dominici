@@ -13,6 +13,7 @@ public class TurnNotify  extends Packet<ClientController> implements PacketManag
     {
         System.out.println("It's your turn!");
         controller.abortHelp();
+        controller.setMyTurn(true);
         controller.excecuteTurn();
         return null;
     }

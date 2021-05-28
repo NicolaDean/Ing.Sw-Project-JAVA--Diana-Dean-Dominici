@@ -390,6 +390,7 @@ public class GUI extends Observable<ClientController> implements View{
             if(GuiHelper.YesNoDialog("End TURN","Do you want to end turn?"))
             {
                 this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
+                this.notifyObserver(clientController -> clientController.setMyTurn(false));
             }
         });
     }

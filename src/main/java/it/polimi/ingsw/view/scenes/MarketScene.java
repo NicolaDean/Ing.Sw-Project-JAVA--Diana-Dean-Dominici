@@ -3,15 +3,11 @@ package it.polimi.ingsw.view.scenes;
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.utils.ConstantValues;
-import it.polimi.ingsw.utils.DebugMessages;
-import it.polimi.ingsw.view.GuiHelper;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 public class MarketScene extends BasicSceneUpdater{
@@ -20,6 +16,7 @@ public class MarketScene extends BasicSceneUpdater{
     private ImageView[][] balls;
     private ImageView discartedBall;
 
+    private boolean isMyTurn;
     boolean isAlreadySetted=false;
 
     @FXML
@@ -28,6 +25,10 @@ public class MarketScene extends BasicSceneUpdater{
     GridPane gpaneDiscardedBall;
     @FXML
     Button back;
+    @FXML
+    Button row1,row2,row3;
+    @FXML
+    Button col1,col2,col3,col4;
 
     @Override
     public void init() {
@@ -36,7 +37,9 @@ public class MarketScene extends BasicSceneUpdater{
         this.discartedBall = new ImageView();
         updateMarket();
         isAlreadySetted=true;
-        back.setStyle("-fx-background-image: url('../images/interface/Button.png') no-repeat top left");
+        //back.setStyle("-fx-background-image: url('../images/interface/Button.png') no-repeat top left");
+        back.setVisible(true);
+        setExstracionButtonVisible(true);
     }
 
     @Override
@@ -54,7 +57,6 @@ public class MarketScene extends BasicSceneUpdater{
             drawBall(discarted,0,0,gpaneDiscardedBall);
     }
 
-
     public void drawBall(BasicBall ball,int row,int col,GridPane gpaneBalls){
         if(!isAlreadySetted) {
             this.balls[row][col] = loadImage("/images/balls/" + ball.getColor() + ".png", 50, 50);
@@ -67,19 +69,43 @@ public class MarketScene extends BasicSceneUpdater{
 
     @FXML
     public void exstractionRow(ActionEvent event){
-        int pos =Integer.parseInt((String) ((Node)event.getSource()).getUserData());
-        this.notifyObserver(clientController -> { clientController.sendMarketExtraction(false,pos); });
+        this.notifyObserver(clientController -> this.isMyTurn=clientController.isMyTurn());
+        if(isMyTurn) {
+            int pos = Integer.parseInt((String) ((Node) event.getSource()).getUserData());
+            this.notifyObserver(clientController -> {
+                clientController.sendMarketExtraction(false, pos);
+            });
+            setExstracionButtonVisible(false);
+            back.setVisible(false);
+        }
     }
 
     @FXML
     public void exstractionCol(ActionEvent event){
-        int pos =Integer.parseInt((String) ((Node)event.getSource()).getUserData());
-        this.notifyObserver(clientController -> { clientController.sendMarketExtraction(true,pos); });
+        this.notifyObserver(clientController -> this.isMyTurn=clientController.isMyTurn());
+        if(isMyTurn) {
+            int pos = Integer.parseInt((String) ((Node) event.getSource()).getUserData());
+            this.notifyObserver(clientController -> {
+                clientController.sendMarketExtraction(true, pos);
+            });
+            setExstracionButtonVisible(false);
+            back.setVisible(false);
+        }
     }
 
     @FXML
     public void comeBack(ActionEvent event){
         this.notifyObserver(ClientController::showDashboard);
+    }
+
+    public void setExstracionButtonVisible(boolean visible){
+        row1.setVisible(visible);
+        row2.setVisible(visible);
+        row3.setVisible(visible);
+        col1.setVisible(visible);
+        col2.setVisible(visible);
+        col3.setVisible(visible);
+        col4.setVisible(visible);
     }
 
 }
