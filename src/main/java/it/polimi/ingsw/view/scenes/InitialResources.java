@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.scenes;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.view.utils.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -29,6 +30,9 @@ public class InitialResources extends BasicDialog{
     public Pane destination;
     @FXML
     public FlowPane resContainer;
+    @FXML
+    public ImageView bin;
+
 
     public Button btOk;
 
@@ -82,33 +86,13 @@ public class InitialResources extends BasicDialog{
 
         }
 
+        //Set destination drag event
+        destination.setOnDragOver(this::onOver);
+        destination.setOnDragDropped(this::destinationOnDragDropped);
 
-        destination.setOnDragOver(event -> {
-
-            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-
-            event.consume();
-        });
-
-        destination.setOnDragDropped(event -> {
-
-            if(numOfInserted>=numOfChoices)
-            {
-                btOk.setCancelButton(true);
-                return;
-            }
-            //Load a resource corresponding to image
-            numOfInserted ++ ;
-            ResourceType res = ResourceType.valueOf(event.getDragboard().getString());
-
-            this.out.add(new Resource(res,1));
-
-            System.out.println("dropped " + event.getDragboard().getString());
-            ImageView img = new ImageView(event.getDragboard().getImage());
-            img.setFitHeight(100);
-            img.setFitWidth(100);
-            resContainer.getChildren().add(img);
-        });
+        //Set bin drag event
+        bin.setOnDragOver(this::onOver);
+        bin.setOnDragDropped(this::binOnDragDropper);
 
         //Avoid user to exit with no selected resources
         btOk.addEventFilter(
@@ -117,11 +101,105 @@ public class InitialResources extends BasicDialog{
                     if (!(this.numOfInserted >= this.numOfChoices)) {
                         System.out.println("You have to select "+ (this.numOfChoices-this.numOfInserted)+" Resources");
                         event.consume();
-                    }else isReady = false;
+                    }
+                    {
+                        (new Logger()).printInlineResourceList(this.out);
+                        isReady = false;
+                    }
                 }
         );
     }
 
+
+    /**
+     * function called when something is dragged and dropped on the bin
+     * @param event drag event
+     */
+    public void binOnDragDropper(DragEvent event)
+    {
+        String s = event.getDragboard().getString();
+
+        if(s.contains("-d-"))
+        {
+            String [] split = s.split("-d-");
+            s         = split[0];
+            int index = Integer.parseInt(split[1]);
+            System.out.println("Remove : " + index);
+            ResourceType type = ResourceType.valueOf(s);
+
+            this.out.remove(new Resource(type,1));
+
+            this.resContainer.getChildren().remove(index);
+
+            if(index==0 && !this.resContainer.getChildren().isEmpty())
+            {
+                split = this.resContainer.getChildren().get(0).getId().split("-d-");
+                this.resContainer.getChildren().get(0).setId(split[0] + "-d-" + 0);
+            }
+            this.numOfInserted --;
+        }
+        else
+        {
+            System.out.println("not discardable");
+        }
+    }
+
+    /**
+     * when a resource is dropped from source to destination pane it will be added a new image
+     * and resource type corresponding to it will be added to res list
+     * @param event drag event
+     */
+    public void destinationOnDragDropped(DragEvent event)
+    {
+        if(event.getDragboard().getString().contains("-d-"))
+        {
+            System.out.println("Now allowed drag ( dest -> dest");
+            return;
+        }
+
+        if(numOfInserted>=numOfChoices)
+        {
+            btOk.setCancelButton(true);
+            return;
+        }
+        //Load a resource corresponding to image
+
+        ResourceType res = ResourceType.valueOf(event.getDragboard().getString());
+
+        this.out.add(new Resource(res,1));
+
+        System.out.println("dropped " + event.getDragboard().getString() +" -> " + numOfInserted);
+        ImageView img = new ImageView(event.getDragboard().getImage());
+        img.setId(res.toString() + "-d-" + numOfInserted);
+        img.setFitHeight(100);
+        img.setFitWidth(100);
+
+        numOfInserted ++ ;
+
+        img.setOnDragDetected(eventBin -> {
+            /* allow any transfer mode */
+            Dragboard db = img.startDragAndDrop(TransferMode.ANY);
+
+            /* put a string on dragboard */
+            ClipboardContent content = new ClipboardContent();
+            content.putString(img.getId());
+            content.putImage(img.getImage());
+            db.setContent(content);
+
+            event.consume();
+        });
+        resContainer.getChildren().add(img);
+    }
+
+    /**
+     * function called when a drag event is over an object
+     * @param event drag evnet
+     */
+    public void onOver(DragEvent event)
+    {
+        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        event.consume();
+    }
     public List<Resource> getResources()
     {
         return this.out;
