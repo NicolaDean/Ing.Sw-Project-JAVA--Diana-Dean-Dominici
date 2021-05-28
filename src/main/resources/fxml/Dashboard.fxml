@@ -29,7 +29,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                         </GridPane>
-                        <ImageView fitHeight="832.0" fitWidth="1079.0" layoutX="-96.0" layoutY="-86.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView disable="true" fitHeight="832.0" fitWidth="1079.0" layoutX="-96.0" layoutY="-86.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/frames/frame1.png" />
                            </image>
