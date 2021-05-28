@@ -37,7 +37,6 @@ public class MarketScene extends BasicSceneUpdater{
         this.discartedBall = new ImageView();
         updateMarket();
         isAlreadySetted=true;
-        //back.setStyle("-fx-background-image: url('../images/interface/Button.png') no-repeat top left");
         back.setVisible(true);
         setExstracionButtonVisible(true);
     }

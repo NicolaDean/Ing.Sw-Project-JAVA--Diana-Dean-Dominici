@@ -15,12 +15,12 @@
                             <Button fx:id="col1" layoutX="301.0" layoutY="351.0" mnemonicParsing="false" onAction="#exstractionCol" prefHeight="86.0" prefWidth="40.0" stylesheets="@../css/MarketScreen.css" userData="1" />
                             <Button fx:id="col2" layoutX="247.0" layoutY="349.0" mnemonicParsing="false" onAction="#exstractionCol" prefHeight="86.0" prefWidth="40.0" stylesheets="@../css/MarketScreen.css" userData="2" />
                             <Button fx:id="col3" layoutX="196.0" layoutY="351.0" mnemonicParsing="false" onAction="#exstractionCol" prefHeight="86.0" prefWidth="40.0" stylesheets="@../css/MarketScreen.css" userData="3" />
-                            <Button fx:id="col4" layoutX="143.0" layoutY="352.0" mnemonicParsing="false" onAction="#exstractionCol" prefHeight="86.0" prefWidth="40.0" styleClass="back_button" stylesheets="@../css/MarketScreen.css" userData="4" />
-                            <Button fx:id="back" layoutX="36.0" layoutY="392.0" mnemonicParsing="false" onAction="#comeBack" text="BACK" />
-                            <AnchorPane fx:id="paneBalls" layoutX="74.0" layoutY="73.0" prefHeight="266.0" prefWidth="318.0" styleClass="grid" stylesheets="@../css/MarketScreen.css">
+                            <Button fx:id="col4" layoutX="143.0" layoutY="352.0" mnemonicParsing="false" onAction="#exstractionCol" prefHeight="86.0" prefWidth="40.0" stylesheets="@../css/MarketScreen.css" userData="4" />
+                            <Button fx:id="back" layoutX="25.0" layoutY="392.0" mnemonicParsing="false" onAction="#comeBack" prefHeight="26.0" prefWidth="61.0" styleClass="back_button" stylesheets="@../css/Global.css" text="BACK" textFill="WHITE" />
+                            <AnchorPane fx:id="paneBalls" layoutX="74.0" layoutY="73.0" prefHeight="275.0" prefWidth="329.0" styleClass="grid" stylesheets="@../css/MarketScreen.css">
                                  <children>
-                                   <GridPane fx:id="gpaneBalls" gridLinesVisible="true" layoutX="56.0" layoutY="77.0" prefHeight="152.0" prefWidth="220.0" />
-                                   <GridPane fx:id="gpaneDiscardedBall" gridLinesVisible="true" layoutX="245.0" layoutY="6.0" prefHeight="62.0" prefWidth="68.0" />
+                                   <GridPane fx:id="gpaneBalls" layoutX="56.0" layoutY="77.0" prefHeight="152.0" prefWidth="220.0" />
+                                   <GridPane fx:id="gpaneDiscardedBall" layoutX="245.0" layoutY="6.0" prefHeight="62.0" prefWidth="68.0" />
                                  </children>
                             </AnchorPane>
                             <Button fx:id="row1" layoutX="414.0" layoutY="251.0" mnemonicParsing="false" onAction="#exstractionRow" prefHeight="40.0" prefWidth="57.0" stylesheets="@../css/MarketScreen.css" userData="1" />

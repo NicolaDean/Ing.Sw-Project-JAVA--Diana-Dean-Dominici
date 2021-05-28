@@ -17,9 +17,10 @@
 
 .back_button
 {
-    -fx-alignment: top-center;
     -fx-background-image: url('../images/interface/Button.png') no-repeat top left;
-    -fx-padding: 2px 8px;
+    -fx-background-size: 70px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 50%;;
 }
 
 

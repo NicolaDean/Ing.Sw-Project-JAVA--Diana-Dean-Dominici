@@ -27,6 +27,8 @@ public class GUI extends Observable<ClientController> implements View{
     boolean singleplayer;
     private BasicBall[][]   miniMarketBalls;
     private BasicBall       miniMarketDiscardedResouce;
+    boolean isMyTurn; //used just for endTurn button and market exstraction
+
 
     boolean firstTurn = true;
     Thread gui;
@@ -386,13 +388,15 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void askEndTurn() {
-        Platform.runLater(()-> {
-            if(GuiHelper.YesNoDialog("End TURN","Do you want to end turn?"))
-            {
-                this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
-                this.notifyObserver(clientController -> clientController.setMyTurn(false));
-            }
-        });
+        this.notifyObserver(clientController -> isMyTurn=clientController.isMyTurn());
+        if(isMyTurn) {
+            Platform.runLater(() -> {
+                if (GuiHelper.YesNoDialog("End TURN", "Do you want to end turn?")) {
+                    this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
+                    this.notifyObserver(clientController -> clientController.setMyTurn(false));
+                }
+            });
+        }
     }
 
 
