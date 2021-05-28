@@ -29,6 +29,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                         </GridPane>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="442.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </AnchorPane>
                   <ImageView id="production_card" fx:id="shopbutton" fitHeight="97.0" fitWidth="213.0" layoutX="71.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">

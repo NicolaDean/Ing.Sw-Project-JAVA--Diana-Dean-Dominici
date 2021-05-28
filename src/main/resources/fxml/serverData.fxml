@@ -37,12 +37,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
-
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/HomeScreen.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.AskServerData">
    <children>
@@ -124,6 +124,15 @@
                      </font>
                   </TextField>
                   <StackPane prefHeight="150.0" prefWidth="200.0" />
+                  <Pane fx:id="errorMsg" layoutX="75.0" layoutY="486.0" prefHeight="114.0" prefWidth="630.0" style="-fx-background-color: red;">
+                     <children>
+                        <Label layoutX="122.0" layoutY="35.0" prefHeight="17.0" prefWidth="423.0" text="Label" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
                </children>
             </AnchorPane>
          </children>

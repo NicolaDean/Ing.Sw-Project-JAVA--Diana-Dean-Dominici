@@ -17,23 +17,24 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 public class DashboardScene extends BasicSceneUpdater{
-
 
     @FXML
     public AnchorPane root;
 
-
     @FXML
     public GridPane grid;
-
 
     @FXML
     public ImageView marketbutton;
 
     @FXML
     public ImageView shopbutton;
+
+    @FXML
+    public ImageView endturn;
 
     @Override
     public void init()
@@ -48,6 +49,10 @@ public class DashboardScene extends BasicSceneUpdater{
 
         shopbutton.setOnMouseClicked(event -> {
             this.notifyObserver(controller -> controller.showshop());
+        });
+
+        endturn.setOnMouseClicked(event -> {
+            this.notifyObserver(controller -> controller.askEndTurn());
         });
 
 
@@ -82,5 +87,10 @@ public class DashboardScene extends BasicSceneUpdater{
 
         });
     }
+
+
+
+
+
 
 }

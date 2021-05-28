@@ -25,7 +25,7 @@
                      <Font size="14.0" />
                   </font>
                </Label>
-               <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="345.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+               <ImageView fx:id="bin" fitHeight="100.0" fitWidth="100.0" layoutX="345.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
                   <image>
                      <Image url="@../images/other/bin.png" />
                   </image>

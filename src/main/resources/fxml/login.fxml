@@ -32,28 +32,39 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="600.0" prefWidth="800.0" styleClass="root" stylesheets="@../css/HomeScreen.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.LoginScene" >
+
+<StackPane styleClass="root" stylesheets="@../css/HomeScreen.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.LoginScene">
    <children>
-      <Label alignment="CENTER" layoutX="118.0" layoutY="80.0" prefHeight="164.0" prefWidth="565.0" text="LOGIN" textFill="#973131">
-         <font>
-            <Font name="System Bold" size="96.0" />
-         </font>
-      </Label>
-      <TextField id="centered" fx:id="nickname" alignment="TOP_CENTER" layoutX="227.0" layoutY="263.0" maxHeight="72.0" maxWidth="-Infinity" minHeight="57.0" minWidth="-Infinity" prefHeight="57.0" prefWidth="347.0" promptText="Insert username" stylesheets="@../css/HomeScreen.css">
-         <font>
-            <Font size="29.0" />
-         </font>
-      </TextField>
-      <Button alignment="CENTER" layoutX="335.0" layoutY="357.0" maxHeight="104.0" maxWidth="233.0" minHeight="77.0" minWidth="130.0" mnemonicParsing="false" onAction="#login" prefHeight="77.0" prefWidth="130.0" stylesheets="@../css/HomeScreen.css" text="Play">
-         <font>
-            <Font size="37.0" />
-         </font>
-      </Button>
+      <Group>
+         <children>
+            <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="600.0" prefWidth="800.0">
+               <children>
+                  <Label alignment="CENTER" layoutX="118.0" layoutY="80.0" prefHeight="164.0" prefWidth="565.0" text="LOGIN" textFill="#973131">
+                     <font>
+                        <Font name="System Bold" size="96.0" />
+                     </font>
+                  </Label>
+                  <TextField id="centered" fx:id="nickname" alignment="TOP_CENTER" layoutX="227.0" layoutY="263.0" maxHeight="72.0" maxWidth="-Infinity" minHeight="57.0" minWidth="-Infinity" prefHeight="57.0" prefWidth="347.0" promptText="Insert username" stylesheets="@../css/HomeScreen.css">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </TextField>
+                  <Button alignment="CENTER" layoutX="335.0" layoutY="357.0" maxHeight="104.0" maxWidth="233.0" minHeight="77.0" minWidth="130.0" mnemonicParsing="false" onAction="#login" prefHeight="77.0" prefWidth="130.0" stylesheets="@../css/HomeScreen.css" text="Play">
+                     <font>
+                        <Font size="37.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </Group>
    </children>
-</AnchorPane>
+</StackPane>
