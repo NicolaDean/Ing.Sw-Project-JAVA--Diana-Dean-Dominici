@@ -755,6 +755,7 @@ public class CLI extends Observable<ClientController> implements View {
                                 pos = askInt("Which deposit you want to use? normal(1-3) bonus(4-5)", "Wrong deposit number", 1, ConstantValues.maxDepositsNumber) - 1;
                             }
                             Resource tmp = null;
+
                             if(res.getQuantity()!=1)
                             {
                                 quantity = askInt("How much of this resources you want to pay here?","Excessive quantity",1,res.getQuantity());
@@ -764,6 +765,7 @@ public class CLI extends Observable<ClientController> implements View {
 
                             if(tmp == null)
                             {
+                                tmp = res;
                                 payed.add(res);
                             }
 

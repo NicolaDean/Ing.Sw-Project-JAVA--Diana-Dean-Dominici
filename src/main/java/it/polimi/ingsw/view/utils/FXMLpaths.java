@@ -15,4 +15,5 @@ public class FXMLpaths {
     public static String market          = "market";
     public static String dashboard       = "Dashboard";
     public static String yesNo           = "yesNoDialog";
+    public static String toast           = "toastMsg";
 }

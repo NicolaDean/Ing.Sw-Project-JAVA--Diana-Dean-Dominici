@@ -192,6 +192,9 @@ public class Dashboard {
     {
         this.pendingCost.remove(res);
         this.chest.remove(res);
+
+        //this.pendingCost = ResourceOperator.remove(this.pendingCost,res);
+        //this.chest = ResourceOperator.remove(this.chest,res);
     }
 
     public void applyChestCosts(List<Resource> res)
@@ -208,6 +211,7 @@ public class Dashboard {
     public void applyStorageCosts(Resource res,int pos) throws EmptyDeposit, WrongPosition {
                 this.storage.safeSubtraction(res,pos);
                 this.pendingCost.remove(res);
+                //this.pendingCost = ResourceOperator.remove(this.pendingCost,res);
     }
 
     /**

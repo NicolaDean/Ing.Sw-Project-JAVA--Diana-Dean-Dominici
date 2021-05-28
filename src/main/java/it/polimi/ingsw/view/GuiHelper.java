@@ -93,6 +93,10 @@ public class GuiHelper extends Application {
     }
 
 
+    public static BasicSceneUpdater getCurrentScene()
+    {
+        return currentScene;
+    }
     public static boolean YesNoDialog(String title,String msg)
     {
         return loadDialog(FXMLpaths.yesNo,title,new YesNoDialog(msg)).equals(ButtonType.YES);

@@ -4,14 +4,25 @@ import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.view.GuiHelper;
 import it.polimi.ingsw.view.scenes.BasicSceneUpdater;
+import it.polimi.ingsw.view.utils.ToastMessage;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
+
 public class AskServerData extends BasicSceneUpdater {
+
+    @FXML
+    public StackPane root;
 
     @FXML
     TextField ip;
@@ -31,7 +42,7 @@ public class AskServerData extends BasicSceneUpdater {
     public void init() {
         super.init();
 
-        errorMsg.setOpacity(0);
+       // errorMsg.setOpacity(0);
         //GuiHelper.resize(800,600);
 
 
@@ -61,23 +72,10 @@ public class AskServerData extends BasicSceneUpdater {
     //TODO Create a custom Toad message class to use in every scene
     public void errorMsg(String msg)
     {
-        ((Label)this.errorMsg.getChildren().get(0)).setText(msg); //Instantiating FadeTransition class
+        double x =  (GuiHelper.getStage().getHeight()/2);
+        double y =  (GuiHelper.getStage().getWidth()/2);
 
-        FadeTransition fade = new FadeTransition();
-        //setting the duration for the Fade transition
-        fade.setDuration(Duration.millis(4000));
-
-        //setting the initial and the target opacity value for the transition
-        fade.setFromValue(10);
-        fade.setToValue(0);
-
-        //the transition will set to be auto reversed by setting this to true
-        fade.setAutoReverse(true);
-
-        //setting Circle as the node onto which the transition will be applied
-        fade.setNode(errorMsg);
-
-        //playing the transition
-        fade.play();
+        ToastMessage t = new ToastMessage(msg,this.root,2000);
+        t.show();
     }
 }

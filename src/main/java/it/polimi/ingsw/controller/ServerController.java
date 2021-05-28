@@ -329,11 +329,13 @@ public class ServerController{
         return  new PendingCost(dashboard.getPendingCost());
     }
 
+
     /**
-     * chose 2 of 4 leaders drawed
-     * @param leaders 2 chosed leaders
-     * @param index
-     * @return
+     *
+     * @param pos1   first leader
+     * @param pos2   second leader
+     * @param index  controller index
+     * @return  a response packet (only if exception occur)
      */
     public Packet setLeaders(int pos1,int pos2, int index)
     {

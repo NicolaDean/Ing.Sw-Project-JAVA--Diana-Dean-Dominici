@@ -160,6 +160,52 @@ public class ResourceOperator {
     }
 
 
+    public static List<Resource> remove(List<Resource> resources,Resource res)
+    {
+        int pos=0;
+
+        if (res == null) return resources;
+        if(resources.isEmpty())
+        {
+            return resources;
+        }
+        else
+        {
+            for(Resource r :resources)
+            {
+                if(r!= null)
+                {
+                    if(res.getType().equals(res.getType()))
+                    {
+                        try {
+                            if(r.getQuantity() >= res.getQuantity())
+                            {
+                                resources.set(pos,ResourceOperator.sub(r,res));
+                                return resources;
+                            }
+                            else{
+                                return resources;
+                            }
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            return resources;
+                        }
+                    }
+                }
+
+                pos++;
+
+            }
+            return resources;
+        }
+    }
+    /**
+     * return the number of non empty resource type inside this resource list
+      * @param resources list to check
+     * @return number of not null resource type
+     */
     public static int getTypeCounter(List<Resource> resources)
     {
         int out =0;
