@@ -41,6 +41,7 @@ public class ClientController implements Runnable{
     private PongController        pongController;
     private int                   index;
     private boolean               connected;
+    private boolean               isMyTurn;
 
     private ErrorManager          errorManager;
     private View                  view;   //Interface with all view methods
@@ -54,6 +55,7 @@ public class ClientController implements Runnable{
         this.connected = false;
         if(type)view = new CLI(this.index);
         else view = new GUI();//GUI()
+        isMyTurn=false;
 
         this.view.setObserver(this);
 
@@ -92,7 +94,13 @@ public class ClientController implements Runnable{
 
     }
 
+    public void setMyTurn(boolean myTurn) {
+        isMyTurn = myTurn;
+    }
 
+    public boolean isMyTurn() {
+        return isMyTurn;
+    }
 
     public View getView() {
         return view;
