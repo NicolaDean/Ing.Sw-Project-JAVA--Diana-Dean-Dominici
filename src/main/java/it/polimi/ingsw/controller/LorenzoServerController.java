@@ -1,16 +1,18 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.packets.*;
-import it.polimi.ingsw.exceptions.MatchFull;
-import it.polimi.ingsw.exceptions.NicknameAlreadyTaken;
-import it.polimi.ingsw.exceptions.NotEnoughPlayers;
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.lorenzo.Lorenzo;
 import it.polimi.ingsw.model.lorenzo.LorenzoGame;
+import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.DebugMessages;
 
 import javax.swing.plaf.metal.MetalBorders;
 import java.util.concurrent.TimeUnit;
+
+import static it.polimi.ingsw.enumeration.ResourceType.*;
 
 public class LorenzoServerController extends ServerController{
 
@@ -56,8 +58,7 @@ public class LorenzoServerController extends ServerController{
     }
 
     @Override
-    public void startGame()
-    {
+    public void startGame() throws FullDepositException, NoBonusDepositOwned, WrongPosition {
         try {
             this.game.startGame();
             this.clients.get(0).sendToClient(this.generateGameStartedPacket(this.generateMiniPlayer(),0));
@@ -66,6 +67,17 @@ public class LorenzoServerController extends ServerController{
         } catch (NotEnoughPlayers notEnoughPlayers) {
             notEnoughPlayers.printStackTrace();
         }
+
+        if(DebugMessages.infiniteResources) {
+            for (Player p : game.getPlayers()) {
+                p.getDashboard().getStorage().safeInsertion(new Resource(COIN, 1), 0);
+                p.getDashboard().getStorage().safeInsertion(new Resource(SHIELD, 2), 1);
+                p.getDashboard().getStorage().safeInsertion(new Resource(ROCK, 3), 2);
+                sendStorageUpdate(p.getControllerIndex());
+
+            }
+        }
+
 
     }
 

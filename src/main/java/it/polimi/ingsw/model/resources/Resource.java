@@ -34,6 +34,31 @@ public class Resource {
         return this.type;
     }
 
+
+    public int getNumericType()
+    {
+        switch (this.type) {
+            case SHIELD:
+                return 1;
+
+            case ROCK:
+                return 2;
+
+            case COIN:
+                return 3;
+
+            case SERVANT:
+                return 4;
+
+            default:
+                return 1;
+
+
+        }
+
+
+    }
+
     /**
      * set Quantity of the resource
      * @param quantity

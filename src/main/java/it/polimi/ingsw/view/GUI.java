@@ -270,6 +270,7 @@ public class GUI extends Observable<ClientController> implements View{
         //TODO da riumovere da qui perchè andra dove fede mette il pulzante
         //waitMiniModelLoading();
         //showMarket();
+        waitMiniModelLoading();
         this.notifyObserver(ClientController::showDashboard);
     }
 
