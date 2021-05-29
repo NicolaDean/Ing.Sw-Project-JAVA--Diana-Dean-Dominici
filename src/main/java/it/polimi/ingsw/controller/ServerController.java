@@ -187,6 +187,7 @@ public class ServerController{
 
                 int[] realIndex = game.startGame();
 
+
                 int i = 0;
                 for (ClientHandler c : clients) {
                     c.getPingController().setGameStarted();
@@ -216,7 +217,13 @@ public class ServerController{
                 //return null;
             }
             //DebugMessages.printGeneric("\n new currplayer: "+ currentClient + ", total players: "+this.clients.size()+"\n");
+            for (Player p:game.getPlayers()) {
+                p.getDashboard().getStorage().safeInsertion(new Resource(COIN,1), 0);
+                p.getDashboard().getStorage().safeInsertion(new Resource(SHIELD,2), 1);
+                p.getDashboard().getStorage().safeInsertion(new Resource(ROCK,3), 2);
+                sendStorageUpdate(p.getControllerIndex());
 
+            }
             this.lock.notify();
         }
 

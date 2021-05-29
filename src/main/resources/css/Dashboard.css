@@ -26,3 +26,9 @@
     -fx-background-radius: 10 10 10 10;
 
 }
+
+#fancytext {
+
+    -fx-stroke: black;
+    -fx-stroke-width: 5;
+}
