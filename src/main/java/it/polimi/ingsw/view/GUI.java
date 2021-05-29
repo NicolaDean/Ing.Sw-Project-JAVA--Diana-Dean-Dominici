@@ -81,6 +81,11 @@ public class GUI extends Observable<ClientController> implements View{
         });
     }
 
+    @Override
+    public void showMessage(String msg) {
+        Platform.runLater(()->GuiHelper.sendMessage(msg));
+    }
+
     /**
      *
      * @return the matrix of balls in the market
@@ -294,6 +299,7 @@ public class GUI extends Observable<ClientController> implements View{
         //TODO da riumovere da qui perchè andra dove fede mette il pulzante
         //waitMiniModelLoading();
         //showMarket();
+        waitMiniModelLoading();
         this.notifyObserver(ClientController::showDashboard);
     }
 
@@ -363,8 +369,8 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void showGameStarted() {
-        Platform.runLater(()-> GuiHelper.sendMessage("Game Started"));
         this.askCommand();
+        Platform.runLater(()-> GuiHelper.sendMessage("Game Started"));
     }
 
     @Override

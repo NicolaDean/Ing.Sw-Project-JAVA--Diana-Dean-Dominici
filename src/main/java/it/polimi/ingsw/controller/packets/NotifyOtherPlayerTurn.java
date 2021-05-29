@@ -22,7 +22,8 @@ public class NotifyOtherPlayerTurn  extends Packet<ClientController> implements 
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("It's "+nickname+"'s turn...");
+
+        controller.showMessage("It's "+nickname+"'s turn...");
 
         return null;
     }

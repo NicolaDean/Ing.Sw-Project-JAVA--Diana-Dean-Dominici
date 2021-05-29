@@ -60,13 +60,13 @@ public class ToastMessage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         autoKill();
+
     }
 
     public void autoKill()
     {
-        new Thread(()->{
+        Thread x = new Thread(()->{
             try {
                 Thread.sleep(this.expiringTime);
             } catch (InterruptedException e) {
@@ -76,6 +76,7 @@ public class ToastMessage {
             Platform.runLater(()->{
                 this.root.getChildren().remove(toast);
             });
-        }).start();
+        });
+        x.start();
     }
 }

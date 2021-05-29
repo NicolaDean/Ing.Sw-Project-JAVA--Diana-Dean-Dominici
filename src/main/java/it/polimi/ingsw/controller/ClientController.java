@@ -148,7 +148,7 @@ public class ClientController implements Runnable{
 
     public void exampleACK(int code)
     {
-        errorManager.getErrorMessageFromCode(code);//TODO magari oltre al numero passo la view che chiamera "showError"
+        this.view.showError(errorManager.getErrorMessageFromCode(code));
     }
 
 
@@ -357,6 +357,7 @@ public class ClientController implements Runnable{
 
     public void storageUpdate(Deposit[] deposits,int index)
     {
+        //System.out.println("aggiorno lo storage!");
         this.model.updateStorage(deposits,index);
     }
 
@@ -584,6 +585,14 @@ public class ClientController implements Runnable{
         view.setMarket(null,null);
     }
 
+    public void showError(String msg)
+    {
+        this.view.showError(msg);
+    }
+    public void showMessage(String msg)
+    {
+        this.view.showMessage(msg);
+    }
     /**
      *extraction column fror minimarket
      * @param pos column position, it must be between 1 and 4

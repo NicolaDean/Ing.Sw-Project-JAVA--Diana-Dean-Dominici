@@ -31,6 +31,7 @@ public interface View {
      */
     public void setMarket(BasicBall[][] balls, BasicBall discarted);
 
+    public void showMessage(String msg);
     /**
      * getter for mini market
      * @return balls

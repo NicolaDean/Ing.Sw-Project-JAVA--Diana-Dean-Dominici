@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.view.scenes.*;
 import it.polimi.ingsw.view.utils.FXMLpaths;
+import it.polimi.ingsw.view.utils.ToastMessage;
 import it.polimi.ingsw.viewtest.Appp;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -168,7 +169,6 @@ public class GuiHelper extends Application {
     public static void sendError(String msg)
     {
         currentScene.reciveError(msg);
-
     }
 
     /**

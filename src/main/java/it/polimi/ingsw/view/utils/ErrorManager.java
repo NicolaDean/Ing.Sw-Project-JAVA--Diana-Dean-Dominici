@@ -25,13 +25,15 @@ public class ErrorManager {
      * Get error messages from ack code
      * @param code
      */
-    public void getErrorMessageFromCode(int code)
+    public String getErrorMessageFromCode(int code)
     {
         if(code != 0) {
             Logger l = new Logger();
-            l.printError( errors.get(code));
+            //l.printError( errors.get(code));
+            return errors.get(code);
         }
-        //else
-            //System.out.println("ack received");
+
+        return "";
+
     }
 }

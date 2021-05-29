@@ -175,6 +175,7 @@ public class BuyScene extends BasicSceneUpdater{
         if(result.equals(ButtonType.OK) && dialog.getPos()!= -1)
         {
             this.pos = dialog.getPos();
+            click.setText((this.col + 1) + " - " + (this.row + 1) + "-> in pos: "+ dialog.pos);
             this.notifyObserver(controller -> controller.sendBuyCard(this.row,this.col,this.pos));
 
             this.goBack(null);

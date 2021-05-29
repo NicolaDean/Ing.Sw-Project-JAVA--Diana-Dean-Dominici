@@ -41,7 +41,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<StackPane styleClass="root" stylesheets="@../css/HomeScreen.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.LoginScene">
+<StackPane styleClass="root" stylesheets="@../css/HomeScreen.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.LoginScene">
    <children>
       <Group>
          <children>

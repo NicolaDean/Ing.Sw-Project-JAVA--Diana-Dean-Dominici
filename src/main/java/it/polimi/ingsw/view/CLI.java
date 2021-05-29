@@ -73,6 +73,11 @@ public class CLI extends Observable<ClientController> implements View {
         }
     }
 
+    @Override
+    public void showMessage(String msg) {
+        this.terminal.printGoodMessages(msg);
+    }
+
     /**
      *
      * @return the matrix of balls in the market

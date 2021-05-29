@@ -85,7 +85,7 @@ public class BasicSceneUpdater extends Observable<ClientController> {
      */
     public void reciveMessage(String msg)
     {
-
+        System.out.println("MSG: " + msg);
     }
 
     /**
