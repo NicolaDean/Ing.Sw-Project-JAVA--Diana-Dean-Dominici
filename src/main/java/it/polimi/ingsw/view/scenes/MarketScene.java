@@ -1,8 +1,12 @@
 package it.polimi.ingsw.view.scenes;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.view.CLI;
+import it.polimi.ingsw.view.View;
+import it.polimi.ingsw.view.utils.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -43,16 +47,15 @@ public class MarketScene extends BasicSceneUpdater{
 
     @Override
     public void updateMarket() {
-        this.notifyObserver(clientController -> {
-            fillMarket(clientController.getView().getMiniMarketBalls(),clientController.getView().getMiniMarketDiscardedResouce());
-        });
+        this.notifyObserver(clientController -> { fillMarket(clientController.getView().getMiniMarketBalls(),clientController.getView().getMiniMarketDiscardedResouce()); });
     }
 
     public void fillMarket(BasicBall[][] balls, BasicBall discarted){
-            for(int i=0;i<ConstantValues.marketRow;i++)
-                for(int j=0;j<ConstantValues.marketCol;j++)
-                    drawBall(balls[i][j],i,j,gpaneBalls);
-
+        //c'è qualcosa che non va con la drawBall
+        for(int i=0;i<ConstantValues.marketRow;i++)
+            for(int j=0;j<ConstantValues.marketCol;j++)
+                drawBall(balls[i][j], i, j, gpaneBalls);
+            
             drawBall(discarted,0,0,gpaneDiscardedBall);
     }
 
@@ -64,6 +67,16 @@ public class MarketScene extends BasicSceneUpdater{
         }else{
             this.balls[row][col].setImage(loadImage("/images/balls/" + ball.getColor() + ".png"));
         }
+    }
+
+    public void setExstracionButtonVisible(boolean visible){
+        row1.setVisible(visible);
+        row2.setVisible(visible);
+        row3.setVisible(visible);
+        col1.setVisible(visible);
+        col2.setVisible(visible);
+        col3.setVisible(visible);
+        col4.setVisible(visible);
     }
 
     @FXML
@@ -95,16 +108,6 @@ public class MarketScene extends BasicSceneUpdater{
     @FXML
     public void comeBack(ActionEvent event){
         this.notifyObserver(ClientController::showDashboard);
-    }
-
-    public void setExstracionButtonVisible(boolean visible){
-        row1.setVisible(visible);
-        row2.setVisible(visible);
-        row3.setVisible(visible);
-        col1.setVisible(visible);
-        col2.setVisible(visible);
-        col3.setVisible(visible);
-        col4.setVisible(visible);
     }
 
 }

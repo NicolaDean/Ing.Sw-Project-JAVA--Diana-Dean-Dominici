@@ -6,6 +6,7 @@ import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
+import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
@@ -16,6 +17,8 @@ import it.polimi.ingsw.view.scenes.DialogLeader;
 import it.polimi.ingsw.view.scenes.InitialResources;
 import it.polimi.ingsw.view.scenes.MarketScene;
 import it.polimi.ingsw.view.utils.FXMLpaths;
+import it.polimi.ingsw.view.utils.Logger;
+import it.polimi.ingsw.view.utils.ToastMessage;
 import javafx.application.Platform;
 import javafx.scene.control.ButtonType;
 
@@ -27,14 +30,17 @@ public class GUI extends Observable<ClientController> implements View{
     boolean singleplayer;
     private BasicBall[][]   miniMarketBalls;
     private BasicBall       miniMarketDiscardedResouce;
-    boolean isMyTurn; //used just for endTurn button and market exstraction
-
+    private boolean         isMarketLoaded;
+    boolean                 isMyTurn; //used just for endTurn button and market exstraction
 
     boolean firstTurn = true;
     Thread gui;
+
+
     public GUI()
     {
         gui = new Thread(()->{GuiHelper.main(this);});
+        isMarketLoaded = false;
         gui.start();
     }
 
@@ -52,10 +58,27 @@ public class GUI extends Observable<ClientController> implements View{
         if((balls != null)&&(discarted != null)) {
             miniMarketBalls = balls;
             miniMarketDiscardedResouce = discarted;
-        }else {
-            waitMiniModelLoading();
-            Platform.runLater(() -> { try { GuiHelper.updateMarket(); }catch(Exception e){ e.printStackTrace();}});
-        }
+            isMarketLoaded=true;
+        }else Platform.runLater(() -> { try { GuiHelper.updateMarket(); }catch(Exception e){ e.printStackTrace();}});
+    }
+
+    /**
+     * wait untill market is setted
+     */
+    public void waitMarketLoaded(){
+        this.notifyObserver(controller -> {
+            if(isMarketLoaded) return;
+
+            //Loop until market is loaded
+            while(!isMarketLoaded)
+            {
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -63,6 +86,7 @@ public class GUI extends Observable<ClientController> implements View{
      * @return the matrix of balls in the market
      */
     public BasicBall[][] getMiniMarketBalls() {
+        waitMarketLoaded();
         return miniMarketBalls;
     }
 
@@ -71,6 +95,7 @@ public class GUI extends Observable<ClientController> implements View{
      * @return discarded ball
      */
     public BasicBall getMiniMarketDiscardedResouce() {
+        waitMarketLoaded();
         return miniMarketDiscardedResouce;
     }
 
@@ -217,7 +242,6 @@ public class GUI extends Observable<ClientController> implements View{
     public void askResourceInsertion(List<Resource> resourceList) {
 
         //show resource obtained in a dialog with only OK button
-        //
         //TODO change controller of dashbard view to insetion controller
         //TODO add dinamicly controller update to GUIHELPER
     }
@@ -362,6 +386,7 @@ public class GUI extends Observable<ClientController> implements View{
         }
 
         this.askResourceInsertion(out);
+
     }
 
     @Override
