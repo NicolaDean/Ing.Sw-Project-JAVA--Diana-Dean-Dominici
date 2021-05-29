@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GuiHelper;
+import it.polimi.ingsw.view.utils.ToastMessage;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -79,6 +80,7 @@ public class DashboardScene extends BasicSceneUpdater{
                 grid.add(immage,j-1,0);
                 immage.setOnMouseClicked(event -> {
                     System.out.println("bella ziii");
+                    //TODO show dialog (YES,NO)
                 });
 
 
@@ -89,8 +91,11 @@ public class DashboardScene extends BasicSceneUpdater{
     }
 
 
+    @Override
+    public void reciveMessage(String msg) {
+        super.reciveMessage(msg);
+        ToastMessage t = new ToastMessage(msg,this.root,2000);
+        t.show();
 
-
-
-
+    }
 }

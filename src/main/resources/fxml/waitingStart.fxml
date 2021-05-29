@@ -42,7 +42,6 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-
 <StackPane prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/Background.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.WaitingStartScene">
    <children>
       <Group>
@@ -70,9 +69,9 @@
                         </RadialGradient>
                      </textFill>
                   </Label>
-                  <Button fx:id="start" layoutX="297.0" layoutY="364.0" mnemonicParsing="false" onAction="#startGame" prefHeight="67.0" prefWidth="171.0" text="Start Game">
+                  <Button id="button" fx:id="start" layoutX="297.0" layoutY="364.0" mnemonicParsing="false" onAction="#startGame" prefHeight="67.0" prefWidth="171.0"  stylesheets="@../css/Global.css" text="Start Game" textFill="WHITE">
                      <font>
-                        <Font size="17.0" />
+                        <Font name="System Bold" size="17.0" />
                      </font>
                   </Button>
                   <Label fx:id="first_user" layoutX="635.0" layoutY="222.0" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #ccffcc;" text="Nicola">
