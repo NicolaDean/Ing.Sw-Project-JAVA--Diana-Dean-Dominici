@@ -91,11 +91,6 @@ public class DashboardScene extends BasicSceneUpdater{
             chestservantq.setText(Integer.toString(controller.getMiniModel().getPersonalPlayer().getChest().get(3).getQuantity())) ;
             chestshieldq.setText(Integer.toString(controller.getMiniModel().getPersonalPlayer().getChest().get(0).getQuantity())) ;
             MiniModel model = controller.getMiniModel();
-            try {
-                TimeUnit.SECONDS.sleep(3);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             Deposit d1 = controller.getMiniModel().getStorage()[0];
             Deposit d2 = controller.getMiniModel().getStorage()[1];
             Deposit d3 = controller.getMiniModel().getStorage()[2];
@@ -103,7 +98,7 @@ public class DashboardScene extends BasicSceneUpdater{
             //System.out.println("la risorsa in d2 vale "+d1.getResource().getQuantity());
             if(d2.getResource()!=null) {
                 for (int i = 0; i < d2.getResource().getQuantity(); i++) {
-                    System.out.println("stampo la risorsa");
+                    //System.out.println("stampo la risorsa");
                     ImageView immage = null;
                     immage = loadImage("/images/resources/"+d2.getResource().getNumericType()+".png",40,40);
                     deposit2.add(immage,i,0);

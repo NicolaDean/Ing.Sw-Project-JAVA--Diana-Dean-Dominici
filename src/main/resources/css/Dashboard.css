@@ -17,6 +17,7 @@
 
 #production_card:hover
 {
+
     -fx-effect: dropshadow(gaussian, #f2e0d6, 20, 0.3, 0, 0);
     -fx-alignment: center;
     -fx-cursor: hand;

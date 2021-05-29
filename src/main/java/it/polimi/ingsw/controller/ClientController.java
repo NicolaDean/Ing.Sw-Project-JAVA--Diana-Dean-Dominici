@@ -357,7 +357,7 @@ public class ClientController implements Runnable{
 
     public void storageUpdate(Deposit[] deposits,int index)
     {
-        System.out.println("aggiorno lo storage!");
+        //System.out.println("aggiorno lo storage!");
         this.model.updateStorage(deposits,index);
     }
 

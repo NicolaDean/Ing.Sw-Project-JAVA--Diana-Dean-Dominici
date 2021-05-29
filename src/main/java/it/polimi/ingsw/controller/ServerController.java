@@ -5,6 +5,9 @@ import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.enumeration.ErrorMessages;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.exceptions.AckManager;
+import it.polimi.ingsw.exceptions.FullDepositException;
+import it.polimi.ingsw.exceptions.NoBonusDepositOwned;
+import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.LeaderCard;
@@ -218,15 +221,7 @@ public class ServerController{
             }
             //DebugMessages.printGeneric("\n new currplayer: "+ currentClient + ", total players: "+this.clients.size()+"\n");
 
-            if(DebugMessages.infiniteResources) {
-                for (Player p : game.getPlayers()) {
-                    p.getDashboard().getStorage().safeInsertion(new Resource(COIN, 1), 0);
-                    p.getDashboard().getStorage().safeInsertion(new Resource(SHIELD, 2), 1);
-                    p.getDashboard().getStorage().safeInsertion(new Resource(SERVANT, 3), 2);
-                    sendStorageUpdate(p.getControllerIndex());
 
-                }
-            }
 
             this.lock.notify();
         }
@@ -247,9 +242,16 @@ public class ServerController{
      *
      * @return a list of miniplayer
      */
-    public MiniPlayer[] generateMiniPlayer(){
+    public MiniPlayer[] generateMiniPlayer() throws FullDepositException, NoBonusDepositOwned, WrongPosition {
         MiniPlayer[] players= new MiniPlayer[game.getNofplayers()];
         int i=0;
+        if(DebugMessages.infiniteResources) {
+            for (Player p : game.getPlayers()) {
+                p.getDashboard().getStorage().safeInsertion(new Resource(COIN, 1), 0);
+                p.getDashboard().getStorage().safeInsertion(new Resource(SHIELD, 2), 1);
+                p.getDashboard().getStorage().safeInsertion(new Resource(SERVANT, 3), 2);
+            }
+        }
 
         List<Resource> resources = new ResourceList();
         if(DebugMessages.infiniteResources)
@@ -259,6 +261,8 @@ public class ServerController{
             resources.add(new Resource(SHIELD,100));
             resources.add(new Resource(ROCK,100));
         }
+
+
         for (Player p:game.getPlayers()){
             players[i]=new MiniPlayer(p.getNickname());
             players[i].setStorage(p.getDashboard().getStorage().getDeposits());
@@ -273,6 +277,7 @@ public class ServerController{
             }
             i++;
         }
+
         return players;
     }
 
