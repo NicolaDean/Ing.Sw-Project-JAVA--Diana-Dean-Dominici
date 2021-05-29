@@ -426,9 +426,17 @@ public class ClientController implements Runnable{
      * @param quantity quantity to add
      */
     public void incrementPositionPlayersWithOut(int index,int quantity){
-        for(MiniPlayer p:this.model.getPlayers())
+        /*for(MiniPlayer p:this.model.getPlayers())
             if(!p.equals(this.model.getPlayers()[index]))
-                p.incrementPosition(quantity);
+
+            p.incrementPosition(quantity);
+         */
+
+            MiniPlayer[] players = this.model.getPlayers();
+            for(int i=0; i<players.length;i++)
+            {
+                if(i != index)  players[i].incrementPosition(quantity);
+            }
     }
 
     /**

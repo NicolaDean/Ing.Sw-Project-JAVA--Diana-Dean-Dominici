@@ -29,6 +29,7 @@
     -fx-background-image: url("../images/interface/Button.png");
     -fx-background-size: cover;
     -fx-background-color: transparent;
+    -fx-text-fill: white;
 }
 
 #button:hover

@@ -168,7 +168,12 @@ public class Dashboard {
      * @param pos stack of card to select
      * @return true if the activation goes well
      */
-    public void production(Player p, int pos) throws NotEnoughResource {
+    public void production(Player p, int pos) throws NotEnoughResource, WrongPosition {
+
+        if(this.producionCards[pos].isEmpty())
+        {
+            throw new WrongPosition("Empty Dashboard");
+        }
         ProductionCard card = this.producionCards[pos].peek();
 
         try
