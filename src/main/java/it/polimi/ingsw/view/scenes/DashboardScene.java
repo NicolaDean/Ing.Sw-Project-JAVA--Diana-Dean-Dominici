@@ -12,16 +12,27 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DashboardScene extends BasicSceneUpdater {
 
     @FXML
     public AnchorPane root;
+
+    @FXML
+    public CheckBox swap1;
+
+    @FXML
+    public CheckBox swap2;
+
+    @FXML
+    public CheckBox swap3;
 
     @FXML
     public GridPane grid;
@@ -54,6 +65,9 @@ public class DashboardScene extends BasicSceneUpdater {
     public ImageView shopbutton;
 
     @FXML
+    public ImageView swapbutton;
+
+    @FXML
     public ImageView endturn;
 
     @FXML
@@ -68,6 +82,10 @@ public class DashboardScene extends BasicSceneUpdater {
     @FXML
     public AnchorPane toastForMarketInsersion;
 
+    CheckBox lastchecked;
+
+    CheckBox[] boxes;
+
     boolean showLeaders, imHereAfterMarketExstraction;
 
     public DashboardScene(List<Resource> resourceList) {
@@ -81,10 +99,18 @@ public class DashboardScene extends BasicSceneUpdater {
 
     @Override
     public void init() {
+
         super.init();
+        boxes = new CheckBox[3];
+        boxes[0]=swap1;
+        boxes[1]=swap2;
+        boxes[2]=swap3;
+
         showLeaders = false;
         leaderCards.setVisible(false);
         marketbutton.setId("production_card");
+
+
 
         toastForMarketInsersion.setVisible(false);
         doThisJustIfIsHereFromMarketExtraction(imHereAfterMarketExstraction);
@@ -102,6 +128,25 @@ public class DashboardScene extends BasicSceneUpdater {
 
         shopbutton.setOnMouseClicked(event -> {
             this.notifyObserver(controller -> controller.showshop());
+        });
+
+        swapbutton.setOnMouseClicked(event -> {
+            int count = 0;
+            List<Integer> d = new ArrayList<Integer>();
+            for(int i=0; i<boxes.length;i++) {
+                if (boxes[i].isSelected() == true) {
+                    d.add(i);
+                    count++;
+                }
+            }
+
+            if(count==2)
+                this.notifyObserver(controller -> controller.askSwap(d.get(0)+1,d.get(1)+1));
+
+            for(int i=0; i<boxes.length;i++) {
+            boxes[i].setSelected(false);
+            }
+
         });
 
         endturn.setOnMouseClicked(event -> {
@@ -127,38 +172,20 @@ public class DashboardScene extends BasicSceneUpdater {
             Deposit d1 = controller.getMiniModel().getStorage()[0];
             Deposit d2 = controller.getMiniModel().getStorage()[1];
             Deposit d3 = controller.getMiniModel().getStorage()[2];
+            Deposit[] ddd = new Deposit[3];
+            ddd[0]=d1;
+            ddd[1]=d2;
+            ddd[2]=d3;
 
-            //System.out.println("la risorsa in d2 vale "+d1.getResource().getQuantity());
-            if (d2.getResource() != null) {
-                for (int i = 0; i < d2.getResource().getQuantity(); i++) {
-                    //System.out.println("stampo la risorsa");
-                    ImageView immage = null;
-                    immage = loadImage("/images/resources/" + d2.getResource().getNumericType() + ".png", 40, 40);
-                    deposit2.add(immage, i, 0);
 
-                }
-            }
 
-            if (d3.getResource() != null) {
-                for (int i = 0; i < d3.getResource().getQuantity(); i++) {
-                    System.out.println("stampo la risorsa");
-                    ImageView immage = null;
-                    immage = loadImage("/images/resources/" + d3.getResource().getNumericType() + ".png", 40, 40);
-                    deposit3.add(immage, i, 0);
+            updateStorage(controller.getIndex(), ddd);
 
-                }
-            }
 
-            if (d1.getResource() != null) {
 
-                System.out.println("stampo la risorsa");
-                ImageView immage = null;
-                immage = loadImage("/images/resources/" + d1.getResource().getNumericType() + ".png", 40, 40);
-                deposit1.add(immage, 0, 0);
-
-            }
 
         });
+
 
 
         drawProductions();
@@ -186,6 +213,48 @@ public class DashboardScene extends BasicSceneUpdater {
         chestservantq.setId("fancytext");
     }
 
+
+    @Override
+    public void updateStorage(int player, Deposit[] storage)
+    {
+        Platform.runLater(()-> this.drawStorage(player,storage));
+    }
+
+    public void drawStorage (int player, Deposit[] storage)
+    {
+
+
+        //System.out.println("la risorsa in d2 vale "+d1.getResource().getQuantity());
+        if (storage[1].getResource() != null) {
+            for (int i = 0; i < storage[2].getResource().getQuantity(); i++) {
+                //System.out.println("stampo la risorsa");
+                ImageView immage = null;
+                immage = loadImage("/images/resources/" + storage[1].getResource().getNumericType() + ".png", 40, 40);
+                deposit2.add(immage, i, 0);
+
+            }
+        }
+
+        if (storage[2].getResource() != null) {
+            for (int i = 0; i < storage[2].getResource().getQuantity(); i++) {
+                System.out.println("stampo la risorsa");
+                ImageView immage = null;
+                immage = loadImage("/images/resources/" + storage[2].getResource().getNumericType() + ".png", 40, 40);
+                deposit3.add(immage, i, 0);
+
+            }
+        }
+
+        if (storage[0].getResource() != null) {
+
+            System.out.println("stampo la risorsa");
+            ImageView immage = null;
+            immage = loadImage("/images/resources/" + storage[0].getResource().getNumericType() + ".png", 40, 40);
+            deposit1.add(immage, 0, 0);
+
+        }
+
+    }
 
     /**
      * draw production decks of this user
@@ -296,4 +365,37 @@ public class DashboardScene extends BasicSceneUpdater {
             this.drawLeaders(leaders);
         });
     }
+
+
+    public void select1()
+    {
+        if(swap1.isSelected() && swap2.isSelected() && swap3.isSelected())
+            if(lastchecked != swap2)
+                swap2.setSelected(false);
+            else
+                swap3.setSelected(false);
+        lastchecked = swap1;
+    }
+
+    public void select2()
+    {
+        if(swap1.isSelected() && swap2.isSelected() && swap3.isSelected())
+            if(lastchecked != swap1)
+                swap1.setSelected(false);
+            else
+                swap3.setSelected(false);
+        lastchecked = swap2;
+    }
+
+    public void select3()
+    {
+        if(swap1.isSelected() && swap2.isSelected() && swap3.isSelected())
+            if(lastchecked != swap1)
+                swap1.setSelected(false);
+            else
+                swap2.setSelected(false);
+        lastchecked = swap3;
+    }
+
+
 }

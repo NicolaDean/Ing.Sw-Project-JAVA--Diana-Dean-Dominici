@@ -248,8 +248,8 @@ public class ServerController{
         if(DebugMessages.infiniteResources) {
             for (Player p : game.getPlayers()) {
                 p.getDashboard().getStorage().safeInsertion(new Resource(COIN, 1), 0);
-                p.getDashboard().getStorage().safeInsertion(new Resource(SHIELD, 2), 1);
-                p.getDashboard().getStorage().safeInsertion(new Resource(SERVANT, 3), 2);
+                p.getDashboard().getStorage().safeInsertion(new Resource(SHIELD, 1), 1);
+                p.getDashboard().getStorage().safeInsertion(new Resource(SERVANT, 1), 2);
             }
         }
 
