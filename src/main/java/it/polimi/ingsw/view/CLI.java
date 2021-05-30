@@ -720,6 +720,7 @@ public class CLI extends Observable<ClientController> implements View {
         }
         this.notifyObserver(ClientController::showStorage);
         Avoidable = true;
+
     }
 
     @Override
