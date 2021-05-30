@@ -34,6 +34,8 @@ public class GuiHelper extends Application {
     private static GuiHelper            guiHelper;
     private static Stage                stage;
     private static BasicSceneUpdater    currentScene;
+    private static boolean              buyType = false;
+
     public GuiHelper()
     {
         guiHelper = this;
@@ -92,7 +94,14 @@ public class GuiHelper extends Application {
             System.out.println("REOPEN");
         }
     }
-
+    public static void setBuyType(boolean b)
+    {
+        buyType = b;
+    }
+    public static boolean getBuyType()
+    {
+        return buyType;
+    }
 
     public static BasicSceneUpdater getCurrentScene()
     {
@@ -102,6 +111,7 @@ public class GuiHelper extends Application {
     {
         return loadDialog(FXMLpaths.yesNo,title,new YesNoDialog(msg)).equals(ButtonType.YES);
     }
+
     public static void resize(double width,double height)
     {
         GuiHelper.getStage().setWidth(width);
@@ -248,7 +258,6 @@ public class GuiHelper extends Application {
     public static void main(GUI g) {
         gui = g;
         launch();
-
     }
 
 }

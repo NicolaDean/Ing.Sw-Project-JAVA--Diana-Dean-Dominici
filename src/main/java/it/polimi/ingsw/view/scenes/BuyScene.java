@@ -66,9 +66,6 @@ public class BuyScene extends BasicSceneUpdater{
         //GuiHelper.resize(1280,720);
         this.cards = new ImageView[ConstantValues.rowDeck][ConstantValues.colDeck];
 
-        InitialResources dialog = new InitialResources(2);
-        ButtonType result = loadDialog(FXMLpaths.initialResource,"Chose dashboard position",dialog);
-
         click.setOpacity(0);
 
         GuiHelper.getStage().show();
@@ -174,6 +171,7 @@ public class BuyScene extends BasicSceneUpdater{
 
         if(result.equals(ButtonType.OK) && dialog.getPos()!= -1)
         {
+            GuiHelper.setBuyType(true);
             this.pos = dialog.getPos();
             click.setText((this.col + 1) + " - " + (this.row + 1) + "-> in pos: "+ dialog.pos);
             this.notifyObserver(controller -> controller.sendBuyCard(this.row,this.col,this.pos));

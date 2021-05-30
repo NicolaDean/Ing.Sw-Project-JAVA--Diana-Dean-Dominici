@@ -7,10 +7,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane id="dialog" fx:id="dialog" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="868.0" stylesheets="@../css/Global.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<DialogPane id="dialog" fx:id="dialog" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="469.0" prefWidth="868.0" stylesheets="@../css/Global.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
     <header>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="377.0" prefWidth="753.0" stylesheets="@../css/Cards.css">
          <children>
@@ -25,12 +24,8 @@
                      <Image url="@../images/other/bin.png" />
                   </image>
                </ImageView>
-               <Pane fx:id="destination" layoutX="18.0" layoutY="42.0" prefHeight="193.0" prefWidth="324.0">
-                  <children>
-                     <FlowPane fx:id="resContainer" layoutY="-2.0" prefHeight="199.0" prefWidth="325.0" />
-                  </children>
-               </Pane>
-               <ImageView fitHeight="240.0" fitWidth="390.0" layoutX="-15.0" layoutY="17.0" pickOnBounds="true">
+               <FlowPane fx:id="destination" layoutX="18.0" layoutY="42.0" prefHeight="193.0" prefWidth="324.0" />
+               <ImageView fitHeight="240.0" fitWidth="390.0" layoutX="-15.0" layoutY="17.0" mouseTransparent="true" pickOnBounds="true" translateZ="-1.0">
                   <image>
                      <Image url="@../images/frames/frame1.png" />
                   </image>
