@@ -34,6 +34,8 @@ public class GuiHelper extends Application {
     private static GuiHelper            guiHelper;
     private static Stage                stage;
     private static BasicSceneUpdater    currentScene;
+    private static boolean              buyType = false;
+
     public GuiHelper()
     {
         guiHelper = this;
@@ -92,7 +94,14 @@ public class GuiHelper extends Application {
             System.out.println("REOPEN");
         }
     }
-
+    public static void setBuyType(boolean b)
+    {
+        buyType = b;
+    }
+    public static boolean getBuyType()
+    {
+        return buyType;
+    }
 
     public static BasicSceneUpdater getCurrentScene()
     {

@@ -194,7 +194,7 @@ public class DashboardScene extends BasicSceneUpdater {
     {
         this.notifyObserver(controller -> {
             ProductionCard[] cards = controller.getMiniModel().getPersonalPlayer().getDecks();
-            int j = 0;
+            int j = 1;
             for (ProductionCard card : cards) {
 
                 if (card != null) {
@@ -212,6 +212,7 @@ public class DashboardScene extends BasicSceneUpdater {
 
 
                         if (res) {
+                            GuiHelper.setBuyType(false);
                             this.notifyObserver(ctrl -> ctrl.sendProduction(finalJ - 1));
                         }
                     });
@@ -223,6 +224,10 @@ public class DashboardScene extends BasicSceneUpdater {
 
     }
 
+    /**
+     * disable buttons only if we are in "resources insertion" mode
+     * @param b
+     */
     public void doThisJustIfIsHereFromMarketExtraction(Boolean b){
         if(!b) return;
         toastForMarketInsersion.setVisible(true);

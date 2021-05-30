@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.packets.ExtractionInstruction;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.view.GuiHelper;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -202,7 +203,14 @@ public class PaymentDialog extends BasicDialog{
      */
     public void drawDeposit(FlowPane container,Deposit deposit)
     {
+        if(deposit.getResource() == null)
+        {
+            System.out.println("Print empty dep");
+            return;
+        }
         dragDeposit(container);
+
+
         //addDragEvent(container,deposit.getResource());  //é brutto proprio impedire il drag, meglio impedire il drop
         for(int i=0;i<deposit.getResource().getQuantity();i++)
         {
@@ -306,7 +314,7 @@ public class PaymentDialog extends BasicDialog{
                         event.consume();
                     }
                     else{
-                        this.notifyObserver(controller -> controller.sendResourceExtraction(true,packetInfo));
+                        this.notifyObserver(controller -> controller.sendResourceExtraction(GuiHelper.getBuyType(),packetInfo));
                     }
                 }
         );

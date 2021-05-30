@@ -258,9 +258,9 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void askResourceExtraction(List<Resource> resourceList) {
-
+        System.out.println("PAYMENT ");
+        PaymentDialog dialog = new PaymentDialog(resourceList);
         Platform.runLater(()->{
-            PaymentDialog dialog = new PaymentDialog(resourceList);
             GuiHelper.loadDialog(FXMLpaths.payment,"Payment",dialog);
         });
     }
