@@ -222,6 +222,18 @@ public class DashboardScene extends BasicSceneUpdater {
 
     public void drawStorage (int player, Deposit[] storage)
     {
+       /* try{
+        for(int i=0;i<2;i++)
+            deposit2.getChildren().remove(deposit2.getChildren().get(i));
+        for(int i=0;i<3;i++)
+            deposit3.getChildren().remove(deposit3.getChildren().get(i));
+        deposit1.getChildren().remove(deposit1.getChildren().get(0));}
+        catch (Exception e)
+        {
+
+        }
+
+        */
 
 
         //System.out.println("la risorsa in d2 vale "+d1.getResource().getQuantity());
@@ -231,6 +243,7 @@ public class DashboardScene extends BasicSceneUpdater {
                 ImageView immage = null;
                 immage = loadImage("/images/resources/" + storage[1].getResource().getNumericType() + ".png", 40, 40);
                 deposit2.add(immage, i, 0);
+                //deposit2.getChildren().remove(immage);
 
             }
         }
