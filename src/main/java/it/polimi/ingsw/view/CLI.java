@@ -820,7 +820,7 @@ public class CLI extends Observable<ClientController> implements View {
         //Send swap
         int finalD1 = d1;
         int finalD2 = d2;
-        this.notifyObserver(controller -> controller.askSwap(finalD1, finalD2, index));
+        this.notifyObserver(controller -> controller.askSwap(finalD1, finalD2));
 
         try {
             TimeUnit.MILLISECONDS.sleep(100);

@@ -39,3 +39,23 @@
     -fx-background-image: url("../images/other/toast.png");
     -fx-background-size: cover;
 }
+
+.check-box .box {
+
+    -fx-background-color: white;
+    -fx-border-color:black;
+    -fx-border-width: 2px;
+    -fx-border-radius:2px;
+
+}
+
+.check-box:selected .mark {
+
+    -fx-background-color: white;
+
+}
+
+.check-box:selected .box {
+
+    -fx-background-color: #29e367;
+}
