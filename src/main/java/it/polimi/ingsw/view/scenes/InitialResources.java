@@ -83,7 +83,6 @@ public class InitialResources extends BasicDialog{
 
                 event.consume();
             });
-
         }
 
         //Set destination drag event
@@ -186,9 +185,10 @@ public class InitialResources extends BasicDialog{
             content.putImage(img.getImage());
             db.setContent(content);
 
-            event.consume();
+            eventBin.consume();
         });
         resContainer.getChildren().add(img);
+        event.consume();
     }
 
     /**
@@ -200,6 +200,7 @@ public class InitialResources extends BasicDialog{
         event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         event.consume();
     }
+
     public List<Resource> getResources()
     {
         return this.out;
