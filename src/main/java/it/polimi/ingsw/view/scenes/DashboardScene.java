@@ -320,7 +320,8 @@ public class DashboardScene extends BasicSceneUpdater {
 
     public void removeElementFromGridPane(GridPane pane)
     {
-        for(int i=0;i<pane.getChildren().size();i++)
+        int s = pane.getChildren().size();
+        for(int i=0;i<s;i++)
         {
             pane.getChildren().remove(0);
         }
@@ -415,7 +416,8 @@ public class DashboardScene extends BasicSceneUpdater {
      */
     public void drawLeaders(LeaderCard[] cards) {
 
-        for(int i=0;i<this.leaderCards.getChildren().size();i++)
+        int s = this.leaderCards.getChildren().size();
+        for(int i=0;i<s;i++)
         {
             this.leaderCards.getChildren().remove(0);
         }
