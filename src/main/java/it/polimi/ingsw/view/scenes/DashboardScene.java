@@ -28,7 +28,7 @@ import javafx.util.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class DashboardScene extends BasicSceneUpdater{
+public class DashboardScene extends BasicSceneUpdater {
 
     @FXML
     public AnchorPane root;
@@ -82,17 +82,16 @@ public class DashboardScene extends BasicSceneUpdater{
     }*/
 
     @Override
-    public void init()
-    {
+    public void init() {
         super.init();
         showLeaders = false;
         leaderCards.setVisible(false);
-        marketbutton.setDisable(true);
+        marketbutton.setId("production_card");
 
         this.notifyObserver(controller -> {
             LeaderCard[] cards = controller.getMiniModel().getPersonalPlayer().getLeaderCards();
 
-            Platform.runLater(()->{
+            Platform.runLater(() -> {
                 this.drawLeaders(cards);
             });
         });
@@ -113,101 +112,74 @@ public class DashboardScene extends BasicSceneUpdater{
         //DRAW FAITH TOKEN POSITION
         this.notifyObserver(controller -> {
             int pos = controller.getMiniModel().getPersonalPlayer().getPosition();
-            this.faith.get(pos).getChildren().add(loadImage("/images/resources/tokenPosition.png",50,50));
+            this.faith.get(pos).getChildren().add(loadImage("/images/resources/tokenPosition.png", 50, 50));
         });
 
         //DRAW STORAGE
-        this.notifyObserver(controller ->{
+        this.notifyObserver(controller -> {
             DebugMessages.printError("Dashboard Scene initialized");
 
             ProductionCard[] carte = controller.getMiniModel().getPersonalPlayer().getDecks();
-            chestcoinq.setText(Integer.toString(controller.getMiniModel().getPersonalPlayer().getChest().get(2).getQuantity())) ;
-            chestrockq.setText(Integer.toString(controller.getMiniModel().getPersonalPlayer().getChest().get(1).getQuantity())) ;
-            chestservantq.setText(Integer.toString(controller.getMiniModel().getPersonalPlayer().getChest().get(3).getQuantity())) ;
-            chestshieldq.setText(Integer.toString(controller.getMiniModel().getPersonalPlayer().getChest().get(0).getQuantity())) ;
+            chestcoinq.setText(Integer.toString(controller.getMiniModel().getPersonalPlayer().getChest().get(2).getQuantity()));
+            chestrockq.setText(Integer.toString(controller.getMiniModel().getPersonalPlayer().getChest().get(1).getQuantity()));
+            chestservantq.setText(Integer.toString(controller.getMiniModel().getPersonalPlayer().getChest().get(3).getQuantity()));
+            chestshieldq.setText(Integer.toString(controller.getMiniModel().getPersonalPlayer().getChest().get(0).getQuantity()));
             MiniModel model = controller.getMiniModel();
             Deposit d1 = controller.getMiniModel().getStorage()[0];
             Deposit d2 = controller.getMiniModel().getStorage()[1];
             Deposit d3 = controller.getMiniModel().getStorage()[2];
 
             //System.out.println("la risorsa in d2 vale "+d1.getResource().getQuantity());
-            if(d2.getResource()!=null) {
+            if (d2.getResource() != null) {
                 for (int i = 0; i < d2.getResource().getQuantity(); i++) {
                     //System.out.println("stampo la risorsa");
                     ImageView immage = null;
-                    immage = loadImage("/images/resources/"+d2.getResource().getNumericType()+".png",40,40);
-                    deposit2.add(immage,i,0);
+                    immage = loadImage("/images/resources/" + d2.getResource().getNumericType() + ".png", 40, 40);
+                    deposit2.add(immage, i, 0);
 
                 }
             }
 
-            if(d3.getResource()!=null) {
+            if (d3.getResource() != null) {
                 for (int i = 0; i < d3.getResource().getQuantity(); i++) {
                     System.out.println("stampo la risorsa");
                     ImageView immage = null;
-                    immage = loadImage("/images/resources/"+d3.getResource().getNumericType()+".png",40,40);
-                    deposit3.add(immage,i,0);
+                    immage = loadImage("/images/resources/" + d3.getResource().getNumericType() + ".png", 40, 40);
+                    deposit3.add(immage, i, 0);
 
                 }
             }
 
-            if(d1.getResource()!=null) {
+            if (d1.getResource() != null) {
 
-                    System.out.println("stampo la risorsa");
-                    ImageView immage = null;
-                    immage = loadImage("/images/resources/"+d1.getResource().getNumericType()+".png",40,40);
-                    deposit1.add(immage,0,0);
+                System.out.println("stampo la risorsa");
+                ImageView immage = null;
+                immage = loadImage("/images/resources/" + d1.getResource().getNumericType() + ".png", 40, 40);
+                deposit1.add(immage, 0, 0);
 
             }
 
         });
 
-        for (int j=1;j<4;j++) {
-            //ImageView immage = loadImage("/images/cards/productions/"+c.getId()+".jpg",130,200);
-            ImageView immage = null;
 
-            immage = loadImage("/images/cards/productions/"+j+".jpg",150,250);
+        drawProductions();
+        int x = 0;
+        int y = 0;
 
-            //hadow shadow = new Shadow();
+        for (int i = 0; i < 4; i++) {
+            int k = i + 1;
+            ImageView immage = loadImage("/images/resources/" + k + ".png", 34, 34);
+            chestgrid.add(immage, x, y);
 
-            //immage.setEffect(shadow);
-
-            immage.setId("production_card");
-            marketbutton.setId("production_card");
-
-            grid.add(immage,j-1,0);
-            int finalJ = j;
-            immage.setOnMouseClicked(event -> {
-                System.out.println("bella ziii");
-
-                boolean res = GuiHelper.YesNoDialog("Production Card Activation","Do you want to produce with this card?");
-
-                if(res)
-                {
-                    this.notifyObserver(controller -> controller.sendProduction(finalJ -1));
-                }
-            });
-
-
-        }
-
-        int x=0;
-        int y=0;
-
-        for(int i=0; i<4; i++)
-        {
-            int k= i+1;
-            ImageView immage = loadImage("/images/resources/"+k+".png",34,34);
-            chestgrid.add(immage,x,y );
-
-            if(x==1)
-                x=0;
+            if (x == 1)
+                x = 0;
             else
                 x++;
 
-            if(i==1)
-                y=1;
+            if (i == 1)
+                y = 1;
         }
+
 
         chestshieldq.setId("fancytext");
         chestcoinq.setId("fancytext");
@@ -216,8 +188,45 @@ public class DashboardScene extends BasicSceneUpdater{
     }
 
 
+    /**
+     * draw production decks of this user
+     */
+    public void drawProductions()
+    {
+        this.notifyObserver(controller -> {
+            ProductionCard[] cards = controller.getMiniModel().getPersonalPlayer().getDecks();
+            int j = 0;
+            for (ProductionCard card : cards) {
 
+                if (card != null) {
+                    ImageView immage = null;
 
+                    immage = loadImage("/images/cards/productions/" + card.getId() + ".jpg", 130, 200);
+                    immage.setId("production_card");
+                    grid.add(immage, j - 1, 0);
+
+                    int finalJ = j;
+                    immage.setOnMouseClicked(event -> {
+                        System.out.println("bella ziii");
+
+                        boolean res = GuiHelper.YesNoDialog("Production Card Activation", "Do you want to produce with this card?");
+
+                        if (res) {
+                            this.notifyObserver(ctrl -> ctrl.sendProduction(finalJ - 1));
+                        }
+                    });
+                }
+                j++;
+
+            }
+        });
+
+    }
+
+    /**
+     * draw leaders of this player
+     * @param cards
+     */
     public void drawLeaders(LeaderCard[] cards)
     {
 
@@ -248,6 +257,10 @@ public class DashboardScene extends BasicSceneUpdater{
 
     }
 
+    /**
+     * this function allow to hide and show leaders deck owned
+     * @param actionEvent
+     */
     public void showLeader(ActionEvent actionEvent) {
         if(!showLeaders)
         {
