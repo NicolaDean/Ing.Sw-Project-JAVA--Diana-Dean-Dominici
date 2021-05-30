@@ -87,9 +87,6 @@ public class DialogLeader extends BasicDialog{
                     else isReady = false;
                 }
         );
-
-
-
     }
 
 

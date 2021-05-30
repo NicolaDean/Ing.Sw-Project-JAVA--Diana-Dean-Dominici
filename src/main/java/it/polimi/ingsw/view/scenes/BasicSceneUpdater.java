@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.scenes;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.resources.Resource;
@@ -140,6 +141,11 @@ public class BasicSceneUpdater extends Observable<ClientController> {
      * @param newPos new player position
      */
     public void updatePlayerPosition(int player,int newPos)
+    {
+
+    }
+
+    public void updateLeaders(int player, LeaderCard[] leaderCards)
     {
 
     }
