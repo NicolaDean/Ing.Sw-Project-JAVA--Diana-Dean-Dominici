@@ -102,6 +102,7 @@ public class GuiHelper extends Application {
     {
         return loadDialog(FXMLpaths.yesNo,title,new YesNoDialog(msg)).equals(ButtonType.YES);
     }
+
     public static void resize(double width,double height)
     {
         GuiHelper.getStage().setWidth(width);

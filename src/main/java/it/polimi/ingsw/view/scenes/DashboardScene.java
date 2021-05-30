@@ -74,6 +74,12 @@ public class DashboardScene extends BasicSceneUpdater{
     @FXML
     public Button showButton;
     boolean showLeaders;
+    boolean showInsertion = false;
+
+    /*public DashboardScene(boolean a)
+    {
+        showInsertion = a;
+    }*/
 
     @Override
     public void init()
@@ -81,6 +87,7 @@ public class DashboardScene extends BasicSceneUpdater{
         super.init();
         showLeaders = false;
         leaderCards.setVisible(false);
+        marketbutton.setDisable(true);
 
         this.notifyObserver(controller -> {
             LeaderCard[] cards = controller.getMiniModel().getPersonalPlayer().getLeaderCards();
@@ -106,8 +113,6 @@ public class DashboardScene extends BasicSceneUpdater{
         //DRAW FAITH TOKEN POSITION
         this.notifyObserver(controller -> {
             int pos = controller.getMiniModel().getPersonalPlayer().getPosition();
-
-            for(int i=0;i<25;i++)this.faith.get(i).getChildren().add(loadImage("/images/resources/tokenPosition.png",50,50));
             this.faith.get(pos).getChildren().add(loadImage("/images/resources/tokenPosition.png",50,50));
         });
 
@@ -227,7 +232,7 @@ public class DashboardScene extends BasicSceneUpdater{
             ImageView card = loadImage("/images/cards/leaders/"+c.getId()+".jpg",130,200);
             int finalI = i;
             card.setOnMouseClicked(event -> {
-                boolean out = GuiHelper.YesNoDialog("Leader actviation","Do you want to activate this leader");
+                boolean out = GuiHelper.YesNoDialog("Leader actviation","Do you want to activate this leader?");
 
                 if(out) this.notifyObserver(controller -> controller.activateLeader(finalI));
             });
