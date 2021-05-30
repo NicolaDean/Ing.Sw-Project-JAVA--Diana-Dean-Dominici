@@ -15,6 +15,7 @@ import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.scenes.DialogLeader;
 import it.polimi.ingsw.view.scenes.InitialResources;
 import it.polimi.ingsw.view.scenes.MarketScene;
+import it.polimi.ingsw.view.scenes.PaymentDialog;
 import it.polimi.ingsw.view.utils.FXMLpaths;
 import javafx.application.Platform;
 import javafx.scene.control.ButtonType;
@@ -230,6 +231,10 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askResourceExtraction(List<Resource> resourceList) {
 
+        Platform.runLater(()->{
+            PaymentDialog dialog = new PaymentDialog(resourceList);
+            GuiHelper.loadDialog(FXMLpaths.payment,"Payment",dialog);
+        });
     }
 
     @Override

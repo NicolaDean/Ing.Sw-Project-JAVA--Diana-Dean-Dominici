@@ -82,6 +82,8 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
 
     public void setLeaderCards(LeaderCard[] leaderCards) {
         this.leaderCards = leaderCards;
+
+        this.notifyObserver(scene-> scene.updateLeaders(index,leaderCards));
     }
 
     public LeaderCard[] getLeaderCards()
