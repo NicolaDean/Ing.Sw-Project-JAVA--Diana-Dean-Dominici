@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.scenes.BasicSceneUpdater;
+import javafx.application.Platform;
 
 import java.util.List;
 
@@ -72,6 +73,8 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
     }
     public void setStorage(Deposit[] storage) {
         this.storage = storage;
+        //Platform.runLater(()-> this.notifyObserver(scene -> scene.updateStorage(index,storage)));
+
         this.notifyObserver(scene -> scene.updateStorage(index,storage));
     }
 
