@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.scenes;
 
+import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniModel;
@@ -8,9 +9,11 @@ import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GuiHelper;
 import it.polimi.ingsw.view.utils.FXMLpaths;
 import it.polimi.ingsw.view.utils.ToastMessage;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BlurType;
@@ -65,11 +68,27 @@ public class DashboardScene extends BasicSceneUpdater{
 
     @FXML
     public List<Pane> faith;
+
+    @FXML
+    public FlowPane leaderCards;
+    @FXML
+    public Button showButton;
+    boolean showLeaders;
+
     @Override
     public void init()
     {
         super.init();
+        showLeaders = false;
+        leaderCards.setVisible(false);
 
+        this.notifyObserver(controller -> {
+            LeaderCard[] cards = controller.getMiniModel().getPersonalPlayer().getLeaderCards();
+
+            Platform.runLater(()->{
+                this.drawLeaders(cards);
+            });
+        });
         //GuiHelper.resize(1280,720);
 
         marketbutton.setOnMouseClicked(event -> {
@@ -183,24 +202,68 @@ public class DashboardScene extends BasicSceneUpdater{
 
             if(i==1)
                 y=1;
-
         }
 
         chestshieldq.setId("fancytext");
         chestcoinq.setId("fancytext");
         chestrockq.setId("fancytext");
         chestservantq.setId("fancytext");
-
     }
 
 
 
 
+    public void drawLeaders(LeaderCard[] cards)
+    {
+
+        for(int i=0;i<this.leaderCards.getChildren().size();i++)
+        {
+            this.leaderCards.getChildren().remove(0);
+        }
+
+        int i=0;
+        for(LeaderCard c : cards)
+        {
+            ImageView card = loadImage("/images/cards/leaders/"+c.getId()+".jpg",130,200);
+            int finalI = i;
+            card.setOnMouseClicked(event -> {
+                boolean out = GuiHelper.YesNoDialog("Leader actviation","Do you want to activate this leader");
+
+                if(out) this.notifyObserver(controller -> controller.activateLeader(finalI));
+            });
+            i++;
+            leaderCards.getChildren().add(card);
+        }
+    }
     @Override
     public void reciveMessage(String msg) {
         super.reciveMessage(msg);
         ToastMessage t = new ToastMessage(msg,this.root,2000);
         t.show();
 
+    }
+
+    public void showLeader(ActionEvent actionEvent) {
+        if(!showLeaders)
+        {
+            showLeaders = true;
+            showButton.setText("Hide leaders");
+            leaderCards.setVisible(true);
+        }
+        else
+        {
+            showLeaders = false;
+            showButton.setText("Show leaders");
+            leaderCards.setVisible(false);
+        }
+
+    }
+
+    @Override
+    public void updateLeaders(int player, LeaderCard[] leaders) {
+
+        Platform.runLater(()->{
+            this.drawLeaders(leaders);
+        });
     }
 }

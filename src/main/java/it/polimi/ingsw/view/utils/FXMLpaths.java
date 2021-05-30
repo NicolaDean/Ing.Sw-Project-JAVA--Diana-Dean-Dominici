@@ -7,7 +7,7 @@ public class FXMLpaths {
     public static String askNickname     = "login";
     public static String waitingStart    = "waitingStart";
     public static String buy             = "buy";
-    public static String payment         = "pendingCost";
+    public static String payment         = "dialogPayment";
     public static String insertions      = "buy";
     public static String prodDialog      = "dialogProduction";
     public static String initialResource = "dialogChoseResource";

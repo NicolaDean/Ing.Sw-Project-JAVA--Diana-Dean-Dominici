@@ -37,3 +37,19 @@
     -fx-effect: dropshadow(gaussian, #f2e0d6, 20, 0.3, 0, 0);
 }
 
+#dialog
+{
+    -fx-background-image: url("../images/interface/dialog.jpg");
+    -fx-background-size: cover;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    background-repeat:   no-repeat;
+    background-position: center center;
+
+}
+
+.label
+{
+    -fx-text-fill: white;
+}
+

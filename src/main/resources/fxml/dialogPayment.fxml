@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<DialogPane id="dialog" fx:id="dialog" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="868.0" stylesheets="@../css/Global.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+    <header>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="377.0" prefWidth="753.0" stylesheets="@../css/Cards.css">
+         <children>
+            <AnchorPane layoutX="363.0" layoutY="163.0" prefHeight="200.0" prefWidth="453.0">
+               <Label layoutX="18.0" layoutY="11.0" prefHeight="20.0" prefWidth="473.0" text="You need to DRAG AND DROP  the resources from storage or chest">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+               <ImageView fx:id="bin" fitHeight="100.0" fitWidth="100.0" layoutX="345.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../images/other/bin.png" />
+                  </image>
+               </ImageView>
+               <Pane fx:id="destination" layoutX="18.0" layoutY="42.0" prefHeight="193.0" prefWidth="324.0">
+                  <children>
+                     <FlowPane fx:id="resContainer" layoutY="-2.0" prefHeight="199.0" prefWidth="325.0" />
+                  </children>
+               </Pane>
+               <ImageView fitHeight="240.0" fitWidth="390.0" layoutX="-15.0" layoutY="17.0" pickOnBounds="true">
+                  <image>
+                     <Image url="@../images/frames/frame1.png" />
+                  </image>
+               </ImageView>
+            </AnchorPane>
+            <Label layoutX="402.0" layoutY="11.0" prefHeight="20.0" prefWidth="335.0" text="You have the following resources to pay">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <FlowPane fx:id="source" layoutX="366.0" layoutY="60.0" prefHeight="103.0" prefWidth="486.0" />
+            <ImageView fitHeight="379.0" fitWidth="294.0" layoutX="14.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/dashboard/deposits.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="464.0" fitWidth="257.0" layoutX="-8.0" layoutY="-45.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/frames/frame1.png" />
+               </image>
+            </ImageView>
+            <FlowPane fx:id="deposit1" layoutX="104.0" layoutY="65.0" prefHeight="47.0" prefWidth="46.0" />
+            <FlowPane fx:id="deposit2" layoutX="79.0" layoutY="112.0" prefHeight="47.0" prefWidth="92.0" />
+            <FlowPane fx:id="deposit3" layoutX="64.0" layoutY="164.0" prefHeight="56.0" prefWidth="134.0" />
+            <FlowPane fx:id="chest" layoutX="39.0" layoutY="265.0" prefHeight="104.0" prefWidth="131.0" />
+         </children>
+      </AnchorPane>
+    </header>
+    <expandableContent>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
+    </expandableContent>
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+   </buttonTypes>
+</DialogPane>
