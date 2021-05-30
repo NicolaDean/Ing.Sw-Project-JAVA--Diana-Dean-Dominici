@@ -13,6 +13,7 @@ import it.polimi.ingsw.view.utils.ToastMessage;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -109,7 +110,7 @@ public class DashboardScene extends BasicSceneUpdater {
     }
 
 
-    int index;
+    int index = -1;
     @Override
     public void init() {
 
@@ -161,8 +162,12 @@ public class DashboardScene extends BasicSceneUpdater {
         //DRAW ALL DASHBOARD COMPONENTS
         this.notifyObserver(controller -> {
             DebugMessages.printError("Dashboard Scene initialized");
+            if(this.index == -1)
+            {
+                this.setIndex(controller.getMiniModel().getPersanalIndex());
+            }
 
-            MiniPlayer p = controller.getMiniModel().getPersonalPlayer();
+            MiniPlayer p = controller.getMiniModel().getPlayers()[index];
 
             drawStorage     (p.getStorage());
             drawChest       (p.getChest());
@@ -171,11 +176,23 @@ public class DashboardScene extends BasicSceneUpdater {
             drawPosition    (p.getPosition());
             drawNicknames();
             //DRAW FAITH TOKEN POSITION
-            this.index =  controller.getMiniModel().getPersanalIndex();
+
         });
+
+
     }
 
+    /**
+     * disable swap button (used by SpyScene)
+     */
+    public void disableSwap()
+    {
+        this.swapbutton.setDisable(true);
+    }
 
+    /**
+     * Draw Nicknames
+     */
     public void drawNicknames()
     {
 
@@ -187,19 +204,32 @@ public class DashboardScene extends BasicSceneUpdater {
                 System.out.println(player.getNickname());
                 Pane p = new Pane();
                 Label l = new Label(player.getNickname());
-                l.setId("fancytext");
+                l.setId("font");
+                l.setAlignment(Pos.CENTER);
                 p.getChildren().add(l);
 
+
+                int finalI = i;
                 p.setOnMouseClicked(event -> {
                     Platform.runLater(()->{
                         try {
-                            GuiHelper.setRoot(FXMLpaths.dashboard,new SpyScene(i,player.getNickname()));
+                            if(finalI != controller.getMiniModel().getPersanalIndex())
+                            {
+                                //If click on others nickname
+                                GuiHelper.setRoot(FXMLpaths.dashboard,new SpyScene(finalI,player.getNickname()));
+                            }
+                            else
+                            {
+                                //If click on his nickname
+                                GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     });
                 });
                 this.nicknames.getChildren().add(p);
+                i++;
             }
 
         });
@@ -218,7 +248,9 @@ public class DashboardScene extends BasicSceneUpdater {
      */
     public void drawPosition(int pos)
     {
-        this.faith.get(pos).getChildren().add(loadImage("/images/resources/tokenPosition.png", 50, 50));
+        Platform.runLater(()->{
+            this.faith.get(pos).getChildren().add(loadImage("/images/resources/tokenPosition.png", 50, 50));
+        });
     }
 
     @Override
