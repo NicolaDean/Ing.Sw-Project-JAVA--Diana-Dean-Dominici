@@ -249,7 +249,6 @@ public class GuiHelper extends Application {
     public static void main(GUI g) {
         gui = g;
         launch();
-
     }
 
 }
