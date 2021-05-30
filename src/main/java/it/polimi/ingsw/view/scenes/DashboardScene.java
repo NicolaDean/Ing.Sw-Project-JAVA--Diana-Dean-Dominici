@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.minimodel.MiniModel;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GuiHelper;
+import it.polimi.ingsw.view.utils.FXMLpaths;
 import it.polimi.ingsw.view.utils.ToastMessage;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -21,6 +22,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class DashboardScene extends BasicSceneUpdater{
@@ -61,6 +63,8 @@ public class DashboardScene extends BasicSceneUpdater{
     @FXML
     public ImageView endturn;
 
+    @FXML
+    public List<Pane> faith;
     @Override
     public void init()
     {
@@ -80,9 +84,15 @@ public class DashboardScene extends BasicSceneUpdater{
             this.notifyObserver(controller -> controller.askEndTurn());
         });
 
+        //DRAW FAITH TOKEN POSITION
+        this.notifyObserver(controller -> {
+            int pos = controller.getMiniModel().getPersonalPlayer().getPosition();
 
-        GuiHelper.getStage().show();
-        //DRAW DECK
+            for(int i=0;i<25;i++)this.faith.get(i).getChildren().add(loadImage("/images/resources/tokenPosition.png",50,50));
+            this.faith.get(pos).getChildren().add(loadImage("/images/resources/tokenPosition.png",50,50));
+        });
+
+        //DRAW STORAGE
         this.notifyObserver(controller ->{
             DebugMessages.printError("Dashboard Scene initialized");
 
@@ -124,12 +134,7 @@ public class DashboardScene extends BasicSceneUpdater{
                     immage = loadImage("/images/resources/"+d1.getResource().getNumericType()+".png",40,40);
                     deposit1.add(immage,0,0);
 
-
             }
-
-
-
-
 
         });
 
@@ -147,8 +152,16 @@ public class DashboardScene extends BasicSceneUpdater{
             marketbutton.setId("production_card");
 
             grid.add(immage,j-1,0);
+            int finalJ = j;
             immage.setOnMouseClicked(event -> {
                 System.out.println("bella ziii");
+
+                boolean res = GuiHelper.YesNoDialog("Production Card Activation","Do you want to produce with this card?");
+
+                if(res)
+                {
+                    this.notifyObserver(controller -> controller.sendProduction(finalJ -1));
+                }
             });
 
 
@@ -178,15 +191,9 @@ public class DashboardScene extends BasicSceneUpdater{
         chestrockq.setId("fancytext");
         chestservantq.setId("fancytext");
 
-
-
-
-
-
-
-
-
     }
+
+
 
 
     @Override

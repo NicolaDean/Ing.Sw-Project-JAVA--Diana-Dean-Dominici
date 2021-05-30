@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/Background.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.DashboardScene">
-   <children>
+<StackPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/Background.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.DashboardScene">
+
+    <children>
       <Group fx:id="group">
          <children>
             <AnchorPane layoutX="113.0" layoutY="136.0" prefHeight="637.0" prefWidth="1039.0" stylesheets="@../css/Dashboard.css">
@@ -97,6 +101,63 @@
                               </GridPane>
                            </children>
                         </AnchorPane>
+                        <Pane fx:id="faith1" layoutX="34.0" layoutY="125.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith2" layoutX="77.0" layoutY="122.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith3" layoutX="122.0" layoutY="122.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith4" layoutX="121.0" layoutY="83.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith5" layoutX="119.0" layoutY="33.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith6" layoutX="164.0" layoutY="40.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith7" layoutX="211.0" layoutY="41.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith8" layoutX="254.0" layoutY="39.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith9" layoutX="297.0" layoutY="39.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith10" layoutX="344.0" layoutY="40.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith11" layoutX="343.0" layoutY="77.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith12" layoutX="342.0" layoutY="124.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith13" layoutX="382.0" layoutY="124.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith14" layoutX="433.0" layoutY="124.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith15" layoutX="474.0" layoutY="124.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith16" layoutX="517.0" layoutY="124.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith17" layoutX="564.0" layoutY="125.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith18" layoutX="563.0" layoutY="76.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith19" layoutX="564.0" layoutY="39.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith20" layoutX="610.0" layoutY="39.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith21" layoutX="651.0" layoutY="39.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith22" layoutX="693.0" layoutY="39.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith23" layoutX="738.0" layoutY="39.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith24" layoutX="779.0" layoutY="34.0" prefHeight="41.0" prefWidth="41.0" />
+                        <Pane fx:id="faith25" layoutX="826.0" layoutY="40.0" prefHeight="41.0" prefWidth="41.0" />
+
+                         <fx:define>
+                            <ArrayList fx:id="faith">
+                                 <fx:reference source="faith1" />
+                                 <fx:reference source="faith2" />
+                                 <fx:reference source="faith3" />
+                                 <fx:reference source="faith4" />
+                                 <fx:reference source="faith5" />
+                                 <fx:reference source="faith6" />
+                                 <fx:reference source="faith7" />
+                                 <fx:reference source="faith8" />
+                                 <fx:reference source="faith9" />
+                                 <fx:reference source="faith10" />
+                                 <fx:reference source="faith11" />
+                                 <fx:reference source="faith12" />
+                                 <fx:reference source="faith13" />
+                                 <fx:reference source="faith14" />
+                                 <fx:reference source="faith15" />
+                                 <fx:reference source="faith16" />
+                                 <fx:reference source="faith17" />
+                                 <fx:reference source="faith18" />
+                                 <fx:reference source="faith19" />
+                                 <fx:reference source="faith20" />
+                                 <fx:reference source="faith21" />
+                                 <fx:reference source="faith22" />
+                                 <fx:reference source="faith23" />
+                                 <fx:reference source="faith24" />
+                                 <fx:reference source="faith25" />
+                             </ArrayList>
+                         </fx:define>
+                        <TabPane layoutX="223.0" layoutY="224.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" />
+                        <Button id="button" layoutX="855.0" layoutY="628.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="92.0" stylesheets="@../css/Global.css" text="Show Leader" />
                      </children>
                   </AnchorPane>
                   <ImageView id="production_card" fx:id="shopbutton" fitHeight="97.0" fitWidth="213.0" layoutX="71.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
