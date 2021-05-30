@@ -13,10 +13,7 @@ import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.view.observer.Observable;
-import it.polimi.ingsw.view.scenes.DialogLeader;
-import it.polimi.ingsw.view.scenes.InitialResources;
-import it.polimi.ingsw.view.scenes.MarketScene;
-import it.polimi.ingsw.view.scenes.PaymentDialog;
+import it.polimi.ingsw.view.scenes.*;
 import it.polimi.ingsw.view.utils.FXMLpaths;
 import it.polimi.ingsw.view.utils.Logger;
 import it.polimi.ingsw.view.utils.ToastMessage;
@@ -250,6 +247,13 @@ public class GUI extends Observable<ClientController> implements View{
         //show resource obtained in a dialog with only OK button
         //TODO change controller of dashbard view to insetion controller
         //TODO add dinamicly controller update to GUIHELPER
+
+        Platform.runLater(()->{
+            try{ GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene(resourceList));}catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+
     }
 
     @Override
@@ -414,7 +418,7 @@ public class GUI extends Observable<ClientController> implements View{
 
         Platform.runLater(()->{
             try {
-                GuiHelper.setRoot(FXMLpaths.dashboard);
+                GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
             } catch (IOException e) {
                 e.printStackTrace();
             }

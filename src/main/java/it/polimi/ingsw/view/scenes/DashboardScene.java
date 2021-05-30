@@ -4,29 +4,19 @@ import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniModel;
-import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GuiHelper;
-import it.polimi.ingsw.view.utils.FXMLpaths;
 import it.polimi.ingsw.view.utils.ToastMessage;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.effect.BlurType;
-import javafx.scene.effect.Shadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class DashboardScene extends BasicSceneUpdater{
 
@@ -71,9 +61,22 @@ public class DashboardScene extends BasicSceneUpdater{
 
     @FXML
     public FlowPane leaderCards;
+
     @FXML
     public Button showButton;
-    boolean showLeaders;
+
+    @FXML
+    public AnchorPane toastForMarketInsersion;
+
+    boolean showLeaders, imHereAfterMarketExstraction;
+
+    public DashboardScene(List<Resource> resourceList) {
+        imHereAfterMarketExstraction =true;
+    }
+
+    public DashboardScene(){
+        imHereAfterMarketExstraction =false;
+    }
 
     @Override
     public void init()
@@ -81,7 +84,8 @@ public class DashboardScene extends BasicSceneUpdater{
         super.init();
         showLeaders = false;
         leaderCards.setVisible(false);
-
+        toastForMarketInsersion.setVisible(false);
+        doThisJustIfIsHereFromMarketExtraction(imHereAfterMarketExstraction);
         this.notifyObserver(controller -> {
             LeaderCard[] cards = controller.getMiniModel().getPersonalPlayer().getLeaderCards();
 
@@ -89,7 +93,6 @@ public class DashboardScene extends BasicSceneUpdater{
                 this.drawLeaders(cards);
             });
         });
-        //GuiHelper.resize(1280,720);
 
         marketbutton.setOnMouseClicked(event -> {
             this.notifyObserver(controller -> controller.showmarket());
@@ -211,10 +214,15 @@ public class DashboardScene extends BasicSceneUpdater{
     }
 
 
+    public void doThisJustIfIsHereFromMarketExtraction(Boolean b){
+        if(!b) return;
+        toastForMarketInsersion.setVisible(true);
+        marketbutton.setDisable(true);
+        endturn.setDisable(true);
+        shopbutton.setDisable(true);
+    }
 
-
-    public void drawLeaders(LeaderCard[] cards)
-    {
+    public void drawLeaders(LeaderCard[] cards) {
 
         for(int i=0;i<this.leaderCards.getChildren().size();i++)
         {
@@ -235,6 +243,7 @@ public class DashboardScene extends BasicSceneUpdater{
             leaderCards.getChildren().add(card);
         }
     }
+
     @Override
     public void reciveMessage(String msg) {
         super.reciveMessage(msg);
