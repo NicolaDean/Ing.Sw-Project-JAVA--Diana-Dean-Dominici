@@ -4,21 +4,31 @@ import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniModel;
+import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GuiHelper;
+import it.polimi.ingsw.view.utils.FXMLpaths;
 import it.polimi.ingsw.view.utils.ToastMessage;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class DashboardScene extends BasicSceneUpdater {
 
@@ -82,6 +92,9 @@ public class DashboardScene extends BasicSceneUpdater {
     @FXML
     public AnchorPane toastForMarketInsersion;
 
+    @FXML
+    public FlowPane nicknames;
+
     CheckBox lastchecked;
 
     CheckBox[] boxes;
@@ -97,6 +110,7 @@ public class DashboardScene extends BasicSceneUpdater {
     }
 
 
+    int index = -1;
     @Override
     public void init() {
 
@@ -113,14 +127,6 @@ public class DashboardScene extends BasicSceneUpdater {
 
 
         toastForMarketInsersion.setVisible(false);
-        doThisJustIfIsHereFromMarketExtraction(imHereAfterMarketExstraction);
-        this.notifyObserver(controller -> {
-            LeaderCard[] cards = controller.getMiniModel().getPersonalPlayer().getLeaderCards();
-
-            Platform.runLater(() -> {
-                this.drawLeaders(cards);
-            });
-        });
 
         marketbutton.setOnMouseClicked(event -> {
             this.notifyObserver(controller -> controller.showmarket());
@@ -153,42 +159,120 @@ public class DashboardScene extends BasicSceneUpdater {
             this.notifyObserver(controller -> controller.askEndTurn());
         });
 
-        //DRAW FAITH TOKEN POSITION
-        this.notifyObserver(controller -> {
-            int pos = controller.getMiniModel().getPersonalPlayer().getPosition();
-            this.faith.get(pos).getChildren().add(loadImage("/images/resources/tokenPosition.png", 50, 50));
-        });
-
-        //DRAW STORAGE
+        //DRAW ALL DASHBOARD COMPONENTS
         this.notifyObserver(controller -> {
             DebugMessages.printError("Dashboard Scene initialized");
+            if(this.index == -1)
+            {
+                this.setIndex(controller.getMiniModel().getPersanalIndex());
+            }
 
-            ProductionCard[] carte = controller.getMiniModel().getPersonalPlayer().getDecks();
-            chestcoinq.setText(Integer.toString(controller.getMiniModel().getPersonalPlayer().getChest().get(2).getQuantity()));
-            chestrockq.setText(Integer.toString(controller.getMiniModel().getPersonalPlayer().getChest().get(1).getQuantity()));
-            chestservantq.setText(Integer.toString(controller.getMiniModel().getPersonalPlayer().getChest().get(3).getQuantity()));
-            chestshieldq.setText(Integer.toString(controller.getMiniModel().getPersonalPlayer().getChest().get(0).getQuantity()));
-            MiniModel model = controller.getMiniModel();
-            Deposit d1 = controller.getMiniModel().getStorage()[0];
-            Deposit d2 = controller.getMiniModel().getStorage()[1];
-            Deposit d3 = controller.getMiniModel().getStorage()[2];
-            Deposit[] ddd = new Deposit[3];
-            ddd[0]=d1;
-            ddd[1]=d2;
-            ddd[2]=d3;
+            MiniPlayer p = controller.getMiniModel().getPlayers()[index];
 
-
-
-            updateStorage(controller.getIndex(), ddd);
-
-
-
+            drawStorage     (p.getStorage());
+            drawChest       (p.getChest());
+            drawLeaders     (p.getLeaderCards());
+            drawProductions (p.getDecks());
+            drawPosition    (p.getPosition());
+            drawNicknames();
+            //DRAW FAITH TOKEN POSITION
 
         });
 
 
+    }
 
-        drawProductions();
+    /**
+     * disable swap button (used by SpyScene)
+     */
+    public void disableSwap()
+    {
+        this.swapbutton.setDisable(true);
+    }
+
+    /**
+     * Draw Nicknames
+     */
+    public void drawNicknames()
+    {
+
+        this.notifyObserver(controller -> {
+
+            int i=0;
+            for(MiniPlayer player:controller.getMiniModel().getPlayers())
+            {
+                System.out.println(player.getNickname());
+                Pane p = new Pane();
+                Label l = new Label(player.getNickname());
+                l.setId("font");
+                l.setAlignment(Pos.CENTER);
+                p.getChildren().add(l);
+
+
+                int finalI = i;
+                p.setOnMouseClicked(event -> {
+                    Platform.runLater(()->{
+                        try {
+                            if(finalI != controller.getMiniModel().getPersanalIndex())
+                            {
+                                //If click on others nickname
+                                GuiHelper.setRoot(FXMLpaths.dashboard,new SpyScene(finalI,player.getNickname()));
+                            }
+                            else
+                            {
+                                //If click on his nickname
+                                GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                });
+                this.nicknames.getChildren().add(p);
+                i++;
+            }
+
+        });
+    }
+    public int getIndex()
+    {
+        return this.index;
+    }
+    public void setIndex(int index)
+    {
+        this.index = index;
+    }
+    /**
+     * draw user position
+     * @param pos position of user in faith track
+     */
+    public void drawPosition(int pos)
+    {
+        Platform.runLater(()->{
+            this.faith.get(pos).getChildren().add(loadImage("/images/resources/tokenPosition.png", 50, 50));
+        });
+    }
+
+    @Override
+    public void updatePlayerPosition(int player, int newPos) {
+        if(player != this.index) return;
+
+        System.out.println("Position update");
+        this.drawPosition(newPos);
+    }
+
+    /**
+     * draw chest of client player
+     * @param chest chest of this client
+     */
+    public void drawChest(List<Resource> chest)
+    {
+        chestshieldq  .setText(Integer.toString(chest.get(0).getQuantity()));
+        chestrockq    .setText(Integer.toString(chest.get(1).getQuantity()));
+        chestcoinq    .setText(Integer.toString(chest.get(2).getQuantity()));
+        chestservantq .setText(Integer.toString(chest.get(3).getQuantity()));
+
+
         int x = 0;
         int y = 0;
 
@@ -206,49 +290,62 @@ public class DashboardScene extends BasicSceneUpdater {
                 y = 1;
         }
 
-
         chestshieldq.setId("fancytext");
         chestcoinq.setId("fancytext");
         chestrockq.setId("fancytext");
         chestservantq.setId("fancytext");
     }
 
+    @Override
+    public void updateChest(int player, List<Resource> chest) {
+        if(player != this.index) return;
+
+        System.out.println("Chest update");
+        this.drawChest(chest);
+    }
 
     @Override
     public void updateStorage(int player, Deposit[] storage)
     {
-        Platform.runLater(()-> this.drawStorage(player,storage));
+        if(player != this.index) return;
+
+        System.out.println("Storage update");
+        //Check if update is of client player or other players
+        this.notifyObserver(controller -> {
+            if(player== controller.getMiniModel().getPersanalIndex())  Platform.runLater(()-> this.drawStorage(storage));
+        });
+
     }
 
-    public void drawStorage (int player, Deposit[] storage)
+
+    public void removeElementFromGridPane(GridPane pane)
     {
-       /* try{
-        for(int i=0;i<2;i++)
-            deposit2.getChildren().remove(deposit2.getChildren().get(i));
-        for(int i=0;i<3;i++)
-            deposit3.getChildren().remove(deposit3.getChildren().get(i));
-        deposit1.getChildren().remove(deposit1.getChildren().get(0));}
-        catch (Exception e)
+        int s = pane.getChildren().size();
+        for(int i=0;i<s;i++)
         {
-
+            pane.getChildren().remove(0);
         }
-
-        */
-
-
+    }
+    /**
+     * Draw storage of player
+     * @param storage  storage to print
+     */
+    public void drawStorage (Deposit[] storage)
+    {
         //System.out.println("la risorsa in d2 vale "+d1.getResource().getQuantity());
         if (storage[1].getResource() != null) {
+            removeElementFromGridPane(deposit2);
             for (int i = 0; i < storage[2].getResource().getQuantity(); i++) {
                 //System.out.println("stampo la risorsa");
                 ImageView immage = null;
                 immage = loadImage("/images/resources/" + storage[1].getResource().getNumericType() + ".png", 40, 40);
                 deposit2.add(immage, i, 0);
-                //deposit2.getChildren().remove(immage);
 
             }
         }
 
         if (storage[2].getResource() != null) {
+            removeElementFromGridPane(deposit3);
             for (int i = 0; i < storage[2].getResource().getQuantity(); i++) {
                 System.out.println("stampo la risorsa");
                 ImageView immage = null;
@@ -259,7 +356,7 @@ public class DashboardScene extends BasicSceneUpdater {
         }
 
         if (storage[0].getResource() != null) {
-
+            removeElementFromGridPane(deposit1);
             System.out.println("stampo la risorsa");
             ImageView immage = null;
             immage = loadImage("/images/resources/" + storage[0].getResource().getNumericType() + ".png", 40, 40);
@@ -272,10 +369,8 @@ public class DashboardScene extends BasicSceneUpdater {
     /**
      * draw production decks of this user
      */
-    public void drawProductions()
+    public void drawProductions(ProductionCard[] cards)
     {
-        this.notifyObserver(controller -> {
-            ProductionCard[] cards = controller.getMiniModel().getPersonalPlayer().getDecks();
             int j = 1;
             for (ProductionCard card : cards) {
 
@@ -302,8 +397,6 @@ public class DashboardScene extends BasicSceneUpdater {
                 j++;
 
             }
-        });
-
     }
 
     /**
@@ -323,7 +416,8 @@ public class DashboardScene extends BasicSceneUpdater {
      */
     public void drawLeaders(LeaderCard[] cards) {
 
-        for(int i=0;i<this.leaderCards.getChildren().size();i++)
+        int s = this.leaderCards.getChildren().size();
+        for(int i=0;i<s;i++)
         {
             this.leaderCards.getChildren().remove(0);
         }
@@ -374,6 +468,8 @@ public class DashboardScene extends BasicSceneUpdater {
     @Override
     public void updateLeaders(int player, LeaderCard[] leaders) {
 
+        if(player != this.index) return;
+        System.out.println("Leader update");
         Platform.runLater(()->{
             this.drawLeaders(leaders);
         });

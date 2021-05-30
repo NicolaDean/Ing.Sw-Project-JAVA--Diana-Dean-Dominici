@@ -304,6 +304,9 @@ public class PaymentDialog extends BasicDialog{
         event.consume();
     }
 
+    /**
+     * funcion called with "OK" dialog button
+     */
     private void addOnExit()
     {
         this.getControlButton(ButtonType.OK).addEventFilter(

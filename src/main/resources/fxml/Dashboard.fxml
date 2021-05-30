@@ -100,9 +100,9 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                               </GridPane>
-                              <CheckBox fx:id="swap1" layoutX="190.0" layoutY="37.0" mnemonicParsing="false" onAction="#select1" />
-                              <CheckBox fx:id="swap2" layoutX="189.0" layoutY="93.0" mnemonicParsing="false" onAction="#select2" />
-                              <CheckBox fx:id="swap3" contentDisplay="TOP" layoutX="189.0" layoutY="150.0" mnemonicParsing="false" onAction="#select3" textOverrun="CLIP" />
+                              <CheckBox fx:id="swap1" layoutX="190.0" layoutY="37.0" mnemonicParsing="false"  />
+                              <CheckBox fx:id="swap2" layoutX="189.0" layoutY="93.0" mnemonicParsing="false"  />
+                              <CheckBox fx:id="swap3" contentDisplay="TOP" layoutX="189.0" layoutY="150.0" mnemonicParsing="false" textOverrun="CLIP" />
                            </children>
                         </AnchorPane>
                         <Pane fx:id="faith1" layoutX="34.0" layoutY="125.0" prefHeight="41.0" prefWidth="41.0" />
@@ -189,6 +189,7 @@
                               <Font size="15.0" />
                            </font>
                         </Text>
+                        <FlowPane id="dialog" fx:id="nicknames" layoutX="816.0" layoutY="218.0" prefHeight="187.0" prefWidth="139.0" stylesheets="@../css/Global.css" />
                      </children>
                   </AnchorPane>
                   <ImageView id="production_card" fx:id="shopbutton" fitHeight="97.0" fitWidth="213.0" layoutX="71.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
