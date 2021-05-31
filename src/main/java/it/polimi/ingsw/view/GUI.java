@@ -429,14 +429,27 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askEndTurn() {
         this.notifyObserver(clientController -> isMyTurn=clientController.isMyTurn());
+
         if(isMyTurn) {
             Platform.runLater(() -> {
                 if (GuiHelper.YesNoDialog("End TURN", "Do you want to end turn?")) {
                     this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
                     this.notifyObserver(clientController -> clientController.setMyTurn(false));
+                    try {
+                        GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else{}
+                try {
+                    GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             });
         }
+
+
     }
 
 
