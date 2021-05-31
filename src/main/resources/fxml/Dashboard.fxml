@@ -100,9 +100,9 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                               </GridPane>
-                              <CheckBox fx:id="swap1" layoutX="190.0" layoutY="37.0" mnemonicParsing="false"  />
-                              <CheckBox fx:id="swap2" layoutX="189.0" layoutY="93.0" mnemonicParsing="false"  />
-                              <CheckBox fx:id="swap3" contentDisplay="TOP" layoutX="189.0" layoutY="150.0" mnemonicParsing="false" textOverrun="CLIP" />
+                              <CheckBox fx:id="swap1" layoutX="190.0" layoutY="37.0" mnemonicParsing="false" onAction="#select1" />
+                              <CheckBox fx:id="swap2" layoutX="189.0" layoutY="93.0" mnemonicParsing="false" onAction="#select2" />
+                              <CheckBox fx:id="swap3" contentDisplay="TOP" layoutX="189.0" layoutY="150.0" mnemonicParsing="false" onAction="#select3" textOverrun="CLIP" />
                            </children>
                         </AnchorPane>
                         <Pane fx:id="faith1" layoutX="34.0" layoutY="125.0" prefHeight="41.0" prefWidth="41.0" />
