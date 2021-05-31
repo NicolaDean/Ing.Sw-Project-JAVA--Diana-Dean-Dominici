@@ -5,19 +5,19 @@ import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
-import it.polimi.ingsw.model.minimodel.MiniModel;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.model.resources.ResourceOperator;
+import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GuiHelper;
 import it.polimi.ingsw.view.utils.FXMLpaths;
+import it.polimi.ingsw.view.utils.Logger;
 import it.polimi.ingsw.view.utils.ToastMessage;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -28,18 +28,12 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.io.IOException;
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Stream;
 
 public class DashboardScene extends BasicSceneUpdater {
 
@@ -109,9 +103,6 @@ public class DashboardScene extends BasicSceneUpdater {
     @FXML
     public FlowPane nicknames;
 
-    CheckBox lastchecked;
-
-    CheckBox[] boxes;
 
     @FXML
     public FlowPane marketInsersion;
@@ -119,15 +110,25 @@ public class DashboardScene extends BasicSceneUpdater {
     @FXML
     public ImageView bin;
 
+    CheckBox lastchecked;
+
+    CheckBox[] boxes;
+
+    int index;
+
     boolean showLeaders, imHereAfterMarketExstraction;
     List<Resource> resourceExtracted;
-    List<InsertionInstruction> resourceInserted;
     List<Resource> resourceDiscarted;
+    List<Resource> resourceInserted;
+    List<InsertionInstruction> resourceInsertedInstraction;
+    Deposit[]                   oldStorage;
+
 
     public DashboardScene(List<Resource> resourceList) {
         imHereAfterMarketExstraction =true;
         this.resourceExtracted =resourceList;
-        this.resourceInserted = new ArrayList<>();
+        this.resourceInsertedInstraction = new ArrayList<>();
+        this.resourceInserted = new ResourceList();
         this.resourceDiscarted = new ResourceList();
     }
 
@@ -135,8 +136,6 @@ public class DashboardScene extends BasicSceneUpdater {
         imHereAfterMarketExstraction =false;
     }
 
-
-    int index;
     @Override
     public void init() {
 
@@ -208,7 +207,6 @@ public class DashboardScene extends BasicSceneUpdater {
         });
     }
 
-
     public void drawNicknames()
     {
 
@@ -241,10 +239,12 @@ public class DashboardScene extends BasicSceneUpdater {
     {
         return this.index;
     }
+
     public void setIndex(int index)
     {
         this.index = index;
     }
+
     /**
      * draw user position
      * @param pos position of user in faith track
@@ -326,16 +326,18 @@ public class DashboardScene extends BasicSceneUpdater {
             pane.getChildren().remove(0);
         }
     }
+
     /**
      * Draw storage of player
      * @param storage  storage to print
      */
     public void drawStorage (Deposit[] storage)
     {
+
         //System.out.println("la risorsa in d2 vale "+d1.getResource().getQuantity());
         if (storage[1].getResource() != null) {
             removeElementFromGridPane(deposit2);
-            for (int i = 0; i < storage[2].getResource().getQuantity(); i++) {
+            for (int i = 0; i < storage[1].getResource().getQuantity(); i++) {
                 //System.out.println("stampo la risorsa");
                 ImageView immage = null;
                 immage = loadImage("/images/resources/" + storage[1].getResource().getNumericType() + ".png", 40, 40);
@@ -405,13 +407,17 @@ public class DashboardScene extends BasicSceneUpdater {
      */
     public void doThisJustIfIsHereFromMarketExtraction(Boolean b){
         if(!b) return;
-
+        this.oldStorage=new Deposit[ConstantValues.normalDepositNumber];
         boolean visible=true;
         toastForMarketInsersion.setVisible(visible);
         marketbutton.setDisable(visible);
         endturn.setDisable(visible);
         shopbutton.setDisable(visible);
         bin.setVisible(visible);
+
+        this.notifyObserver(clientController -> {
+                this.oldStorage = clientController.getMiniModel().getStorage().clone();
+        });
 
         printResourceExtracted();
 
@@ -468,7 +474,14 @@ public class DashboardScene extends BasicSceneUpdater {
         }
 
         if(this.resourceExtracted.isEmpty()){
-            this.notifyObserver(controller -> {controller.sendResourceInsertion(resourceInserted);});
+            //ripristina vecchio storage
+            this.notifyObserver(controller -> {
+                try {
+                    controller.getMiniModel().getPersonalPlayer().setStorage(this.oldStorage);
+                } catch (Exception e) { e.printStackTrace(); }
+            });
+
+            this.notifyObserver(controller -> {controller.sendResourceInsertion(resourceInsertedInstraction);});
         }
 
     }
@@ -479,7 +492,6 @@ public class DashboardScene extends BasicSceneUpdater {
      */
     public void onOver(DragEvent event)
     {
-        System.out.println(event.getDragboard().getString());
         event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         event.consume();
     }
@@ -491,78 +503,50 @@ public class DashboardScene extends BasicSceneUpdater {
      */
     public void destinationOnDragDropped(DragEvent event)
     {
-        int position=Integer.parseInt( ((GridPane)event.getGestureTarget()).getId().charAt(((GridPane)event.getGestureTarget()).getId().length()-1)+"" ) ;
-        String s = event.getDragboard().getString();
-        /*
+        int position=(Integer.parseInt( ((GridPane)event.getGestureTarget()).getId().charAt(((GridPane)event.getGestureTarget()).getId().length()-1)+"" ))-1 ; //posizione dello storage
+        String s = event.getDragboard().getString(); //risorsa che ci ha droppato
+        ResourceType res = ResourceType.valueOf(event.getDragboard().getString()); //risorda droppata
+
         this.notifyObserver(controller -> {
-            if(controller.getMiniModel().getPersonalPlayer().getStorage()[position].getResource().toString().toUpperCase(Locale.ROOT).equals(s))
+            try{
+                controller.getMiniModel().getPersonalPlayer().getStorage()[position].safeInsertion(new Resource(res,ResourceOperator.extractQuantityOf(res,resourceExtracted)));
 
+                //TODO da modificare il fatto che 2 risorse dello stesso tipo vanno messe insieme
+                //rimuovo da resourceexstracted quello che ho droppato e lo aggiungo a resourceinsered
+
+                this.resourceExtracted.remove( new Resource(res,ResourceOperator.extractQuantityOf(res,resourceExtracted)) );
+                this.resourceInsertedInstraction.add(new InsertionInstruction(new Resource(res,  ResourceOperator.extractQuantityOf(res,resourceExtracted))  , position ));
+                this.resourceInserted.add(new Resource(res,ResourceOperator.extractQuantityOf(res,resourceExtracted)));
+
+                //rimiovo dal toast quello che ho droppato
+                for (int j = 0; j < this.marketInsersion.getChildren().size(); j++) {
+                    if(this.marketInsersion.getChildren().get(j)!=null)
+                        if(this.marketInsersion.getChildren().get(j).getId().equals( res.toString() )) {
+                            this.marketInsersion.getChildren().remove(j);
+                        }
+                }
+
+                //TODO da cambaire con drawStorage
+                updateStorage(controller.getMiniModel().getPersanalIndex(),controller.getMiniModel().getStorage());
+
+            }catch (Exception e){
+                e.printStackTrace();
+                System.out.println("non puoi metterla lì");
+            }
         });
 
-         */
-
-
-        int i;
-        for (i = 0; i < resourceExtracted.size(); i++) {
-            if((resourceExtracted.get(i).getType().toString().toUpperCase(Locale.ROOT).equals(s))&&(resourceExtracted.get(i).getQuantity()>0)) {
-                break;
-            }
-        }
-
-        if(event.getDragboard().getString().contains("-d-"))
-        {
-            System.out.println("Now allowed drag ( dest -> dest");
-            return;
-        }
-
-        //Load a resource corresponding to image
-        ResourceType res = ResourceType.valueOf(event.getDragboard().getString());
-
-        System.out.println("Messo nello storage numero: "+((GridPane)event.getGestureTarget()).getId().charAt(((GridPane)event.getGestureTarget()).getId().length()-1));
-
-
-        //TODO da modificare il fatto che 2 risorse dello stesso tipo vanno messe insieme
-        if(ResourceOperator.extractQuantityOf(res,resourceExtracted)>1){
-            resourceExtracted.remove(new Resource(res,ResourceOperator.extractQuantityOf(res,resourceExtracted)));
-            this.resourceInserted.add(new InsertionInstruction(new Resource(res,  ResourceOperator.extractQuantityOf(res,resourceExtracted))  , Integer.parseInt( ((GridPane)event.getGestureTarget()).getId().charAt(((GridPane)event.getGestureTarget()).getId().length()-1)+"" ) ));
-        }else {
-            if(ResourceOperator.extractQuantityOf(res,resourceExtracted)==1)
-                this.resourceExtracted.remove(new Resource(res, 1));
-        }
-
-
-        for (int j = 0; j < this.marketInsersion.getChildren().size(); j++) {
-            if(this.marketInsersion.getChildren().get(j).getId().equals( resourceExtracted.get(i).getType().toString().toUpperCase(Locale.ROOT) )) {
-                this.marketInsersion.getChildren().remove(j);
-            }
-        }
-
-
-        System.out.println("dropped " + event.getDragboard().getString());
-        ImageView img = new ImageView(event.getDragboard().getImage());
-        img.setId(res.toString());
-        img.setFitHeight(60);
-        img.setFitWidth(60);
-
-
-        img.setOnDragDetected(eventBin -> {
-            /* allow any transfer mode */
-            Dragboard db = img.startDragAndDrop(TransferMode.ANY);
-
-            /* put a string on dragboard */
-            ClipboardContent content = new ClipboardContent();
-            content.putString(img.getId());
-            content.putImage(img.getImage());
-            db.setContent(content);
-
-            eventBin.consume();
-        });
-
+        //se non c'è piu niente invia il pacchetto
         if(this.resourceExtracted.isEmpty()){
-            this.notifyObserver(controller -> {controller.sendResourceInsertion(resourceInserted);});
+                //ripristina vecchio storage
+                this.notifyObserver(controller -> {
+                    try {
+                        controller.getMiniModel().getPersonalPlayer().setStorage(this.oldStorage);
+                    } catch (Exception e) { e.printStackTrace(); }
+                });
+
+            this.notifyObserver(controller -> {controller.sendResourceInsertion(resourceInsertedInstraction);});
         }
 
-        ((GridPane)event.getGestureTarget()).getChildren().add(img);
         event.consume();
     }
 
