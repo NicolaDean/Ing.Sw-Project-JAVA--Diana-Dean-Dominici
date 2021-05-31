@@ -112,4 +112,14 @@ public class Deposit {
 
     }
 
+    @Override
+    public Deposit clone() {
+        Deposit out = new Deposit(this.sizeMax);
+        try {
+            out.safeInsertion(this.getResource());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return out;
+    }
 }
