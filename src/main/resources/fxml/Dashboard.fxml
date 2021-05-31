@@ -168,7 +168,7 @@
                              <children>
                                  <ImageView fitHeight="187.0" fitWidth="570.0" pickOnBounds="true" style="-fx-background-color: #1d1d1d;">
                                      <image>
-                                         <Image url="@../images/other/toast.png" />
+                                         <Image url="@../images/interface/dialog.png" />
                                      </image>
                                  </ImageView>
                                  <Text disable="true" fill="WHITE" layoutX="68.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You have the following resources to insert in storage" textAlignment="LEFT">

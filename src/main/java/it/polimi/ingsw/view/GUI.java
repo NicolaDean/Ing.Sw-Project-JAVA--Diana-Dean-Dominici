@@ -369,7 +369,7 @@ public class GUI extends Observable<ClientController> implements View{
                 result = GuiHelper.loadDialog(FXMLpaths.initialResource,"Chose " + number + "of those resources",dialog);
             }while (result.equals(ButtonType.CANCEL));
 
-            this.askResourceInsertion(dialog.getResources());
+            //this.askResourceInsertion(dialog.getResources());
         });
 
 

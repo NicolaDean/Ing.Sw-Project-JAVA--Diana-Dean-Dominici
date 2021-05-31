@@ -134,6 +134,7 @@ public class DashboardScene extends BasicSceneUpdater {
         this.resourceInsertedInstraction = new ArrayList<>();
         this.resourceInserted = new ResourceList();
         this.resourceDiscarted = new ResourceList();
+
     }
 
     public DashboardScene(){
@@ -542,6 +543,8 @@ public class DashboardScene extends BasicSceneUpdater {
 
         if(this.resourceExtracted.isEmpty()){
             this.notifyObserver(controller -> {
+                for(InsertionInstruction r:resourceInsertedInstraction)
+                    System.out.println("tipo: "+r.getResource().getType()+" quantita: "+r.getResource().getQuantity()+" tipo numero: "+r.getResource().getNumericType());
                 controller.sendResourceInsertion(resourceInsertedInstraction);
                 this.drawStorage(controller.getMiniModel().getStorage());
             });
@@ -569,30 +572,41 @@ public class DashboardScene extends BasicSceneUpdater {
         int position=(Integer.parseInt( ((GridPane)event.getGestureTarget()).getId().charAt(((GridPane)event.getGestureTarget()).getId().length()-1)+"" ))-1 ; //posizione dello storage
         ResourceType res = ResourceType.valueOf(event.getDragboard().getString()); //risorda droppata
 
-
             try{
 
-                tmpStorage[position].safeInsertion(new Resource(res,1));
+                tmpStorage[position].safeInsertion(new Resource(res,ResourceOperator.extractQuantityOf(res,resourceExtracted)));
+
+                //temporaneo-----------------------------------------------------------------------------------------------------------------------------
+                if(ResourceOperator.extractQuantityOf(res,resourceExtracted)>1){
+                    for (int j = 0; j < this.marketInsersion.getChildren().size(); j++) {
+                        if(this.marketInsersion.getChildren().get(j)!=null)
+                            if(this.marketInsersion.getChildren().get(j).getId().equals( "x2" ))
+                                this.marketInsersion.getChildren().remove(j);
+
+                    }
+                }
+                //----------------------------------------------------------------------------------------------------
 
                 //rimuovo da resourceexstracted quello che ho droppato e lo aggiungo a resourceinsered
-                this.resourceExtracted.remove( new Resource(res,1) );
                 //TODO da modificare il fatto che 2 risorse dello stesso tipo vanno messe insieme
-                this.resourceInsertedInstraction.add(new InsertionInstruction(new Resource(res,  ResourceOperator.extractQuantityOf(res,resourceExtracted))  , position ));
-                this.resourceInserted.add(new Resource(res,1));
+                this.resourceInsertedInstraction.add(new InsertionInstruction(new Resource(res, ResourceOperator.extractQuantityOf(res,resourceExtracted)), position));
+                this.resourceExtracted.remove(new Resource(res, ResourceOperator.extractQuantityOf(res,resourceExtracted)));
+                this.resourceInserted.add(new Resource(res, ResourceOperator.extractQuantityOf(res,resourceExtracted)));
+
+
 
                 //rimuovo dal toast quello che ho droppato
                 for (int j = 0; j < this.marketInsersion.getChildren().size(); j++) {
                     if(this.marketInsersion.getChildren().get(j)!=null)
                         if(this.marketInsersion.getChildren().get(j).getId().equals( res.toString() )) {
                             this.marketInsersion.getChildren().remove(j);
-                            break;
                         }
                 }
+
 
                 this.drawStorage(tmpStorage);
 
             }catch (Exception e){
-                e.printStackTrace();
                 System.out.println("non puoi metterla lì");
             }
 
@@ -600,7 +614,6 @@ public class DashboardScene extends BasicSceneUpdater {
         //se non c'è piu niente invia il pacchetto
         if(this.resourceExtracted.isEmpty()){
             this.notifyObserver(controller -> {
-                System.out.println(resourceInsertedInstraction);
                 controller.sendResourceInsertion(resourceInsertedInstraction);
                 this.drawStorage(controller.getMiniModel().getStorage());
             });
@@ -612,18 +625,24 @@ public class DashboardScene extends BasicSceneUpdater {
     private void printResourceExtracted(){
         for (int i = 0; i < resourceExtracted.size(); i++) {
             if(resourceExtracted.get(i).getQuantity()>0) {
-                for(int j = 0; j < resourceExtracted.get(i).getQuantity(); j++) {
+                //for(int j = 0; j < resourceExtracted.get(i).getQuantity(); j++) {
 
                     int name = resourceExtracted.get(i).getType().ordinal() + 1;
                     ImageView img = loadImage("/images/resources/" + name + ".png", 60, 60);
                     img.setId(resourceExtracted.get(i).getType().toString());
 
                     marketInsersion.getChildren().add(img);
+                    //temporaneo----------------------------------------
+                    Text x2;
+                    if(resourceExtracted.get(i).getQuantity()>1){
+                      x2=new Text("x2");
+                      x2.setFill(Color.WHITE);
+                      x2.setId("x2");
+                      marketInsersion.getChildren().add(x2);
+                     }
+                    //--------------------------------------------------------
 
-
-
-
-                    //Set image as draggable
+                //Set image as draggable
                     img.setOnDragDetected(event -> {
                         System.out.println("dragged");
 
@@ -631,7 +650,6 @@ public class DashboardScene extends BasicSceneUpdater {
                         Dragboard db = img.startDragAndDrop(TransferMode.COPY_OR_MOVE);
                         img.setFitHeight(60);
                         img.setFitWidth(60);
-
 
                         /* put a string on dragboard */
                         ClipboardContent content = new ClipboardContent();
@@ -642,7 +660,7 @@ public class DashboardScene extends BasicSceneUpdater {
                         event.consume();
 
                     });
-                }
+                //}
             }
         }
     }

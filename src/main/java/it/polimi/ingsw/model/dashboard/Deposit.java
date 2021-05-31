@@ -118,7 +118,6 @@ public class Deposit {
         try {
             out.safeInsertion(this.getResource());
         }catch (Exception e){
-            e.printStackTrace();
         }
         return out;
     }
