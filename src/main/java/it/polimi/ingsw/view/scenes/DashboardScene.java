@@ -24,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
 import java.sql.Array;
@@ -36,19 +37,16 @@ public class DashboardScene extends BasicSceneUpdater {
 
     @FXML
     public AnchorPane root;
-
+    //SWAP
     @FXML
     public CheckBox swap1;
-
     @FXML
     public CheckBox swap2;
-
     @FXML
     public CheckBox swap3;
-
     @FXML
     public GridPane grid;
-
+    //CHEST
     @FXML
     public Text chestshieldq;
     @FXML
@@ -58,44 +56,44 @@ public class DashboardScene extends BasicSceneUpdater {
     @FXML
     public Text chestservantq;
 
+    //STORAGE
     @FXML
     public GridPane deposit3;
-
     @FXML
     public GridPane deposit2;
-
     @FXML
     public GridPane deposit1;
-
     @FXML
     public GridPane chestgrid;
 
+    //BUTTONS
     @FXML
     public ImageView marketbutton;
-
     @FXML
     public ImageView shopbutton;
-
     @FXML
     public ImageView swapbutton;
-
     @FXML
     public ImageView endturn;
-
+    @FXML
+    public Button showButton;
+    @FXML
+    public Button you;
+    //FAITH TRACK
     @FXML
     public List<Pane> faith;
 
+    //LEADER CARD
     @FXML
     public FlowPane leaderCards;
-
     @FXML
-    public Button showButton;
+    public Label nickname;
 
     @FXML
     public AnchorPane toastForMarketInsersion;
 
     @FXML
-    public FlowPane nicknames;
+    public GridPane nicknames;
 
     CheckBox lastchecked;
 
@@ -142,6 +140,15 @@ public class DashboardScene extends BasicSceneUpdater {
             this.notifyObserver(controller -> controller.showshop());
         });
 
+        you.setOnMouseClicked(event -> {
+            Platform.runLater(()->{
+                try {
+                    GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        });
         swapbutton.setOnMouseClicked(event -> {
             int count = 0;
             List<Integer> d = new ArrayList<Integer>();
@@ -205,12 +212,20 @@ public class DashboardScene extends BasicSceneUpdater {
 
         this.notifyObserver(controller -> {
 
+            this.nickname .setText(controller.getMiniModel().getPlayers()[this.index].getNickname());
+
             int i=0;
+            this.nicknames.setAlignment(Pos.CENTER);
             for(MiniPlayer player:controller.getMiniModel().getPlayers())
             {
                 System.out.println(player.getNickname());
                 Pane p = new Pane();
+
+                p.prefWidthProperty().bind(this.nicknames.widthProperty());
+                p.setPrefHeight(40);
+                p.setId("nick");
                 Label l = new Label(player.getNickname());
+                l.setTextAlignment(TextAlignment.CENTER);
                 l.setId("font");
                 l.setAlignment(Pos.CENTER);
                 p.getChildren().add(l);
@@ -228,14 +243,14 @@ public class DashboardScene extends BasicSceneUpdater {
                             else
                             {
                                 //If click on his nickname
-                                GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
+                                //GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     });
                 });
-                this.nicknames.getChildren().add(p);
+                this.nicknames.add(p,0,i);
                 i++;
             }
 
@@ -345,7 +360,7 @@ public class DashboardScene extends BasicSceneUpdater {
         //System.out.println("la risorsa in d2 vale "+d1.getResource().getQuantity());
         if (storage[1].getResource() != null) {
             removeElementFromGridPane(deposit2);
-            for (int i = 0; i < storage[2].getResource().getQuantity(); i++) {
+            for (int i = 0; i < storage[1].getResource().getQuantity(); i++) {
                 //System.out.println("stampo la risorsa");
                 ImageView immage = null;
                 immage = loadImage("/images/resources/" + storage[1].getResource().getNumericType() + ".png", 40, 40);
