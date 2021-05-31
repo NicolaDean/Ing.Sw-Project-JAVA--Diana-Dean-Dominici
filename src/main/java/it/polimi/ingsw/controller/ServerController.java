@@ -152,9 +152,10 @@ public class ServerController{
 
     public void sendPositionUpdate(int pos,int clientIndex)
     {
+        //TODO non sempre inviata
         if(this.isStarted)
         {
-            this.sendMessage(new IncrementPosition(pos,this.clients.get(clientIndex).getRealPlayerIndex()),clientIndex);
+            this.broadcastMessage(-1,new IncrementPosition(pos,this.clients.get(clientIndex).getRealPlayerIndex()));
         }
     }
 
@@ -655,6 +656,7 @@ public class ServerController{
     public Packet discardResource(int quantity,int index)
     {
         this.game.discardResource(quantity);
+
         this.broadcastMessage(-1,new UpdatePosition(quantity,this.clients.get(index).getRealPlayerIndex()));
         return new ACK(0);
     }

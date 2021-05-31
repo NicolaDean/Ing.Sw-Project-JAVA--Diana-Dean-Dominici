@@ -186,7 +186,7 @@ public class BuyScene extends BasicSceneUpdater{
     public void goBack(MouseEvent mouseEvent)
     {
         try {
-            GuiHelper.setRoot(FXMLpaths.dashboard);
+            GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
         } catch (IOException e) {
             e.printStackTrace();
         }

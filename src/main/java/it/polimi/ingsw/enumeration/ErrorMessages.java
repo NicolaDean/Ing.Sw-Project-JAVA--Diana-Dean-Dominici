@@ -15,5 +15,4 @@ public enum ErrorMessages {
     LeaderActivated,
     NotEnoughPlayers,
     IllegalResourceMove
-
 }

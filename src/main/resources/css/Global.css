@@ -53,3 +53,10 @@
     -fx-text-fill: white;
 }
 
+#font
+{
+    font-family: 'Cardinal';
+    src: url('../font/Cardinal.ttf');
+    -fx-font-size: 30pt ;
+}
+

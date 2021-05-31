@@ -440,11 +440,12 @@ public class ClientController implements Runnable{
     }
 
     /**
-     * increment player position
-     * @param index player index
+     *
+     * @param index     player index
+     * @param pos       new position
      */
-    public void incrementPositionPlayer(int index,int quantity){
-        this.model.getPlayers()[index].incrementPosition(quantity);
+    public void incrementPositionPlayer(int index,int pos){
+        this.model.getPlayers()[index].incrementPosition(pos);
     }
 
     /**
