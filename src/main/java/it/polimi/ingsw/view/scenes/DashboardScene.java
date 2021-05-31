@@ -120,6 +120,10 @@ public class DashboardScene extends BasicSceneUpdater {
         boxes[1]=swap2;
         boxes[2]=swap3;
 
+
+
+
+
         showLeaders = false;
         leaderCards.setVisible(false);
         marketbutton.setId("production_card");
