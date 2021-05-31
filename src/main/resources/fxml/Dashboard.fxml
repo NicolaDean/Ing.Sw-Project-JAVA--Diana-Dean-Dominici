@@ -185,7 +185,7 @@
                               <Image url="@../images/interface/Button.png" />
                            </image>
                         </ImageView>
-                        <Text disable="true" fill="WHITE" layoutX="21.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SWAP" textAlignment="CENTER" wrappingWidth="45.19546926352109">
+                        <Text fx:id="swaptext" disable="true" fill="WHITE" layoutX="21.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SWAP" textAlignment="CENTER" wrappingWidth="45.19546926352109">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -205,7 +205,7 @@
                               <Image url="@../images/interface/dialog2.png" />
                            </image>
                         </ImageView>
-                        <Label layoutX="-2.0" layoutY="-17.0" prefHeight="35.0" prefWidth="250.0" text="Nickname" fx:id="nickname" textFill="WHITE">
+                        <Label fx:id="nickname" layoutX="-2.0" layoutY="-17.0" prefHeight="35.0" prefWidth="250.0" text="Nickname" textFill="WHITE">
                            <font>
                               <Font size="24.0" />
                            </font>

@@ -37,6 +37,9 @@ public class DashboardScene extends BasicSceneUpdater {
 
     @FXML
     public AnchorPane root;
+
+    @FXML
+    public Text swaptext;
     //SWAP
     @FXML
     public CheckBox swap1;
@@ -202,6 +205,11 @@ public class DashboardScene extends BasicSceneUpdater {
     public void disableSwap()
     {
         this.swapbutton.setDisable(true);
+        this.swap1.setVisible(false);
+        this.swap2.setVisible(false);
+        this.swap3.setVisible(false);
+        this.swapbutton.setVisible(false);
+        this.swaptext.setVisible(false);
     }
 
     /**
@@ -372,7 +380,7 @@ public class DashboardScene extends BasicSceneUpdater {
         if (storage[2].getResource() != null) {
             removeElementFromGridPane(deposit3);
             for (int i = 0; i < storage[2].getResource().getQuantity(); i++) {
-                System.out.println("stampo la risorsa");
+                //System.out.println("stampo la risorsa");
                 ImageView immage = null;
                 immage = loadImage("/images/resources/" + storage[2].getResource().getNumericType() + ".png", 40, 40);
                 deposit3.add(immage, i, 0);
@@ -382,7 +390,7 @@ public class DashboardScene extends BasicSceneUpdater {
 
         if (storage[0].getResource() != null) {
             removeElementFromGridPane(deposit1);
-            System.out.println("stampo la risorsa");
+            //System.out.println("stampo la risorsa");
             ImageView immage = null;
             immage = loadImage("/images/resources/" + storage[0].getResource().getNumericType() + ".png", 40, 40);
             deposit1.add(immage, 0, 0);
