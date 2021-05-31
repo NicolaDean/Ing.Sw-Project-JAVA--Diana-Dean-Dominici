@@ -3,6 +3,7 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -21,7 +22,7 @@
     <children>
       <Group fx:id="group">
          <children>
-            <AnchorPane layoutX="113.0" layoutY="136.0" prefHeight="637.0" prefWidth="1039.0" stylesheets="@../css/Dashboard.css">
+            <AnchorPane layoutX="113.0" layoutY="144.0" prefHeight="637.0" prefWidth="1039.0" stylesheets="@../css/Dashboard.css">
                <children>
                   <AnchorPane fx:id="root" layoutX="358.0" layoutY="-7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="642.0" prefWidth="896.0" styleClass="root" stylesheets="@../css/Dashboard.css">
                      <children>
@@ -188,12 +189,31 @@
                               <Image url="@../images/interface/Button.png" />
                            </image>
                         </ImageView>
-                        <Text disable="true" fill="WHITE" layoutX="21.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SWAP" textAlignment="CENTER" wrappingWidth="45.19546926352109">
+                        <Text fx:id="swaptext" disable="true" fill="WHITE" layoutX="21.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SWAP" textAlignment="CENTER" wrappingWidth="45.19546926352109">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <FlowPane id="dialog" fx:id="nicknames" layoutX="816.0" layoutY="218.0" prefHeight="187.0" prefWidth="139.0" stylesheets="@../css/Global.css" />
+                        <Pane id="nicknames" layoutX="780.0" layoutY="162.0" prefHeight="187.0" prefWidth="175.0" stylesheets="@../css/Global.css">
+                           <children>
+                              <GridPane fx:id="nicknames" layoutX="30.0" layoutY="27.0" prefHeight="131.0" prefWidth="132.0" style="-fx-background-image: none;" />
+                              <Button id="button" fx:id="you" layoutX="62.0" layoutY="161.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="70.0" stylesheets="@../css/Global.css" text="YOU">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                           </children></Pane>
+                        <Pane fx:id="basicProd" layoutX="221.0" layoutY="433.0" prefHeight="103.0" prefWidth="107.0" />
+                        <ImageView fitHeight="50.0" fitWidth="293.0" layoutX="-24.0" layoutY="-25.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../images/interface/dialog2.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="nickname" layoutX="-2.0" layoutY="-17.0" prefHeight="35.0" prefWidth="250.0" text="Nickname" textFill="WHITE">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
                   <ImageView id="production_card" fx:id="shopbutton" fitHeight="97.0" fitWidth="213.0" layoutX="71.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">

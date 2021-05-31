@@ -6,12 +6,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="187.0" fitWidth="570.0" pickOnBounds="true" style="-fx-background-color: #1d1d1d;">
          <image>
-            <Image url="@../images/other/toast.png" />
+            <Image url="@../images/interface/dialog2.png" />
          </image>
       </ImageView>
       <Label layoutX="99.0" layoutY="77.0" prefHeight="35.0" prefWidth="407.0" text="Label" textFill="WHITE">

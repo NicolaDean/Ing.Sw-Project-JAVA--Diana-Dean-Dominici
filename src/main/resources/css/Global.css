@@ -48,6 +48,29 @@
 
 }
 
+#nicknames
+{
+    -fx-background-image: url("../images/interface/dialog3.png");
+    -fx-background-size: cover;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    background-repeat:   no-repeat;
+    background-position: center center;
+
+}
+
+#nick{
+    -fx-background-image: url("../images/interface/nickBoard.png");
+    -fx-background-size: cover;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    background-repeat:   no-repeat;
+    background-position: center center;
+}
+#nick:hover{
+    -fx-effect: dropshadow(gaussian, #f2e0d6, 20, 0.3, 0, 0);
+}
+
 .label
 {
     -fx-text-fill: white;
@@ -57,6 +80,6 @@
 {
     font-family: 'Cardinal';
     src: url('../font/Cardinal.ttf');
-    -fx-font-size: 30pt ;
+    -fx-font-size: 12pt ;
 }
 
