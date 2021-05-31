@@ -345,7 +345,7 @@ public class DashboardScene extends BasicSceneUpdater {
         //System.out.println("la risorsa in d2 vale "+d1.getResource().getQuantity());
         if (storage[1].getResource() != null) {
             removeElementFromGridPane(deposit2);
-            for (int i = 0; i < storage[2].getResource().getQuantity(); i++) {
+            for (int i = 0; i < storage[1].getResource().getQuantity(); i++) {
                 //System.out.println("stampo la risorsa");
                 ImageView immage = null;
                 immage = loadImage("/images/resources/" + storage[1].getResource().getNumericType() + ".png", 40, 40);
