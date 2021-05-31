@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GuiHelper;
 import it.polimi.ingsw.view.utils.FXMLpaths;
+import it.polimi.ingsw.view.utils.Logger;
 import it.polimi.ingsw.view.utils.ToastMessage;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -19,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -155,6 +157,7 @@ public class DashboardScene extends BasicSceneUpdater {
 
         });
 
+        showButton.setOnMouseClicked(this::showLeader);
         endturn.setOnMouseClicked(event -> {
             this.notifyObserver(controller -> controller.askEndTurn());
         });
@@ -332,6 +335,9 @@ public class DashboardScene extends BasicSceneUpdater {
      */
     public void drawStorage (Deposit[] storage)
     {
+
+        (new Logger()).printStorage(storage,null,false);
+
         //System.out.println("la risorsa in d2 vale "+d1.getResource().getQuantity());
         if (storage[1].getResource() != null) {
             removeElementFromGridPane(deposit2);
@@ -447,9 +453,9 @@ public class DashboardScene extends BasicSceneUpdater {
 
     /**
      * this function allow to hide and show leaders deck owned
-     * @param actionEvent
+     * @param mouseEvent
      */
-    public void showLeader(ActionEvent actionEvent) {
+    public void showLeader(MouseEvent mouseEvent) {
         if(!showLeaders)
         {
             showLeaders = true;

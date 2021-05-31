@@ -18,7 +18,7 @@ public class IncrementPosition extends Packet<ClientController> implements Packe
     @Override
     public Packet analyze(ClientController controller)
     {
-        DebugMessages.printWarning("Player " + controller.getMiniModel().getPlayers()[player].getNickname() + " increment his position by" + position);
+        DebugMessages.printWarning("" + controller.getMiniModel().getPlayers()[player].getNickname() + " new position is -> " + position);
         controller.incrementPositionPlayer(player,position);
         return null;
     }

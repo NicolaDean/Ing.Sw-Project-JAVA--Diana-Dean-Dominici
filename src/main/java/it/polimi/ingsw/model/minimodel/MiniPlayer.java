@@ -39,8 +39,8 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
     }
 
     public void incrementPosition(int position) {
-        this.position += position;
-        this.notifyObserver(scene -> scene.updatePlayerPosition(index,position));
+        this.position = position;
+        this.notifyObserver(scene -> scene.updatePlayerPosition(index,this.position));
     }
 
     public void setDecks(ProductionCard[] decks) {
