@@ -44,6 +44,11 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
         this.notifyObserver(scene -> scene.updatePlayerPosition(index,this.position));
     }
 
+    public void setNewCard(int pos,ProductionCard card)
+    {
+        this.decks[pos] = card;
+        this.notifyObserver(scene -> scene.updateDashCard(card,pos,index));
+    }
     public void setDecks(ProductionCard[] decks) {
         this.decks = decks;
     }
