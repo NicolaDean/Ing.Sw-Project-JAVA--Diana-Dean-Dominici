@@ -287,25 +287,30 @@ public class DashboardScene extends BasicSceneUpdater {
 
 
                 int finalI = i;
-                p.setOnMouseClicked(event -> {
-                    Platform.runLater(()->{
-                        try {
-                            if(finalI != controller.getMiniModel().getPersanalIndex())
-                            {
-                                //If click on others nickname
-                                GuiHelper.setRoot(FXMLpaths.dashboard,new SpyScene(finalI,player.getNickname()));
+
+                if(finalI != controller.getMiniModel().getPersanalIndex())
+                {
+                    p.setOnMouseClicked(event -> {
+                        Platform.runLater(()->{
+                            try {
+                                if(finalI != controller.getMiniModel().getPersanalIndex())
+                                {
+                                    //If click on others nickname
+                                    GuiHelper.setRoot(FXMLpaths.dashboard,new SpyScene(finalI,player.getNickname()));
+                                }
+                                else
+                                {
+                                    //If click on his nickname
+                                    //GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                            else
-                            {
-                                //If click on his nickname
-                                //GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        });
                     });
-                });
-                this.nicknames.add(p,0,i);
+                    this.nicknames.add(p,0,i);
+                }
+
                 i++;
             }
 
@@ -750,8 +755,28 @@ public class DashboardScene extends BasicSceneUpdater {
             }
             int finalI = i.get();
             card.setOnMouseClicked(event -> {
+
+                if(c.isActive())
+                {
+                    DebugMessages.printError("TRADEE");
+                    boolean out = GuiHelper.YesNoDialog("TRADE BONUS","Do you want to use trade bonus on this card?");
+                    if(out){
+                        List<Resource> result = GuiHelper.getGui().askWhiteBalls(ResourceType.values(),1);
+
+                        ResourceType type = null;
+                        for(Resource r : result)
+                        {
+                            if(r.getQuantity() == 1) type = r.getType();
+                        }
+                        //TODO save somewhere the activation order of trade bonus
+                        ResourceType finalType = type;
+                        this.notifyObserver(ctrl->ctrl.sendBonusProduction(finalI, finalType));
+                    }
+
+                    return;
+                }
                 boolean out = GuiHelper.YesNoDialog("Leader actviation","Do you want to activate this leader?");
-                controller.activateLeader(finalI);
+                if(out)controller.activateLeader(finalI);
 
             });
             i.getAndIncrement();

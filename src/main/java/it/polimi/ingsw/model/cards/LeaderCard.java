@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.utils.CliColors;
 
 import java.util.List;
@@ -72,7 +73,7 @@ public class LeaderCard extends Card {
 
 
         boolean out = resourceRequisite && cardRequisite;
-        if(out)
+        if(out || DebugMessages.leaderFree)
         {
             p.increaseScore(this.getVictoryPoints());
             this.active = true;

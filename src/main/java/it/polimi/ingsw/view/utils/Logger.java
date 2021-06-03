@@ -21,7 +21,7 @@ import it.polimi.ingsw.utils.DebugMessages;
 import java.util.ArrayList;
 import java.util.List;
 
-import static it.polimi.ingsw.enumeration.ResourceType.COIN;
+import static it.polimi.ingsw.enumeration.ResourceType.*;
 import static it.polimi.ingsw.utils.ConstantValues.*;
 
 public class Logger {
@@ -706,10 +706,10 @@ public class Logger {
         int i=1;
         for(ResourceType t:resourceTypes)
         {
-            if(t == COIN) out.printColored("  "+i+" - SHIELD\n",      CliColors.BLUE_TEXT);
-            if(t == COIN) out.printColored("  "+i+" - ROCK\n",         CliColors.WHITE_TEXT);
-            if(t == COIN) out.printColored("  "+i+" - COIN\n",         CliColors.YELLOW_TEXT);
-            if(t == COIN) out.printColored("  "+i+" - SERVANT\n",      CliColors.MAGENTA_TEXT);
+            if(t == SHIELD)  out.printColored("  "+i+" - SHIELD\n",      CliColors.BLUE_TEXT);
+            if(t == ROCK)    out.printColored("  "+i+" - ROCK\n",         CliColors.WHITE_TEXT);
+            if(t == COIN)    out.printColored("  "+i+" - COIN\n",         CliColors.YELLOW_TEXT);
+            if(t == SERVANT) out.printColored("  "+i+" - SERVANT\n",      CliColors.MAGENTA_TEXT);
             i++;
         }
     }

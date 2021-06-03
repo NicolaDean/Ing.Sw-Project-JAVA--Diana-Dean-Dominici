@@ -4,6 +4,7 @@ import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
+import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.dashboard.Storage;
 import it.polimi.ingsw.model.resources.Resource;
@@ -25,7 +26,7 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
     private Deposit[]                   storage;
     private List<Resource>              discount;
     private ResourceType []             whiteBalls;
-    private BonusProductionInterface[]  trade;
+    private LeaderTradeCard[]  trade;
 
     public MiniPlayer(String nickname) {
         this.position = 0;
@@ -115,7 +116,7 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
         this.discount = discount;
     }
 
-    public void setTrade(BonusProductionInterface[] bonusProductionInterfaces)
+    public void setTrade(LeaderTradeCard[] bonusProductionInterfaces)
     {
         this.trade = bonusProductionInterfaces;
     }

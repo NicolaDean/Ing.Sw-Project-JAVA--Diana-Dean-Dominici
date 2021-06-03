@@ -58,11 +58,17 @@ public class ClientApp {
         }
     }
 
+    /**
+     *
+     * @param args -cli / -c / -s / -server / -gui / -g / -p / -port
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         ClientApp app = new ClientApp();
 
         int i=0;
         boolean viewType = false;
+        boolean server   = false;
 
         for(String arg: args)
         {
@@ -75,7 +81,19 @@ public class ClientApp {
             {
                 viewType = false;
             }
+
+            if(arg.equals("-server")||arg.equals("-s"))
+            {
+                server = true;
+            }
             i++;
+        }
+
+
+        if(server)
+        {
+            ServerApp.main(args);
+            return;
         }
 
         app.setViewType(viewType);//CLI poi il bool verra caricato da args

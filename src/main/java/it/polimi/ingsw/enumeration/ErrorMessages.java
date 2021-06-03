@@ -14,5 +14,6 @@ public enum ErrorMessages {
     ExtractionFailed,
     LeaderActivated,
     NotEnoughPlayers,
-    IllegalResourceMove
+    IllegalResourceMove,
+    AlreadyUsed
 }

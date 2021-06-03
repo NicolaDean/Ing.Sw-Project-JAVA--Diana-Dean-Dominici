@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.scenes.*;
 import it.polimi.ingsw.view.utils.FXMLpaths;
@@ -135,6 +136,7 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void showError(String error) {
+        DebugMessages.printError(error);
         Platform.runLater(()->{GuiHelper.sendError(error);});
     }
 
@@ -176,8 +178,6 @@ public class GUI extends Observable<ClientController> implements View{
 
         });
 
-
-        //this.notifyObserver(ClientController::showDecks);
     }
 
     /**
@@ -243,11 +243,7 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void askResourceInsertion(List<Resource> resourceList) {
-
-        //show resource obtained in a dialog with only OK button
-        //TODO change controller of dashbard view to insetion controller
-        //TODO add dinamicly controller update to GUIHELPER
-
+        DebugMessages.printError("inserimento");
         Platform.runLater(()->{
             try{ GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene(resourceList));}catch (Exception e){
                 e.printStackTrace();
@@ -352,6 +348,7 @@ public class GUI extends Observable<ClientController> implements View{
 
         InitialResources dialog = new InitialResources(resourceTypes,num);
         GuiHelper.loadDialog(FXMLpaths.initialResource,"Chose " + num + "of those resources",dialog);
+        //Aggiunge a pending gain
         return dialog.getResources();
     }
 
@@ -369,7 +366,7 @@ public class GUI extends Observable<ClientController> implements View{
                 result = GuiHelper.loadDialog(FXMLpaths.initialResource,"Chose " + number + "of those resources",dialog);
             }while (result.equals(ButtonType.CANCEL));
 
-            //this.askResourceInsertion(dialog.getResources());
+            this.askResourceInsertion(dialog.getResources());
         });
 
 
@@ -394,13 +391,15 @@ public class GUI extends Observable<ClientController> implements View{
         List<Resource> out  = new ResourceList();
         out.addAll(resourceList);
 
-        //if whiteballs is >0 ask user how he want to convert them
-        if(whiteballs>0)
+        Platform.runLater(()->
         {
-            out.addAll(this.askWhiteBalls(types,whiteballs));
-        }
-
-        this.askResourceInsertion(out);
+            //if whiteballs is >0 ask user how he want to convert them
+            if(whiteballs>0)
+            {
+                    out.addAll(this.askWhiteBalls(types,whiteballs));
+            }
+            this.askResourceInsertion(out);
+        });
 
     }
 
@@ -433,6 +432,7 @@ public class GUI extends Observable<ClientController> implements View{
         if(isMyTurn) {
             Platform.runLater(() -> {
                 if (GuiHelper.YesNoDialog("End TURN", "Do you want to end turn?")) {
+                    this.notifyObserver(ClientController::sendDashReset);
                     this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
                     this.notifyObserver(clientController -> clientController.setMyTurn(false));
                     try {
