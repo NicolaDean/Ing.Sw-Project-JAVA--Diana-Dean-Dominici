@@ -45,7 +45,8 @@
     -fx-background-color: white;
     -fx-border-color:black;
     -fx-border-width: 2px;
-    -fx-border-radius:2px;
+    -fx-animated: 2px;
+
 
 }
 
