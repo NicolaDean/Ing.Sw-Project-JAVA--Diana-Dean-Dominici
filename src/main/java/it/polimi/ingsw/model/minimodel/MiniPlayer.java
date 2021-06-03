@@ -76,6 +76,16 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
         //Platform.runLater(()-> this.notifyObserver(scene -> scene.updateStorage(index,storage)));
 
         this.notifyObserver(scene -> scene.updateStorage(index,storage));
+        this.notifyObserver(scene -> scene.updateLeaders(index,leaderCards, getBonusStorage()));
+    }
+
+
+    public Deposit[] getBonusStorage()
+    {
+        Deposit[] bos = new Deposit[2];
+        bos[0] = storage[3];
+        bos[1] = storage[4];
+        return bos;
     }
 
     public ProductionCard[] getCards()
@@ -86,7 +96,7 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
     public void setLeaderCards(LeaderCard[] leaderCards) {
         this.leaderCards = leaderCards;
 
-        this.notifyObserver(scene-> scene.updateLeaders(index,leaderCards));
+        this.notifyObserver(scene-> scene.updateLeaders(index,leaderCards,getBonusStorage()));
     }
 
     public LeaderCard[] getLeaderCards()

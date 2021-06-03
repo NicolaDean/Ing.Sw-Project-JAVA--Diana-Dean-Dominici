@@ -3,12 +3,12 @@ package it.polimi.ingsw.model.cards.leaders;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.StorageUpdate;
 import it.polimi.ingsw.enumeration.ResourceType;
-import it.polimi.ingsw.exceptions.LeaderActivated;
-import it.polimi.ingsw.exceptions.NotSoddisfedPrerequisite;
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.PrerequisiteCard;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.utils.DebugMessages;
 
 import java.util.List;
 
@@ -26,7 +26,11 @@ public class DepositBonus extends LeaderCard{
     public void activate(Player player) throws NotSoddisfedPrerequisite, LeaderActivated {
         super.activate(player);
         //System.out.println(this.getType());
+
         player.getDashboard().getStorage().initializeBonusDeposit(this.getType());
+
+
+
     }
 
     public Packet updateMiniModel(Player p,int index)

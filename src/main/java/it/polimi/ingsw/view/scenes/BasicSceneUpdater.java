@@ -145,7 +145,7 @@ public class BasicSceneUpdater extends Observable<ClientController> {
 
     }
 
-    public void updateLeaders(int player, LeaderCard[] leaderCards)
+    public void updateLeaders(int player, LeaderCard[] leaderCards, Deposit[] bonus)
     {
 
     }
