@@ -268,7 +268,7 @@ public class DashboardScene extends BasicSceneUpdater {
 
         this.notifyObserver(controller -> {
 
-            this.nickname .setText(controller.getMiniModel().getPlayers()[this.index].getNickname());
+            this.nickname.setText(controller.getMiniModel().getPlayers()[this.index].getNickname());
 
             int i=0;
             this.nicknames.setAlignment(Pos.CENTER);
@@ -284,6 +284,7 @@ public class DashboardScene extends BasicSceneUpdater {
                 l.setTextAlignment(TextAlignment.CENTER);
                 l.setId("font");
                 l.setAlignment(Pos.CENTER);
+                l.setPrefSize(100,50);
                 p.getChildren().add(l);
 
 
