@@ -178,8 +178,6 @@ public class GUI extends Observable<ClientController> implements View{
 
         });
 
-
-        //this.notifyObserver(ClientController::showDecks);
     }
 
     /**
@@ -245,11 +243,7 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void askResourceInsertion(List<Resource> resourceList) {
-
-        //show resource obtained in a dialog with only OK button
-        //TODO change controller of dashbard view to insetion controller
-        //TODO add dinamicly controller update to GUIHELPER
-
+        DebugMessages.printError("inserimento");
         Platform.runLater(()->{
             try{ GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene(resourceList));}catch (Exception e){
                 e.printStackTrace();
@@ -397,15 +391,15 @@ public class GUI extends Observable<ClientController> implements View{
         List<Resource> out  = new ResourceList();
         out.addAll(resourceList);
 
-        //if whiteballs is >0 ask user how he want to convert them
-        if(whiteballs>0)
+        Platform.runLater(()->
         {
-            Platform.runLater(()->
+            //if whiteballs is >0 ask user how he want to convert them
+            if(whiteballs>0)
             {
-                out.addAll(this.askWhiteBalls(types,whiteballs));
-                this.askResourceInsertion(out);
-            });
-        }
+                    out.addAll(this.askWhiteBalls(types,whiteballs));
+            }
+            this.askResourceInsertion(out);
+        });
 
     }
 
