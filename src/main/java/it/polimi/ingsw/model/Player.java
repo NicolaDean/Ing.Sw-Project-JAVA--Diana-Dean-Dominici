@@ -9,6 +9,7 @@ import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
+import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
 import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.ConstantValues;
@@ -25,7 +26,7 @@ public class Player extends Observable<ServerController> {
     private Dashboard dashboard;
     private int position;
     private int score = 0;
-    private List<BonusProductionInterface> bonusProductions;
+    private List<LeaderTradeCard> bonusProductions;
     private boolean inkwell;
     private ArrayList<ResourceType> bonusball;
     private int positionLeaderActive;
@@ -342,7 +343,7 @@ public class Player extends Observable<ServerController> {
      * Add the bonusProduction interface to the player so that he can activate bonus production
      * @param bonus the activated  Leader Card
      */
-    public void addTradeBonus(BonusProductionInterface bonus)
+    public void addTradeBonus(LeaderTradeCard bonus)
     {
         if(this.bonusProductions == null) this.bonusProductions = new ArrayList<>();
 
@@ -377,9 +378,10 @@ public class Player extends Observable<ServerController> {
             throw  new WrongPosition("Not existing bonus card");
         }
     }
-    public BonusProductionInterface[] getBonusProduductions()
+
+    public List<LeaderTradeCard> getBonusProduductions()
     {
-        return (BonusProductionInterface[]) this.bonusProductions.toArray();
+        return this.bonusProductions;
     }
     public void setControllerIndex(int controllerIndex) {
         this.controllerIndex = controllerIndex;

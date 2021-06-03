@@ -612,10 +612,10 @@ public class ServerController{
     {
         if(!isRightPlayer(player)) return this.notYourTurn();
 
-        Player p = this.game.getCurrentPlayer();
+        Player p = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex());
         try {
             p.bonusProduction(pos,obt);
-            return new ACK(0);
+            return setPendingCost(p.getDashboard());
         } catch (AckManager err) {
             return err.getAck();
         }

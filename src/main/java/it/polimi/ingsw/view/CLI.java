@@ -431,6 +431,24 @@ public class CLI extends Observable<ClientController> implements View {
         {
             this.terminal.printRequest("This is your bonus productions");
             this.terminal.printBonusCards(bonus);
+
+            int res = askInt("Which of those you want to activate? (1-2)","bonus index not in range (1-2)",1,2)-1;
+
+            this.terminal.printRequest("Resource types:");
+            int j=0;
+            terminal.printResourceTypeSelection();
+            int num = this.askInt("Insert a number rappresenting the resource you want:","Input not in range",1,ResourceType.values().length);
+
+            ResourceType type = null;
+            j=0;
+            //FIND RESOURCE TYPE
+            for(ResourceType resourceType:ResourceType.values())
+            {
+                if(resourceType.ordinal() == num-1) type = resourceType;
+            }
+
+            ResourceType finalType = type;
+            this.notifyObserver(clientController -> clientController.sendBonusProduction(res, finalType));
         }
         else
         {
@@ -940,12 +958,6 @@ public class CLI extends Observable<ClientController> implements View {
             this.terminal.printRequest("Resource types:");
             int j=0;
             terminal.printResourceTypeSelection();
-            /*for(ResourceType resourceType:ResourceType.values())
-            {
-                j++;
-                String color = ConstantValues.resourceRappresentation.getColorRappresentation(resourceType);
-                this.terminal.out.printlnColored(j + " - " + resourceType.toString(),color);
-            }*/
             int num = this.askInt("Insert a number rappresenting the resource you want:","Input not in range",1,ResourceType.values().length);
 
             ResourceType type = null;

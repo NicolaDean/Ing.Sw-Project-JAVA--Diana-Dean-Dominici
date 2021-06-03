@@ -7,6 +7,7 @@ import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
+import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniModel;
@@ -518,7 +519,7 @@ public class ClientController implements Runnable{
      * @param bonus trade bonus new
      * @param index player index
      */
-    public void updateTrade(BonusProductionInterface[] bonus, int index)
+    public void updateTrade(LeaderTradeCard[] bonus, int index)
     {
         this.model.getPlayers()[index].setTrade(bonus);
     }
@@ -647,5 +648,10 @@ public class ClientController implements Runnable{
 
     public void sendDashReset() {
         this.sendMessage(new DashReset());
+    }
+
+    public void sendBonusProduction(int res,ResourceType type) {
+
+        this.sendMessage(new BonusProduction(res,type));
     }
 }

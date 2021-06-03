@@ -121,8 +121,6 @@ public class JsonInterpreterTest {
         System.out.println("----------------------------------");
 
         ServerController s = new ServerController(true);
-
-
     }
 
     @Test
@@ -146,7 +144,7 @@ public class JsonInterpreterTest {
         System.out.println( new UpdatePosition(1,1).generateJson());
         System.out.println( new Production(1).generateJson());
         System.out.println( new BasicProduction(COIN,SERVANT,ROCK, 0).generateJson());
-        System.out.println( new BonusProduction(1,COIN,ROCK).generateJson());
+        System.out.println( new BonusProduction(1,ROCK).generateJson());
         System.out.println( new BuyCard(1,2,1).generateJson());
         System.out.println( new PendingCost(resourceList).generateJson());
         System.out.println( new MarketExtraction(false,1).generateJson());

@@ -10,7 +10,7 @@ public class BonusProduction   extends Packet<ServerController> implements Packe
     private int position;
     private ResourceType obt;
 
-    public BonusProduction(int position,ResourceType res,ResourceType obt)
+    public BonusProduction(int position,ResourceType obt)
     {
         super("BonusProduction");
         this.obt  = obt;
