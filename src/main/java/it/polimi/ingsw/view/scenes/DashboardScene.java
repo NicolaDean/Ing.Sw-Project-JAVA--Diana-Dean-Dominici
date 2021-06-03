@@ -92,6 +92,8 @@ public class DashboardScene extends BasicSceneUpdater {
     public Button showButton;
     @FXML
     public Button you;
+    @FXML
+    public Pane basicProd;
     //FAITH TRACK
     @FXML
     public List<Pane> faith;
@@ -204,6 +206,10 @@ public class DashboardScene extends BasicSceneUpdater {
                 boxes[i].setSelected(false);
             }
 
+        });
+
+        basicProd.setOnMouseClicked(event->{
+            GuiHelper.getGui().askBasicProduction();
         });
 
         showButton.setOnMouseClicked(this::showLeader);

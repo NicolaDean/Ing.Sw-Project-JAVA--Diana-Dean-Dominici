@@ -221,7 +221,28 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void askBasicProduction() {
+        Platform.runLater(()->{
 
+            this.notifyObserver(controller->{
+
+                //TODO add to this dialog a custom message to ask something to player
+                //eg insert resource to trade
+                InitialResources dialog = new InitialResources(2);
+                GuiHelper.loadDialog(FXMLpaths.initialResource,"Chose trade resources",dialog);
+
+                ResourceType t1 = dialog.getResources().get(0).getType();
+                ResourceType t2 = dialog.getResources().get(1).getType();
+
+                dialog = new InitialResources(1);
+                GuiHelper.loadDialog(FXMLpaths.initialResource,"Chose resource to obtain",dialog);
+
+                ResourceType obt = dialog.getResources().get(0).getType();
+
+                controller.sendBasicProduction(t1,t2,obt);
+
+            });
+
+        });
     }
 
     @Override
