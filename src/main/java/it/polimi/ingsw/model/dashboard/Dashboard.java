@@ -111,7 +111,11 @@ public class Dashboard {
 
     public void resetGain()
     {
-        for(Stack<ProductionCard> c: producionCards) c.peek().setUnused();
+        for(Stack<ProductionCard> c: producionCards)
+        {
+            if(!c.isEmpty())
+                c.peek().setUnused();
+        }
         this.turnGain = new ResourceList();
     }
     /**

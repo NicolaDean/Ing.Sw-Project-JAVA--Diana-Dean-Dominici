@@ -62,7 +62,7 @@ public class LorenzoServerController extends ServerController{
         try {
             this.game.startGame();
             this.clients.get(0).sendToClient(this.generateGameStartedPacket(this.generateMiniPlayer(),0));
-
+            this.isStarted = true;
             this.clients.get(0).sendToClient(new TurnNotify());
         } catch (NotEnoughPlayers notEnoughPlayers) {
             notEnoughPlayers.printStackTrace();

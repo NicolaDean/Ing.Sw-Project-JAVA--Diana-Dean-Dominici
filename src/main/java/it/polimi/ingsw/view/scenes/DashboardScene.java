@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.packets.InsertionInstruction;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
+import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
@@ -720,8 +721,28 @@ public class DashboardScene extends BasicSceneUpdater {
             }
             int finalI = i.get();
             card.setOnMouseClicked(event -> {
+
+                if(c.isActive())
+                {
+                    DebugMessages.printError("TRADEE");
+                    boolean out = GuiHelper.YesNoDialog("TRADE BONUS","Do you want to use trade bonus on this card?");
+                    if(out){
+                        List<Resource> result = GuiHelper.getGui().askWhiteBalls(ResourceType.values(),1);
+
+                        ResourceType type = null;
+                        for(Resource r : result)
+                        {
+                            if(r.getQuantity() == 1) type = r.getType();
+                        }
+                        //TODO save somewhere the activation order of trade bonus
+                        ResourceType finalType = type;
+                        this.notifyObserver(ctrl->ctrl.sendBonusProduction(finalI, finalType));
+                    }
+
+                    return;
+                }
                 boolean out = GuiHelper.YesNoDialog("Leader actviation","Do you want to activate this leader?");
-                controller.activateLeader(finalI);
+                if(out)controller.activateLeader(finalI);
 
             });
             i.getAndIncrement();
