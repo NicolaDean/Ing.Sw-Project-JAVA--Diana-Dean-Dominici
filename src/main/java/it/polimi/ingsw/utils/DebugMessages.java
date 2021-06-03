@@ -12,6 +12,7 @@ public  class DebugMessages {
     public static boolean infiniteResourcesStorage = true;
     public static boolean infiniteResourcesChest   = true;
     public static boolean leaderFree               = true;
+
     //DEBUG MESSAGES
     public static boolean enableError = true;
     public static boolean enableWarning = true;

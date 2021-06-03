@@ -31,7 +31,6 @@ public class ServerApp {
      */
     public void start()
     {
-
         this.connection();
         this.waitNewClients();
     }
@@ -80,20 +79,21 @@ public class ServerApp {
 
     public static void main(String[] args) {
 
-        int port;
+        int port = ConstantValues.defaultServerPort;
 
-        if(args.length != 0 && (args[0].equals("-port") || args[0].equals("-p")))
+        int i=0;
+        for(String arg : args)
         {
-            try {
-                port = Integer.parseInt(args[1]);
-            } catch (NumberFormatException e) {
-                DebugMessages.printError("Invalid argument,default port setted");
-                port = ConstantValues.defaultServerPort;
+            if(arg.equals("-port") || arg.equals("-p"))
+            {
+                try {
+                    port = Integer.parseInt(args[i+1]);
+                } catch (NumberFormatException e) {
+                    DebugMessages.printError("Invalid argument,default port setted");
+                    port = ConstantValues.defaultServerPort;
+                }
             }
-        }
-        else
-        {
-            port = ConstantValues.defaultServerPort;
+            i++;
         }
 
         System.out.println("Port "+ port);
