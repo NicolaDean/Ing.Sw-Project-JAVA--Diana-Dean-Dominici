@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.scenes.*;
 import it.polimi.ingsw.view.utils.FXMLpaths;
@@ -135,6 +136,7 @@ public class GUI extends Observable<ClientController> implements View{
 
     @Override
     public void showError(String error) {
+        DebugMessages.printError(error);
         Platform.runLater(()->{GuiHelper.sendError(error);});
     }
 

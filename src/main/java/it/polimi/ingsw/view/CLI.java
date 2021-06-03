@@ -261,7 +261,7 @@ public class CLI extends Observable<ClientController> implements View {
 
     @Override
     public void showError(String error) {
-
+        this.terminal.printError(error);
     }
 
     public void clickEnter() {
