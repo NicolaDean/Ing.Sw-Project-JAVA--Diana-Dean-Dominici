@@ -26,23 +26,10 @@ public class DepositBonus extends LeaderCard{
     public void activate(Player player) throws NotSoddisfedPrerequisite, LeaderActivated {
         super.activate(player);
         //System.out.println(this.getType());
-        int d=4;
-        if(player.getDashboard().getStorage().getStorage()[3] == null)
-            d=3;
+
         player.getDashboard().getStorage().initializeBonusDeposit(this.getType());
 
-        if(DebugMessages.infiniteResources)
-        {
-            try {
-                player.getDashboard().getStorage().safeInsertion(new Resource(this.getType(), 2), d);
-            } catch (NoBonusDepositOwned noBonusDepositOwned) {
-                noBonusDepositOwned.printStackTrace();
-            } catch (WrongPosition wrongPosition) {
-                wrongPosition.printStackTrace();
-            } catch (FullDepositException e) {
-                e.printStackTrace();
-            }
-        }
+
 
     }
 
