@@ -112,4 +112,8 @@ public class LeaderCard extends Card {
     {
         return new ACK(0);
     }
+
+    public String getCliRappresentation() {
+        return cliRappresentation;
+    }
 }

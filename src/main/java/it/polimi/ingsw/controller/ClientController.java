@@ -23,6 +23,7 @@ import it.polimi.ingsw.view.View;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
@@ -48,6 +49,8 @@ public class ClientController implements Runnable{
     private MiniModel             model;
     private AckExample            resolver;
 
+    private List<Integer> activatedLeaders;
+
 
 
     public ClientController(boolean type)
@@ -56,6 +59,7 @@ public class ClientController implements Runnable{
         if(type)view = new CLI(this.index);
         else view = new GUI();//GUI()
         isMyTurn=false;
+        activatedLeaders = new ArrayList<>();
 
         this.view.setObserver(this);
 
@@ -72,6 +76,14 @@ public class ClientController implements Runnable{
     }
 
 
+    public void setActivatedLeaders(int i)
+    {
+        activatedLeaders.add(i);
+    }
+
+    public List<Integer> getActivatedLeaders() {
+        return activatedLeaders;
+    }
 
     /*
      * set all initial information into miniMarted

@@ -557,7 +557,10 @@ public class ServerController{
                 //TODO send leaderUpdate with discarded leader
             }
 
-            return new ACK(0);
+            if(p.getLeaders()[pos].getCliRappresentation().equals("DEPOSIT"))
+                return new LeaderActivated(p.getLeaders()[pos].getId());
+            else
+                return new ACK(0);
         } catch (AckManager err) {
             return err.getAck();
         }
