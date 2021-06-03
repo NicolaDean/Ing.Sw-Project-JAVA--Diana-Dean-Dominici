@@ -116,6 +116,9 @@ public class DashboardScene extends BasicSceneUpdater {
 
     CheckBox lastchecked;
 
+    public CheckBox swap4 = new CheckBox();
+    public CheckBox swap5 = new CheckBox();
+
     CheckBox[] boxes;
 
     int leadersactivated=-1;
@@ -147,14 +150,8 @@ public class DashboardScene extends BasicSceneUpdater {
     public void init() {
 
         super.init();
-        boxes = new CheckBox[3];
-        boxes[0]=swap1;
-        boxes[1]=swap2;
-        boxes[2]=swap3;
 
-
-
-
+        initializecheckboxes();
 
         showLeaders = false;
         leaderCards.setVisible(false);
@@ -231,6 +228,20 @@ public class DashboardScene extends BasicSceneUpdater {
             //DRAW FAITH TOKEN POSITION
 
         });
+
+
+    }
+
+    public void initializecheckboxes()
+    {
+        swap4.setOnAction(actionEvent -> select4());
+        swap5.setOnAction(actionEvent -> select5());
+        boxes = new CheckBox[5];
+        boxes[0]=swap1;
+        boxes[1]=swap2;
+        boxes[2]=swap3;
+        boxes[3]=swap4;
+        boxes[4]=swap5;
 
 
     }
@@ -701,17 +712,38 @@ public class DashboardScene extends BasicSceneUpdater {
                 if(c.isActive()) {
                     FlowPane leaderdeposit = new FlowPane(15, 12);
                     leaderdeposit.setPrefSize(130, 188);
-                    leaderdeposit.setAlignment(Pos.BOTTOM_CENTER);
+
+                    CheckBox check = new CheckBox();
+
+
                     int index=1;
-                    if(c.getId() == controller.getActivatedLeaders().get(0))
-                        index=0;
+                    check = swap5;
+                    if(c.getId() == controller.getActivatedLeaders().get(0)) {
+                        index = 0;
+                        check=swap4;
+
+                    }
+
+                    check.setAlignment(Pos.BOTTOM_RIGHT);
+
                     if(bonusstorage!=null && bonusstorage[index].getResource()!=null) {
                         for(int k=0; k< bonusstorage[index].getResource().getQuantity(); k++) {
                             ImageView resource = loadImage("/images/resources/" + bonusstorage[index].getResource().getNumericType() +".png", 30, 30);
                             leaderdeposit.getChildren().add(resource);
 
                         }
+                        if(bonusstorage[index].getResource().getQuantity()==2)
+                            leaderdeposit.setAlignment(Pos.BOTTOM_CENTER);
+                        else{
+                            ImageView pippo = loadImage("/images/resources/" + bonusstorage[index].getResource().getNumericType() +".png", 30, 30);
+                            pippo.setVisible(false);
+                            leaderdeposit.getChildren().add(pippo);
+                            leaderdeposit.setAlignment(Pos.BOTTOM_CENTER);
+
+                        }
+
                         pane.getChildren().add(leaderdeposit);
+                        pane.getChildren().add(check);
                     }
                 }
 
@@ -768,32 +800,54 @@ public class DashboardScene extends BasicSceneUpdater {
 
     public void select1()
     {
-        if(swap1.isSelected() && swap2.isSelected() && swap3.isSelected())
-            if(lastchecked != swap2)
-                swap2.setSelected(false);
-            else
-                swap3.setSelected(false);
+        if(countchecked()==3)
+            uncheck(swap1);
         lastchecked = swap1;
     }
 
     public void select2()
     {
-        if(swap1.isSelected() && swap2.isSelected() && swap3.isSelected())
-            if(lastchecked != swap1)
-                swap1.setSelected(false);
-            else
-                swap3.setSelected(false);
+        if(countchecked()==3)
+            uncheck(swap2);
         lastchecked = swap2;
     }
 
     public void select3()
     {
-        if(swap1.isSelected() && swap2.isSelected() && swap3.isSelected())
-            if(lastchecked != swap1)
-                swap1.setSelected(false);
-            else
-                swap2.setSelected(false);
+        if(countchecked()==3)
+            uncheck(swap3);
         lastchecked = swap3;
+    }
+
+    public void select4()
+    {
+        if(countchecked()==3)
+            uncheck(swap4);
+        lastchecked = swap4;
+    }
+    public void select5()
+    {
+        if(countchecked()==3)
+            uncheck(swap5);
+        lastchecked = swap5;
+    }
+
+    public int countchecked()
+    {
+        int count = 0;
+        for (CheckBox c :boxes) {
+            if(c.isSelected())
+                count++;
+        }
+        return count;
+    }
+
+    public void uncheck(CheckBox lmao)
+    {
+        for (CheckBox c :boxes) {
+            if(c.isSelected() && c!=lastchecked && c!=lmao)
+                c.setSelected(false);
+        }
     }
 
 

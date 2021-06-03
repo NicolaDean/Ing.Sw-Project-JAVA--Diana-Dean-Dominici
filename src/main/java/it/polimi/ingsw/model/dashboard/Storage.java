@@ -222,23 +222,7 @@ public class Storage {
         }
         if(pos2 >=3 && pos1 >=3)
         {
-            //da pos1 bonus a pos2 bonus
-            if(storage[pos1].getResource().getQuantity()==0)
-                throw new IllegalResourceMove("The starting deposit is empty.");
-            if(storage[pos1].getResource().getQuantity()<q)
-                throw new IllegalResourceMove("You don't have enough resources in the first deposit.");
-            if(storage[pos1].getResource().getType() != storage[pos2].getResource().getType())
                 throw new IllegalResourceMove("The two bonus deposits are of different resource types!");
-
-            resource = new Resource(storage[pos1].getResource().getType(), q);
-            try {
-                storage[pos1].safeSubtraction(resource);
-                storage[pos2].safeInsertion(resource);
-            } catch (Exception e)
-            {
-                throw e;
-            }
-            return;
         }
 
     }
