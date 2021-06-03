@@ -912,7 +912,7 @@ public class CLI extends Observable<ClientController> implements View {
             int res = this.askInt("You have "+num+" to choose","wrong input range",1,resourceTypes.length) -1;
             int qty =1;
 
-            if(num>1) qty = this.askInt("How many balls you want to convert with this type?","wrong input range",1,num) -1;
+            if(num>1) qty = this.askInt("How many balls you want to convert with this type?","wrong input range",1,num);
             chosen.add(new Resource(resourceTypes[res],qty));
             num=num-(qty-1);
         }
@@ -1198,12 +1198,14 @@ public class CLI extends Observable<ClientController> implements View {
         in = in.toLowerCase(Locale.ROOT);
         if(in.equals("yes") || in.equals("y")) {
             actionDone = false;
+            this.notifyObserver(ClientController::sendDashReset);
             this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
             if(!this.singlePlayer)
                 this.waitturn();
         }
         else
         {
+
             if(turnSelected == 1)
             {
                 this.askBuy();

@@ -152,6 +152,17 @@ public class ServerController{
     }
 
 
+    /**
+     * Reset player dashboard gained resources
+     *
+     * whenever user produce with a card obtained mat are inserted into a "turnGain" list
+     * and when production card check if can activate itself exclude those resources from the available one
+     * @param index client index of sender
+     */
+    public void dashReset(int index)
+    {
+        this.game.getPlayer(this.clients.get(index).getRealPlayerIndex()).getDashboard().resetGain();
+    }
 
     public void sendPositionUpdate(int pos,int clientIndex)
     {
@@ -249,7 +260,7 @@ public class ServerController{
     public MiniPlayer[] generateMiniPlayer() throws FullDepositException, NoBonusDepositOwned, WrongPosition {
         MiniPlayer[] players= new MiniPlayer[game.getNofplayers()];
         int i=0;
-        if(DebugMessages.infiniteResources) {
+        if(DebugMessages.infiniteResourcesStorage) {
             for (Player p : game.getPlayers()) {
                 p.getDashboard().getStorage().safeInsertion(new Resource(COIN, 1), 0);
                 p.getDashboard().getStorage().safeInsertion(new Resource(SHIELD, 2), 1);
@@ -258,7 +269,7 @@ public class ServerController{
         }
 
         List<Resource> resources = new ResourceList();
-        if(DebugMessages.infiniteResources)
+        if(DebugMessages.infiniteResourcesChest)
         {
             resources.add(new Resource(COIN,100));
             resources.add(new Resource(SERVANT,100));
@@ -276,7 +287,7 @@ public class ServerController{
             players[i].setLeaderCards(leaderCards);
             p.setLeaders(leaderCards);
 
-            if(DebugMessages.infiniteResources) {
+            if(DebugMessages.infiniteResourcesChest) {
                 p.chestInsertion(resources);
             }
             i++;
@@ -564,7 +575,7 @@ public class ServerController{
 
                 sendMessage(new LeaderActivated(p.getLeaders()[pos].getId()), p.getControllerIndex());
 
-                if(DebugMessages.infiniteResources)
+                if(DebugMessages.infiniteResourcesStorage)
                 {
                     int d=3;
                     if(p.getDashboard().getStorage().getStorage()[4] != null)

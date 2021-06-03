@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.enumeration.CardType;
+import it.polimi.ingsw.exceptions.AlreadyUsed;
 import it.polimi.ingsw.exceptions.NotEnoughResource;
 import it.polimi.ingsw.exceptions.WrongPosition;
 import it.polimi.ingsw.model.Player;
@@ -19,7 +20,7 @@ public class ProductionCard extends Card {
     private int obtainedFaith;
     private List<Resource> rawMaterials;
     private List<Resource> obtainedMaterials;
-
+    private boolean alreadyUsed;
 
     //Empty Constructor for GSON
     public ProductionCard(List<Resource> cost,List<Resource> raw,List<Resource>obt,int victoryPoints,int level,int obtainedFaith,CardType type)
@@ -30,6 +31,7 @@ public class ProductionCard extends Card {
         this.obtainedMaterials =  obt;
         this.type = type;
         this.obtainedFaith = obtainedFaith;
+        this.alreadyUsed = false;
     }
 
 
@@ -37,6 +39,7 @@ public class ProductionCard extends Card {
     public ProductionCard(List<Resource> cost, int victoryPoints,int level) {
         super(cost, victoryPoints);
         this.level = level;
+        this.alreadyUsed = false;
     }
 
     public ProductionCard(List<Resource> cost,List<Resource> raw,List<Resource>obt,int victoryPoints,int level)
@@ -45,6 +48,7 @@ public class ProductionCard extends Card {
         this.level = level;
         this.rawMaterials =  raw;
         this.obtainedMaterials =  obt;
+        this.alreadyUsed = false;
     }
 
     public void setId(int id)
@@ -61,6 +65,10 @@ public class ProductionCard extends Card {
         return level;
     }
 
+    public void setUnused()
+    {
+        this.alreadyUsed = false;
+    }
     public CardType getType() {
         return type;
     }
@@ -98,6 +106,7 @@ public class ProductionCard extends Card {
 
     @Override
     public boolean checkCost(Dashboard dash) {
+
         List<Resource> availableRes = ResourceOperator.merge(dash.getDiscount(),dash.getAllAvailableResource());
 
         boolean out = ResourceOperator.compare(availableRes,this.getCost());
@@ -112,10 +121,15 @@ public class ProductionCard extends Card {
      * @param p Dashboard of the player
      * @return  true if the activation goes well
      */
-    public boolean produce(Player p) throws NotEnoughResource {
+    public boolean produce(Player p) throws NotEnoughResource, AlreadyUsed {
+
+        if(alreadyUsed) throw new AlreadyUsed("");
 
         //Check if necesary resources are availabe
         List<Resource> resAvailable = p.getDashboard().getAllAvailableResource();
+        //Remove from res available resources obtained during this turn
+        resAvailable = ResourceOperator.listSubtraction(resAvailable,p.getDashboard().getTurnGain());
+
         boolean out = ResourceOperator.compare(resAvailable,this.rawMaterials);
 
         //if true add obtained resources to the chest
@@ -123,6 +137,8 @@ public class ProductionCard extends Card {
         {
             p.incrementPosition(this.obtainedFaith);
             p.chestInsertion(this.obtainedMaterials);
+            p.getDashboard().setGain(this.obtainedMaterials);
+            this.alreadyUsed = true;
         }
         else
         {

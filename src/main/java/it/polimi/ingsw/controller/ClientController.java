@@ -644,4 +644,8 @@ public class ClientController implements Runnable{
             this.waitMessage();
         }
     }
+
+    public void sendDashReset() {
+        this.sendMessage(new DashReset());
+    }
 }

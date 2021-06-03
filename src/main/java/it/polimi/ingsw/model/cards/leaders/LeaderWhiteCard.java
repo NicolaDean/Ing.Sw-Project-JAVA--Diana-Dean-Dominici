@@ -30,6 +30,6 @@ public class LeaderWhiteCard extends LeaderCard{
 
     public Packet updateMiniModel(Player p,int index)
     {
-        return new LeaderWhiteUpdate((ResourceType[]) p.getBonusball().toArray(),index);
+        return new LeaderWhiteUpdate( p.getBonusball(),index);
     }
 }

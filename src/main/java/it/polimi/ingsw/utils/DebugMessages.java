@@ -8,7 +8,11 @@ import it.polimi.ingsw.view.utils.Logger;
  */
 public  class DebugMessages {
 
-    public static boolean infiniteResources = true;
+    //DEBUG CHEATS
+    public static boolean infiniteResourcesStorage = true;
+    public static boolean infiniteResourcesChest   = true;
+    public static boolean leaderFree               = true;
+    //DEBUG MESSAGES
     public static boolean enableError = true;
     public static boolean enableWarning = true;
     public static boolean enableNetwork= false;

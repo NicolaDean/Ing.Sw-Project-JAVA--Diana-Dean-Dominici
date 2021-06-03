@@ -19,6 +19,7 @@ public class Dashboard {
     private boolean [] papalToken;
     private List<Resource> bonusResources;
     private List<Resource>pendingCost;
+    private List<Resource>turnGain;
 
 
     public Storage getStorage() {
@@ -103,6 +104,16 @@ public class Dashboard {
     }
 
 
+    public List<Resource> getTurnGain()
+    {
+        return turnGain;
+    }
+
+    public void resetGain()
+    {
+        for(Stack<ProductionCard> c: producionCards) c.peek().setUnused();
+        this.turnGain = new ResourceList();
+    }
     /**
      *
      * @param card Card to position
@@ -168,7 +179,7 @@ public class Dashboard {
      * @param pos stack of card to select
      * @return true if the activation goes well
      */
-    public void production(Player p, int pos) throws NotEnoughResource, WrongPosition {
+    public void production(Player p, int pos) throws NotEnoughResource, WrongPosition, AlreadyUsed {
 
         if(this.producionCards[pos].isEmpty())
         {
@@ -326,4 +337,11 @@ public class Dashboard {
         return cardCount;
     }
 
+    /**
+     * set resources produced by production card
+     * @param obtainedMaterials obtained mat from a production
+     */
+    public void setGain(List<Resource> obtainedMaterials) {
+        this.turnGain.addAll(obtainedMaterials);
     }
+}

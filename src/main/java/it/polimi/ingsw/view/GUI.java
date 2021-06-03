@@ -398,10 +398,12 @@ public class GUI extends Observable<ClientController> implements View{
         //if whiteballs is >0 ask user how he want to convert them
         if(whiteballs>0)
         {
-            out.addAll(this.askWhiteBalls(types,whiteballs));
+            Platform.runLater(()->
+            {
+                out.addAll(this.askWhiteBalls(types,whiteballs));
+                this.askResourceInsertion(out);
+            });
         }
-
-        this.askResourceInsertion(out);
 
     }
 
@@ -434,6 +436,7 @@ public class GUI extends Observable<ClientController> implements View{
         if(isMyTurn) {
             Platform.runLater(() -> {
                 if (GuiHelper.YesNoDialog("End TURN", "Do you want to end turn?")) {
+                    this.notifyObserver(ClientController::sendDashReset);
                     this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
                     this.notifyObserver(clientController -> clientController.setMyTurn(false));
                     try {
