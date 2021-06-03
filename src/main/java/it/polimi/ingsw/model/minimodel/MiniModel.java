@@ -32,7 +32,7 @@ public class MiniModel extends Observable<BasicSceneUpdater>
     }
     public void updateCard(ProductionCard newCard,int x,int y,int dashboardPos,int index)
     {
-        players[index].getDecks()[dashboardPos] = decks[x][y];
+        players[index].setNewCard(dashboardPos,decks[x][y]);
         decks[x][y] = newCard;
         System.out.println("Dash updated");
 

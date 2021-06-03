@@ -21,6 +21,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ClipboardContent;
@@ -387,7 +388,8 @@ public class DashboardScene extends BasicSceneUpdater {
         if(player != this.index) return;
 
         System.out.println("Chest update");
-        this.drawChest(chest);
+
+        Platform.runLater(() -> this.drawChest(chest));
     }
 
     @Override
@@ -398,10 +400,7 @@ public class DashboardScene extends BasicSceneUpdater {
         System.out.println("Storage update");
         //Check if update is of client player or other players
         this.notifyObserver(controller -> {
-            if(player== controller.getMiniModel().getPersanalIndex()) {
                 Platform.runLater(() -> this.drawStorage(storage));
-
-            }
         });
 
     }
@@ -824,6 +823,26 @@ public class DashboardScene extends BasicSceneUpdater {
         });
     }
 
+    @Override
+    public void updateDashCard(ProductionCard card, int pos, int player) {
+        if(player != this.index) return;
+        System.out.println("Card changed");
+
+        Platform.runLater(()->{
+            Image immage = loadImage("/images/cards/productions/" + card.getId() + ".jpg");
+
+            if(this.grid.getChildren().size()>=pos)
+            {
+                this.grid.add(loadImage("/images/cards/productions/" + card.getId() + ".jpg",130,200),pos,0);
+            }else
+            {
+                this.grid.add(loadImage("/images/cards/productions/" + card.getId() + ".jpg",130,200),pos,0);
+            }
+
+
+        });
+
+    }
 
     public void select1()
     {
