@@ -26,31 +26,27 @@ public class StorageMassInsertion extends Packet<ServerController> implements Pa
         boolean failed = false;
         List<Resource> remaining = new ResourceList();
 
-        for(InsertionInstruction instruction: insertions)
-        {
-            if(!failed)
-            {
-                packet = instruction.apply(controller,this.getClientIndex());
-                if(packet!=null)
-                {
+        for(InsertionInstruction instruction: insertions) {
+            if (!failed) {
+                packet = instruction.apply(controller, this.getClientIndex());
+                if (packet != null) {
                     //TODO invert packet(NACK) and Pending gain
                     failed = true;
                     remaining.add(instruction.getResource());
                 }
-            }
-            else
-            {
+                //else controller.removeGain(instrunction.getResource())
+            } else {
                 remaining.add(instruction.getResource());
             }
 
         }
-
 
         if(failed)
         {
             controller.sendMessage(packet,this.getClientIndex());
             controller.sendStorageUpdate(this.getClientIndex());
             return new MarketResult(remaining);
+            //return new MarketResult(controller.getGain)
         }
         else
         {

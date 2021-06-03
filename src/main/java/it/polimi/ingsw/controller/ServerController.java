@@ -38,6 +38,9 @@ public class ServerController{
     protected boolean             isStarted;
     protected  int         idpartita;
 
+
+    //TEST TEMPORANEO
+    //list<Resource>  pendingGain;
     /**
      *
      * @param real if true create a real controller(with clientHandlers) if false an emptyController for accept Login in waitingRoom
@@ -696,6 +699,8 @@ public class ServerController{
         List <Resource> res = m.getPendingResourceExtracted();
         int white           = m.getWhiteCount();
         this.broadcastMessage(-1,new UpdateMiniMarket(direction,pos));
+
+        //PendingGain.addAll(res)
         return  new MarketResult(res,white);
 
     }

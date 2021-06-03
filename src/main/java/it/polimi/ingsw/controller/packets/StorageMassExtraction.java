@@ -34,6 +34,7 @@ public class StorageMassExtraction extends Packet<ServerController> implements P
                     failed = true;
                     remaining.add(instruction.getResource());
                 }
+
             }
             else
             {

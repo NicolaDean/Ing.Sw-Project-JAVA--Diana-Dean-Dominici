@@ -352,6 +352,7 @@ public class GUI extends Observable<ClientController> implements View{
 
         InitialResources dialog = new InitialResources(resourceTypes,num);
         GuiHelper.loadDialog(FXMLpaths.initialResource,"Chose " + num + "of those resources",dialog);
+        //Aggiunge a pending gain
         return dialog.getResources();
     }
 

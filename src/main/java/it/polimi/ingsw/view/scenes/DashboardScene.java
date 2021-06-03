@@ -151,9 +151,6 @@ public class DashboardScene extends BasicSceneUpdater {
         boxes[2]=swap3;
 
 
-
-
-
         showLeaders = false;
         leaderCards.setVisible(false);
         marketbutton.setId("production_card");
@@ -273,25 +270,30 @@ public class DashboardScene extends BasicSceneUpdater {
 
 
                 int finalI = i;
-                p.setOnMouseClicked(event -> {
-                    Platform.runLater(()->{
-                        try {
-                            if(finalI != controller.getMiniModel().getPersanalIndex())
-                            {
-                                //If click on others nickname
-                                GuiHelper.setRoot(FXMLpaths.dashboard,new SpyScene(finalI,player.getNickname()));
+
+                if(finalI != controller.getMiniModel().getPersanalIndex())
+                {
+                    p.setOnMouseClicked(event -> {
+                        Platform.runLater(()->{
+                            try {
+                                if(finalI != controller.getMiniModel().getPersanalIndex())
+                                {
+                                    //If click on others nickname
+                                    GuiHelper.setRoot(FXMLpaths.dashboard,new SpyScene(finalI,player.getNickname()));
+                                }
+                                else
+                                {
+                                    //If click on his nickname
+                                    //GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                            else
-                            {
-                                //If click on his nickname
-                                //GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        });
                     });
-                });
-                this.nicknames.add(p,0,i);
+                    this.nicknames.add(p,0,i);
+                }
+
                 i++;
             }
 
