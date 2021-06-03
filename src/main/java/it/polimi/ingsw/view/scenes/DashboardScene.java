@@ -153,6 +153,7 @@ public class DashboardScene extends BasicSceneUpdater {
 
         initializecheckboxes();
 
+
         showLeaders = false;
         leaderCards.setVisible(false);
         marketbutton.setId("production_card");
