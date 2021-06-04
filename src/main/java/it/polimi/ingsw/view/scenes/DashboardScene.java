@@ -4,7 +4,6 @@ import it.polimi.ingsw.controller.packets.InsertionInstruction;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
-import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
@@ -22,6 +21,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ClipboardContent;
@@ -92,6 +92,8 @@ public class DashboardScene extends BasicSceneUpdater {
     public Button showButton;
     @FXML
     public Button you;
+    @FXML
+    public Pane basicProd;
     //FAITH TRACK
     @FXML
     public List<Pane> faith;
@@ -116,6 +118,9 @@ public class DashboardScene extends BasicSceneUpdater {
     public ImageView bin;
 
     CheckBox lastchecked;
+
+    public CheckBox swap4 = new CheckBox();
+    public CheckBox swap5 = new CheckBox();
 
     CheckBox[] boxes;
 
@@ -148,10 +153,8 @@ public class DashboardScene extends BasicSceneUpdater {
     public void init() {
 
         super.init();
-        boxes = new CheckBox[3];
-        boxes[0]=swap1;
-        boxes[1]=swap2;
-        boxes[2]=swap3;
+
+        initializecheckboxes();
 
 
         showLeaders = false;
@@ -205,6 +208,10 @@ public class DashboardScene extends BasicSceneUpdater {
 
         });
 
+        basicProd.setOnMouseClicked(event->{
+            GuiHelper.getGui().askBasicProduction();
+        });
+
         showButton.setOnMouseClicked(this::showLeader);
         endturn.setOnMouseClicked(event -> {
             this.notifyObserver(controller -> controller.askEndTurn());
@@ -233,6 +240,20 @@ public class DashboardScene extends BasicSceneUpdater {
 
     }
 
+    public void initializecheckboxes()
+    {
+        swap4.setOnAction(actionEvent -> select4());
+        swap5.setOnAction(actionEvent -> select5());
+        boxes = new CheckBox[5];
+        boxes[0]=swap1;
+        boxes[1]=swap2;
+        boxes[2]=swap3;
+        boxes[3]=swap4;
+        boxes[4]=swap5;
+
+
+    }
+
     /**
      * disable swap button (used by SpyScene)
      */
@@ -254,7 +275,7 @@ public class DashboardScene extends BasicSceneUpdater {
 
         this.notifyObserver(controller -> {
 
-            this.nickname .setText(controller.getMiniModel().getPlayers()[this.index].getNickname());
+            this.nickname.setText(controller.getMiniModel().getPlayers()[this.index].getNickname());
 
             int i=0;
             this.nicknames.setAlignment(Pos.CENTER);
@@ -270,6 +291,7 @@ public class DashboardScene extends BasicSceneUpdater {
                 l.setTextAlignment(TextAlignment.CENTER);
                 l.setId("font");
                 l.setAlignment(Pos.CENTER);
+                l.setPrefSize(100,50);
                 p.getChildren().add(l);
 
 
@@ -372,7 +394,8 @@ public class DashboardScene extends BasicSceneUpdater {
         if(player != this.index) return;
 
         System.out.println("Chest update");
-        this.drawChest(chest);
+
+        Platform.runLater(() -> this.drawChest(chest));
     }
 
     @Override
@@ -383,10 +406,7 @@ public class DashboardScene extends BasicSceneUpdater {
         System.out.println("Storage update");
         //Check if update is of client player or other players
         this.notifyObserver(controller -> {
-            if(player== controller.getMiniModel().getPersanalIndex()) {
                 Platform.runLater(() -> this.drawStorage(storage));
-
-            }
         });
 
     }
@@ -687,17 +707,38 @@ public class DashboardScene extends BasicSceneUpdater {
                 if(c.isActive()) {
                     FlowPane leaderdeposit = new FlowPane(15, 12);
                     leaderdeposit.setPrefSize(130, 188);
-                    leaderdeposit.setAlignment(Pos.BOTTOM_CENTER);
+
+                    CheckBox check = new CheckBox();
+
+
                     int index=1;
-                    if(c.getId() == controller.getActivatedLeaders().get(0))
-                        index=0;
+                    check = swap5;
+                    if(c.getId() == controller.getActivatedLeaders().get(0)) {
+                        index = 0;
+                        check=swap4;
+
+                    }
+
+                    check.setAlignment(Pos.BOTTOM_RIGHT);
+
                     if(bonusstorage!=null && bonusstorage[index].getResource()!=null) {
                         for(int k=0; k< bonusstorage[index].getResource().getQuantity(); k++) {
                             ImageView resource = loadImage("/images/resources/" + bonusstorage[index].getResource().getNumericType() +".png", 30, 30);
                             leaderdeposit.getChildren().add(resource);
 
                         }
+                        if(bonusstorage[index].getResource().getQuantity()==2)
+                            leaderdeposit.setAlignment(Pos.BOTTOM_CENTER);
+                        else{
+                            ImageView pippo = loadImage("/images/resources/" + bonusstorage[index].getResource().getNumericType() +".png", 30, 30);
+                            pippo.setVisible(false);
+                            leaderdeposit.getChildren().add(pippo);
+                            leaderdeposit.setAlignment(Pos.BOTTOM_CENTER);
+
+                        }
+
                         pane.getChildren().add(leaderdeposit);
+                        pane.getChildren().add(check);
                     }
                 }
 
@@ -771,35 +812,77 @@ public class DashboardScene extends BasicSceneUpdater {
         });
     }
 
+    @Override
+    public void updateDashCard(ProductionCard card, int pos, int player) {
+        if(player != this.index) return;
+        System.out.println("Card changed");
+
+        Platform.runLater(()->{
+            Image immage = loadImage("/images/cards/productions/" + card.getId() + ".jpg");
+
+            if(this.grid.getChildren().size()>=pos)
+            {
+                this.grid.add(loadImage("/images/cards/productions/" + card.getId() + ".jpg",130,200),pos,0);
+            }else
+            {
+                this.grid.add(loadImage("/images/cards/productions/" + card.getId() + ".jpg",130,200),pos,0);
+            }
+
+
+        });
+
+    }
 
     public void select1()
     {
-        if(swap1.isSelected() && swap2.isSelected() && swap3.isSelected())
-            if(lastchecked != swap2)
-                swap2.setSelected(false);
-            else
-                swap3.setSelected(false);
+        if(countchecked()==3)
+            uncheck(swap1);
         lastchecked = swap1;
     }
 
     public void select2()
     {
-        if(swap1.isSelected() && swap2.isSelected() && swap3.isSelected())
-            if(lastchecked != swap1)
-                swap1.setSelected(false);
-            else
-                swap3.setSelected(false);
+        if(countchecked()==3)
+            uncheck(swap2);
         lastchecked = swap2;
     }
 
     public void select3()
     {
-        if(swap1.isSelected() && swap2.isSelected() && swap3.isSelected())
-            if(lastchecked != swap1)
-                swap1.setSelected(false);
-            else
-                swap2.setSelected(false);
+        if(countchecked()==3)
+            uncheck(swap3);
         lastchecked = swap3;
+    }
+
+    public void select4()
+    {
+        if(countchecked()==3)
+            uncheck(swap4);
+        lastchecked = swap4;
+    }
+    public void select5()
+    {
+        if(countchecked()==3)
+            uncheck(swap5);
+        lastchecked = swap5;
+    }
+
+    public int countchecked()
+    {
+        int count = 0;
+        for (CheckBox c :boxes) {
+            if(c.isSelected())
+                count++;
+        }
+        return count;
+    }
+
+    public void uncheck(CheckBox lmao)
+    {
+        for (CheckBox c :boxes) {
+            if(c.isSelected() && c!=lastchecked && c!=lmao)
+                c.setSelected(false);
+        }
     }
 
 
