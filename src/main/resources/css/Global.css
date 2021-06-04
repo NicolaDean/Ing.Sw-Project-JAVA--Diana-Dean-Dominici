@@ -1,5 +1,5 @@
 .root{
-    -fx-background-image: url("../images/dashboard/dashboard-front.jpg");
+    -fx-background-image: url("../images/logo.jpg");
     -fx-background-size: cover;
 }
 
@@ -83,3 +83,9 @@
     -fx-font-size: 12pt ;
 }
 
+#fancytext{
+
+    -fx-stroke: black;
+    -fx-stroke-width: 2;
+
+}
