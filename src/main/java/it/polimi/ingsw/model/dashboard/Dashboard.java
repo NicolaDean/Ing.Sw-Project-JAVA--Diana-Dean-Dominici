@@ -166,7 +166,6 @@ public class Dashboard {
         boolean output = ResourceOperator.compare(availableRes,tmp);
         if(output)
         {
-            Resource ob = new Resource(obtain,1);
             this.chestInsertion(new Resource(obtain,1));
             this.pendingCost.add(new Resource(spendOne,1));
             this.pendingCost.add(new Resource(spendTwo,1));

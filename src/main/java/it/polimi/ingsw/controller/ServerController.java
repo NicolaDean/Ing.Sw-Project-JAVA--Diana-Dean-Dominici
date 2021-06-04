@@ -317,7 +317,7 @@ public class ServerController{
         }
 
         for (int j = 0; j < nOfplayer-1; j++) { //found player that activate papal cell
-            if(this.game.getPlayers().get(j).getScore()>this.game.getPlayers().get(j+1).getScore())
+            if(this.game.getPlayers().get(j).getPosition()>this.game.getPlayers().get(j+1).getPosition())
                 index=j;
         }
 
@@ -399,7 +399,7 @@ public class ServerController{
      * @param player packet sender index
      */
     public Packet buyCard(int x,int y,int pos,int player){
-        Player p = this.game.getCurrentPlayer();
+        Player p = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex());
 
         if(!isRightPlayer(player)) return this.notYourTurn();
 
@@ -427,7 +427,7 @@ public class ServerController{
      */
     public Packet production(int pos,int player)
     {
-        Player p = this.game.getCurrentPlayer();
+        Player p = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex());
         Dashboard dashboard = p.getDashboard();
 
         if(!isRightPlayer(player)) return this.notYourTurn();
@@ -454,7 +454,7 @@ public class ServerController{
     public Packet basicProduction(ResourceType res1,ResourceType res2, ResourceType obt, int player)
     {
         System.out.println(game.getCurrentPlayer().getNickname());
-        Player p = this.game.getCurrentPlayer();
+        Player p = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex());
         Dashboard dashboard = p.getDashboard();
 
         //if(!isRightPlayer(player)) return this.notYourTurn();
@@ -500,7 +500,7 @@ public class ServerController{
     {
         if(!isRightPlayer(player)) return this.notYourTurn();
 
-        Player p = this.game.getCurrentPlayer();
+        Player p = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex());
 
         try {
             p.storageInsertion(resource,pos);
@@ -521,7 +521,7 @@ public class ServerController{
     {
         if(!isRightPlayer(player)) return this.notYourTurn();
 
-        Player p = this.game.getCurrentPlayer();
+        Player p = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex());;
         try {
             p.payStorageResource(resource,pos);
         } catch (AckManager err) {

@@ -230,13 +230,36 @@ public class GUI extends Observable<ClientController> implements View{
                 InitialResources dialog = new InitialResources(2);
                 GuiHelper.loadDialog(FXMLpaths.initialResource,"Chose trade resources",dialog);
 
-                ResourceType t1 = dialog.getResources().get(0).getType();
-                ResourceType t2 = dialog.getResources().get(1).getType();
+                boolean first = true;
+                ResourceType t1 = null;
+                ResourceType t2 = null;
+                for(int i=0;i<dialog.getResources().size();i++)
+                {
+                    if(first && dialog.getResources().get(i).getQuantity()==2)
+                    {
+                         t1 = dialog.getResources().get(i).getType();
+                         t2 = dialog.getResources().get(i).getType();
+                        i=dialog.getResources().size();
+                    }
+                    else if(first && dialog.getResources().get(i).getQuantity()==1)
+                    {
+                        t1 = dialog.getResources().get(i).getType();
+                        first = false;
+                    }
+                    else if(dialog.getResources().get(i).getQuantity()==1)
+                    {
+                        t2 = dialog.getResources().get(i).getType();
+                        i=dialog.getResources().size();
+                    }
+                }
 
-                dialog = new InitialResources(1);
-                GuiHelper.loadDialog(FXMLpaths.initialResource,"Chose resource to obtain",dialog);
 
-                ResourceType obt = dialog.getResources().get(0).getType();
+                InitialResources dialog2 = new InitialResources(1);
+                GuiHelper.loadDialog(FXMLpaths.initialResource,"Chose resource to obtain",dialog2);
+
+                ResourceType obt = null;
+                for(Resource res: dialog2.getResources())
+                    if(res.getQuantity()==1) obt = res.getType();
 
                 controller.sendBasicProduction(t1,t2,obt);
 

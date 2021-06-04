@@ -137,6 +137,7 @@ public class ResourceOperator {
     {
         List<Resource> out = new ResourceList();
 
+        if(b == null) return a;
 
         for(Resource res1 : a)
         {
