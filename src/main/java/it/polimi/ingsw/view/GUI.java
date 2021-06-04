@@ -368,9 +368,6 @@ public class GUI extends Observable<ClientController> implements View{
 
             this.askResourceInsertion(dialog.getResources());
         });
-
-
-
     }
 
     @Override

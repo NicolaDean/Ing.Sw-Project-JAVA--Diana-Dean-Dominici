@@ -682,7 +682,7 @@ public class CLI extends Observable<ClientController> implements View {
                             removed.add(discRes);
 
                             //SEND TO SERVER DISCARD MESSAGE
-                            this.notifyObserver(controller->{controller.sendResourceDiscard(discRes.getQuantity());});
+                            this.notifyObserver(controller->{controller.sendResourceDiscard(discRes.getQuantity(),discRes.getType());});
 
                             //TODO SI PTOREBBE INVIARE TUTTE LE RISORSE SCARTATE IN BLOCCO (ora lo fa per i singoli tipi di risorsa)
                             resDiscarded.add(discRes);

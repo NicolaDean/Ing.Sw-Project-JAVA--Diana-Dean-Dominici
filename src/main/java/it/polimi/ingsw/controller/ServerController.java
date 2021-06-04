@@ -37,10 +37,10 @@ public class ServerController{
     protected boolean             isSinglePlayer;
     protected boolean             isStarted;
     protected  int         idpartita;
+    List<Resource>      pendingGain;
 
 
-    //TEST TEMPORANEO
-    //list<Resource>  pendingGain;
+
     /**
      *
      * @param real if true create a real controller(with clientHandlers) if false an emptyController for accept Login in waitingRoom
@@ -51,6 +51,7 @@ public class ServerController{
         this.isStarted = false;
         this.game = new Game();
         this.lock = new Object();
+        this.pendingGain = new ResourceList();
         if(real)  clients = new ArrayList<>();//If is a real controller create also ClientHandlers
     }
 
@@ -699,6 +700,10 @@ public class ServerController{
         return new ACK(0);
     }
 
+    public List<Resource> getPendingGain() {
+        return pendingGain;
+    }
+
     /**
      *
      * @param direction row or column (row = false,col = true)
@@ -735,7 +740,7 @@ public class ServerController{
         int white           = m.getWhiteCount();
         this.broadcastMessage(-1,new UpdateMiniMarket(direction,pos));
 
-        //PendingGain.addAll(res)
+        pendingGain.addAll(res);
         return  new MarketResult(res,white);
 
     }

@@ -6,6 +6,7 @@ import it.polimi.ingsw.controller.packets.ACK;
 import it.polimi.ingsw.controller.packets.MarketResult;
 import it.polimi.ingsw.controller.packets.PendingCost;
 import it.polimi.ingsw.controller.packets.UpdatePosition;
+import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
@@ -150,7 +151,7 @@ public class JsonInterpreterTest {
         System.out.println( new MarketExtraction(false,1).generateJson());
         System.out.println( new StorageMassExtraction(false,ins).generateJson());
         System.out.println( new ActivateLeader(1,false).generateJson());
-        System.out.println( new DiscardResource(1).generateJson());
+        System.out.println( new DiscardResource(1, COIN).generateJson());
         System.out.println( new SwapDeposit(1,2).generateJson());
         System.out.println( new SetTurnType(2).generateJson());
         System.out.println( new EndTurn().generateJson());

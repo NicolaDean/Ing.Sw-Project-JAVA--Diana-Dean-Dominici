@@ -30,11 +30,9 @@ public class StorageMassInsertion extends Packet<ServerController> implements Pa
             if (!failed) {
                 packet = instruction.apply(controller, this.getClientIndex());
                 if (packet != null) {
-                    //TODO invert packet(NACK) and Pending gain
                     failed = true;
                     remaining.add(instruction.getResource());
-                }
-                //else controller.removeGain(instrunction.getResource())
+                }else controller.getPendingGain().remove(instruction.getResource());
             } else {
                 remaining.add(instruction.getResource());
             }
@@ -45,16 +43,18 @@ public class StorageMassInsertion extends Packet<ServerController> implements Pa
         {
             controller.sendMessage(packet,this.getClientIndex());
             controller.sendStorageUpdate(this.getClientIndex());
-            return new MarketResult(remaining);
-            //return new MarketResult(controller.getGain)
+            //return new MarketResult(remaining);
+            return new MarketResult(controller.getPendingGain());
         }
-        else
+
+        if(remaining.isEmpty()&&controller.getPendingGain().isEmpty())
         {
             controller.sendMessage(new ACK(0),this.getClientIndex());
             controller.sendStorageUpdate(this.getClientIndex());
 
             return new OperationCompleted();
         }
-
+        controller.sendStorageUpdate(this.getClientIndex());
+        return new MarketResult(controller.getPendingGain());
     }
 }
