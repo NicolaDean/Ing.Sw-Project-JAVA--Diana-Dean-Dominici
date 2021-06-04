@@ -321,7 +321,6 @@ public class GUI extends Observable<ClientController> implements View{
             Platform.runLater(()->this.notifyObserver(ClientController::askLeaders));;         //SHOW DIALOG with leaders
             Platform.runLater(()->this.notifyObserver(ClientController::askInitialResoruce));  //SHOW DIALOG WHIT initial resources
             this.notifyObserver(ClientController::showDashboard);
-            firstTurn = false;
         }
         else
         {
@@ -399,7 +398,10 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void askInitialResoruce(int number) {
 
-        if(number == 0) return;
+        if(number == 0){
+            firstTurn = false;
+            return;
+        }
 
         InitialResources dialog = new InitialResources(number);
 
@@ -471,7 +473,18 @@ public class GUI extends Observable<ClientController> implements View{
         this.notifyObserver(clientController -> isMyTurn=clientController.isMyTurn());
 
         if(isMyTurn) {
+
             Platform.runLater(() -> {
+                if(firstTurn)
+                {
+                    try {
+                        GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    firstTurn = false;
+                    return;
+                }
                 if (GuiHelper.YesNoDialog("End TURN", "Do you want to end turn?")) {
                     this.notifyObserver(ClientController::sendDashReset);
                     this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
