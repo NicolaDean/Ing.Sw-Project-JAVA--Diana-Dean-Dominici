@@ -500,7 +500,7 @@ public class DashboardScene extends BasicSceneUpdater {
     }
 
     /**
-     * disable buttons only if we are in "resources insertion" mode
+     * disable buttons only if we are in "resources insertion" mode and activate pannel for resources
      * @param b
      */
     public void doThisJustIfIsHereFromMarketExtraction(Boolean b){
@@ -537,9 +537,10 @@ public class DashboardScene extends BasicSceneUpdater {
      * function called when something is dragged and dropped on the bin
      * @param event drag event
      */
-    public void binOnDragDropper(DragEvent event)
+    public void  binOnDragDropper(DragEvent event)
     {
         String s = event.getDragboard().getString();
+        ResourceType res = ResourceType.valueOf(event.getDragboard().getString());
         System.out.println(s);
         int i;
         boolean contains=false;
@@ -565,7 +566,7 @@ public class DashboardScene extends BasicSceneUpdater {
                         this.marketInsersion.getChildren().remove(j);
             }
 
-            this.notifyObserver(controller->{controller.sendResourceDiscard(1);});
+            this.notifyObserver(controller->{controller.sendResourceDiscard(1,res);});
 
         }
         else
@@ -606,24 +607,13 @@ public class DashboardScene extends BasicSceneUpdater {
 
         try{
 
-            tmpStorage[position].safeInsertion(new Resource(res,ResourceOperator.extractQuantityOf(res,resourceExtracted)));
+            tmpStorage[position].safeInsertion(new Resource(res,1));
 
-            //temporaneo-----------------------------------------------------------------------------------------------------------------------------
-            if(ResourceOperator.extractQuantityOf(res,resourceExtracted)>1){
-                for (int j = 0; j < this.marketInsersion.getChildren().size(); j++) {
-                    if(this.marketInsersion.getChildren().get(j)!=null)
-                        if(this.marketInsersion.getChildren().get(j).getId().equals( "x2" ))
-                            this.marketInsersion.getChildren().remove(j);
-
-                }
-            }
-            //----------------------------------------------------------------------------------------------------
 
             //rimuovo da resourceexstracted quello che ho droppato e lo aggiungo a resourceinsered
-            //TODO da modificare il fatto che 2 risorse dello stesso tipo vanno messe insieme
-            this.resourceInsertedInstraction.add(new InsertionInstruction(new Resource(res, ResourceOperator.extractQuantityOf(res,resourceExtracted)), position));
-            this.resourceExtracted.remove(new Resource(res, ResourceOperator.extractQuantityOf(res,resourceExtracted)));
-            this.resourceInserted.add(new Resource(res, ResourceOperator.extractQuantityOf(res,resourceExtracted)));
+            this.resourceInsertedInstraction.add(new InsertionInstruction(new Resource(res, 1), position));
+            this.resourceExtracted.remove(new Resource(res, 1));
+            this.resourceInserted.add(new Resource(res, 1));
 
 
 
@@ -632,6 +622,7 @@ public class DashboardScene extends BasicSceneUpdater {
                 if(this.marketInsersion.getChildren().get(j)!=null)
                     if(this.marketInsersion.getChildren().get(j).getId().equals( res.toString() )) {
                         this.marketInsersion.getChildren().remove(j);
+                        break;
                     }
             }
 
@@ -644,12 +635,12 @@ public class DashboardScene extends BasicSceneUpdater {
 
 
         //se non c'è piu niente invia il pacchetto
-        if(this.resourceExtracted.isEmpty()){
+//        if(this.resourceExtracted.isEmpty()){
             this.notifyObserver(controller -> {
                 controller.sendResourceInsertion(resourceInsertedInstraction);
-                this.drawStorage(controller.getMiniModel().getStorage());
+                //this.drawStorage(controller.getMiniModel().getStorage());
             });
-        }
+  //      }
 
         event.consume();
     }
@@ -657,22 +648,14 @@ public class DashboardScene extends BasicSceneUpdater {
     private void printResourceExtracted(){
         for (int i = 0; i < resourceExtracted.size(); i++) {
             if(resourceExtracted.get(i).getQuantity()>0) {
-                //for(int j = 0; j < resourceExtracted.get(i).getQuantity(); j++) {
+                for(int j = 0; j < resourceExtracted.get(i).getQuantity(); j++) {
 
                 int name = resourceExtracted.get(i).getType().ordinal() + 1;
                 ImageView img = loadImage("/images/resources/" + name + ".png", 60, 60);
                 img.setId(resourceExtracted.get(i).getType().toString());
 
                 marketInsersion.getChildren().add(img);
-                //temporaneo----------------------------------------
-                Text x2;
-                if(resourceExtracted.get(i).getQuantity()>1){
-                    x2=new Text("x2");
-                    x2.setFill(Color.WHITE);
-                    x2.setId("x2");
-                    marketInsersion.getChildren().add(x2);
-                }
-                //--------------------------------------------------------
+
 
                 //Set image as draggable
                 img.setOnDragDetected(event -> {
@@ -692,7 +675,7 @@ public class DashboardScene extends BasicSceneUpdater {
                     event.consume();
 
                 });
-                //}
+                }
             }
         }
     }

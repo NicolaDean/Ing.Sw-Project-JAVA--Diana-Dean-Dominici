@@ -363,9 +363,9 @@ public class ClientController implements Runnable{
 
     }
 
-    public void sendResourceDiscard(int quantity)
+    public void sendResourceDiscard(int quantity,ResourceType type)
     {
-        this.sendMessage(new DiscardResource(quantity));
+        this.sendMessage(new DiscardResource(quantity,type));
     }
 
     public void storageUpdate(Deposit[] deposits,int index)

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 public class GuiTest {
 
-    @Test
+    @Disabled
     public void showMarketTest(){
         View v=new GUI();
         Market m=new Market();
