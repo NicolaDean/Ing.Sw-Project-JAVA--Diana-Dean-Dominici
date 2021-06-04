@@ -15,9 +15,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+
 <?import java.util.ArrayList?>
-
-
 <StackPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/Background.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
     <children>
       <Group fx:id="group">
@@ -194,15 +193,6 @@
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <Pane id="nicknames" layoutX="780.0" layoutY="162.0" prefHeight="187.0" prefWidth="175.0" stylesheets="@../css/Global.css">
-                           <children>
-                              <GridPane fx:id="nicknames" layoutX="30.0" layoutY="27.0" prefHeight="131.0" prefWidth="132.0" style="-fx-background-image: none;" />
-                              <Button id="button" fx:id="you" layoutX="62.0" layoutY="161.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="70.0" stylesheets="@../css/Global.css" text="YOU">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Button>
-                           </children></Pane>
                         <Pane fx:id="basicProd" layoutX="221.0" layoutY="433.0" prefHeight="103.0" prefWidth="107.0" />
                         <ImageView fitHeight="50.0" fitWidth="293.0" layoutX="-24.0" layoutY="-25.0" pickOnBounds="true">
                            <image>
@@ -246,6 +236,16 @@
                         <Font name="LillyBelle" size="22.0" />
                      </font>
                   </Text>
+                  <Pane id="nicknames" layoutX="88.0" layoutY="436.0" prefHeight="187.0" prefWidth="175.0" stylesheets="@../css/Global.css">
+                     <children>
+                        <GridPane fx:id="nicknames" layoutX="30.0" layoutY="27.0" prefHeight="131.0" prefWidth="132.0" style="-fx-background-image: none;" />
+                        <Button id="button" fx:id="you" layoutX="62.0" layoutY="161.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="70.0" stylesheets="@../css/Global.css" text="YOU">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
                </children>
             </AnchorPane>
          </children>

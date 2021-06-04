@@ -46,9 +46,9 @@
    <children>
       <Group>
          <children>
-            <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="600.0" prefWidth="800.0" styleClass="root" stylesheets="@../css/Global.css">
+            <AnchorPane layoutX="-55.0" layoutY="380.0" maxHeight="-1.0" maxWidth="-1.0" prefHeight="720.0" prefWidth="1280.0" styleClass="root" stylesheets="@../css/Global.css">
                <children>
-                  <Label layoutX="160.0" layoutY="235.0" prefHeight="130.0" prefWidth="463.0" text="Waiting other player">
+                  <Label id="fancytext" layoutX="473.0" layoutY="-23.0" prefHeight="130.0" prefWidth="463.0" style="-fx-f: black; -fx-stroke-width: 2;" text="Waiting for other players ">
                      <font>
                         <Font name="System Bold" size="43.0" />
                      </font>
@@ -69,27 +69,27 @@
                         </RadialGradient>
                      </textFill>
                   </Label>
-                  <Button id="button" fx:id="start" layoutX="297.0" layoutY="364.0" mnemonicParsing="false" onAction="#startGame" prefHeight="67.0" prefWidth="171.0"  stylesheets="@../css/Global.css" text="Start Game" textFill="WHITE">
+                  <Button id="button" fx:id="start" layoutX="604.0" layoutY="601.0" mnemonicParsing="false" onAction="#startGame" prefHeight="67.0" prefWidth="171.0" stylesheets="@../css/Global.css" text="Start Game" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Button>
-                  <Label fx:id="first_user" layoutX="635.0" layoutY="222.0" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #ccffcc;" text="Nicola">
+                  <Label fx:id="first_user" layoutX="1089.0" layoutY="97.0" prefHeight="30.0" prefWidth="124.0" style="-fx-background-color: #111111;" text="Nicola">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
-                  <Label fx:id="second_user" layoutX="635.0" layoutY="263.0" prefHeight="30.0" prefWidth="119.0" style="-fx-background-color: #ccffcc;" text="Riccardo">
+                  <Label fx:id="second_user" layoutX="1089.0" layoutY="157.0" prefHeight="30.0" prefWidth="121.0" style="-fx-background-color: #111111;" text="Riccardo">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
-                  <Label fx:id="third_user" layoutX="635.0" layoutY="309.0" prefHeight="30.0" prefWidth="119.0" style="-fx-background-color: #ccffcc;" text="Federico">
+                  <Label fx:id="third_user" layoutX="1088.0" layoutY="217.0" prefHeight="30.0" prefWidth="123.0" style="-fx-background-color: #111111;" text="Federico">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
-                  <Label fx:id="fourth_user" layoutX="639.0" layoutY="355.0" prefHeight="30.0" prefWidth="119.0" style="-fx-background-color: #ccffcc;" text="Leonardo">
+                  <Label fx:id="fourth_user" layoutX="1088.0" layoutY="273.0" prefHeight="30.0" prefWidth="123.0" style="-fx-background-color: #111111;" text="Leonardo">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
