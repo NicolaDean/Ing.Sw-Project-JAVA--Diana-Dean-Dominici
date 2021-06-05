@@ -193,14 +193,35 @@ public class DashboardScene extends BasicSceneUpdater {
             int count = 0;
             List<Integer> d = new ArrayList<Integer>();
             for(int i=0; i<boxes.length;i++) {
-                if (boxes[i].isSelected() == true) {
+                if (boxes[i]==lastchecked) {
                     d.add(i);
                     count++;
                 }
             }
 
-            if(count==2)
-                this.notifyObserver(controller -> controller.askSwap(d.get(0)+1,d.get(1)+1));
+            for(int i=0; i<boxes.length;i++) {
+                if (boxes[i].isSelected() == true && boxes[i]!=lastchecked) {
+                    d.add(i);
+                    count++;
+                }
+            }
+
+
+
+
+
+            if(count==2) {
+                if(checkifmove())
+                {
+                    AtomicInteger answer = new AtomicInteger();
+                    MoveScene dialog = new MoveScene(answer);
+
+                    loadDialog(FXMLpaths.move,"Move resources",dialog);
+                    this.notifyObserver(controller -> controller.askMove(d.get(1) , d.get(0), answer.get()));
+                }
+                else
+                    this.notifyObserver(controller -> controller.askSwap(d.get(0) + 1, d.get(1) + 1));
+            }
 
             for(int i=0; i<boxes.length;i++) {
                 boxes[i].setSelected(false);
@@ -252,6 +273,19 @@ public class DashboardScene extends BasicSceneUpdater {
         boxes[4]=swap5;
 
 
+    }
+
+    public boolean checkifmove()
+    {
+        List<Integer> selected = new ArrayList<>();
+        for(int i=0; i<boxes.length;i++) {
+            if (boxes[i].isSelected() == true) {
+                selected.add(i);
+            }
+        }
+        if(selected.get(0)>2 || selected.get(1)>2)
+            return true;
+        return false;
     }
 
     /**
@@ -433,6 +467,7 @@ public class DashboardScene extends BasicSceneUpdater {
         removeElementFromGridPane(deposit1);
         removeElementFromGridPane(deposit2);
         removeElementFromGridPane(deposit3);
+
         if (storage[1].getResource() != null) {
 
             for (int i = 0; i < storage[1].getResource().getQuantity(); i++) {
