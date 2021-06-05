@@ -178,6 +178,7 @@ public class Storage {
         if(pos1 <3 && pos2 >=3)
         {
             //da pos1 normale a pos2 bonus
+            System.out.println("\nda pos1 normale a pos2 bonus\n");
             if(storage[pos1].getResource()==null)
                 throw new IllegalResourceMove("The starting deposit is empty.");
             if(storage[pos1].getResource().getQuantity()<q)
@@ -208,6 +209,7 @@ public class Storage {
         if(pos2 <3 && pos1 >=3)
         {
             //da pos1 bonus a pos2 normale
+            System.out.println("\nda pos1 bonus a pos2 normale\n");
             if(storage[pos1].getResource().getQuantity()==0)
                 throw new IllegalResourceMove("The starting deposit is empty.");
             if(storage[pos1].getResource().getQuantity()<q)

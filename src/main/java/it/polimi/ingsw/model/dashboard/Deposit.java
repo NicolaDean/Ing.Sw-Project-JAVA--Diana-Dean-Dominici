@@ -104,7 +104,6 @@ public class Deposit {
     {
         resource = new Resource(Rtype, Rquantity);
         if (Rquantity == -1) {
-            System.out.println("!! entrato...");
             resource = null;
         }
     }
