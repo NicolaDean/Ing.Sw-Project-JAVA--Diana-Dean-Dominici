@@ -214,10 +214,18 @@ public class Storage {
                 throw new IllegalResourceMove("The starting deposit is empty.");
             if(storage[pos1].getResource().getQuantity()<q)
                 throw new IllegalResourceMove("You don't have enough resources in the first deposit.");
+
             if(storage[pos2].getResource()!=null)
             {
+                if(storage[pos2].sizeMax-storage[pos2].getResource().getQuantity() < q)
+                    throw new IllegalResourceMove("the second deposit dosn't have enough space!");
                 if(storage[pos2].getResource().getType()!=storage[pos1].getResource().getType())
                     throw new IllegalResourceMove("You can't insert this type of resource in this deposit.");
+            }
+            else
+            {
+                if(storage[pos2].sizeMax < q)
+                    throw new IllegalResourceMove("the second deposit dosn't have enough space!");
             }
             resource = new Resource(storage[pos1].getResource().getType(), q);
             try {
@@ -225,6 +233,7 @@ public class Storage {
                 safeInsertion(resource, pos2);
             } catch (Exception e)
             {
+                System.out.println("l'ho lanciata bro\n\n");
                 throw e;
             }
 
