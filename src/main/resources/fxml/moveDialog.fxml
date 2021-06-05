@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<DialogPane id="dialog" fx:id="dialog" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="486.0" stylesheets="@../css/Global.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<DialogPane id="dialog" fx:id="dialog" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="486.0" stylesheets="@../css/Global.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <header>
-      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="377.0" prefWidth="486.0" stylesheets="@../css/Cards.css">
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="105.0" prefWidth="486.0" stylesheets="@../css/Cards.css">
          <children>
-            <Text fill="WHITE" layoutX="120.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How many resources you want to move?" wrappingWidth="241.85272216796875" />
-            <Button fx:id="option1" layoutX="265.0" layoutY="288.0" mnemonicParsing="false" onAction="#selected2" text="2" />
-            <Button fx:id="option2" layoutX="180.0" layoutY="288.0" mnemonicParsing="false" onAction="#selected1" prefHeight="26.0" prefWidth="27.0" text="1" />
+            <Text id="fancytext" fill="WHITE" layoutX="115.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How many resources do you want to move?" wrappingWidth="267.7480163574219" />
+            <Button fx:id="option1" layoutX="275.0" layoutY="76.0" mnemonicParsing="false" onAction="#selected2" text="2" />
+            <Button fx:id="option2" layoutX="174.0" layoutY="75.0" mnemonicParsing="false" onAction="#selected1" prefHeight="26.0" prefWidth="27.0" text="1" />
          </children>
       </AnchorPane>
    </header>

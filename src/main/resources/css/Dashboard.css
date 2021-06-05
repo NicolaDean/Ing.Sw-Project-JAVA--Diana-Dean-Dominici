@@ -60,3 +60,11 @@
 
     -fx-background-color: #29e367;
 }
+
+#fancytext2{
+
+    -fx-stroke: black;
+
+    -fx-font-family: Papyrus;
+
+}
