@@ -11,8 +11,8 @@
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="105.0" prefWidth="486.0" stylesheets="@../css/Cards.css">
          <children>
             <Text id="fancytext" fill="WHITE" layoutX="115.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How many resources do you want to move?" wrappingWidth="267.7480163574219" />
-            <Button fx:id="option1" layoutX="275.0" layoutY="76.0" mnemonicParsing="false" onAction="#selected2" text="2" />
-            <Button fx:id="option2" layoutX="174.0" layoutY="75.0" mnemonicParsing="false" onAction="#selected1" prefHeight="26.0" prefWidth="27.0" text="1" />
+            <Button id="button" fx:id="option1" layoutX="274.0" layoutY="73.0" mnemonicParsing="false" onAction="#selected2" prefHeight="33.0" prefWidth="79.0" stylesheets="@../css/Global.css" text="2" />
+            <Button id="button" fx:id="option2" layoutX="125.0" layoutY="73.0" mnemonicParsing="false" onAction="#selected1" prefHeight="33.0" prefWidth="77.0" stylesheets="@../css/Global.css" text="1" />
          </children>
       </AnchorPane>
    </header>
