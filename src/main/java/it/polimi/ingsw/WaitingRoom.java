@@ -2,6 +2,11 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.LorenzoServerController;
 import it.polimi.ingsw.controller.ServerController;
+import it.polimi.ingsw.controller.packets.ACK;
+import it.polimi.ingsw.controller.packets.Packet;
+import it.polimi.ingsw.controller.packets.Reconnect;
+import it.polimi.ingsw.enumeration.ErrorMessages;
+import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.utils.CliColors;
 import it.polimi.ingsw.view.utils.Logger;
 
@@ -17,12 +22,12 @@ public class WaitingRoom extends ClientHandler{
     private final ExecutorService executor;
     int currentClient = 0;
 
-    public WaitingRoom(Socket socket,List<ServerController> controllers,ServerController fakeController,ExecutorService executor)
+    public WaitingRoom(Socket socket, List<ServerController> controllers, ServerController fakeController, ExecutorService executor)
     {
         super(socket,fakeController);
-        this.fakeController = fakeController;
-        this.controllers = controllers;
-        this.executor = executor;
+        this.fakeController     = fakeController;
+        this.controllers        = controllers;
+        this.executor           = executor;
     }
 
 
@@ -39,7 +44,7 @@ public class WaitingRoom extends ClientHandler{
     @Override
     public boolean exitCondition()
     {
-        boolean out = !(fakeController.getGame().getPlayers().size() == 1);
+        boolean out = !(fakeController.getGame().getPlayers().size() == 1) && !fakeController.isReconnected();
 
         return out;
     }
@@ -74,6 +79,15 @@ public class WaitingRoom extends ClientHandler{
         boolean out = exitCondition();
         if(!out)
         {
+
+            if(this.interpreter.getController().isReconnected())
+            {
+                DebugMessages.printError("Reconnection in progress");
+                Reconnect r = (Reconnect) this.interpreter.getController().getReconnected();
+
+                this.reconnect(r.getId(),r.getNickname());
+                return;
+            }
             String nickname = fakeController.getGame().getPlayer(0).getNickname();
 
             ServerController c;
@@ -81,6 +95,8 @@ public class WaitingRoom extends ClientHandler{
             {
                 //Create single player
                 c = new LorenzoServerController();
+                c.setMatchId(this.controllers.size());
+                this.controllers.add(c);
             }
             else
             {
@@ -101,6 +117,28 @@ public class WaitingRoom extends ClientHandler{
         }
     }
 
+    public Packet reconnect(long id, String nickname)
+    {
+        DebugMessages.printError("Try to reconnect to match " + id + " -> " + nickname);
+        for(ServerController match:this.controllers)
+        {
+            if(match.getMatchId()==id)
+            {
+                //Create new ClientHandler with this controller
+                ClientHandler handler = new ClientHandler(this.getSocket(),match);
+                //Add Handler to Real Controller
+                //Create Thread
+                this.createRealClientThread(handler);
+
+                match.reconnect(handler,nickname);
+                handler.respondToClient();
+                //TODO generate Minimodel
+                return new ACK(0);
+            }
+        }
+
+        return new ACK(ErrorMessages.AlreadyUsed);
+    }
     /**
      * Create a new Thread to handle the client connection
      * @param clientHandler
@@ -126,18 +164,20 @@ public class WaitingRoom extends ClientHandler{
         {
             if(!controller.isFull(nickname))
             {
+                //if(controller.isStarted()) this.controllers.remove(controller)
                 terminal.out.printlnColored("Player logged to the "+ i + "^ Match", CliColors.GREEN_TEXT,CliColors.BLACK_BACKGROUND);
                 return controller;
             }
             i++;
         }
+
         if(i>0)
             System.out.println("All match Full, new one created");
         terminal.out.printlnColored("Player logged to the "+ i + "^ Match", CliColors.GREEN_TEXT,CliColors.BLACK_BACKGROUND);
 
 
         ServerController c = new ServerController(true);
-        c.setIdpartita(i);
+        c.setMatchId(i);
         controllers.add(c);
         return c;
     }

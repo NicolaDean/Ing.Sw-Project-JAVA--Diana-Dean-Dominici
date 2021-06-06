@@ -17,13 +17,16 @@ public class ServerApp {
     private final ExecutorService   executor;
     private final int               port;
     private ServerSocket            serverSocket;
+    private long                    matchId;
     List<ServerController>          availableControllers;
+    List<ServerController>          startedControllers;
 
     public ServerApp(int port)
     {
-        this.executor= Executors.newCachedThreadPool();
-        this.port = port;
+        this.executor             = Executors.newCachedThreadPool();
+        this.port                 = port;
         this.availableControllers = new ArrayList<>();
+        this.matchId              = 0;
     }
 
     /**

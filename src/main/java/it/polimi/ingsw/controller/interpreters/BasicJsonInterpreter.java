@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller.interpreters;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import it.polimi.ingsw.WaitingRoom;
 import it.polimi.ingsw.controller.packets.PacketManager;
 
 public class BasicJsonInterpreter {
@@ -9,6 +10,7 @@ public class BasicJsonInterpreter {
     JsonParser parser;
     PacketManager response;
     boolean responseAvailable;
+
 
     public BasicJsonInterpreter()
     {

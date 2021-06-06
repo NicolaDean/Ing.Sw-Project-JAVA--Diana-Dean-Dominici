@@ -1,5 +1,9 @@
 package it.polimi.ingsw.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.controller.interpreters.JsonInterpreterClient;
 import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.controller.pingManager.PongController;
@@ -9,6 +13,7 @@ import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
+import it.polimi.ingsw.model.factory.CardFactory;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniModel;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
@@ -21,8 +26,7 @@ import it.polimi.ingsw.view.utils.ErrorManager;
 import it.polimi.ingsw.view.CLI;
 import it.polimi.ingsw.view.View;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +43,7 @@ public class ClientController implements Runnable{
     private PrintWriter           output;
     private JsonInterpreterClient interpreter;
 
+    private final Object          lock;
 
     private PongController        pongController;
     private int                   index;
@@ -50,7 +55,7 @@ public class ClientController implements Runnable{
     private MiniModel             model;
     private AckExample            resolver;
 
-    private List<Integer> activatedLeaders;
+    private List<Integer>         activatedLeaders;
 
 
 
@@ -68,7 +73,7 @@ public class ClientController implements Runnable{
         this.errorManager = new ErrorManager();
         this.resolver = new AckExample();
         model= new MiniModel(); //provvisiorio
-
+        this.lock = new Object();
     }
 
 
@@ -86,6 +91,13 @@ public class ClientController implements Runnable{
         return activatedLeaders;
     }
 
+
+    public void setInformation(MiniModel model, BasicBall[][] miniBallsMarket, BasicBall miniBallDiscarted)
+    {
+        DebugMessages.printError("LOOOOOL");
+        this.model = model;
+        view.setMarket(miniBallsMarket,miniBallDiscarted);
+    }
     /*
      * set all initial information into miniMarted
      */
@@ -152,23 +164,40 @@ public class ClientController implements Runnable{
 
     public ClientController() {
 
+        lock = new Object();
     }
 
+    /**
+     * Print to player that game started
+     */
     public void printGameStarted()
     {
         this.view.showGameStarted();
     }
 
+    /**
+     * retrive Error messages (string) from and int code inside NACK
+     * @param code
+     */
     public void exampleACK(int code)
     {
         this.view.showError(errorManager.getErrorMessageFromCode(code));
     }
 
 
+    /**
+     * Set connection to server  status
+     * @param conn connection status
+     */
     public void setConnected(boolean conn)
     {
         this.connected = conn;
     }
+
+    /**
+     * set this controller player index inside server game model
+     * @param index player index inside game model
+     */
     public void setIndex(int index)
     {
         if(!connected)
@@ -180,6 +209,9 @@ public class ClientController implements Runnable{
         }
     }
 
+    /**
+     * Start the Reading/input channel of the socket (wait for packets)
+     */
     public void starttolisten(){
 
         Thread t = new Thread(this);
@@ -187,34 +219,65 @@ public class ClientController implements Runnable{
         t.start();
     }
 
+    /**
+     *
+     * @return true if connected/false if socket failed
+     */
     public boolean isConnected() {
         return connected;
     }
 
+    /**
+     *
+     * @return the pong controller object, used to set ping recived
+     */
     public PongController getPongController() {
         return pongController;
     }
 
+    /**
+     * Set a gui scene as an observer to the minimodel
+     * @param currScene scene to set as observer
+     */
     public void addModelObserver(BasicSceneUpdater currScene)
     {
         this.model.setModelObserver(currScene);
     }
 
+    /**
+     * send to server a BUYCARD packet
+     * @param x     x pos in deck
+     * @param y     y pos in deck
+     * @param pos   dashboard position
+     */
     public void sendBuyCard(int x,int y,int pos)
     {
         this.sendMessage(new BuyCard(x,y,pos));
     }
 
+    /**
+     * send to server a PRODUCTION packet
+     * @param pos dashboard position to activate
+     */
     public void sendProduction(int pos)
     {
         this.sendMessage(new Production(pos));
     }
 
+    /**
+     * send to server a BASIC PRODUCTION packet
+     * @param res1  resource to pay
+     * @param res2  resource to pay
+     * @param obt   wanted resource
+     */
     public void sendBasicProduction(ResourceType res1, ResourceType res2, ResourceType obt)
     {
         this.sendMessage(new BasicProduction(res1,res2,obt, index));
     }
 
+    /**
+     * show Players nicknames (called at first start to show turns order)
+     */
     public void showAvailableNickname()
     {
         int i=0;
@@ -224,26 +287,50 @@ public class ClientController implements Runnable{
             i++;
         }
     }
+
+    /**
+     * notify players that game ended (in cli show dashboard of current player, in GUI show a Points Scene)
+     */
     public void endGame()
     {
         this.showDashboard();
         DebugMessages.printWarning("GAME ENDED, SOMEONE DISCONNECT");
 
     }
+
+    /**
+     * call view method to print "index" player dashboard
+     * @param index player to spy
+     */
     public void spyPlayer(int index)
     {
         MiniPlayer p = this.model.getPlayers()[index];
         this.view.showPlayer(p.getStorage(),p.getChest(),p.getDecks(),p.getLeaderCards(),p.getNickname());
     }
+
+    /**
+     * Update leaders inside minimodel
+     * @param leaderCard New leaders
+     * @param index      player which do the update
+     */
     public void updateLeader(LeaderCard [] leaderCard,int index)
     {
         this.model.getPlayers()[index].setLeaderCards(leaderCard);
     }
 
+    /**
+     * send to server a Leader Select packet to choose initial leader
+     * @param pos1 first leader
+     * @param pos2 second leader
+     */
     public void sendLeader(int pos1,int pos2)
     {
         this.sendMessage(new SelectLeader(pos1,pos2));
     }
+
+    /**
+     * show view method to ask player which initila leaders he want
+     */
     public void askLeaders()
     {
         int index = this.model.getPersanalIndex();
@@ -251,28 +338,47 @@ public class ClientController implements Runnable{
         this.view.askLeaders(p.getLeaderCards());
     }
 
-    public void showLeaders()
-    {
-        //TODO showLeaders
-    }
+
+    /**
+     * send to server a request to activate leader in pos
+     * @param pos leader to activate
+     */
     public void activateLeader(int pos)
     {
         this.sendMessage(new ActivateLeader(pos,true));
     }
 
+    /**
+     * send to server a request to discard leader in pos
+     * @param pos leader to discard
+     */
     public void discardLeader(int pos)
     {
         this.sendMessage(new ActivateLeader(pos,false));
     }
+
+    /**
+     * method called by CLI when "she" need to abort "waitingOtherTurn" help command loop
+     *
+     * User are blocked inside an "infinite" help command loop where he can only use commands inside help list
+     */
     public void abortHelp()
     {
         this.view.abortHelp();
     }
+
+    /**
+     * show "welcome" message to user
+     */
     public void startGame()
     {
         view.printWelcomeScreen();
     }
 
+
+    /**
+     * Send to server a request to start the match (if thers 2 or more players inside the game the match will start)
+     * */
 
     public void sendStartCommand()
     {
@@ -284,6 +390,26 @@ public class ClientController implements Runnable{
         view.askCommand();
     }
 
+
+    /**
+     * create a new socket for this ip/port pair
+     * @param ip    ip server
+     * @param port  port server
+     * @throws IOException
+     */
+    public void basicConnect(String ip,int port) throws IOException {
+
+        this.interpreter = new JsonInterpreterClient(this);
+        this.server = new Socket(ip,port);
+
+        initializeReader(server);
+        initializeWriter(server);
+
+        new Thread(this);//create input messages manager thread
+        setConnected(true);
+        this.pongController = new PongController(index, output);
+    }
+
     /**
      * Open a connection with this server
      * @param ip server ip
@@ -291,16 +417,8 @@ public class ClientController implements Runnable{
      */
     public void connectToServer(String ip,int port) {
         try {
-            this.interpreter = new JsonInterpreterClient(this);
-            this.server = new Socket(ip,port);
 
-            initializeReader(server);
-            initializeWriter(server);
-
-            new Thread(this);//create input messages manager thread
-            setConnected(true);
-            this.pongController = new PongController(index, output);
-
+            basicConnect(ip,port);
             this.view.askNickname();
         } catch (IOException e) {
             setConnected(false);
@@ -351,40 +469,72 @@ public class ClientController implements Runnable{
         this.starttolisten();
     }
 
+    /**
+     * send server a deposits swap request
+     * @param d1 start deposit
+     * @param d2 destination deposit
+     */
     public void askSwap (int d1, int d2)
     {
         this.sendMessage(new AskSwap(d1, d2, this.getMiniModel().getPersanalIndex()));
 
     }
 
+    /**
+     * similar to swap but move resources beetween a normal and a bonus deposit of same type
+     * @param d1        start deposit
+     * @param d2        destination
+     * @param quantity  quantity to move
+     */
     public void askMove (int d1, int d2, int quantity)
     {
         this.sendMessage(new AskMove(d1, d2, quantity));
 
     }
 
+    /**
+     * send to server a discarded resource notify
+     * @param quantity quantity discarded
+     * @param type     type discarded (to remove from pendingGain list)
+     */
     public void sendResourceDiscard(int quantity,ResourceType type)
     {
         this.sendMessage(new DiscardResource(quantity,type));
     }
 
+    /**
+     * change minimodel by updating index player storage
+     * @param deposits stprage
+     * @param index    player index
+     */
     public void storageUpdate(Deposit[] deposits,int index)
     {
         //System.out.println("aggiorno lo storage!");
         this.model.updateStorage(deposits,index);
     }
 
+    /**
+     * change minimodel by updating chest of index player
+     * @param chest  chest of player
+     * @param index  player index
+     */
     public void chestUpdate(List<Resource> chest,int index)
     {
         this.model.updateChest(chest,index);
     }
 
+    /**
+     * call view method to print storage
+     */
     public void showStorage()
     {
         this.view.showStorage(this.model.getStorage(),this.model.getChest());
     }
 
 
+    /**
+     * call view method to show dashboard
+     */
     public void showDashboard(){
         MiniPlayer p = this.model.getPersonalPlayer();
 
@@ -407,8 +557,11 @@ public class ClientController implements Runnable{
      */
     public void sendMessage(Packet p)
     {
-        this.output.println(p.generateJson()); ;   //(p.generateJson());
-        this.output.flush();
+        synchronized (lock)
+        {
+            this.output.println(p.generateJson()); ;   //(p.generateJson());
+            this.output.flush();
+        }
     }
     /**
      * wait server messages
@@ -653,5 +806,68 @@ public class ClientController implements Runnable{
     public void sendBonusProduction(int res,ResourceType type) {
 
         this.sendMessage(new BonusProduction(res,type));
+    }
+
+    public void saveReconnectInfo(long gameId) {
+
+        String nickname = this.model.getPersonalPlayer().getNickname();
+        String ip       = this.server.getInetAddress().getHostAddress();
+        int    port     = this.server.getPort();
+
+        Reconnect saveInfo = new Reconnect(nickname,ip,port,gameId);
+
+        Writer writer = null;
+        try {
+
+            writer = new BufferedWriter(new FileWriter("reconnectInfo.json"));
+            System.out.println(saveInfo.generateJson());
+            writer.write(saveInfo.generateJson());
+            writer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (writer != null) try { writer.close(); } catch (IOException ignore) {}
+        }
+    }
+
+    /**
+     * send to server inside "reconnectInfo.json" a reconnect request
+     */
+    public void reconnect() {
+
+        JsonReader reader = null;
+        try {
+            reader = new JsonReader(new FileReader("reconnectInfo.json"));
+            JsonParser parser = new JsonParser();
+
+            //Parse packet
+            JsonObject json = parser.parse(reader).getAsJsonObject();
+
+            //Extract info
+            String      type    = json.get("type").getAsString();
+            JsonObject  content = json.get("content").getAsJsonObject();
+
+            Reconnect reconnect = (Reconnect) BasicPacketFactory.getPacket(type,content,Reconnect.class);
+
+            try {
+
+                System.out.println("Reconnect to " + reconnect.getIp() + " -> " + reconnect.getPort() + " -> "+ reconnect.getNickname());
+                this.basicConnect(reconnect.getIp(),reconnect.getPort());
+                this.sendMessage(reconnect);
+                this.starttolisten();
+
+                this.view.askCommand();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }

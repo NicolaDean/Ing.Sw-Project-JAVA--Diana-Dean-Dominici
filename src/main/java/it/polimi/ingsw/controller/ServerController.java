@@ -15,6 +15,7 @@ import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Dashboard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.market.Market;
+import it.polimi.ingsw.model.minimodel.MiniModel;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
@@ -32,15 +33,14 @@ public class ServerController{
     //view
     protected Game                game;
     protected List<ClientHandler> clients;
-    protected final Object              lock;
+    protected final Object        lock;
     protected int                 currentClient = 0;
     protected boolean             isSinglePlayer;
     protected boolean             isStarted;
-    protected  int         idpartita;
-    List<Resource>      pendingGain;
-
-
-
+    protected  List<Resource>     pendingGain;
+    protected long                id;
+    protected boolean             isReconnected = false;
+    protected Packet              reconnected;
     /**
      *
      * @param real if true create a real controller(with clientHandlers) if false an emptyController for accept Login in waitingRoom
@@ -53,16 +53,18 @@ public class ServerController{
         this.lock = new Object();
         this.pendingGain = new ResourceList();
         if(real)  clients = new ArrayList<>();//If is a real controller create also ClientHandlers
+        this.id = id;
+        this.isReconnected = false;
     }
 
 
 
-    public void setIdpartita(int idpartita) {
-        this.idpartita = idpartita;
+    public void setMatchId(int matchId) {
+        this.id = matchId;
     }
 
-    public int getIdpartita() {
-        return idpartita;
+    public long getMatchId() {
+        return this.id;
     }
 
     public void warning(String msg)
@@ -96,19 +98,30 @@ public class ServerController{
     {
         synchronized (this.lock)
         {
-            this.warning("Client "+ index + " removed from game number "+ this.getIdpartita());
-            this.clients.remove(index);
-            currentClient = currentClient -1;
 
-            //Change other client index
-            int i=0;
-            for(ClientHandler c : clients)
+            if(isStarted)
             {
-                this.warning("Now Client "+  c.getIndex() + " is -> " + i);
+                this.warning("Client "+ index + " disconnected from game number "+ this.getMatchId());
 
-                c.setIndex(i);
-                i++;
+                this.game.getPlayer(clients.get(index).getRealPlayerIndex()).setConnectionState(false);
             }
+            else
+            {
+                this.warning("Client "+ index + " removed completly from game number "+ this.getMatchId());
+                this.clients.remove(index);
+                currentClient = currentClient -1;
+
+                //Change other client index
+                int i=0;
+                for(ClientHandler c : clients)
+                {
+                    this.warning("Now Client "+  c.getIndex() + " is -> " + i);
+
+                    c.setIndex(i);
+                    i++;
+                }
+            }
+
             this.lock.notify();
         }
 
@@ -180,15 +193,11 @@ public class ServerController{
 
     /**
      * Start the game (called from StartGame packet)
-     * //TODO Send a broadcast to all player with "GAME STARTED" packet (and remove from clientApp the line with automatic start sender)
+     * Send a broadcast to all player with "GAME STARTED" packet (and remove from clientApp the line with automatic start sender)
      * @throws Exception (if game cant start)
      */
     public void startGame() throws Exception
     {
-        //TODO RARE EXCEPTION:
-        //TODO USO SYNCRONIZED per lockasre la lista di client ed evitare che un client venga rimosso mentre inizio il game,
-        // o inizi il game prima che un giocatore venga rimosso
-        //Se game non ha abbastanza giocatori lancia eccezione e manda NACK
         synchronized (this.lock) {
             for(Player player:this.game.getPlayers()) player.setObserver(this); //set observer for papal space
 
@@ -202,7 +211,7 @@ public class ServerController{
 
 
 
-                this.warning("\n-----------Game " + this.getIdpartita() + " avviato---------- \n");
+                this.warning("\n-----------Game " + this.getMatchId() + " avviato---------- \n");
 
                 int[] realIndex = game.startGame();
 
@@ -251,12 +260,13 @@ public class ServerController{
      * @return game started packet
      */
     public Packet generateGameStartedPacket(MiniPlayer[] players,int index){
-        return new GameStarted(index,players,game.getProductionDecks(),game.getMarket().getResouces(),game.getMarket().getDiscardedResouce());
+        return new GameStarted(this.id,index,players,game.getProductionDecks(),game.getMarket().getResouces(),game.getMarket().getDiscardedResouce());
     }
 
     /**
      *
-     * @return a list of miniplayer
+     * @return a list of miniplayer to send to the client to VIEW purpose
+     * is a reduced version of Game model
      */
     public MiniPlayer[] generateMiniPlayer() throws FullDepositException, NoBonusDepositOwned, WrongPosition {
         MiniPlayer[] players= new MiniPlayer[game.getNofplayers()];
@@ -441,6 +451,10 @@ public class ServerController{
         }
     }
 
+    public boolean isStarted()
+    {
+        return this.game.isGamestarted();
+    }
     public boolean isFull(String nickname)
     {
         return this.game.isFull(nickname);
@@ -829,5 +843,87 @@ public class ServerController{
     }
 
 
+    /**
+     * try reconnect a client to this match
+     * @param handler client handler to reconnect
+     */
+    public void reconnect(ClientHandler handler,String nickname) {
 
+        int i=0;
+        for(Player p:this.game.getPlayers())
+        {
+            //If same name and player is disconnected (forbit to reconnect multiple time simultaneusly)
+            if(p.getNickname().equals(nickname) && !p.checkConnection())
+            {
+                handler.setRealPlayerIndex(i);
+                handler.setIndex(p.getControllerIndex());
+
+                synchronized (this.lock)
+                {
+                    this.clients.remove(p.getControllerIndex());
+                    this.clients.add(p.getControllerIndex(),handler);
+                    this.lock.notify();
+                }
+
+                //Start Ping/Pong
+                new Thread(handler.initializePingController(this)).start();
+                handler.getPingController().setGameStarted();
+
+                    if(nickname.equals(this.game.getPlayer(this.clients.get(p.getControllerIndex()).getRealPlayerIndex()).getNickname()))
+                    {
+                        DebugMessages.printError("EURECAAA");
+                    }
+                    p.setConnectionState(true);
+
+                    try {
+                        //Create Minimodel of CURRENT STATE of game
+                        MiniModel m = new MiniModel();
+                        //ADD player to it
+                        MiniPlayer[] players = this.generateMiniPlayer();
+                        m.setPlayers(players);
+                        //ADD shop to it
+                        m.setDeck(game.getProductionDecks());
+                        //Set Personal Index
+                        int index = this.clients.get(p.getControllerIndex()).getRealPlayerIndex();
+                        m.setPersanalIndex(index);
+                        //Create a reconnecting Info to send to client
+                        Packet reconn = new ReconnectingInfo(id,m,this.game.getMarket().getResouces(),this.game.getMarket().getDiscardedResouce());
+                        handler.sendToClient(reconn);
+
+                    } catch (FullDepositException e) {
+                        e.printStackTrace();
+                    } catch (NoBonusDepositOwned noBonusDepositOwned) {
+                        noBonusDepositOwned.printStackTrace();
+                    } catch (WrongPosition wrongPosition) {
+                        wrongPosition.printStackTrace();
+                    }
+
+
+
+            }
+            i++;
+        }
+    }
+
+    /**
+     *
+     * @return true if fake controller is setted to reconnect state by reconnect packet inside waiting room
+     */
+    public boolean isReconnected()
+    {
+        return this.isReconnected;
+    }
+    public Packet getReconnected()
+    {
+        return this.reconnected;
+    }
+
+    /**
+     * if waiting room recive a reconnect packet it affect the fake controller by setting true this flag
+     */
+    public void setReconnect(Packet reconnect)
+    {
+        this.reconnected = reconnect;
+        this.isReconnected = true;
+    }
 }

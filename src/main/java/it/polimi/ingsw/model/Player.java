@@ -37,6 +37,22 @@ public class Player extends Observable<ServerController> {
     private UpdateCardBuyed pendingCard = null;
 
 
+
+    public Player(String nickname, int nofcells)
+    {
+
+        surpassedcells = new boolean[nofcells];
+        for (boolean a:surpassedcells) {
+            a=false;
+        }
+        this.dashboard = new Dashboard();
+        this.dashboard = new Dashboard();
+        this.nickname = nickname;
+        this.bonusProductions =null;
+        bonusball = new ArrayList<>();
+        connectionState = true;
+    }
+
     public void resetPendingBuy()
     {
         this.pendingCard = null;
@@ -51,6 +67,10 @@ public class Player extends Observable<ServerController> {
         this.pendingCard = new UpdateCardBuyed(newCard,x,y,dashPos,playerIndex);
     }
 
+    public void setConnectionState(boolean state)
+    {
+        this.connectionState = state;
+    }
     public Packet getPendingCard()
     {
         return this.pendingCard;
@@ -71,20 +91,6 @@ public class Player extends Observable<ServerController> {
 
     public boolean[] getSurpassedcells() {
         return surpassedcells;
-    }
-
-    public Player(String nickname, int nofcells)
-    {
-
-        surpassedcells = new boolean[nofcells];
-        for (boolean a:surpassedcells) {
-            a=false;
-        }
-        this.dashboard = new Dashboard();
-        this.dashboard = new Dashboard();
-        this.nickname = nickname;
-        this.bonusProductions =null;
-        bonusball = new ArrayList<>();
     }
 
     public int getScore() {

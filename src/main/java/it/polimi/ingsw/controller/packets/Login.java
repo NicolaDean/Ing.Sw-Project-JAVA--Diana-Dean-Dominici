@@ -22,3 +22,4 @@ public class Login  extends Packet<ServerController> implements PacketManager<Se
         return controller.login(this.nickname);
     }
 }
+

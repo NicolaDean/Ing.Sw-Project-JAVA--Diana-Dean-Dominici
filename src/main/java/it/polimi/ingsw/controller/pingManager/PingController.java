@@ -7,7 +7,6 @@ import java.io.PrintWriter;
 
 public class PingController extends GenericPing<ServerController>{
 
-
     boolean gameStarted = false;
     public PingController(int index, PrintWriter out) {
         super(index, out);
@@ -59,8 +58,12 @@ public class PingController extends GenericPing<ServerController>{
     {
         DebugMessages.printWarning("\nIl client "+ index + " Si  è disconnesso, nessun pong ricevuto\n");
 
-        if(!gameStarted) notifyObserver(controller -> {controller.removeClient(this.index);});
-        else notifyObserver(ServerController::endGame); //IF SOMEONE DISCONNECT END GAME
+        if(!gameStarted){
+            notifyObserver(controller -> {controller.removeClient(this.index);});
+        }
+        else {
+            notifyObserver(controller -> {controller.removeClient(this.index);});
+        }
         //else -> interrompi la partita
 
     }

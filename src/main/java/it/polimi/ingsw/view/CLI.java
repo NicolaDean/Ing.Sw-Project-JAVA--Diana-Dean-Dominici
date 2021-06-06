@@ -311,9 +311,27 @@ public class CLI extends Observable<ClientController> implements View {
         this.askCommand();
     }
 
+    public boolean askReconnect()
+    {
+        terminal.printRequest("Type -r or -reconnect if you want to return to the last match abbandoned");
+        String rec = this.input.readLine();
+
+        if(rec.equals("-reconnect") || rec.equals("-r"))
+        {
+            this.notifyObserver(ClientController::reconnect);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
     @Override
     public void askServerData()
     {
+        if(this.askReconnect()) return;
+
         terminal.printRequest("Insert a valid server IP: ( empty for default: localhost ) ");
 
         String ip =".";

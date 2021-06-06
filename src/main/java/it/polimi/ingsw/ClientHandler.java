@@ -18,6 +18,7 @@ public class ClientHandler implements Runnable {
     private Scanner         input;
     private PrintWriter     output;
     JsonInterpreterServer   interpreter;
+    private final Object    lock;
     private int index;
     private int realPlayerIndex;
     private boolean ping = false;
@@ -33,6 +34,7 @@ public class ClientHandler implements Runnable {
 
         this.initializeReader(client);
         this.initializeWriter(client);
+        lock = new Object();
 
     }
 
@@ -210,9 +212,11 @@ public class ClientHandler implements Runnable {
             String response = interpreter.getResponse();
             if(response!=null)
             {
+                synchronized (lock) {
                 System.out.println("RESPONSE : -> " + response);
-                output.println(response);
-                output.flush();
+                    output.println(response);
+                    output.flush();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -226,10 +230,15 @@ public class ClientHandler implements Runnable {
      */
     public void sendToClient(Packet p)
     {
+        //Avoid using output channel at the same time
+        synchronized (lock)
+        {
+            System.out.println(p.generateJson());
+            output.println(p.generateJson());
+            output.flush();
+            lock.notify();
+        }
 
-        System.out.println(p.generateJson());
-        output.println(p.generateJson());
-        output.flush();
     }
 
 

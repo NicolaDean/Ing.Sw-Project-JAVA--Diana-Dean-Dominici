@@ -6,25 +6,23 @@ import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniModel;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
+import it.polimi.ingsw.utils.DebugMessages;
 
 import java.util.Stack;
 
-public class GameStarted extends Packet<ClientController> implements PacketManager<ClientController>{
+public class ReconnectingInfo extends Packet<ClientController> implements PacketManager<ClientController>{
 
-    MiniPlayer[] players;
-    Stack<ProductionCard>[][] productionDecks;
+    MiniModel model;
     BasicBall[][] miniBallsMarket;
     BasicBall miniBallDiscarted;
     int index;
     long gameId;
 
-    public GameStarted(long gameId,int index,MiniPlayer[] players,Stack<ProductionCard>[][] productionDecks, BasicBall[][] miniBallsMarket, BasicBall miniBallDiscarted) {
-        super("GameStarted");
-        this.players=players;
-        this.productionDecks=productionDecks;
+    public ReconnectingInfo(long gameId,MiniModel model, BasicBall[][] miniBallsMarket, BasicBall miniBallDiscarted) {
+        super("ReconnectingInfo");
+        this.model=model;
         this.miniBallsMarket=miniBallsMarket;
         this.miniBallDiscarted=miniBallDiscarted;
-        this.index = index;
         this.gameId = gameId;
     }
 
@@ -40,11 +38,8 @@ public class GameStarted extends Packet<ClientController> implements PacketManag
     @Override
     public Packet analyze(ClientController controller)
     {
-        controller.setInformation(index,players,productionDecks,miniBallsMarket,miniBallDiscarted);
-
-        controller.saveReconnectInfo(this.gameId);
-        controller.printGameStarted();
-
+        DebugMessages.printError("INFORMATION SETTED WHEN RECONNECT");
+        controller.setInformation(model,miniBallsMarket,miniBallDiscarted);
         //controller.abortHelp();
         return null;
     }

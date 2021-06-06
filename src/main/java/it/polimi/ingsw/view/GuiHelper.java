@@ -211,6 +211,22 @@ public class GuiHelper extends Application {
         return getParent(loader);
     }
 
+    public static Parent loadFXML(String fxml,BasicSceneUpdater sceneUpdater,boolean a) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(GuiHelper.class.getResource("/fxml/"+fxml+".fxml"));
+
+        loader.setController(sceneUpdater);
+        //Load fxml
+        Parent out = loader.load();
+        //Get current scene controller
+        BasicSceneUpdater b = loader.getController();
+        //initialize components (eg hide label... show card..)
+        b.init();
+        currentScene = b;
+
+        return out;
+    }
     /**
      * Generate and initialize the Scene to be setted by subscribing it to model observer
      * this function allow to load only scene that use "basicSceneUpdater" children as controller
@@ -233,16 +249,29 @@ public class GuiHelper extends Application {
         return out;
     }
 
+    public static ButtonType loadDialogFromDash(String path,String title,BasicSceneUpdater controller)
+    {
+        BasicSceneUpdater x =  currentScene;
+
+        ButtonType aa = loadDialog(path,title,controller);
+
+        gui.notifyObserver(c->c.addModelObserver(x));
+        return aa;
+    }
+
     public static ButtonType loadDialog(String path,String title,BasicSceneUpdater controller)
     {
+
         try {
 
-            DialogPane pane = (DialogPane) GuiHelper.loadFXML(path,controller);
+            DialogPane pane = (DialogPane) GuiHelper.loadFXML(path,controller,false);
             Dialog<ButtonType> dialog  =  new Dialog<>();
             dialog.setDialogPane(pane);
             dialog.setTitle(title);
 
             Optional<ButtonType> options = dialog.showAndWait();
+
+
             return options.orElse(ButtonType.CANCEL);
 
         } catch (IOException e) {

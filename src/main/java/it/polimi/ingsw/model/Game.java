@@ -74,6 +74,10 @@ public class Game {
         return false;
     }
 
+    public boolean isGamestarted()
+    {
+        return gamestarted;
+    }
     public boolean isFull(String nickname) {
         return (this.nofplayers==4 || gamestarted || checkNickname(nickname));
 
