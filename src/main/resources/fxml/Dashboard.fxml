@@ -188,7 +188,7 @@
                               <Image url="@../images/interface/Button.png" />
                            </image>
                         </ImageView>
-                        <Text fx:id="swaptext" disable="true" fill="WHITE" layoutX="21.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SWAP" textAlignment="CENTER" wrappingWidth="45.19546926352109">
+                        <Text id="fancytext2" fx:id="swaptext" disable="true" fill="WHITE" layoutX="21.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVE" textAlignment="CENTER" wrappingWidth="45.19546926352109">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -216,12 +216,12 @@
                         <Image url="@../images/interface/Button.png" />
                      </image>
                   </ImageView>
-                  <Text disable="true" fill="WHITE" layoutX="109.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MARKET" textAlignment="CENTER" wrappingWidth="132.80088806152344">
+                  <Text id="fancytext2" disable="true" fill="WHITE" layoutX="109.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MARKET" textAlignment="CENTER" wrappingWidth="132.80088806152344">
                      <font>
                         <Font name="LillyBelle" size="22.0" />
                      </font>
                   </Text>
-                  <Text disable="true" fill="WHITE" layoutX="111.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SHOP" textAlignment="CENTER" wrappingWidth="132.80088806152344">
+                  <Text id="fancytext2" disable="true" fill="WHITE" layoutX="111.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SHOP" textAlignment="CENTER" wrappingWidth="132.80088806152344">
                      <font>
                         <Font name="LillyBelle" size="22.0" />
                      </font>
@@ -231,7 +231,7 @@
                         <Image url="@../images/interface/Button.png" />
                      </image>
                   </ImageView>
-                  <Text disable="true" fill="WHITE" layoutX="109.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="END TURN" textAlignment="CENTER" wrappingWidth="132.80088806152344">
+                  <Text id="fancytext2" disable="true" fill="WHITE" layoutX="109.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="END TURN" textAlignment="CENTER" wrappingWidth="132.80088806152344">
                      <font>
                         <Font name="LillyBelle" size="22.0" />
                      </font>

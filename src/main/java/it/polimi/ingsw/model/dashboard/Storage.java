@@ -166,7 +166,7 @@ public class Storage {
     /*
     method to move resources between deposits (at least 1 needs to be bonus)
      */
-    public void moveResource(int pos1, int pos2, int q) throws IllegalResourceMove, FullDepositException, EmptyDeposit, WrongPosition {
+    public void moveResource(int pos1, int pos2, int q) throws IllegalResourceMove, FullDepositException, EmptyDeposit, NoBonusDepositOwned, WrongPosition {
         //System.out.println("\nla risorsa !!!!! ora ha quantità: "+storage[pos1].getResource().getQuantity()+"\n");
 
         //System.out.println("\n\n q vale: "+q+"\n\n");
@@ -178,6 +178,7 @@ public class Storage {
         if(pos1 <3 && pos2 >=3)
         {
             //da pos1 normale a pos2 bonus
+            System.out.println("\nda pos1 normale a pos2 bonus\n");
             if(storage[pos1].getResource()==null)
                 throw new IllegalResourceMove("The starting deposit is empty.");
             if(storage[pos1].getResource().getQuantity()<q)
@@ -185,36 +186,54 @@ public class Storage {
             if(storage[pos1].getResource().getType() != storage[pos2].getResource().getType())
                 throw new IllegalResourceMove("You can't insert this type of resource in this bonus deposit.");
             resource = new Resource(storage[pos1].getResource().getType(), q);
-            try {
-                //System.out.println("\nla risorsa ora ha quantità: "+storage[pos1].getResource().getQuantity()+"\n");
-                storage[pos1].safeSubtraction(resource);
-                //System.out.println("\nla risorsa ora ha quantità: "+storage[pos1].getResource().getQuantity()+"\n");
-                storage[pos2].safeInsertion(resource);
 
-            } catch (Exception e)
-            {
-                throw e;
+                //System.out.println("\nla risorsa ora ha quantità: "+storage[pos1].getResource().getQuantity()+"\n");
+            try {
+                safeSubtraction(resource,pos1);
+                safeInsertion(resource,pos2);
+            } catch (EmptyDeposit emptyDeposit) {
+                emptyDeposit.printStackTrace();
+            } catch (WrongPosition wrongPosition) {
+                wrongPosition.printStackTrace();
+            } catch (FullDepositException e) {
+                e.printStackTrace();
+            } catch (NoBonusDepositOwned noBonusDepositOwned) {
+                noBonusDepositOwned.printStackTrace();
             }
+            //System.out.println("\nla risorsa ora ha quantità: "+storage[pos1].getResource().getQuantity()+"\n");
+
+
+
             return;
         }
         if(pos2 <3 && pos1 >=3)
         {
             //da pos1 bonus a pos2 normale
+            System.out.println("\nda pos1 bonus a pos2 normale\n");
             if(storage[pos1].getResource().getQuantity()==0)
                 throw new IllegalResourceMove("The starting deposit is empty.");
             if(storage[pos1].getResource().getQuantity()<q)
                 throw new IllegalResourceMove("You don't have enough resources in the first deposit.");
+
             if(storage[pos2].getResource()!=null)
             {
+                if(storage[pos2].sizeMax-storage[pos2].getResource().getQuantity() < q)
+                    throw new IllegalResourceMove("the second deposit dosn't have enough space!");
                 if(storage[pos2].getResource().getType()!=storage[pos1].getResource().getType())
                     throw new IllegalResourceMove("You can't insert this type of resource in this deposit.");
             }
+            else
+            {
+                if(storage[pos2].sizeMax < q)
+                    throw new IllegalResourceMove("the second deposit dosn't have enough space!");
+            }
             resource = new Resource(storage[pos1].getResource().getType(), q);
             try {
-                storage[pos1].safeSubtraction(resource);
-                storage[pos2].safeInsertion(resource);
+                safeSubtraction(resource, pos1);
+                safeInsertion(resource, pos2);
             } catch (Exception e)
             {
+                System.out.println("l'ho lanciata bro\n\n");
                 throw e;
             }
 
@@ -306,6 +325,7 @@ public class Storage {
      */
     public void safeSubtraction(Resource in, int pos) throws EmptyDeposit, WrongPosition {
         storage[pos].safeSubtraction(in);
+        System.out.println("\n "+storage[pos].getResource().getQuantity()+"\n");
         if (storage[pos].getResource().getQuantity()==0 && pos<ConstantValues.normalDepositNumber)
 
             storage[pos].setNewDeposit(ROCK, -1);

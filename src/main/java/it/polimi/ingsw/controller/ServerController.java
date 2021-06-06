@@ -592,7 +592,7 @@ public class ServerController{
 
                 if(DebugMessages.infiniteResourcesStorage)
                 {
-                    int d=3;
+                    /*int d=3;
                     if(p.getDashboard().getStorage().getStorage()[4] != null)
                         d=4;
                     try {
@@ -603,6 +603,8 @@ public class ServerController{
 
                     }
                     sendStorageUpdate(p.getControllerIndex());
+
+                     */
                 }
 
 

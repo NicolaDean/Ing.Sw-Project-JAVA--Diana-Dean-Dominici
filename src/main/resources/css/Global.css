@@ -30,6 +30,9 @@
     -fx-background-size: cover;
     -fx-background-color: transparent;
     -fx-text-fill: white;
+    -fx-stroke: black;
+
+    -fx-font-family: Papyrus;
 }
 
 #button:hover
@@ -86,6 +89,15 @@
 #fancytext{
 
     -fx-stroke: black;
-    -fx-stroke-width: 2;
+
+    -fx-font: 18px Papyrus;
+
+}
+
+#fancytext2{
+
+    -fx-stroke: black;
+
+    -fx-font-family: Papyrus;
 
 }
