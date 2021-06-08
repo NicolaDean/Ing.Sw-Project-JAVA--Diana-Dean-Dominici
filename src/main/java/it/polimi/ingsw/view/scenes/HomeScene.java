@@ -35,6 +35,6 @@ public class HomeScene  extends BasicSceneUpdater {
 
     public void reconnectCall()
     {
-
+        GuiHelper.getGui().notifyObserver(ClientController::reconnect);
     }
 }

@@ -97,6 +97,7 @@ public class ClientController implements Runnable{
         DebugMessages.printError("LOOOOOL");
         this.model = model;
         view.setMarket(miniBallsMarket,miniBallDiscarted);
+        this.showDashboard();
     }
     /*
      * set all initial information into miniMarted

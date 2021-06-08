@@ -217,6 +217,7 @@ public class DashboardScene extends BasicSceneUpdater {
                     MoveScene dialog = new MoveScene(answer);
 
                     loadDialog(FXMLpaths.move,"Move resources",dialog);
+                    this.resetObserverAfterDialog();
                     this.notifyObserver(controller -> controller.askMove(d.get(1) , d.get(0), answer.get()));
                 }
                 else
@@ -521,7 +522,7 @@ public class DashboardScene extends BasicSceneUpdater {
                     System.out.println("bella ziii");
 
                     boolean res = GuiHelper.YesNoDialog("Production Card Activation", "Do you want to produce with this card?");
-
+                    this.resetObserverAfterDialog();
 
                     if (res) {
                         GuiHelper.setBuyType(false);
@@ -785,6 +786,7 @@ public class DashboardScene extends BasicSceneUpdater {
                 {
                     DebugMessages.printError("TRADEE");
                     boolean out = GuiHelper.YesNoDialog("TRADE BONUS","Do you want to use trade bonus on this card?");
+                    this.resetObserverAfterDialog();
                     if(out){
                         List<Resource> result = GuiHelper.getGui().askWhiteBalls(ResourceType.values(),1);
 
@@ -801,6 +803,7 @@ public class DashboardScene extends BasicSceneUpdater {
                     return;
                 }
                 boolean out = GuiHelper.YesNoDialog("Leader actviation","Do you want to activate this leader?");
+                this.resetObserverAfterDialog();
                 if(out)controller.activateLeader(finalI);
 
             });
@@ -808,6 +811,10 @@ public class DashboardScene extends BasicSceneUpdater {
             leaderCards.getChildren().add(pane);
         }
     });}
+
+    private void resetObserverAfterDialog() {
+        GuiHelper.getGui().notifyObserver(ctrl->ctrl.addModelObserver(this));
+    }
 
     @Override
     public void reciveMessage(String msg) {

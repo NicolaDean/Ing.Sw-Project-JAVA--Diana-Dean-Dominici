@@ -343,6 +343,7 @@ public class ServerController{
     public void turnNotifier()
     {
         clients.get(currentClient).sendToClient(new TurnNotify());
+
         for (Player p: this.getGame().getPlayers()) {
             if (p.getControllerIndex() != currentClient)
                 clients.get(p.getControllerIndex()).sendToClient(new NotifyOtherPlayerTurn(this.game.getCurrentPlayer().getNickname()));
@@ -798,7 +799,14 @@ public class ServerController{
      * @return null
      */
     public Packet nextTurn(){
-        Player player = game.nextTurn();
+
+        Player player=null;
+        do
+        {
+            //Skip turn to all offline players
+            player = game.nextTurn();
+        }while (player.checkConnection());
+
         DebugMessages.printError("PLAYER "+ this.game.getCurrentPlayerIndex() + "->controller:"+this.game.getCurrentPlayer().getControllerIndex());
         //se risulterà positivo invierà in broadcast EndTurn e chiudera la connessione in maniera safe
         if(game.checkEndGame()) lastTurn();
