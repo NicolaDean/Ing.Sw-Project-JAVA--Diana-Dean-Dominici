@@ -384,9 +384,9 @@ public class ServerController{
     public Packet setLeaders(int pos1,int pos2, int index)
     {
         int playerIndex = this.clients.get(index).getRealPlayerIndex();
-        //this.game.getCurrentPlayer().setLeaders(leaders);
-        this.game.getCurrentPlayer().setLeaders(pos1,pos2);
-        this.broadcastMessage(-1,new UpdateLeaders(this.game.getCurrentPlayer().getLeaders(),playerIndex));
+        Player p = this.game.getPlayer(playerIndex);
+        p.setLeaders(pos1,pos2);
+        this.broadcastMessage(-1,new UpdateLeaders(p.getLeaders(),playerIndex));
         return null;
     }
     /**

@@ -163,14 +163,6 @@ public class DashboardScene extends BasicSceneUpdater {
         toastForMarketInsersion.setVisible(false);
         bin.setVisible(false);
         doThisJustIfIsHereFromMarketExtraction(imHereAfterMarketExstraction);
-        this.notifyObserver(controller -> {
-            LeaderCard[] cards = controller.getMiniModel().getPersonalPlayer().getLeaderCards();
-            Deposit[] bonusdeposit = controller.getMiniModel().getPersonalPlayer().getBonusStorage();
-
-            Platform.runLater(() -> {
-                this.drawLeaders(cards, bonusdeposit);
-            });
-        });
 
         marketbutton.setOnMouseClicked(event -> {
             this.notifyObserver(controller -> controller.showmarket());
