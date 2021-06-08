@@ -805,7 +805,7 @@ public class ServerController{
         {
             //Skip turn to all offline players
             player = game.nextTurn();
-        }while (player.checkConnection());
+        }while (!player.checkConnection());
 
         DebugMessages.printError("PLAYER "+ this.game.getCurrentPlayerIndex() + "->controller:"+this.game.getCurrentPlayer().getControllerIndex());
         //se risulterà positivo invierà in broadcast EndTurn e chiudera la connessione in maniera safe
