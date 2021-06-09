@@ -32,6 +32,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 
+
 import java.util.ArrayList;
 import java.io.IOException;
 import java.util.List;
@@ -708,6 +709,7 @@ public class DashboardScene extends BasicSceneUpdater {
     }
 
     private void printResourceExtracted(){
+        this.showLeader(null);
         for (int i = 0; i < resourceExtracted.size(); i++) {
             if(resourceExtracted.get(i).getQuantity()>0) {
                 for(int j = 0; j < resourceExtracted.get(i).getQuantity(); j++) {
