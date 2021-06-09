@@ -17,9 +17,7 @@ public class MiniModel extends Observable<BasicSceneUpdater>
     private int persanalIndex = 0;
     private boolean isLoaded = false;
     private MiniPlayer[] players;
-
     private ProductionCard [][] decks;
-
     public MiniModel()
     {
         players = new MiniPlayer[ConstantValues.numberOfPlayer];
