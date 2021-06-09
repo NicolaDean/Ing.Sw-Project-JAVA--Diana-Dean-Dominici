@@ -1,8 +1,12 @@
 package it.polimi.ingsw.view.scenes;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.DialogPane;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MoveScene extends BasicDialog{
+    
     AtomicInteger value;
 
     public MoveScene(AtomicInteger a) {
