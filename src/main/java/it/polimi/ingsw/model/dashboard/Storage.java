@@ -191,15 +191,12 @@ public class Storage {
             try {
                 safeSubtraction(resource,pos1);
                 safeInsertion(resource,pos2);
-            } catch (EmptyDeposit emptyDeposit) {
-                emptyDeposit.printStackTrace();
-            } catch (WrongPosition wrongPosition) {
-                wrongPosition.printStackTrace();
-            } catch (FullDepositException e) {
-                e.printStackTrace();
-            } catch (NoBonusDepositOwned noBonusDepositOwned) {
-                noBonusDepositOwned.printStackTrace();
             }
+             catch (FullDepositException e) {
+                safeInsertion(resource,pos1);
+                throw e;
+            }
+
             //System.out.println("\nla risorsa ora ha quantità: "+storage[pos1].getResource().getQuantity()+"\n");
 
 
@@ -229,11 +226,11 @@ public class Storage {
             }
             resource = new Resource(storage[pos1].getResource().getType(), q);
             try {
-                safeSubtraction(resource, pos1);
-                safeInsertion(resource, pos2);
-            } catch (Exception e)
-            {
-                System.out.println("l'ho lanciata bro\n\n");
+                safeSubtraction(resource,pos1);
+                safeInsertion(resource,pos2);
+            }
+            catch (FullDepositException e) {
+                safeInsertion(resource,pos1);
                 throw e;
             }
 

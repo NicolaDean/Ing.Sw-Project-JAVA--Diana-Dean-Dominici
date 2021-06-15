@@ -8,7 +8,6 @@ import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
-import it.polimi.ingsw.model.resources.ResourceOperator;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GuiHelper;
@@ -29,9 +28,9 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+
 
 
 import java.util.ArrayList;
@@ -117,6 +116,8 @@ public class DashboardScene extends BasicSceneUpdater {
     @FXML
     public ImageView bin;
 
+
+
     CheckBox lastchecked;
 
     public CheckBox swap4 = new CheckBox();
@@ -134,6 +135,8 @@ public class DashboardScene extends BasicSceneUpdater {
     List<Resource> resourceInserted;
     List<InsertionInstruction> resourceInsertedInstraction;
     Deposit[]                   tmpStorage;
+    FlowPane leaderdeposit;
+
 
 
     public DashboardScene(List<Resource> resourceList) {
@@ -162,6 +165,7 @@ public class DashboardScene extends BasicSceneUpdater {
         marketbutton.setId("production_card");
         toastForMarketInsersion.setVisible(false);
         bin.setVisible(false);
+
         doThisJustIfIsHereFromMarketExtraction(imHereAfterMarketExstraction);
 
         marketbutton.setOnMouseClicked(event -> {
@@ -550,11 +554,11 @@ public class DashboardScene extends BasicSceneUpdater {
         printResourceExtracted();
 
         deposit1.setOnDragOver(this::onOver);
-        deposit1.setOnDragDropped(this::destinationOnDragDropped);
+        deposit1.setOnDragDropped(this::destinationOnDragDroppedForGrid);
         deposit2.setOnDragOver(this::onOver);
-        deposit2.setOnDragDropped(this::destinationOnDragDropped);
+        deposit2.setOnDragDropped(this::destinationOnDragDroppedForGrid);
         deposit3.setOnDragOver(this::onOver);
-        deposit3.setOnDragDropped(this::destinationOnDragDropped);
+        deposit3.setOnDragDropped(this::destinationOnDragDroppedForGrid);
 
         bin.setOnDragOver(this::onOver);
         bin.setOnDragDropped(this::binOnDragDropper);
@@ -628,9 +632,9 @@ public class DashboardScene extends BasicSceneUpdater {
      * and resource type corresponding to it will be added to res list
      * @param event drag event
      */
-    public void destinationOnDragDropped(DragEvent event)
+    public void destinationOnDragDroppedForGrid(DragEvent event)
     {
-        int position=(Integer.parseInt( ((GridPane)event.getGestureTarget()).getId().charAt(((GridPane)event.getGestureTarget()).getId().length()-1)+"" ))-1 ; //posizione dello storage
+        int position = (Integer.parseInt( ((GridPane)event.getGestureTarget()).getId().charAt(((GridPane)event.getGestureTarget()).getId().length()-1)+"" ))-1 ; //posizione dello storage
         ResourceType res = ResourceType.valueOf(event.getDragboard().getString()); //risorda droppata
 
         try{
@@ -653,8 +657,6 @@ public class DashboardScene extends BasicSceneUpdater {
                         break;
                     }
             }
-
-
             this.drawStorage(tmpStorage);
 
         }catch (Exception e){
@@ -662,18 +664,52 @@ public class DashboardScene extends BasicSceneUpdater {
         }
 
 
-        //se non c'è piu niente invia il pacchetto
-//        if(this.resourceExtracted.isEmpty()){
-            this.notifyObserver(controller -> {
-                controller.sendResourceInsertion(resourceInsertedInstraction);
-                //this.drawStorage(controller.getMiniModel().getStorage());
-            });
-  //      }
+        // invia il pacchetto
+        this.notifyObserver(controller -> {
+            controller.sendResourceInsertion(resourceInsertedInstraction);
+        });
+
+        event.consume();
+    }
+
+    /**
+     * when a resource is dropped from source to destination pane it will be added a new image
+     * and resource type corresponding to it will be added to res list
+     * @param event drag event
+     */
+    public void destinationOnDragDroppedForFlow(DragEvent event) {
+
+        int position=(Integer.parseInt( ((FlowPane)event.getGestureTarget()).getId()+"" ) - 1); //posizione dello storage
+        ResourceType res = ResourceType.valueOf(event.getDragboard().getString()); //risorda droppata
+
+
+        //rimuovo da resourceexstracted quello che ho droppato e lo aggiungo a resourceinsered
+        this.resourceInsertedInstraction.add(new InsertionInstruction(new Resource(res, 1), position));
+        this.resourceExtracted.remove(new Resource(res, 1));
+        this.resourceInserted.add(new Resource(res, 1));
+
+
+
+        //rimuovo dal toast quello che ho droppato
+        for (int j = 0; j < this.marketInsersion.getChildren().size(); j++) {
+            if(this.marketInsersion.getChildren().get(j)!=null)
+                if(this.marketInsersion.getChildren().get(j).getId().equals( res.toString() )) {
+                    this.marketInsersion.getChildren().remove(j);
+                    break;
+                }
+        }
+
+        //invio il pacchetto
+        this.notifyObserver(controller -> {
+            controller.sendResourceInsertion(resourceInsertedInstraction);
+        });
+
 
         event.consume();
     }
 
     private void printResourceExtracted(){
+        this.showLeader(null);
         for (int i = 0; i < resourceExtracted.size(); i++) {
             if(resourceExtracted.get(i).getQuantity()>0) {
                 for(int j = 0; j < resourceExtracted.get(i).getQuantity(); j++) {
@@ -687,7 +723,6 @@ public class DashboardScene extends BasicSceneUpdater {
 
                 //Set image as draggable
                 img.setOnDragDetected(event -> {
-                    System.out.println("dragged");
 
                     /* allow any transfer mode */
                     Dragboard db = img.startDragAndDrop(TransferMode.COPY_OR_MOVE);
@@ -733,8 +768,22 @@ public class DashboardScene extends BasicSceneUpdater {
             if(c.getCliRappresentation().equals("DEPOSIT"))
             {
                 if(c.isActive()) {
-                    FlowPane leaderdeposit = new FlowPane(15, 12);
+
+                    if(leaderdeposit==null) {
+                        leaderdeposit = new FlowPane(15, 12);
+                        leaderdeposit.setId("4");
+                    } else {
+                        leaderdeposit = new FlowPane(15, 12);
+                        leaderdeposit.setId("5");
+                    }
+
+
                     leaderdeposit.setPrefSize(130, 188);
+
+                    if(imHereAfterMarketExstraction){
+                        leaderdeposit.setOnDragOver(this::onOver);
+                        leaderdeposit.setOnDragDropped(this::destinationOnDragDroppedForFlow); // da riscrivere destinationOnDragDropped per il leader
+                    }
 
                     CheckBox check = new CheckBox();
 
@@ -748,26 +797,26 @@ public class DashboardScene extends BasicSceneUpdater {
                     }
 
                     check.setAlignment(Pos.BOTTOM_RIGHT);
+                    if(bonusstorage[index]!=null)
+                        if(bonusstorage[index].getResource()!=null) {
+                            for(int k=0; k< bonusstorage[index].getResource().getQuantity(); k++) {
+                                ImageView resource = loadImage("/images/resources/" + bonusstorage[index].getResource().getNumericType() +".png", 30, 30);
+                                leaderdeposit.getChildren().add(resource);
 
-                    if(bonusstorage!=null && bonusstorage[index].getResource()!=null) {
-                        for(int k=0; k< bonusstorage[index].getResource().getQuantity(); k++) {
-                            ImageView resource = loadImage("/images/resources/" + bonusstorage[index].getResource().getNumericType() +".png", 30, 30);
-                            leaderdeposit.getChildren().add(resource);
+                            }
+                            if(bonusstorage[index].getResource().getQuantity()==2)
+                                leaderdeposit.setAlignment(Pos.BOTTOM_CENTER);
+                            else{
+                                ImageView pippo = loadImage("/images/resources/" + bonusstorage[index].getResource().getNumericType() +".png", 30, 30);
+                                pippo.setVisible(false);
+                                leaderdeposit.getChildren().add(pippo);
+                                leaderdeposit.setAlignment(Pos.BOTTOM_CENTER);
 
+                            }
+
+                            pane.getChildren().add(leaderdeposit);
+                            pane.getChildren().add(check);
                         }
-                        if(bonusstorage[index].getResource().getQuantity()==2)
-                            leaderdeposit.setAlignment(Pos.BOTTOM_CENTER);
-                        else{
-                            ImageView pippo = loadImage("/images/resources/" + bonusstorage[index].getResource().getNumericType() +".png", 30, 30);
-                            pippo.setVisible(false);
-                            leaderdeposit.getChildren().add(pippo);
-                            leaderdeposit.setAlignment(Pos.BOTTOM_CENTER);
-
-                        }
-
-                        pane.getChildren().add(leaderdeposit);
-                        pane.getChildren().add(check);
-                    }
                 }
 
             }

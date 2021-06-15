@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -68,7 +69,7 @@ public class ProductionTest {
         });
     }
 
-    @Test
+    @Disabled
     public void ProductionTest() throws FullDepositException, NoBonusDepositOwned, WrongPosition, EmptyDeposit {
         Player p = new Player();
 
