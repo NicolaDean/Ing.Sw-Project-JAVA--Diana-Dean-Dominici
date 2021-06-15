@@ -103,6 +103,10 @@ public class GuiHelper extends Application {
         return buyType;
     }
 
+    public static void setCurrentScene(BasicSceneUpdater scene)
+    {
+        currentScene =  scene;
+    }
     public static BasicSceneUpdater getCurrentScene()
     {
         return currentScene;

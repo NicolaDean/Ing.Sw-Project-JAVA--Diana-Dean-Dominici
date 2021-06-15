@@ -854,15 +854,23 @@ public class DashboardScene extends BasicSceneUpdater {
     });}
 
     private void resetObserverAfterDialog() {
+        GuiHelper.setCurrentScene(this);
         GuiHelper.getGui().notifyObserver(ctrl->ctrl.addModelObserver(this));
     }
 
     @Override
     public void reciveMessage(String msg) {
         super.reciveMessage(msg);
-        ToastMessage t = new ToastMessage(msg,this.root,2000);
+        ToastMessage t = new ToastMessage(msg,this.root,5000);
         t.show();
+        this.resetObserverAfterDialog();
+    }
 
+    @Override
+    public void reciveError(String msg) {
+        ToastMessage t = new ToastMessage(msg,this.root,5000);
+        t.show();
+        this.resetObserverAfterDialog();
     }
 
     /**

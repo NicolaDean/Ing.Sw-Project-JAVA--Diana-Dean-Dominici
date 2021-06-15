@@ -11,7 +11,7 @@ public  class DebugMessages {
     //DEBUG CHEATS
     public static boolean infiniteResourcesStorage = false;
     public static boolean infiniteResourcesChest   = true;
-    public static boolean leaderFree               = true;
+    public static boolean leaderFree               = false;
 
     //DEBUG MESSAGES
     public static boolean enableError = true;

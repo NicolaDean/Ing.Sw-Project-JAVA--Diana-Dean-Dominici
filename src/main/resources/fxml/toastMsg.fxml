@@ -13,7 +13,7 @@
             <Image url="@../images/interface/dialog2.png" />
          </image>
       </ImageView>
-      <Label layoutX="99.0" layoutY="77.0" prefHeight="35.0" prefWidth="407.0" text="Label" textFill="WHITE">
+      <Label fx:id="msgToast" layoutX="99.0" layoutY="77.0" prefHeight="35.0" prefWidth="407.0" text="Label" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>

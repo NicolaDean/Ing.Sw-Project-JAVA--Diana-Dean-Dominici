@@ -64,6 +64,8 @@ public class AskServerData extends BasicSceneUpdater {
 
         this.notifyObserver(controller -> {
             controller.connectToServer(finalIp, finalPort);
+
+            if(controller.isConnected()) return;
             errorMsg("ERRORRRRRRRR TRY AGAIN");
 
         });
