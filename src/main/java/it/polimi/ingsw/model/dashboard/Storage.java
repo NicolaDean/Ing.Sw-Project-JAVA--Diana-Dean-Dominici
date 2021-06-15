@@ -358,7 +358,7 @@ public class Storage {
          * initialize a bonus deposit (leader)
          * @param type
          */
-        public void initializeBonusDeposit (ResourceType type)
+        public int initializeBonusDeposit (ResourceType type)
         {
             int i;
             if (storage[3] == null)
@@ -368,6 +368,10 @@ public class Storage {
 
             storage[i] = new Deposit(ConstantValues.bonusDepositSize);
             storage[i].setNewBonusDeposit(type, 0);
+
+            //Indicate the activation order
+            if(i==3) return 0;
+            else return 1;
 
         }
 

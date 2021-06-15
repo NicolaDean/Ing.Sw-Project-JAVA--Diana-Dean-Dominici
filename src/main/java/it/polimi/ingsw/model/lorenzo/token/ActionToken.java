@@ -10,11 +10,10 @@ public interface ActionToken {
      */
     public void activateToken(LorenzoGame l);
 
-
-    public boolean isSpecial();
-
     public CardType getType();
 
     public String getColor();
+
+    public boolean isSpecial();
 
 }

@@ -1,33 +1,33 @@
 package it.polimi.ingsw.model.lorenzo;
 
+import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.CellScore;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
-import it.polimi.ingsw.model.lorenzo.token.ActionToken;
-import it.polimi.ingsw.model.lorenzo.token.BlackCrossToken;
-import it.polimi.ingsw.model.lorenzo.token.ColoredActionToken;
-import it.polimi.ingsw.model.lorenzo.token.SpecialBlackCrossToken;
+import it.polimi.ingsw.model.factory.TokenFactory;
+import it.polimi.ingsw.model.lorenzo.token.*;
 import it.polimi.ingsw.model.resources.Resource;
-import it.polimi.ingsw.utils.ConstantValues;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Stack;
-
-import static it.polimi.ingsw.enumeration.CardType.*;
 
 public class LorenzoGame extends Game {
     ActionToken tokenDrawn;
     Lorenzo lorenzo;
-    Stack<ActionToken> tokenDeck = new Stack<>();
+    Stack<BasicToken> tokenDeck = new Stack<>();
+    ServerController notifier;
 
     public LorenzoGame() {
         super();
-        resetDeckToken();
         this.lorenzo=new Lorenzo();
+    }
+
+    public void initializeTokens(ServerController controller)
+    {
+        this.notifier=controller;
+        resetDeckToken();
     }
 
     public Lorenzo getLorenzo() {
@@ -101,6 +101,7 @@ public class LorenzoGame extends Game {
         papalSpaceCheck();
         checkFaithTrackScoreGain();
         lorenzoTurn();
+
         return getCurrentPlayer();
     }
 
@@ -158,10 +159,19 @@ public class LorenzoGame extends Game {
         lorenzo.activateToken(this,tokenDrawn);
     }
 
+
+    public void loadTokens(ServerController controller)
+    {
+
+    }
     /**
      * shuffle all token together
      */
     public void resetDeckToken(){
+
+        tokenDeck = TokenFactory.loadTokenDeckFromJson(notifier);
+        Collections.shuffle(tokenDeck);
+        /*
         int nofcrosstoken=3,
                 nofspecialcrosstoken=1,
                 nofytoken=1,
@@ -174,19 +184,19 @@ public class LorenzoGame extends Game {
 
         for(int i=0;i<ntotal;i++) {
             if (nofbtoken > 0) {
-                tokenDeck.add(new ColoredActionToken(BLUE));
+                tokenDeck.add(new ColoredActionToken(BLUE,2));
                 nofbtoken--;
             }
             if(nofytoken>0) {
-                tokenDeck.add(new ColoredActionToken(YELLOW));
+                tokenDeck.add(new ColoredActionToken(YELLOW,2));
                 nofytoken--;
             }
             if(nofgtoken>0){
-                tokenDeck.add(new ColoredActionToken(GREEN));
+                tokenDeck.add(new ColoredActionToken(GREEN,2));
                 nofgtoken--;
             }
             if(nofvtoken>0) {
-                tokenDeck.add(new ColoredActionToken(PURPLE));
+                tokenDeck.add(new ColoredActionToken(PURPLE,2));
                 nofvtoken--;
             }
             if(nofcrosstoken>0) {
@@ -198,7 +208,7 @@ public class LorenzoGame extends Game {
                 nofspecialcrosstoken--;
             }
         }
-        Collections.shuffle(tokenDeck);
+        Collections.shuffle(tokenDeck);*/
     }
 
     /**
@@ -218,6 +228,10 @@ public class LorenzoGame extends Game {
         getProductionDecks()[x][y].pop();
     }
 
+    public Stack<ProductionCard>[][] getDeck()
+    {
+        return this.productionDecks;
+    }
     /**
      *
      * @return true if the last turn is activated and we reached the last player before inkweel

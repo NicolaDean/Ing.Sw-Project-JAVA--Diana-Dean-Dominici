@@ -62,6 +62,7 @@ public class Player extends Observable<ServerController> {
     {
         return this.leaders;
     }
+
     public void setPendingBuy(ProductionCard newCard,int x,int y,int dashPos,int playerIndex)
     {
         this.pendingCard = new UpdateCardBuyed(newCard,x,y,dashPos,playerIndex);
@@ -371,11 +372,12 @@ public class Player extends Observable<ServerController> {
      * @param resWanted the resource i want to obtain
      * @return true if the production is done false is something dosnt gone well
      */
-    public void bonusProduction(int pos, ResourceType resWanted) throws WrongPosition, NotEnoughResource {
+    public void bonusProduction(int pos, ResourceType resWanted) throws WrongPosition, NotEnoughResource, AlreadyUsed {
         if(pos < this.bonusProductions.size())
         {
             BonusProductionInterface card = this.bonusProductions.get(pos);
             card.produce(this,resWanted);
+
 
             this.dashboard.setPendingCost(card.getProdCost()); //if goes well add the cost to the pending cost
         }

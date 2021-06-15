@@ -53,7 +53,13 @@ public class LorenzoTest {
 
         int nofcard=0,tmpPos=0,tmpB=0,tmpY=0,tmpV=0,tmpG=0;
 
-        try { game.addPlayer("Richi"); } catch (Exception e) { fail(); }
+        try {
+            game.addPlayer("Richi");
+        }
+        catch (Exception e)
+        {
+            fail();
+        }
 
 
         try {game.startGame(); } catch (Exception e) { fail(); }

@@ -61,6 +61,8 @@ public class LorenzoServerController extends ServerController{
     public void startGame() throws FullDepositException, NoBonusDepositOwned, WrongPosition {
         try {
             this.game.startGame();
+            ((LorenzoGame)this.game).initializeTokens(this);
+
             this.clients.get(0).sendToClient(this.generateGameStartedPacket(this.generateMiniPlayer(),0));
             this.isStarted = true;
             this.clients.get(0).sendToClient(new TurnNotify());

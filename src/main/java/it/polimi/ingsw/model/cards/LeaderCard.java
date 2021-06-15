@@ -21,7 +21,10 @@ public class LeaderCard extends Card {
     private List<PrerequisiteCard> cardPrequisite;
     private String cliRappresentation = "Leader";
     private int id;
+    private int activationOrder=-1;
+
     transient Packet updateMinimodel;
+
 
     public LeaderCard(List<Resource> cost,List<PrerequisiteCard> cardPrequisite, int victoryPoints, ResourceType type) {
         super(cost, victoryPoints);
@@ -40,6 +43,11 @@ public class LeaderCard extends Card {
     public ResourceType getType()
     {
         return this.type;
+    }
+
+    public void setActivationOrder(int order)
+    {
+        this.activationOrder = order;
     }
 
     public void setCardPrequisite(List<PrerequisiteCard> cardPrequisite) {

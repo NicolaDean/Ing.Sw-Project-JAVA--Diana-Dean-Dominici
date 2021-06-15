@@ -20,7 +20,7 @@ public class Dashboard {
     private List<Resource> bonusResources;
     private List<Resource>pendingCost;
     private List<Resource>turnGain;
-
+    private boolean basicActivated = false;
 
     public Storage getStorage() {
         return storage;
@@ -45,6 +45,7 @@ public class Dashboard {
 
         bonusResources = null;
         pendingCost = new ResourceList();
+        turnGain    = new ResourceList();
     }
 
     public int getScore(){
@@ -111,6 +112,7 @@ public class Dashboard {
 
     public void resetGain()
     {
+        basicActivated = false;
         for(Stack<ProductionCard> c: producionCards)
         {
             if(!c.isEmpty())
@@ -155,7 +157,10 @@ public class Dashboard {
      * @param obtain    Type i want
      * @return true if i can do a basicProduction
      */
-    public void basicProduction(ResourceType spendOne, ResourceType spendTwo, ResourceType obtain) throws NotEnoughResource {
+    public void basicProduction(ResourceType spendOne, ResourceType spendTwo, ResourceType obtain) throws NotEnoughResource, AlreadyUsed {
+
+        if(basicActivated) throw new AlreadyUsed("");
+
         List<Resource> availableRes = this.getAllAvailableResource();
 
         //NEED TO ADD A COMPARE OVERLOADING (list<resource>,resource)
@@ -169,6 +174,11 @@ public class Dashboard {
             this.chestInsertion(new Resource(obtain,1));
             this.pendingCost.add(new Resource(spendOne,1));
             this.pendingCost.add(new Resource(spendTwo,1));
+
+            //To avoid use 2 times production
+            this.turnGain.add(new Resource(obtain,1));
+            basicActivated = false;
+
         }
         else
         {

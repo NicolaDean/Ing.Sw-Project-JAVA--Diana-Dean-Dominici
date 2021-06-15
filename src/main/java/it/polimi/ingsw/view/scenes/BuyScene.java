@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.scenes;
 
+import it.polimi.ingsw.model.cards.Card;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.ConstantValues;
@@ -112,14 +113,26 @@ public class BuyScene extends BasicSceneUpdater{
      */
     public void drawCard(ProductionCard card,int x,int y)
     {
-        //Loading image
-        this.cards[y][x] = loadImage("/images/cards/productions/" +card.getId()+".jpg",130,200);
 
-        this.cards[y][x].setId("production_card");
+        if(card== null)
+        {
+            //TODO DRAW THE BACK OF CARD INSTEAD OF LEADER
+            //Loading image
+            this.cards[y][x] = loadImage("/images/cards/leaders/1.jpg",130,200);
+        }
+        else
+        {
+            //Loading image
+            this.cards[y][x] = loadImage("/images/cards/productions/" +card.getId()+".jpg",130,200);
 
-        this.cards[y][x].setOnMouseClicked(event -> {
-            this.clickFunction(x,y);
-        });
+            this.cards[y][x].setId("production_card");
+
+            this.cards[y][x].setOnMouseClicked(event -> {
+                this.clickFunction(x,y);
+            });
+        }
+
+
 
         if(y==0) Row1.getChildren().add(this.cards[y][x]);
         if(y==1) Row2.getChildren().add(this.cards[y][x]);

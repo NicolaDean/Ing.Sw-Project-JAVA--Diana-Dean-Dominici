@@ -502,8 +502,6 @@ public class GUI extends Observable<ClientController> implements View{
                 }
             });
         }
-
-
     }
 
 

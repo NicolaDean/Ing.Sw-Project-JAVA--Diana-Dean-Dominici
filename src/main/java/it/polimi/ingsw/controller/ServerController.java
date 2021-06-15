@@ -422,7 +422,12 @@ public class ServerController{
 
             this.game.getProductionDecks()[x][y].pop();
             //Set a pending card, when user finish to pay it i will send the updateBuyedCard packet i added to player
-            ProductionCard newCard = this.game.getProductionDecks()[x][y].peek();
+            ProductionCard newCard = null;
+            if( !this.game.getProductionDecks()[x][y].isEmpty())
+            {
+                newCard = this.game.getProductionDecks()[x][y].peek();
+            }
+
             p.setPendingBuy(newCard,x,y,pos,this.clients.get(player).getRealPlayerIndex());
 
             return setPendingCost(p.getDashboard());

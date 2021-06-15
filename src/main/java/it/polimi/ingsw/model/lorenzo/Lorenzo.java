@@ -21,8 +21,6 @@ public class Lorenzo {
 
     public void activateToken(LorenzoGame l,ActionToken a){
         a.activateToken(l);
-        if(a.isSpecial())
-            l.resetDeckToken();
     }
 
     public void incrementPosition(int n){

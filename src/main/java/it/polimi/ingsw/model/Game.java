@@ -328,6 +328,8 @@ public class Game {
     public boolean checkCardCondition()
     {
         Player p = this.players.get(currentPlayer);
+
+        DebugMessages.printError("Card count = "+ p.getDashboard().countCard());
         return p.getDashboard().countCard() >= ConstantValues.cardsWinningCondition;
     }
 

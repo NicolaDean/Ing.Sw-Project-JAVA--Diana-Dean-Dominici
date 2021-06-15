@@ -788,6 +788,25 @@ public class ClientController implements Runnable{
     }
 
     /**
+     * Update lorenzo position inside minimodel
+     * @param pos lorenzo position
+     */
+    public void lorenzoPositionUpdate(int pos)
+    {
+        this.model.lorenzoPositionUpdate(pos);
+    }
+
+    /**
+     * Update decks card due to lorenzo discard token
+     * @param x         col deck
+     * @param y         row deck
+     * @param newCard   new card to insert in minimodel
+     */
+    public void lorenzoCardDiscard(int x,int y,ProductionCard newCard)
+    {
+        this.model.lorenzoCardDiscard(x,y,newCard);
+    }
+    /**
      * This thread listen to the server packet and analyze them
      */
     @Override
@@ -804,11 +823,21 @@ public class ClientController implements Runnable{
         this.sendMessage(new DashReset());
     }
 
+    /**
+     * send to server a bonus production
+     * @param res
+     * @param type
+     */
     public void sendBonusProduction(int res,ResourceType type) {
 
         this.sendMessage(new BonusProduction(res,type));
     }
 
+
+    /**
+     * save inside a json the necessary information to reconnect to the server
+     * @param gameId a unique code used to reconnect to the game (rappresent the serverController to search)
+     */
     public void saveReconnectInfo(long gameId) {
 
         String nickname = this.model.getPersonalPlayer().getNickname();

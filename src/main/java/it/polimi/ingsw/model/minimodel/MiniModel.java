@@ -14,6 +14,7 @@ import java.util.Stack;
 public class MiniModel extends Observable<BasicSceneUpdater>
 {
 
+    private int lorenzo;
     private int persanalIndex = 0;
     private boolean isLoaded = false;
     private MiniPlayer[] players;
@@ -112,4 +113,25 @@ public class MiniModel extends Observable<BasicSceneUpdater>
         this.players[index].updateChest(chest);
     }
 
+    public void lorenzoPositionUpdate(int pos) {
+        lorenzo = pos;
+    }
+
+    /**
+     * update minimodel decks by discarding card drawed by lorenzo
+     * @param x        col deck
+     * @param y        row deck
+     * @param newCard  new card to put inside view
+     */
+    public void lorenzoCardDiscard(int x,int y,ProductionCard newCard)
+    {
+        this.decks[x][y] = newCard;
+        this.notifyObserver(scene -> scene.updateDeckCard(newCard,x,y));
+    }
+
+    public int getLorenzo()
+    {
+        //Observer per draware lorenzo
+        return lorenzo;
+    }
 }
