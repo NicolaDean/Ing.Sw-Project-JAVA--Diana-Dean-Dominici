@@ -63,7 +63,9 @@ public class LorenzoServerController extends ServerController{
             this.game.startGame();
             ((LorenzoGame)this.game).initializeTokens(this);
 
-            this.clients.get(0).sendToClient(this.generateGameStartedPacket(this.generateMiniPlayer(),0));
+            //Generate Minimodel,Initialize cheats and send user the "gameStarted" packet
+            this.initializeMinimodel();
+            //this.clients.get(0).sendToClient(this.generateGameStartedPacket(this.generateMiniPlayer(),0));
             this.isStarted = true;
             this.clients.get(0).sendToClient(new TurnNotify());
         } catch (NotEnoughPlayers notEnoughPlayers) {

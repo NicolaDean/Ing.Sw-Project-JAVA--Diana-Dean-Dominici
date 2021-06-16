@@ -61,7 +61,6 @@ public class ToastMessage {
             fadeInTimeline.getKeyFrames().add(fadeInKey1);
             fadeInTimeline.setOnFinished((ae) -> container.close());
             fadeInTimeline.play();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

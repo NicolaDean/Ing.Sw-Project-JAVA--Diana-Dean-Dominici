@@ -564,13 +564,9 @@ public class ClientController implements Runnable{
             this.output.flush();
         }
     }
-    /**
-     * wait server messages
-     */
-    public void waitMessage()
-    {
-        String message = this.input.nextLine();
 
+    public void analyze(String message)
+    {
         Thread t = new Thread(()->{
 
             try
@@ -585,6 +581,15 @@ public class ClientController implements Runnable{
             }
         });
         t.start();
+    }
+    /**
+     * wait server messages
+     */
+    public void waitMessage()
+    {
+        String message = this.input.nextLine();
+        analyze(message);
+
     }
 
     /**
@@ -899,5 +904,9 @@ public class ClientController implements Runnable{
         }
 
 
+    }
+
+    public void executePacket(BasicPacketFactory lastAction) {
+        analyze(lastAction.toJson());
     }
 }

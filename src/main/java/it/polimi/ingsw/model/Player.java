@@ -53,6 +53,7 @@ public class Player extends Observable<ServerController> {
         connectionState = true;
     }
 
+
     public void resetPendingBuy()
     {
         this.pendingCard = null;

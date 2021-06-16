@@ -22,6 +22,9 @@ import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.utils.CliColors;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -58,11 +61,18 @@ public class ServerController{
     }
 
 
-
+    /**
+     * set id of this match
+     * @param matchId assiged id
+     */
     public void setMatchId(int matchId) {
         this.id = matchId;
     }
 
+    /**
+     *
+     * @return the id assegated to this match
+     */
     public long getMatchId() {
         return this.id;
     }
@@ -102,8 +112,10 @@ public class ServerController{
             if(isStarted)
             {
                 this.warning("Client "+ index + " disconnected from game number "+ this.getMatchId());
-
                 this.game.getPlayer(clients.get(index).getRealPlayerIndex()).setConnectionState(false);
+
+                if(currentClient == index)
+                    this.nextTurn();
             }
             else
             {
@@ -178,6 +190,11 @@ public class ServerController{
         this.game.getPlayer(this.clients.get(index).getRealPlayerIndex()).getDashboard().resetGain();
     }
 
+    /**
+     * Send users new position of a specific player
+     * @param pos
+     * @param clientIndex
+     */
     public void sendPositionUpdate(int pos,int clientIndex)
     {
         //TODO non sempre inviata
@@ -191,6 +208,25 @@ public class ServerController{
         return game;
     }
 
+
+    /**
+     * Generate MiniPlayers, add cheat and draw them 4 leaders each then send to clients "gameStarted" packet with minimodel data
+     * @throws FullDepositException
+     * @throws WrongPosition
+     * @throws NoBonusDepositOwned
+     */
+    public void initializeMinimodel() throws FullDepositException, WrongPosition, NoBonusDepositOwned {
+        //Add cheat to minimodel if flags are active
+        this.addCheat();
+
+        //Draw 4 leaders for each player
+        this.game.initializeLeaders();
+
+        MiniPlayer[] miniPlayers = this.generateMiniPlayer();
+        for (ClientHandler c : clients) {
+            c.sendToClient(generateGameStartedPacket(miniPlayers,c.getRealPlayerIndex()));
+        }
+    }
     /**
      * Start the game (called from StartGame packet)
      * Send a broadcast to all player with "GAME STARTED" packet (and remove from clientApp the line with automatic start sender)
@@ -209,12 +245,9 @@ public class ServerController{
                     return;
                 }
 
-
-
                 this.warning("\n-----------Game " + this.getMatchId() + " avviato---------- \n");
 
                 int[] realIndex = game.startGame();
-
 
                 int i = 0;
                 for (ClientHandler c : clients) {
@@ -225,15 +258,9 @@ public class ServerController{
 
                 int firstPlayer = this.game.getPlayer(0).getControllerIndex();
                 currentClient = firstPlayer;
-                //Send broadcast with game started packet
 
-                i=0;
-                MiniPlayer[] miniPlayers = this.generateMiniPlayer();
-                for (ClientHandler c : clients) {
-                    DebugMessages.printError("PLAYER "+ c.getRealPlayerIndex() + "->controller: "+i);
-                    c.sendToClient(generateGameStartedPacket(miniPlayers,c.getRealPlayerIndex()));
-                    i++;
-                }
+                //Send broadcast with game started packet
+                initializeMinimodel();
 
                 this.isStarted = true;
                 TimeUnit.SECONDS.sleep(2);
@@ -263,14 +290,16 @@ public class ServerController{
         return new GameStarted(this.id,index,players,game.getProductionDecks(),game.getMarket().getResouces(),game.getMarket().getDiscardedResouce());
     }
 
+
+
     /**
-     *
-     * @return a list of miniplayer to send to the client to VIEW purpose
-     * is a reduced version of Game model
+     * Add cheat to player (for debug purpose)
+     * if Debug infinite resouces flag is true add to all players 100 resources of all type and fullify storage
+     * @throws WrongPosition
+     * @throws NoBonusDepositOwned
+     * @throws FullDepositException
      */
-    public MiniPlayer[] generateMiniPlayer() throws FullDepositException, NoBonusDepositOwned, WrongPosition {
-        MiniPlayer[] players= new MiniPlayer[game.getNofplayers()];
-        int i=0;
+    public void addCheat() throws WrongPosition, NoBonusDepositOwned, FullDepositException {
         if(DebugMessages.infiniteResourcesStorage) {
             for (Player p : game.getPlayers()) {
                 p.getDashboard().getStorage().safeInsertion(new Resource(COIN, 1), 0);
@@ -286,21 +315,27 @@ public class ServerController{
             resources.add(new Resource(SERVANT,100));
             resources.add(new Resource(SHIELD,100));
             resources.add(new Resource(ROCK,100));
-        }
 
+            for (Player p : game.getPlayers()) {
+                p.chestInsertion(resources);
+            }
+        }
+    }
+    /**
+     *
+     * @return a list of miniplayer to send to the client to VIEW purpose
+     * is a reduced version of Game model
+     */
+    public MiniPlayer[] generateMiniPlayer() throws FullDepositException, NoBonusDepositOwned, WrongPosition {
+        MiniPlayer[] players= new MiniPlayer[game.getNofplayers()];
+        int i=0;
 
         for (Player p:game.getPlayers()){
             players[i]=new MiniPlayer(p.getNickname());
             players[i].setStorage(p.getDashboard().getStorage().getDeposits());
-            players[i].updateChest(resources);
+            players[i].updateChest(p.getDashboard().getChest());
             players[i].setIndex(i);
-            LeaderCard[] leaderCards = this.game.get4leaders();
-            players[i].setLeaderCards(leaderCards);
-            p.setLeaders(leaderCards);
-
-            if(DebugMessages.infiniteResourcesChest) {
-                p.chestInsertion(resources);
-            }
+            players[i].setLeaderCards(p.getLeaders());
             i++;
         }
 
@@ -342,7 +377,23 @@ public class ServerController{
      */
     public void turnNotifier()
     {
-        clients.get(currentClient).sendToClient(new TurnNotify());
+        ClientHandler c = clients.get(currentClient);
+        Player curr = this.game.getPlayer(c.getRealPlayerIndex());
+
+        //Check if user have some not completed action after reconnecting
+        if(!curr.getPendingCost().isEmpty())
+        {
+            c.sendToClient(new TurnNotifySpecialPending(curr.getPendingCost()));
+        }
+        else if(!this.pendingGain.isEmpty())
+        {
+            c.sendToClient(new TurnNotifySpecialGain(this.pendingGain));
+        }
+        else
+        {
+            c.sendToClient(new TurnNotify());
+        }
+
 
         for (Player p: this.getGame().getPlayers()) {
             if (p.getControllerIndex() != currentClient)
@@ -797,6 +848,19 @@ public class ServerController{
         List<Resource>chest = this.game.getPlayer(this.clients.get(index).getRealPlayerIndex()).getDashboard().getChest();
         this.broadcastMessage(-1,new ChestUpdate(chest,this.clients.get(index).getRealPlayerIndex()));
     }
+
+    /**
+     * Save Game state for the "evryOneDisconnected" or "serverCrush" possibility
+     */
+    public void saveGameState() throws IOException {
+        //Save Game inside File
+        FileOutputStream fout = new FileOutputStream("save.ser");
+        ObjectOutputStream oos = new ObjectOutputStream(fout);
+        //oos.writeObject(new GameSaveState(this.game));
+
+        //oos.close();
+        //fout.close();
+    }
     /**
      * if end condition are true send to all a "last Turn" packet
      * if the current player is 4 and the match is ended then send an "end game" packet to all
@@ -806,10 +870,24 @@ public class ServerController{
     public Packet nextTurn(){
 
         Player player=null;
+
+        int nOfDisconnected=0;
         do
         {
-            //Skip turn to all offline players
             player = game.nextTurn();
+
+            if(!player.checkConnection()) DebugMessages.printError(player.getNickname()+" Skip turn due disconnection");
+            nOfDisconnected ++;
+            if(nOfDisconnected == this.game.getPlayers().size())
+            {
+                try {
+                    saveGameState();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //TODO stop this serverController
+                return null;
+            }
         }while (!player.checkConnection());
 
         DebugMessages.printError("PLAYER "+ this.game.getCurrentPlayerIndex() + "->controller:"+this.game.getCurrentPlayer().getControllerIndex());
@@ -821,12 +899,7 @@ public class ServerController{
             return null;
         }
 
-
         currentClient = player.getControllerIndex();
-        //currentClient=this.game.getRealPlayerHandlerIndex();
-
-        //DebugMessages.printGeneric("\n new currplayer: "+ currentClient + ", total players: "+this.clients.size()+"\n");
-
 
         turnNotifier();
         return null;

@@ -14,6 +14,10 @@ import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -194,9 +198,16 @@ public class JsonInterpreterTest {
         interpreter.analyzePacket(new EndTurn().generateJson());
         interpreter.getResponse();
     }
+
     @Test
-    public void gameStartedTest(){
-        //TODO
+    public void gameStartedTest() throws IOException, ClassNotFoundException {
+
+        ObjectInputStream objectinputstream = null;
+        FileInputStream streamIn = new FileInputStream("save.ser");
+        objectinputstream = new ObjectInputStream(streamIn);
+        Game g = (Game) objectinputstream.readObject();
+
+        g.checkEndGame();
     }
 
 }

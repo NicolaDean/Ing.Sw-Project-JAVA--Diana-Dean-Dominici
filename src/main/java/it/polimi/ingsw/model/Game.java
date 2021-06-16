@@ -11,12 +11,13 @@ import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-public class Game {
+public class Game implements Serializable {
     private List<Player> players;
     protected LeaderCard[] leaders;
     protected Stack<ProductionCard>[][] productionDecks;
@@ -410,4 +411,15 @@ public class Game {
         return this.isEnded && this.currentPlayer == ConstantValues.numberOfPlayer;
     }
 
+    /**
+     * Draw 4 leaders for each player inside game
+     */
+    public void initializeLeaders()
+    {
+        for(Player p:this.players)
+        {
+            LeaderCard[] leaderCards = this.get4leaders();
+            p.setLeaders(leaderCards);
+        }
+    }
 }
