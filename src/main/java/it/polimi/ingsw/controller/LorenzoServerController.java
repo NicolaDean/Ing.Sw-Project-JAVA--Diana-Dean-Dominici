@@ -46,7 +46,15 @@ public class LorenzoServerController extends ServerController{
      * @return Packet to send at client with
      */
     @Override
-    public Packet nextTurn(){ //TODO nexturn di lorenzo
+    public Packet nextTurn(){
+        saveGameState();
+        if(!this.game.getPlayer(0).checkConnection())
+        {
+            //IF PLAYER IS OFFLINE PAUSE THE MATCH (is single player)
+            paused = true;
+            return null;
+        }
+
         ((LorenzoGame)game).nextTurn();
         if(game.checkEndGame()) lastTurn();
         if(game.IsEnded()) {

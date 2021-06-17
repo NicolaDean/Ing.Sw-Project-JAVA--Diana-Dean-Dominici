@@ -9,6 +9,7 @@ import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.enumeration.ErrorMessages;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.utils.ConstantValues;
+import it.polimi.ingsw.utils.LoadGameState;
 import it.polimi.ingsw.view.utils.CliColors;
 import it.polimi.ingsw.view.utils.Logger;
 
@@ -29,12 +30,12 @@ public class ServerApp {
     List<ServerController>          availableControllers;
     List<ServerController>          closed;
 
-    public ServerApp(int port)
+    public ServerApp(int port,long matchId)
     {
         this.executor             = Executors.newCachedThreadPool();
         this.port                 = port;
         this.availableControllers = new ArrayList<>();
-        this.matchId              = 0;
+        this.matchId              = matchId;
     }
 
 
@@ -108,6 +109,7 @@ public class ServerApp {
         int port = ConstantValues.defaultServerPort;
 
         int i=0;
+        long matchId=0;
         for(String arg : args)
         {
             if(arg.equals("-port") || arg.equals("-p"))
@@ -119,15 +121,22 @@ public class ServerApp {
                     port = ConstantValues.defaultServerPort;
                 }
             }
+            //IF USER START SERVER WITH OTHER ATRIBUTE WILL OVERWRITE THE MATCH saved one by one starting with id 1
             if(arg.equals("-restart") || arg.equals("-r"))
             {
                //TODO load server from files
+                //Carica da json l'id da cui partire a contare
+                try {
+                    matchId = LoadGameState.loadCurrentId();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             i++;
         }
 
         System.out.println("Port "+ port);
-        ServerApp serverApp = new ServerApp(port);
+        ServerApp serverApp = new ServerApp(port,matchId);
         serverApp.start();
 
     }
@@ -145,17 +154,42 @@ public class ServerApp {
         {
             if(match.getMatchId()==id)
             {
-                //Create new ClientHandler with this controller
-                ClientHandler handler = new ClientHandler(s,match);
-                //Add Handler to Real Controller
-                //Create Thread
-                this.createRealClientThread(handler);
-
-                match.reconnect(handler,nickname);
-                handler.respondToClient();
+                initializeReconnectedClient(s,match,nickname);
+                return;
             }
         }
 
+        //If no active match is available search inside saving (if not expired)
+        try {
+            ServerController match = LoadGameState.loadGame(id);
+            if(match!=null)
+            {
+
+                match.setPaused();
+                initializeReconnectedClient(s,match,nickname);
+                match.exitPause();
+            }
+            else
+            {
+                DebugMessages.printError("Error during loading saving data");
+                //TODO Respond to client Error during reconnection
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public synchronized void initializeReconnectedClient(Socket s,ServerController match,String nickname)
+    {
+        //Create new ClientHandler with this controller
+        ClientHandler handler = new ClientHandler(s,match);
+        //Add Handler to Real Controller
+        //Create Thread
+        this.createRealClientThread(handler);
+
+        match.reconnect(handler,nickname);
+        handler.respondToClient();
     }
 
     /**
@@ -163,23 +197,28 @@ public class ServerApp {
      * @param nickname
      * @param s         waiting room socket
      */
-    public void singleLogin(String nickname,Socket s)
+    public synchronized void singleLogin(String nickname,Socket s)
     {
         //Create single player
         ServerController c = new LorenzoServerController();
-        c.setMatchId(this.availableControllers.size());
+        c.setMatchId(matchId);
         availableControllers.add(c);
-
+        matchId++;
+        try {
+            LoadGameState.writeCurrentId(matchId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         createHandler(c,s,new LoginSinglePlayer(nickname));
-
     }
+
 
     /**
      * execute login for this player from fakecontroller
      * @param nickname client nickanme
      * @param s        waiting room socket
      */
-    public void login(String nickname,Socket s)
+    public synchronized void login(String nickname,Socket s)
     {
         ServerController c = findFreeController(nickname);
         createHandler(c,s,new Login(nickname));
@@ -241,13 +280,23 @@ public class ServerApp {
         }
 
         if(i>0)
+        {
             System.out.println("All match Full, new one created");
+        }
+
+
         terminal.out.printlnColored("Player logged to the "+ i + "^ Match", CliColors.GREEN_TEXT,CliColors.BLACK_BACKGROUND);
 
 
         ServerController c = new ServerController(true);
-        c.setMatchId(i);
+        c.setMatchId(matchId);
         availableControllers.add(c);
+        matchId++;
+        try {
+            LoadGameState.writeCurrentId(matchId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return c;
     }
 

@@ -39,7 +39,7 @@ public class ServerController extends Observable<ServerApp> implements Serializa
     //view
     protected Game                game;
     protected List<ClientHandler> clients = null;
-    transient protected final Object  lock;
+    transient protected Object  lock;
     protected int                 currentClient = 0;
     protected boolean             isSinglePlayer;
     protected boolean             isStarted;
@@ -82,7 +82,7 @@ public class ServerController extends Observable<ServerApp> implements Serializa
      * set id of this match
      * @param matchId assiged id
      */
-    public void setMatchId(int matchId) {
+    public void setMatchId(long matchId) {
         this.id = matchId;
     }
 
@@ -188,7 +188,9 @@ public class ServerController extends Observable<ServerApp> implements Serializa
      * @param client client to add
      */
     public void addClient(ClientHandler client) {
+        if(clients == null) clients = new ArrayList<>();
         this.clients.add(client);
+        if(client==null)return;
 
         client.setIndex(this.clients.size()-1);
         new Thread(client.initializePingController(this)).start();
@@ -895,10 +897,12 @@ public class ServerController extends Observable<ServerApp> implements Serializa
     /**
      * Save Game state for the "evryOneDisconnected" or "serverCrush" possibility
      */
-    public void saveGameState() throws IOException {
-
-        paused = true;
-        LoadGameState.saveGame(this);
+    public void saveGameState() {
+        try {
+            LoadGameState.saveGame(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     /**
      * if end condition are true send to all a "last Turn" packet
@@ -910,6 +914,8 @@ public class ServerController extends Observable<ServerApp> implements Serializa
 
         Player player=null;
 
+        saveGameState();
+
         int nOfDisconnected=0;
         do
         {
@@ -919,12 +925,8 @@ public class ServerController extends Observable<ServerApp> implements Serializa
             nOfDisconnected ++;
             if(nOfDisconnected == this.game.getPlayers().size())
             {
-                try {
-                    saveGameState();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                //TODO stop this serverController
+                paused = true;
+                DebugMessages.printError("All players Disconnected, Game paused");
                 return null;
             }
         }while (!player.checkConnection());
@@ -983,7 +985,7 @@ public class ServerController extends Observable<ServerApp> implements Serializa
         for(Player p:this.game.getPlayers())
         {
             //If same name and player is disconnected (forbit to reconnect multiple time simultaneusly)
-            if(p.getNickname().equals(nickname) && !p.checkConnection())
+            if(p.getNickname().equals(nickname) && (!p.checkConnection() || paused))
             {
                 handler.setRealPlayerIndex(i);
                 handler.setIndex(p.getControllerIndex());
@@ -1055,5 +1057,23 @@ public class ServerController extends Observable<ServerApp> implements Serializa
     {
         this.notifyObserver(serverApp -> {serverApp.reconnect(nickname,id,this.waitingRoomSocket);});
         this.isReconnected = true;
+    }
+
+    /**
+     * exit pause state and lauch turn
+     */
+    public void exitPause() {
+
+        paused = false;
+        nextTurn();
+    }
+
+    /**
+     * Indicate that now game is in paused mode , it happen when server crush and user reload, or when all player disconnect
+     */
+    public void setPaused()
+    {
+        lock = new Object();
+        paused = true;
     }
 }
