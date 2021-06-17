@@ -6,18 +6,15 @@ import it.polimi.ingsw.controller.packets.ACK;
 import it.polimi.ingsw.controller.packets.MarketResult;
 import it.polimi.ingsw.controller.packets.PendingCost;
 import it.polimi.ingsw.controller.packets.UpdatePosition;
-import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.utils.GameSaveState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -202,12 +199,20 @@ public class JsonInterpreterTest {
     @Test
     public void gameStartedTest() throws IOException, ClassNotFoundException {
 
+
+        FileOutputStream fout = new FileOutputStream("save.ser");
+        ObjectOutputStream oos = new ObjectOutputStream(fout);
+        oos.writeObject(new GameSaveState(new ServerController(false)));
+
+        oos.close();
+        fout.close();
+
         ObjectInputStream objectinputstream = null;
         FileInputStream streamIn = new FileInputStream("save.ser");
         objectinputstream = new ObjectInputStream(streamIn);
-        Game g = (Game) objectinputstream.readObject();
+        GameSaveState a = (GameSaveState) objectinputstream.readObject();
 
-        g.checkEndGame();
+        System.out.println("");
     }
 
 }

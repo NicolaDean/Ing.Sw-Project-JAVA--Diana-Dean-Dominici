@@ -4,7 +4,9 @@ import it.polimi.ingsw.enumeration.CardType;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.CurrentOS;
 
-public class PrerequisiteCard {
+import java.io.Serializable;
+
+public class PrerequisiteCard  implements Serializable {
     private int level;
     private CardType type;
     private int quantity;

@@ -14,7 +14,7 @@ import it.polimi.ingsw.view.utils.CliColors;
 
 import java.util.List;
 
-public class LeaderCard extends Card {
+public class LeaderCard extends Card  {
 
     private boolean      active;
     private ResourceType type;

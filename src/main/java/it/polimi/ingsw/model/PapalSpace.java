@@ -3,9 +3,10 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.lorenzo.Lorenzo;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PapalSpace {
+public class PapalSpace  implements Serializable {
 
     private int initialPosition;
     private int finalPosition;

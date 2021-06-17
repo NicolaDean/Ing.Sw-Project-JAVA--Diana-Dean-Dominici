@@ -8,10 +8,11 @@ import it.polimi.ingsw.utils.ConstantValues;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Storage {
+public class Storage  implements Serializable {
     private Deposit[] storage = new Deposit[ConstantValues.maxDepositsNumber];
 
 

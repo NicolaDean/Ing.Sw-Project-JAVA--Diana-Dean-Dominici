@@ -10,12 +10,13 @@ import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.view.utils.CliColors;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.List;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
 import static it.polimi.ingsw.utils.ConstantValues.*;
 
-public class Market {
+public class Market implements Serializable {
     private int whiteCount=0;
     private Boolean redBallExtracted=false;
     private List<Resource> pendingResourceExtracted = new ResourceList();

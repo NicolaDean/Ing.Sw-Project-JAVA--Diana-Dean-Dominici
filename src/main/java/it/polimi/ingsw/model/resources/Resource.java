@@ -5,7 +5,9 @@ import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.CurrentOS;
 import it.polimi.ingsw.view.utils.CliColors;
 
-public class Resource {
+import java.io.Serializable;
+
+public class Resource implements Serializable {
     private              ResourceType  type;
     private              int           quantity;
 

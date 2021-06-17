@@ -587,8 +587,15 @@ public class ClientController implements Runnable{
      */
     public void waitMessage()
     {
-        String message = this.input.nextLine();
-        analyze(message);
+        try {
+            String message = this.input.nextLine();
+            analyze(message);
+        }catch (Exception e)
+        {
+            connected = false;
+            DebugMessages.printError("Server Connection Crushed (Server Offline)");
+            System.exit(-1);
+        }
 
     }
 

@@ -4,9 +4,10 @@ import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Card {
+public class Card  implements Serializable {
 
     private List<Resource> cost = new ResourceList();
     private int victoryPoints;

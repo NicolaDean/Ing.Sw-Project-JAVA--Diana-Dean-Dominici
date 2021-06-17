@@ -2,10 +2,11 @@ package it.polimi.ingsw.model.resources;
 
 import it.polimi.ingsw.enumeration.ResourceType;
 
+import java.io.Serializable;
 import java.util.*;
 
 
-public class ResourceList implements List
+public class ResourceList implements List, Serializable
 {
 
     List<Resource> resources;

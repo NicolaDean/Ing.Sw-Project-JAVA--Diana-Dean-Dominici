@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.ClientHandler;
+import it.polimi.ingsw.ServerApp;
 import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.enumeration.ErrorMessages;
 import it.polimi.ingsw.enumeration.ResourceType;
@@ -20,23 +21,25 @@ import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.utils.DebugMessages;
+import it.polimi.ingsw.utils.LoadGameState;
+import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.utils.CliColors;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
 
-public class ServerController{
+public class ServerController extends Observable<ServerApp> implements Serializable {
 
     //view
     protected Game                game;
-    protected List<ClientHandler> clients;
-    protected final Object        lock;
+    protected List<ClientHandler> clients = null;
+    transient protected final Object  lock;
     protected int                 currentClient = 0;
     protected boolean             isSinglePlayer;
     protected boolean             isStarted;
@@ -44,6 +47,8 @@ public class ServerController{
     protected long                id;
     protected boolean             isReconnected = false;
     protected Packet              reconnected;
+    protected boolean             paused = false;
+    protected Socket              waitingRoomSocket;
     /**
      *
      * @param real if true create a real controller(with clientHandlers) if false an emptyController for accept Login in waitingRoom
@@ -58,6 +63,18 @@ public class ServerController{
         if(real)  clients = new ArrayList<>();//If is a real controller create also ClientHandlers
         this.id = id;
         this.isReconnected = false;
+    }
+
+    /**
+     * Fake controller constructor, it allow to save socket of client inside waiting room to understand his actions
+     * (eg recive login,singleLogin,reconnect)
+     * @param s socket of waitingRoom
+     */
+    public ServerController(Socket s)
+    {
+        clients = null;
+        this.lock = null;
+        this.waitingRoomSocket = s;
     }
 
 
@@ -551,6 +568,24 @@ public class ServerController{
      */
     public Packet login(String nickname)
     {
+        if(clients == null)
+        {
+            this.notifyObserver(serverApp -> {
+                if(isSinglePlayer)
+                {
+                    serverApp.singleLogin(nickname, this.waitingRoomSocket);
+                }
+                else {
+                    serverApp.login(nickname,this.waitingRoomSocket);
+                }
+
+            });
+            //for waiting room exit condition
+            paused = true;
+            return null;
+        }
+
+
         try {
             this.game.addPlayer(nickname);
             //System.out.println("Login di " + nickname);
@@ -850,16 +885,20 @@ public class ServerController{
     }
 
     /**
+     *
+     * @return true if all player was disconnected (if true the recconnect packet will load game from file)
+     */
+    public boolean isPaused()
+    {
+        return paused;
+    }
+    /**
      * Save Game state for the "evryOneDisconnected" or "serverCrush" possibility
      */
     public void saveGameState() throws IOException {
-        //Save Game inside File
-        FileOutputStream fout = new FileOutputStream("save.ser");
-        ObjectOutputStream oos = new ObjectOutputStream(fout);
-        //oos.writeObject(new GameSaveState(this.game));
 
-        //oos.close();
-        //fout.close();
+        paused = true;
+        LoadGameState.saveGame(this);
     }
     /**
      * if end condition are true send to all a "last Turn" packet
@@ -910,6 +949,9 @@ public class ServerController{
      */
     public void endGame()
     {
+        //remove itself from availableControllers
+        this.notifyObserver(serverApp -> {serverApp.closeController(this);});
+
         this.broadcastMessage(-1, new EndGame());
     }
 
@@ -1009,9 +1051,9 @@ public class ServerController{
     /**
      * if waiting room recive a reconnect packet it affect the fake controller by setting true this flag
      */
-    public void setReconnect(Packet reconnect)
+    public void setReconnect(String nickname,long id)
     {
-        this.reconnected = reconnect;
+        this.notifyObserver(serverApp -> {serverApp.reconnect(nickname,id,this.waitingRoomSocket);});
         this.isReconnected = true;
     }
 }

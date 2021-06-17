@@ -9,16 +9,17 @@ import it.polimi.ingsw.view.utils.CliColors;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ClientHandler implements Runnable {
+public class ClientHandler implements Runnable, Serializable {
 
     private final Socket    socket;
     private Scanner         input;
     private PrintWriter     output;
     JsonInterpreterServer   interpreter;
-    private final Object    lock;
+    transient private final Object    lock;
     private int index;
     private int realPlayerIndex;
     private boolean ping = false;

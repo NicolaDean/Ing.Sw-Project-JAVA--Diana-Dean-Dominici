@@ -10,9 +10,10 @@ import it.polimi.ingsw.model.resources.ResourceList;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 import it.polimi.ingsw.utils.ConstantValues;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Dashboard {
+public class Dashboard  implements Serializable {
     private Storage storage;
     private List<Resource> chest;
     private Stack<ProductionCard>[] producionCards;

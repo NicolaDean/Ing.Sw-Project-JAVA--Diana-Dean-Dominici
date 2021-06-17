@@ -25,7 +25,7 @@ public class Reconnect extends Packet<ServerController> implements PacketManager
     @Override
     public Packet analyze(ServerController controller) {
 
-        controller.setReconnect(this);
+        controller.setReconnect(nickname,id);
         return null;
     }
 
