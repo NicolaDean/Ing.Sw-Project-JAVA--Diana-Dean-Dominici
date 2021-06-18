@@ -5,7 +5,9 @@ import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 
-public class Deposit {
+import java.io.Serializable;
+
+public class Deposit  implements Serializable {
     final int sizeMax; //the capacity of the deposit (it can be 1, 2 or 3)
     private Resource resource; //the resource type that the deposit can contain (it can change during the game so it is not final)
 

@@ -46,7 +46,15 @@ public class LorenzoServerController extends ServerController{
      * @return Packet to send at client with
      */
     @Override
-    public Packet nextTurn(){ //TODO nexturn di lorenzo
+    public Packet nextTurn(){
+        saveGameState();
+        if(!this.game.getPlayer(0).checkConnection())
+        {
+            //IF PLAYER IS OFFLINE PAUSE THE MATCH (is single player)
+            paused = true;
+            return null;
+        }
+
         ((LorenzoGame)game).nextTurn();
         if(game.checkEndGame()) lastTurn();
         if(game.IsEnded()) {
@@ -63,7 +71,9 @@ public class LorenzoServerController extends ServerController{
             this.game.startGame();
             ((LorenzoGame)this.game).initializeTokens(this);
 
-            this.clients.get(0).sendToClient(this.generateGameStartedPacket(this.generateMiniPlayer(),0));
+            //Generate Minimodel,Initialize cheats and send user the "gameStarted" packet
+            this.initializeMinimodel();
+            //this.clients.get(0).sendToClient(this.generateGameStartedPacket(this.generateMiniPlayer(),0));
             this.isStarted = true;
             this.clients.get(0).sendToClient(new TurnNotify());
         } catch (NotEnoughPlayers notEnoughPlayers) {

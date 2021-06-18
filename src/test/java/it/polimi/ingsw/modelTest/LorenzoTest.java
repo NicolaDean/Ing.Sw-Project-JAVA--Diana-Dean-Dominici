@@ -20,6 +20,8 @@ public class LorenzoTest {
     public void scoreCellTest() {
         LorenzoGame game = new LorenzoGame();
 
+        game.resetDeckToken();
+
         try { game.addPlayer("Richi"); } catch (Exception e) { e.printStackTrace(); }
 
         Player currPlayer = null;
@@ -48,6 +50,7 @@ public class LorenzoTest {
     @Test
     public void lorenzoTurn() {
         LorenzoGame game = new LorenzoGame();
+        game.resetDeckToken();
         ActionToken at;
         Lorenzo l = game.getLorenzo();
 
@@ -127,6 +130,7 @@ public class LorenzoTest {
 
 
         game = new LorenzoGame();
+        game.resetDeckToken();
         try { game.addPlayer("Richi"); } catch (Exception e) {}
         try {
             game.startGame();
@@ -152,6 +156,7 @@ public class LorenzoTest {
 
 
         game = new LorenzoGame();
+        game.resetDeckToken();
         try { game.addPlayer("Richi"); } catch (Exception e) {}
         try {
             game.startGame();

@@ -9,20 +9,21 @@ import it.polimi.ingsw.view.utils.CliColors;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ClientHandler implements Runnable {
+public class ClientHandler implements Runnable, Serializable {
 
-    private final Socket    socket;
-    private Scanner         input;
-    private PrintWriter     output;
-    JsonInterpreterServer   interpreter;
-    private final Object    lock;
+    transient private final Socket    socket;
+    transient private Scanner         input;
+    transient private PrintWriter     output;
+    transient JsonInterpreterServer   interpreter;
+    transient private Object    lock;
     private int index;
     private int realPlayerIndex;
     private boolean ping = false;
-    private PingController pingController;
+    transient private PingController pingController;
 
 
     //TODO aggiungere una funzione nel game "getIndexFromIndex" che viene chiamata quando mischio i giocatori
@@ -223,7 +224,10 @@ public class ClientHandler implements Runnable {
         }
     }
 
-
+    public void checkLock()
+    {
+        if(lock==null) lock = new Object();
+    }
     /**
      * send a message to this specific client
      * @param p packet to send

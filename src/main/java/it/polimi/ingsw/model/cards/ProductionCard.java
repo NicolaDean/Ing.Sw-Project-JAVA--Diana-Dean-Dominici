@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceOperator;
 import it.polimi.ingsw.utils.ConstantValues;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class ProductionCard extends Card {

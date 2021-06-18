@@ -30,4 +30,7 @@ public class ConstantValues {
 
     public static double                    guiWidth                = 1280;
     public static double                    guiHeight               = 720;
+    public static String                    reconnectFile           ="reconnectInfo.json";
+    public static String                    saveFileName            ="save-state-";
+    public static String                    currentIdFile           ="server-match-id-index.json";
 }

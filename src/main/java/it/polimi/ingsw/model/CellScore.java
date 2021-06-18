@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
-public class CellScore {
+import java.io.Serializable;
+
+public class CellScore  implements Serializable {
     private int position;
     private int score;
 

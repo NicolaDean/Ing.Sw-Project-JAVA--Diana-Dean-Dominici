@@ -15,10 +15,11 @@ import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.view.observer.Observable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player extends Observable<ServerController> {
+public class Player extends Observable<ServerController> implements Serializable {
 
     private String nickname;
     private boolean connectionState;
@@ -52,6 +53,7 @@ public class Player extends Observable<ServerController> {
         bonusball = new ArrayList<>();
         connectionState = true;
     }
+
 
     public void resetPendingBuy()
     {

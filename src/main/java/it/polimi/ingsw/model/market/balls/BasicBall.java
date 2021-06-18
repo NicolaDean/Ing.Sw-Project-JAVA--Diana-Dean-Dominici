@@ -6,8 +6,9 @@ import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.view.utils.CliColors;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class BasicBall {
+public class BasicBall implements Serializable {
     String colorGUI;
     String colorCLI;
 

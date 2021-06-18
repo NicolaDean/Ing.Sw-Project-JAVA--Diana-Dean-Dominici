@@ -4,8 +4,9 @@ import it.polimi.ingsw.controller.packets.Ping;
 import it.polimi.ingsw.utils.DebugMessages;
 
 import java.io.PrintWriter;
+import java.io.Serializable;
 
-public class PingController extends GenericPing<ServerController>{
+public class PingController extends GenericPing<ServerController> implements Serializable {
 
     boolean gameStarted = false;
     public PingController(int index, PrintWriter out) {
