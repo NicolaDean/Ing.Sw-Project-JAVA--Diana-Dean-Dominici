@@ -150,24 +150,66 @@ public class ServerApp {
     public void reconnect(String nickname,long id,Socket s)
     {
         DebugMessages.printError("Try to reconnect to match " + id + " -> " + nickname);
+
+        //Search inside ONLINE match
+        if(!searchMatchFromId(id,s,nickname))
+        {
+            //IF THERS NO ONLINE Match with this ID try to restore it from file
+            restoreFromFile(id,s,nickname);
+        };
+
+    }
+
+    /**
+     * search inside Online matches if exist a match with this id and try to reconnect user
+     * @param id        match id
+     * @param socket    socket of user trying to reconnect
+     * @param nickname  nickname of user to reconnect
+     * @return true if user reconnect correctly
+     */
+    public boolean searchMatchFromId(long id,Socket socket,String nickname)
+    {
         for(ServerController match:this.availableControllers)
         {
             if(match.getMatchId()==id)
             {
-                initializeReconnectedClient(s,match,nickname);
-                return;
+                match.setPaused();
+                ClientHandler handler = match.reconnect(socket,nickname);
+                if(handler!=null)
+                {
+                    match.exitPauseOnline();
+                    this.executor.submit(handler);
+                    return true;
+                }
+
             }
         }
+        return false;
+    }
+    /**
+     * Try to load a match with id from file
+     * @param id        match id
+     * @param socket    socket of user trying to reconnect
+     * @param nickname  nickname of user to reconnect
+     */
+    public void restoreFromFile(long id,Socket socket,String nickname)
+    {
 
-        //If no active match is available search inside saving (if not expired)
         try {
             ServerController match = LoadGameState.loadGame(id);
+
             if(match!=null)
             {
-
+                match.checkClientsStateReconnecting();
                 match.setPaused();
-                initializeReconnectedClient(s,match,nickname);
-                match.exitPause();
+                ClientHandler handler = match.reconnect(socket,nickname);
+                if(handler!=null)
+                {
+                    match.exitPause();
+                    this.executor.submit(handler);
+                    this.availableControllers.add(match);
+                }
+
             }
             else
             {
@@ -177,7 +219,6 @@ public class ServerApp {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     public synchronized void initializeReconnectedClient(Socket s,ServerController match,String nickname)
@@ -188,7 +229,7 @@ public class ServerApp {
         //Create Thread
         this.createRealClientThread(handler);
 
-        match.reconnect(handler,nickname);
+        match.reconnect(s,nickname);
         handler.respondToClient();
     }
 

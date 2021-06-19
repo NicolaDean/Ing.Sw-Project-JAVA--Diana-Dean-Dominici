@@ -35,7 +35,7 @@ public class Player extends Observable<ServerController> implements Serializable
     private int lastadded = 0;
     private int controllerIndex=0;
 
-    private UpdateCardBuyed pendingCard = null;
+    transient private UpdateCardBuyed pendingCard = null;
 
 
 

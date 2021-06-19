@@ -65,6 +65,7 @@ public class WaitingRoom extends ClientHandler{
             System.out.println("COMMAND: -> " + message);
         } catch (Exception e) {
             System.out.println("NotJson: -> " + message);
+            e.printStackTrace();
         }
         System.out.println("------------------------------------------");
 
