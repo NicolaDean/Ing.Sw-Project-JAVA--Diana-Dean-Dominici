@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class ClientHandler implements Runnable, Serializable {
 
-    transient private final Socket    socket;
+    transient private Socket    socket;
     transient private Scanner         input;
     transient private PrintWriter     output;
     transient JsonInterpreterServer   interpreter;
@@ -37,6 +37,11 @@ public class ClientHandler implements Runnable, Serializable {
         this.initializeWriter(client);
         lock = new Object();
 
+    }
+
+    public boolean checkSocket()
+    {
+        return this.socket!=null;
     }
 
     public void disconnect()
@@ -182,7 +187,7 @@ public class ClientHandler implements Runnable, Serializable {
                 }
 
             }
-       // System.out.println("Exit loop");
+        System.out.println("Exit Waiting room");
     }
 
     /**
@@ -234,7 +239,9 @@ public class ClientHandler implements Runnable, Serializable {
      */
     public void sendToClient(Packet p)
     {
+        //TODO CHECK WHY LOCK IS NULL
         //Avoid using output channel at the same time
+        if(lock==null)this.lock = new Object();
         synchronized (lock)
         {
             System.out.println(p.generateJson());
@@ -245,5 +252,26 @@ public class ClientHandler implements Runnable, Serializable {
 
     }
 
+    /**
+     * Add new Data to disconnected client handler (new interpreter,new socket....)
+     * Used when a client try to reconnect to this server
+     * @param socket        new server
+     * @param clientIndex   player index
+     * @param controller    match
+     */
 
+    public void reconnect(Socket socket,int clientIndex,ServerController controller) {
+        this.socket = socket;
+        this.lock   = new Object();
+        this.initializeReader(socket);
+        this.initializeWriter(socket);
+
+        this.interpreter = new JsonInterpreterServer(clientIndex,controller);
+
+        this.setIndex(clientIndex);
+
+        new Thread(this.initializePingController(controller)).start();
+        this.pingController.setGameStarted();
+
+    }
 }

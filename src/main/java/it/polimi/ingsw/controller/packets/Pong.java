@@ -23,6 +23,7 @@ public class Pong extends Packet<ServerController> implements PacketManager<Serv
                 controller.getClients().get(index).getPingController().setPinged();
             } catch (Exception e) {
                 System.out.println("Game not already starded");
+                e.printStackTrace();
             }
         }
         catch (Exception e)

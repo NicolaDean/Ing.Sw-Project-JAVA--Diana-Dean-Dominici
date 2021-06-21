@@ -31,6 +31,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Handler;
 
 import static it.polimi.ingsw.enumeration.ResourceType.*;
 
@@ -113,7 +114,11 @@ public class ServerController extends Observable<ServerApp> implements Serializa
         this.warning("Broadcast sending: "+ message.generateJson());
         for(ClientHandler c: clients)
         {
-            if(c.getIndex()!=except || except == -1) c.sendToClient(message);
+            if(c.getIndex()!=except || except == -1)
+            {
+                if(c.checkSocket())
+                    c.sendToClient(message);
+            }
         }
     }
 
@@ -416,7 +421,11 @@ public class ServerController extends Observable<ServerApp> implements Serializa
 
         for (Player p: this.getGame().getPlayers()) {
             if (p.getControllerIndex() != currentClient)
-                clients.get(p.getControllerIndex()).sendToClient(new NotifyOtherPlayerTurn(this.game.getCurrentPlayer().getNickname()));
+            {
+                if(p.checkConnection())
+                     clients.get(p.getControllerIndex()).sendToClient(new NotifyOtherPlayerTurn(this.game.getCurrentPlayer().getNickname()));
+            }
+
 
         }
     }
@@ -904,6 +913,18 @@ public class ServerController extends Observable<ServerApp> implements Serializa
             e.printStackTrace();
         }
     }
+
+    /**
+     * When reconnecting a player check if other player have invalid socket (to avoid using null socket)
+     */
+    public void checkClientsStateReconnecting()
+    {
+        for(ClientHandler c:clients)
+        {
+            if(!c.checkSocket())
+                this.game.getPlayer(c.getRealPlayerIndex()).setConnectionState(false);
+        }
+    }
     /**
      * if end condition are true send to all a "last Turn" packet
      * if the current player is 4 and the match is ended then send an "end game" packet to all
@@ -921,12 +942,17 @@ public class ServerController extends Observable<ServerApp> implements Serializa
         {
             player = game.nextTurn();
 
-            if(!player.checkConnection()) DebugMessages.printError(player.getNickname()+" Skip turn due disconnection");
-            nOfDisconnected ++;
+            if(!player.checkConnection())
+            {
+                nOfDisconnected ++;
+                DebugMessages.printError(player.getNickname()+" Skip turn due disconnection");
+            }
+
             if(nOfDisconnected == this.game.getPlayers().size())
             {
                 paused = true;
                 DebugMessages.printError("All players Disconnected, Game paused");
+
                 return null;
             }
         }while (!player.checkConnection());
@@ -976,30 +1002,24 @@ public class ServerController extends Observable<ServerApp> implements Serializa
 
 
     /**
-     * try reconnect a client to this match
-     * @param handler client handler to reconnect
+     * try to reconnect socket to this match
+     * @param socket    client new socket
+     * @param nickname  user who try to reconnect
      */
-    public void reconnect(ClientHandler handler,String nickname) {
+    public ClientHandler reconnect(Socket socket, String nickname) {
 
+        if(lock==null) lock = new Object();
         int i=0;
+        ClientHandler handler = null;
         for(Player p:this.game.getPlayers())
         {
             //If same name and player is disconnected (forbit to reconnect multiple time simultaneusly)
             if(p.getNickname().equals(nickname) && (!p.checkConnection() || paused))
             {
-                handler.setRealPlayerIndex(i);
-                handler.setIndex(p.getControllerIndex());
-
-                synchronized (this.lock)
-                {
-                    this.clients.remove(p.getControllerIndex());
-                    this.clients.add(p.getControllerIndex(),handler);
-                    this.lock.notify();
-                }
-
-                //Start Ping/Pong
-                new Thread(handler.initializePingController(this)).start();
-                handler.getPingController().setGameStarted();
+                    handler = this.clients.get(p.getControllerIndex());
+                    //Set new Socket
+                    handler.reconnect(socket,handler.getIndex(),this);
+                    handler.getPingController().setGameStarted();
 
                     if(nickname.equals(this.game.getPlayer(this.clients.get(p.getControllerIndex()).getRealPlayerIndex()).getNickname()))
                     {
@@ -1021,6 +1041,7 @@ public class ServerController extends Observable<ServerApp> implements Serializa
                         //Create a reconnecting Info to send to client
                         Packet reconn = new ReconnectingInfo(id,m,this.game.getMarket().getResouces(),this.game.getMarket().getDiscardedResouce());
                         handler.sendToClient(reconn);
+                        return handler;
 
                     } catch (FullDepositException e) {
                         e.printStackTrace();
@@ -1035,6 +1056,7 @@ public class ServerController extends Observable<ServerApp> implements Serializa
             }
             i++;
         }
+        return  handler;
     }
 
     /**
@@ -1055,6 +1077,7 @@ public class ServerController extends Observable<ServerApp> implements Serializa
      */
     public void setReconnect(String nickname,long id)
     {
+        this.paused = true;
         this.notifyObserver(serverApp -> {serverApp.reconnect(nickname,id,this.waitingRoomSocket);});
         this.isReconnected = true;
     }
@@ -1068,6 +1091,12 @@ public class ServerController extends Observable<ServerApp> implements Serializa
         nextTurn();
     }
 
+    public void exitPauseOnline()
+    {
+        paused = false;
+    }
+
+
     /**
      * Indicate that now game is in paused mode , it happen when server crush and user reload, or when all player disconnect
      */
@@ -1076,4 +1105,6 @@ public class ServerController extends Observable<ServerApp> implements Serializa
         lock = new Object();
         paused = true;
     }
+
+
 }
