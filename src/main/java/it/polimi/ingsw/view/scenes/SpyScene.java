@@ -23,6 +23,7 @@ public class SpyScene extends DashboardScene {
 
     @Override
     public void init() {
+        disableCardClick();
         super.init();
         disableSwap();
         DebugMessages.printError("Spying Player " + nickname + " -> " + getIndex());

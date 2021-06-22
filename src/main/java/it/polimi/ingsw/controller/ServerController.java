@@ -511,6 +511,7 @@ public class ServerController extends Observable<ServerApp> implements Serializa
 
             return setPendingCost(p.getDashboard());
         } catch (AckManager err) {
+            err.printStackTrace();
             return err.getAck();
         }
 
@@ -553,6 +554,9 @@ public class ServerController extends Observable<ServerApp> implements Serializa
      */
     public Packet basicProduction(ResourceType res1,ResourceType res2, ResourceType obt, int player)
     {
+
+        if(!isRightPlayer(player)) return this.notYourTurn();
+
         System.out.println(game.getCurrentPlayer().getNickname());
         Player p = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex());
         Dashboard dashboard = p.getDashboard();
@@ -933,6 +937,8 @@ public class ServerController extends Observable<ServerApp> implements Serializa
      */
     public Packet nextTurn(){
 
+        //se risulterà positivo invierà in broadcast EndTurn e chiudera la connessione in maniera safe
+        if(game.checkEndGame()) lastTurn();
         Player player=null;
 
         saveGameState();
@@ -958,8 +964,7 @@ public class ServerController extends Observable<ServerApp> implements Serializa
         }while (!player.checkConnection());
 
         DebugMessages.printError("PLAYER "+ this.game.getCurrentPlayerIndex() + "->controller:"+this.game.getCurrentPlayer().getControllerIndex());
-        //se risulterà positivo invierà in broadcast EndTurn e chiudera la connessione in maniera safe
-        if(game.checkEndGame()) lastTurn();
+
         if(game.IsEnded())
         {
             endGame();
