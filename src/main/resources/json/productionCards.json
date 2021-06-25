@@ -8,14 +8,14 @@
     "obtainedFaith": 1,
     "rawMaterials":
     [
-      {"type":"SHIELD","quantity":2}
+      {"type":"COIN","quantity":1}
     ],
     "obtainedMaterials":
     [
     ],
     "cost":
     [
-      {"type":"COIN","quantity":1}
+      {"type":"SHIELD","quantity":2}
     ]
   },
   {

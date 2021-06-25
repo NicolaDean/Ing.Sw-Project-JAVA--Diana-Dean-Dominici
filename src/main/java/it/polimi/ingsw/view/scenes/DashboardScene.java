@@ -126,6 +126,7 @@ public class DashboardScene extends BasicSceneUpdater {
     CheckBox[] boxes;
 
     int leadersactivated=-1;
+    boolean cardDisabled = false;
 
     int index = -1;
 
@@ -152,6 +153,16 @@ public class DashboardScene extends BasicSceneUpdater {
         imHereAfterMarketExstraction =false;
     }
 
+
+    /**
+     * Disable card click ability during spy (avoid user produce with others card)
+     *
+     * If this control is "broken" the server do contoll as well (so its impossible to use others card anyway)
+     */
+    public void disableCardClick()
+    {
+        cardDisabled = true;
+    }
     @Override
     public void init() {
 
@@ -185,6 +196,7 @@ public class DashboardScene extends BasicSceneUpdater {
                 }
             });
         });
+
         swapbutton.setOnMouseClicked(event -> {
             int count = 0;
             List<Integer> d = new ArrayList<Integer>();
@@ -227,7 +239,9 @@ public class DashboardScene extends BasicSceneUpdater {
         });
 
         basicProd.setOnMouseClicked(event->{
-            GuiHelper.getGui().askBasicProduction();
+            if(!cardDisabled) {
+                GuiHelper.getGui().askBasicProduction();
+            }
         });
 
         showButton.setOnMouseClicked(this::showLeader);
@@ -514,17 +528,21 @@ public class DashboardScene extends BasicSceneUpdater {
                 grid.add(immage, j - 1, 0);
 
                 int finalJ = j;
-                immage.setOnMouseClicked(event -> {
-                    System.out.println("bella ziii");
+                if(!cardDisabled)
+                {
+                    immage.setOnMouseClicked(event -> {
+                        System.out.println("bella ziii");
 
-                    boolean res = GuiHelper.YesNoDialog("Production Card Activation", "Do you want to produce with this card?");
-                    this.resetObserverAfterDialog();
+                        boolean res = GuiHelper.YesNoDialog("Production Card Activation", "Do you want to produce with this card?");
+                        this.resetObserverAfterDialog();
 
-                    if (res) {
-                        GuiHelper.setBuyType(false);
-                        this.notifyObserver(ctrl -> ctrl.sendProduction(finalJ - 1));
-                    }
-                });
+                        if (res) {
+                            GuiHelper.setBuyType(false);
+                            this.notifyObserver(ctrl -> ctrl.sendProduction(finalJ - 1));
+                        }
+                    });
+                }
+
             }
             j++;
 
@@ -820,34 +838,34 @@ public class DashboardScene extends BasicSceneUpdater {
                 }
 
             }
-            int finalI = i.get();
-            card.setOnMouseClicked(event -> {
+            if(!cardDisabled) {
+                int finalI = i.get();
+                card.setOnMouseClicked(event -> {
 
-                if(c.isActive())
-                {
-                    DebugMessages.printError("TRADEE");
-                    boolean out = GuiHelper.YesNoDialog("TRADE BONUS","Do you want to use trade bonus on this card?");
-                    this.resetObserverAfterDialog();
-                    if(out){
-                        List<Resource> result = GuiHelper.getGui().askWhiteBalls(ResourceType.values(),1);
+                    if (c.isActive()) {
+                        DebugMessages.printError("TRADEE");
+                        boolean out = GuiHelper.YesNoDialog("TRADE BONUS", "Do you want to use trade bonus on this card?");
+                        this.resetObserverAfterDialog();
+                        if (out) {
+                            List<Resource> result = GuiHelper.getGui().askWhiteBalls(ResourceType.values(), 1);
 
-                        ResourceType type = null;
-                        for(Resource r : result)
-                        {
-                            if(r.getQuantity() == 1) type = r.getType();
+                            ResourceType type = null;
+                            for (Resource r : result) {
+                                if (r.getQuantity() == 1) type = r.getType();
+                            }
+                            //TODO save somewhere the activation order of trade bonus
+                            ResourceType finalType = type;
+                            this.notifyObserver(ctrl -> ctrl.sendBonusProduction(finalI, finalType));
                         }
-                        //TODO save somewhere the activation order of trade bonus
-                        ResourceType finalType = type;
-                        this.notifyObserver(ctrl->ctrl.sendBonusProduction(finalI, finalType));
+
+                        return;
                     }
+                    boolean out = GuiHelper.YesNoDialog("Leader actviation", "Do you want to activate this leader?");
+                    this.resetObserverAfterDialog();
+                    if (out) controller.activateLeader(finalI);
 
-                    return;
-                }
-                boolean out = GuiHelper.YesNoDialog("Leader actviation","Do you want to activate this leader?");
-                this.resetObserverAfterDialog();
-                if(out)controller.activateLeader(finalI);
-
-            });
+                });
+            }
             i.getAndIncrement();
             leaderCards.getChildren().add(pane);
         }

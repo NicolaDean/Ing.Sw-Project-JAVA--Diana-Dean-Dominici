@@ -17,3 +17,5 @@ target/
 /shade/
 
 /src/main/resources/META-INF/
+
+reconnectInfo.json
