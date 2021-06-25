@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.packets.ACK;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.enumeration.ErrorMessages;
 
+/**
+ * Allow to use a single exception class to handle and generate all possible Model/server errors
+ */
 public class AckManager extends Exception{
 
     int errorCode;
