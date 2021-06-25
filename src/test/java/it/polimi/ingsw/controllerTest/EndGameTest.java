@@ -44,8 +44,9 @@ public class EndGameTest {
         for (Player i:server.getGame().getPlayers())
             System.out.println(i.getNickname()+" VP:"+i.getScore());
         System.out.println("classifica estratta:");
+        ClientController c = new ClientController(true);
         try {
-            p.analyze(new ClientController());
+            p.analyze(c);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
