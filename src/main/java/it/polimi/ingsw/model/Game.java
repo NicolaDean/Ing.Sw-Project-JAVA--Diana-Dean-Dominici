@@ -84,9 +84,6 @@ public class Game implements Serializable {
 
     }
 
-
-
-
     public void removePlayer(int index)
     {
         this.players.remove(index);
@@ -111,31 +108,6 @@ public class Game implements Serializable {
             throw new MatchFull("There are already 4 players");
     }
 
-    /**
-     * Return the player index position from the player
-     * @param nickname
-     * @return
-     */
-    public int getPlayerIndexFromNickname(String nickname)
-    {
-        int i=0;
-        for(Player p:players)
-        {
-            if(p.getNickname().equals(nickname)) return i;
-            i++;
-        }
-        return -1;
-    }
-
-    /**
-     * method to set the leader cards of the player
-     * @param p
-     * @param l
-     */
-    public void setLeaders(Player p, LeaderCard[] l)
-    {
-        p.setLeaders(l);
-    }
 
     /**
      * this method starts the game by shuffling the players and setting the currentPlayer (the one with the Inkwell)
@@ -186,6 +158,17 @@ public class Game implements Serializable {
             currIndex++;
         }
 
+
+        gamestarted=true;
+
+        currentPlayer = 0;
+
+        return outIndexes;
+    }
+
+
+    public void setFirstTurnAdvantage()
+    {
         players.get(0).setInkwell();
 
         //First turn advantage
@@ -197,15 +180,7 @@ public class Game implements Serializable {
         {
             players.get(3).incrementPosition();
         }
-
-
-        currentPlayer = 0;
-        gamestarted=true;
-        //return players.get(currentPlayer);
-        return outIndexes;
     }
-
-
     /**
      * Discard resource of a player and increment other position
      * @param qty resources discarter
@@ -346,6 +321,7 @@ public class Game implements Serializable {
         }
         return false;
     }
+
 
     /**
      *

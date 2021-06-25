@@ -30,7 +30,6 @@ public class Player extends Observable<ServerController> implements Serializable
     private List<LeaderTradeCard> bonusProductions;
     private boolean inkwell;
     private ArrayList<ResourceType> bonusball;
-    private int positionLeaderActive;
     private boolean[] surpassedcells;
     private int lastadded = 0;
     private int controllerIndex=0;
@@ -55,50 +54,7 @@ public class Player extends Observable<ServerController> implements Serializable
     }
 
 
-    public void resetPendingBuy()
-    {
-        this.pendingCard = null;
-    }
 
-    public LeaderCard[] getLeaders()
-    {
-        return this.leaders;
-    }
-
-    public void setPendingBuy(ProductionCard newCard,int x,int y,int dashPos,int playerIndex)
-    {
-        this.pendingCard = new UpdateCardBuyed(newCard,x,y,dashPos,playerIndex);
-    }
-
-    public void setConnectionState(boolean state)
-    {
-        this.connectionState = state;
-    }
-    public Packet getPendingCard()
-    {
-        return this.pendingCard;
-    }
-    //PENDING BUYED CARD
-
-    public int getPositionLeaderActive() {
-        return positionLeaderActive;
-    }
-
-    public void setLastadded(int lastadded) {
-        this.lastadded = lastadded;
-    }
-
-    public int getLastadded() {
-        return lastadded;
-    }
-
-    public boolean[] getSurpassedcells() {
-        return surpassedcells;
-    }
-
-    public int getScore() {
-        return score;
-    }
 
     public Player(String nickname)
     {
@@ -113,18 +69,108 @@ public class Player extends Observable<ServerController> implements Serializable
         nickname = "Test";
     }
 
+
+    /**
+     *
+     * @return the list of owned leaders of this player
+     */
+    public LeaderCard[] getLeaders()
+    {
+        return this.leaders;
+    }
+
+    /**
+     * when user buy a card (and hasnt already payed yet) befor send cardUpdate wait for him to pay
+     * @param newCard     new card in shop
+     * @param x           shop x coordinate
+     * @param y           shop y coordinate
+     * @param dashPos     dash positioning of this player
+     * @param playerIndex index player who buy card (this player)
+     */
+    public void setPendingBuy(ProductionCard newCard,int x,int y,int dashPos,int playerIndex)
+    {
+        this.pendingCard = new UpdateCardBuyed(newCard,x,y,dashPos,playerIndex);
+    }
+
+    /**
+     * change connection state of this player
+     * @param state true if connected
+     */
+    public void setConnectionState(boolean state)
+    {
+        this.connectionState = state;
+    }
+
+    /**
+     *  this function is called when a card is buyed and finaly payer
+     * @return a packet with card buyed but waiting to be payd
+     */
+    public Packet getPendingCard()
+    {
+        return this.pendingCard;
+    }
+    //PENDING BUYED CARD
+
+
+    /**
+     * set new surpassed cell
+     * @param lastadded added
+     */
+    public void setLastadded(int lastadded) {
+        this.lastadded = lastadded;
+    }
+
+    /**
+     *
+     * @return last cell surpassed
+     */
+    public int getLastadded() {
+        return lastadded;
+    }
+
+    /**
+     *
+     * @return all cell of faith track surpassed
+     */
+    public boolean[] getSurpassedcells() {
+        return surpassedcells;
+    }
+
+    /**
+     *
+     * @return final score
+     */
+    public int getScore() {
+        return score;
+    }
+    /**
+     *
+     * @return possible reources choice user can do when own 2 white ball leader
+     */
     public ArrayList<ResourceType> getBonusball() {
         return bonusball;
     }
 
+    /**
+     * first player
+     */
     public void setInkwell() {
         this.inkwell = true;
     }
 
+    /**
+     * set leader chosen by user
+     * @param leaders leader chosen
+     */
     public void setLeaders(LeaderCard[] leaders) {
         this.leaders = leaders;
     }
 
+    /**
+     *  select the 2 leader chosen from user during first turn
+     * @param pos1 first leader selected
+     * @param pos2 second leader selected
+     */
     public void setLeaders(int pos1,int pos2)
     {
         LeaderCard[] cards = new LeaderCard[2];
@@ -135,15 +181,27 @@ public class Player extends Observable<ServerController> implements Serializable
         this.setLeaders(cards);
     }
 
+    /**
+     *
+     * @return player nickname
+     */
     public String getNickname()
     {
         return this.nickname;
     }
 
+    /**
+     *
+     * @return the dashboard of this player containing all his cards
+     */
     public Dashboard getDashboard() {
         return this.dashboard;
     }
 
+    /**
+     *
+     * @return the current position of player
+     */
     public int getPosition() {
         return this.position;
     }
@@ -189,36 +247,7 @@ public class Player extends Observable<ServerController> implements Serializable
         return this.connectionState;
     }
 
-    /**
-     * Calculate the score from the Production Cards, Player position and ...
-     * @return
-     */
-    private int getDashboardScore()
-    {
-        return this.dashboard.getScore();
-    }
 
-    /**
-     * Calculate the score from the Leader Victory Points
-     * @return
-     */
-    private int getCardsScore() {
-        int vp=0;
-        for(LeaderCard Leader : leaders)
-        {
-            vp+=Leader.getScore();
-        }
-        return vp;
-    }
-
-    /**
-     * Return the total score of the player by summing score from the map and cards
-     * @return
-     */
-    public int getPlayerScore()
-    {
-        return this.getCardsScore() + getCardsScore();
-    }
 
     /**
      * Delete Leader from the Leader List of the player
@@ -231,6 +260,7 @@ public class Player extends Observable<ServerController> implements Serializable
         }
         else
         {
+            this.incrementPosition();
             this.leaders[position] = null;
         }
 
@@ -243,11 +273,16 @@ public class Player extends Observable<ServerController> implements Serializable
      * @return true if it's active
      */
     public void activateLeader(int position) throws NotSoddisfedPrerequisite, LeaderActivated {
-        positionLeaderActive = position;
         if(this.leaders[position] == null) throw new LeaderActivated("");
         this.leaders[position].activate(this);
     }
 
+    /**
+     *
+     * @param position    position of card inside dash
+     * @param playerIndex index to update dashboard minimodel
+     * @return a packet that will nonify client that a card is buyed (to update minimodel with new card)
+     */
     public Packet getLeaderCardUpdate(int position,int playerIndex)
     {
         LeaderCard update =  this.leaders[position];
@@ -300,15 +335,6 @@ public class Player extends Observable<ServerController> implements Serializable
     }
 
     /**
-     * Remove a list of resources from the chest ( and remove them also from pendingCost)
-     * @param resource
-     */
-    public void payChestResource(List<Resource> resource)
-    {
-        this.dashboard.applyChestCosts(resource);
-    }
-
-    /**
      * get the debits of this player
      * @return the list of resources this player need to pay (for a production or a buyed card)
      */
@@ -323,11 +349,6 @@ public class Player extends Observable<ServerController> implements Serializable
     public void addDiscount(Resource res)
     {
         this.dashboard.setDiscount( res);
-    }
-
-    public void addDepositBonus(ResourceType typeBonus)
-    {
-        this.dashboard.addDepositBonus(typeBonus);
     }
 
     /**
@@ -359,10 +380,19 @@ public class Player extends Observable<ServerController> implements Serializable
         this.bonusProductions.add(bonus);
     }
 
+    /**
+     * increse final score
+     * @param n increment value
+     */
     public void increaseScore(int n)
     {
         score = score + n;
     }
+
+    /**
+     * decrese final score
+     * @param n increment value
+     */
     public void decreaseScore(int n)
     {
         score = score - n;
@@ -389,16 +419,42 @@ public class Player extends Observable<ServerController> implements Serializable
         }
     }
 
+    /**
+     *
+     * @return the list of bonus productions owned by this player
+     */
     public List<LeaderTradeCard> getBonusProduductions()
     {
         return this.bonusProductions;
     }
+
+    /**
+     *
+     * @param controllerIndex index of clientHandler associated with this player
+     */
     public void setControllerIndex(int controllerIndex) {
         this.controllerIndex = controllerIndex;
     }
 
+    /**
+     *
+     * @return index of clientHandler inside serverController
+     */
     public int getControllerIndex()
     {
         return this.controllerIndex;
+    }
+
+    /**
+     * Reset usage of productions card, trade card, basic production
+     */
+    public void resetTurn() {
+
+        this.dashboard.resetGain();
+        if(bonusProductions==null)return;
+        for(BonusProductionInterface prod:bonusProductions)
+        {
+            prod.reset();
+        }
     }
 }

@@ -5,7 +5,9 @@ import it.polimi.ingsw.enumeration.CardType;
 import it.polimi.ingsw.model.lorenzo.LorenzoGame;
 import it.polimi.ingsw.view.observer.Observable;
 
-public abstract  class BasicToken extends Observable<ServerController> implements ActionToken{
+import java.io.Serializable;
+
+public abstract  class BasicToken extends Observable<ServerController> implements ActionToken, Serializable {
 
     @Override
     public boolean isSpecial() {

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.lorenzo;
 
 import it.polimi.ingsw.controller.ServerController;
+import it.polimi.ingsw.controller.packets.LorenzoPositionUpdate;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.CellScore;
 import it.polimi.ingsw.model.Game;
@@ -44,6 +45,16 @@ public class LorenzoGame extends Game {
     }
 
     /**
+     *
+     * Discard resource of a player and increment other position
+     * @param qty resources discarter
+     */
+    public void discardResource(int qty)
+    {
+        lorenzo.incrementPosition(qty);
+        this.notifier.broadcastMessage(-1,new LorenzoPositionUpdate(lorenzo.getPosition()));
+    }
+    /**
      * function to add a new player to the game
      * @param nickname the nickname of the player
      * @throws Exception
@@ -63,18 +74,6 @@ public class LorenzoGame extends Game {
     }
 
     /**
-     * Discard resource of a player and increment other position
-     * @param p player that want to discard
-     * @param res resource to discard
-     * @param pos deposit pos
-     * @throws Exception wrong deposit
-     */
-    public void discardResource(Player p, Resource res, int pos) throws EmptyDeposit, WrongPosition {
-        p.getDashboard().getStorage().safeSubtraction(res,pos);
-        lorenzo.incrementPosition(res.getQuantity());
-    }
-
-    /**
      * //Check if someone surpass a papal space and in case add the score of papalToken to the players
      */
     public void papalSpaceCheck() {
@@ -82,7 +81,7 @@ public class LorenzoGame extends Game {
         {
             //Check if someone surpass a papal space and in case add the score of papalToken to the players
             boolean out = getPapalSpaces().get(getCurrentPapalSpaceToReach()).checkPapalSpaceActivation(getPlayers(),lorenzo);
-            while(out == true && getCurrentPapalSpaceToReach()+1 < getPapalSpaces().size()){
+            while(out && getCurrentPapalSpaceToReach()+1 < getPapalSpaces().size()){
                 setCurrentPapalSpaceToReach(getCurrentPapalSpaceToReach()+1);
                 out = getPapalSpaces().get(getCurrentPapalSpaceToReach()).checkPapalSpaceActivation(getPlayers(),lorenzo);
             }
@@ -171,44 +170,7 @@ public class LorenzoGame extends Game {
 
         tokenDeck = TokenFactory.loadTokenDeckFromJson(notifier);
         Collections.shuffle(tokenDeck);
-        /*
-        int nofcrosstoken=3,
-                nofspecialcrosstoken=1,
-                nofytoken=1,
-                nofbtoken=1,
-                nofgtoken=1,
-                nofvtoken=1,
-                ntotal=nofbtoken+nofvtoken+nofgtoken+nofytoken+nofspecialcrosstoken+nofcrosstoken;
 
-        tokenDeck=new Stack<>();
-
-        for(int i=0;i<ntotal;i++) {
-            if (nofbtoken > 0) {
-                tokenDeck.add(new ColoredActionToken(BLUE,2));
-                nofbtoken--;
-            }
-            if(nofytoken>0) {
-                tokenDeck.add(new ColoredActionToken(YELLOW,2));
-                nofytoken--;
-            }
-            if(nofgtoken>0){
-                tokenDeck.add(new ColoredActionToken(GREEN,2));
-                nofgtoken--;
-            }
-            if(nofvtoken>0) {
-                tokenDeck.add(new ColoredActionToken(PURPLE,2));
-                nofvtoken--;
-            }
-            if(nofcrosstoken>0) {
-                tokenDeck.add(new BlackCrossToken());
-                nofcrosstoken--;
-            }
-            if(nofspecialcrosstoken>0) {
-                tokenDeck.add(new SpecialBlackCrossToken());
-                nofspecialcrosstoken--;
-            }
-        }
-        Collections.shuffle(tokenDeck);*/
     }
 
     /**

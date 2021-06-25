@@ -34,49 +34,82 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
         this.chest = new ResourceList();
         decks = new ProductionCard[3];
     }
+
+    /**
+     * Indicate which player inside game rappresent
+     * @param index player index
+     */
     public void setIndex(int index)
     {
         this.index = index;
     }
 
+    /**
+     * Increment minimodel position of this miniplayer
+     * @param position new pos
+     */
     public void incrementPosition(int position) {
         this.position = position;
         this.notifyObserver(scene -> scene.updatePlayerPosition(index,this.position));
     }
 
+    /**
+     * Update dashboard cards of this miniplayer
+     * @param pos   dash position
+     * @param card  new card
+     */
     public void setNewCard(int pos,ProductionCard card)
     {
         this.decks[pos] = card;
         this.notifyObserver(scene -> scene.updateDashCard(card,pos,index));
     }
-    public void setDecks(ProductionCard[] decks) {
-        this.decks = decks;
-    }
 
+
+    /**
+     *
+     * @return dash deck
+     */
     public ProductionCard[] getDecks() {
         return decks;
     }
 
+    /**
+     *
+     * @return this player chest
+     */
     public List<Resource> getChest() {
         return chest;
     }
 
+    /**
+     *
+     * @return this player position
+     */
     public int getPosition() {
         return position;
     }
 
+    /**
+     *
+     * @return this player nickname
+     */
     public String getNickname() {
         return nickname;
     }
 
+    /**
+     *
+     * @return this player storage
+     */
     public Deposit[] getStorage() {
         return storage;
     }
 
-    public ProductionCard[] getPlayerCards()
-    {
-        return this.decks;
-    }
+
+    /**
+     * set storage to this miniplayer, used during miniplayer generation
+     * @param storage new storage
+     */
     public void setStorage(Deposit[] storage) {
         this.storage = storage;
         //Platform.runLater(()-> this.notifyObserver(scene -> scene.updateStorage(index,storage)));
@@ -86,6 +119,10 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
     }
 
 
+    /**
+     *
+     * @return 2 deposit bonus of this player
+     */
     public Deposit[] getBonusStorage()
     {
         Deposit[] bos = new Deposit[2];
@@ -94,50 +131,85 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
         return bos;
     }
 
-    public ProductionCard[] getCards()
-    {
-        return this.decks;
-    }
 
+    /**
+     * set miniplayer leaders card
+     * @param leaderCards new leader cards
+     */
     public void setLeaderCards(LeaderCard[] leaderCards) {
         this.leaderCards = leaderCards;
 
         this.notifyObserver(scene-> scene.updateLeaders(index,leaderCards,getBonusStorage()));
     }
 
+    /**
+     *
+     * @return this miniplayer leaders
+     */
     public LeaderCard[] getLeaderCards()
     {
         return this.leaderCards;
     }
 
+    /**
+     * update this miniplayer chest with server data
+     * @param chest new chest
+     */
     public void updateChest(List<Resource> chest)
     {
         this.chest = chest;
         this.notifyObserver(scene -> scene.updateChest(index,chest));
     }
 
+    /**
+     * if a discount leader card is activated this function is called (when server say it)
+     * @param discount discount owned by this player
+     */
     public void setDiscount(List<Resource> discount)
     {
         this.discount = discount;
     }
 
+    /**
+     *
+     * @param bonusProductionInterfaces
+     */
     public void setTrade(LeaderTradeCard[] bonusProductionInterfaces)
     {
         this.trade = bonusProductionInterfaces;
     }
+
+    /**
+     * function called on server request when a white leader is activated
+     * @param resourceTypes resource associated with white ball
+     */
     public void setWhiteBalls(ResourceType[] resourceTypes)
     {
         this.whiteBalls = resourceTypes;
     }
+
+    /**
+     *
+     * @return the owned discounts list
+     */
     public List<Resource> getDiscount()
     {
         return this.discount;
     }
+
+    /**
+     *
+     * @return all posssible choices this user can do with white balls
+     */
     public ResourceType[] getWhiteBalls()
     {
         return this.whiteBalls;
     }
 
+    /**
+     *
+     * @return array with all trade card owned by this player
+     */
     public BonusProductionInterface[] getTrade()
     {
         return this.trade;

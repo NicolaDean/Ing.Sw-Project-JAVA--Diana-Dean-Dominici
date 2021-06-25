@@ -2,7 +2,9 @@ package it.polimi.ingsw.model.lorenzo;
 
 import it.polimi.ingsw.model.lorenzo.token.ActionToken;
 
-public class Lorenzo {
+import java.io.Serializable;
+
+public class Lorenzo implements Serializable {
 
 
     public Lorenzo() {

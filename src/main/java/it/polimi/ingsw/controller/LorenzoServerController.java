@@ -68,6 +68,9 @@ public class LorenzoServerController extends ServerController{
     @Override
     public void startGame() throws FullDepositException, NoBonusDepositOwned, WrongPosition {
         try {
+            for(Player player:this.game.getPlayers()) player.setObserver(this); //set observer for papal space
+
+            isStarted = true;
             this.game.startGame();
             ((LorenzoGame)this.game).initializeTokens(this);
 

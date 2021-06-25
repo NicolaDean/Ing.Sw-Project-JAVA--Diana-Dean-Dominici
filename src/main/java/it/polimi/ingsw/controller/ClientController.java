@@ -546,7 +546,7 @@ public class ClientController implements Runnable{
             this.view.showDashboard(
                     p.getStorage(),
                     p.getChest(),
-                    p.getPlayerCards(),
+                    p.getDecks(),
                     p.getLeaderCards()
             );
         }

@@ -20,3 +20,6 @@ target/
 /src/main/resources/META-INF/
 
 reconnectInfo.json
+
+*.ser
+./*.ser
