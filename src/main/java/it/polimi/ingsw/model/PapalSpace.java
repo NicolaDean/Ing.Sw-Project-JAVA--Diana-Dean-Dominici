@@ -33,6 +33,11 @@ public class PapalSpace  implements Serializable {
         return score;
     }
 
+    /**
+     * check if a specific player is inside papal space or surpassed
+     * @param p plauer to check
+     * @return true if inside or surpassed
+     */
     public boolean checkPlayerInsidePapalSpace(Player p)
     {
         if(p.getPosition() >= this.initialPosition)
@@ -45,6 +50,11 @@ public class PapalSpace  implements Serializable {
         }
     }
 
+    /**
+     * check if a specific player surpassed the papal space
+     * @param p player to check
+     * @return true if surpassed
+     */
     public boolean checkPlayerSurpassPapalSpace(Player p)
     {
         if(p.getPosition() >= this.finalPosition)
@@ -74,6 +84,11 @@ public class PapalSpace  implements Serializable {
         return false;
     }
 
+    /**
+     * check if papal space is surpassed inside multiplayer
+     * @param players list of all players
+     * @return true if surpssed
+     */
     public boolean checkPapalSpaceActivation(List<Player> players)
     {
         boolean out = checkPlayersPositions(players);
@@ -94,6 +109,12 @@ public class PapalSpace  implements Serializable {
 
     }
 
+    /**
+     * check if papal space is surpassed in single player
+     * @param players  list of all player
+     * @param l        lorenzo position
+     * @return         true if surpassed
+     */
     public boolean checkPapalSpaceActivation(List<Player> players, Lorenzo l) {
         boolean out = ((l.getPosition()>=this.finalPosition) || (players.get(0).getPosition() >=this.finalPosition));
 

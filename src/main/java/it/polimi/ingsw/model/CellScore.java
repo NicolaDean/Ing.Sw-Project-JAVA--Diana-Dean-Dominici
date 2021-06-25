@@ -12,15 +12,18 @@ public class CellScore  implements Serializable {
         this.position = position;
         this.score = score;
     }
-    boolean checkSurpassed(int pos)
-    {
-        return pos >= this.position;
-    }
-
+    /**
+     *
+     * @return the position inside faith track
+     */
     public int getPosition() {
         return position;
     }
 
+    /**
+     *
+     * @return the score of this cell
+     */
     public int getScore() {
         return score;
     }
