@@ -115,7 +115,7 @@ public interface View {
      * show papal cell
      * @param p mini player
      */
-    public void showPapalCell(MiniPlayer[] p);
+    public void showPapalCell(MiniPlayer[] p,int lorenzo);
 
     /**
      * ask user where to exract resources to pay a production/buy...
@@ -226,4 +226,5 @@ public interface View {
     public void setObserver(ClientController controller);
 
 
+    void setStarted();
 }

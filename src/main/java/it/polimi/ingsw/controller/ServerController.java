@@ -20,6 +20,7 @@ import it.polimi.ingsw.model.minimodel.MiniModel;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.utils.LoadGameState;
 import it.polimi.ingsw.view.observer.Observable;
@@ -359,6 +360,9 @@ public class ServerController extends Observable<ServerApp> implements Serializa
 
         for (Player p:game.getPlayers()){
             players[i]=new MiniPlayer(p.getNickname());
+            players[i].incrementPosition(p.getPosition());
+            players[i].initializeDeck(p.getDashboard().getMinimodelCards());
+            p.getDashboard().getMinimodelCards();
             players[i].setStorage(p.getDashboard().getStorage().getDeposits());
             players[i].updateChest(p.getDashboard().getChest());
             players[i].setIndex(i);
@@ -1080,7 +1084,10 @@ public class ServerController extends Observable<ServerApp> implements Serializa
                         int index = this.clients.get(p.getControllerIndex()).getRealPlayerIndex();
                         m.setPersanalIndex(index);
                         //Create a reconnecting Info to send to client
-                        Packet reconn = new ReconnectingInfo(id,m,this.game.getMarket().getResouces(),this.game.getMarket().getDiscardedResouce());
+                        boolean firstTurn=false;
+                        if(p.getLeaders().length == ConstantValues.leaderCardsToDraw)firstTurn=true;
+
+                        Packet reconn = new ReconnectingInfo(id,m,this.game.getMarket().getResouces(),this.game.getMarket().getDiscardedResouce(),firstTurn);
                         handler.sendToClient(reconn);
                         return handler;
 
@@ -1129,6 +1136,11 @@ public class ServerController extends Observable<ServerApp> implements Serializa
     public void exitPause() {
 
         paused = false;
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         nextTurn();
     }
 

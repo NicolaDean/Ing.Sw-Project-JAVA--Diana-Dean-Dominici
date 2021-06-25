@@ -53,14 +53,18 @@ public class Logger {
         out.printlnColored(content,CliColors.RED_TEXT,this.istructionBackground);
     }
 
-    public void printPapalPosition(MiniPlayer[] players){
+    public void printPapalPosition(MiniPlayer[] players,int lorenzo){
         List<CellScore> scorePositions = MapFactory.loadCellScoresFromJsonFile();
         List<PapalSpace> papalSpaces= MapFactory.loadPapalSpacesFromJsonFile();
         int dim=(papalSpaces.get(papalSpaces.size()-1).getFinalPosition()+1);
         boolean controll=false;
         int nOfPlayer=players.length;
         String[] colorCLI= new String[nOfPlayer];
-
+        if(nOfPlayer==1)
+        {
+            colorCLI= new String[2];
+            colorCLI[1]=colorCLI[1]=CliColors.GREEN_TEXT;
+        }
         printPapalPositionLegend(players);
 
         for (int i = 0; i < nOfPlayer; i++) {
@@ -115,6 +119,30 @@ public class Logger {
                 for (k = 0; k < nOfPlayer; k++) {
                     if((players[j].getPosition()==players[k].getPosition())&&(j!=k)&&(players[j].getPosition()==i)) {
                         nOfPlayerWhitComunCell++;
+                    }
+                }
+
+                if(nOfPlayer==1)
+                {
+                    if(lorenzo==i)
+                    {
+                        if(players[0].getPosition() == lorenzo)
+                        {
+                            nOfPlayerWhitComunCell=-1;
+                            this.out.printColored(" ⚑", colorCLI[0]);
+                            this.out.printColored("⚑", colorCLI[1]);
+                            System.out.print(" ║");
+
+                            controll=true;
+
+                        }
+                        else
+                        {
+                            this.out.printColored("⚑", colorCLI[1]);
+                            System.out.print(" ║");
+
+                            controll=true;
+                        }
                     }
                 }
 
@@ -201,6 +229,12 @@ public class Logger {
     public void printPapalPositionLegend(MiniPlayer[] players){
         int nOfPlayer=players.length;
         String[] colorCLI= new String[nOfPlayer];
+        if(nOfPlayer==1)
+        {
+            colorCLI= new String[2];
+            colorCLI[1]=colorCLI[1]=CliColors.GREEN_TEXT;
+        }
+
         for (int i = 0; i < nOfPlayer; i++) {
             if(i==0) colorCLI[i]=CliColors.BLUE_TEXT;
             if(i==1) colorCLI[i]=CliColors.MAGENTA_TEXT;
@@ -212,6 +246,13 @@ public class Logger {
             System.out.print(players[i].getNickname()+": ");
             out.printColored("⚑  ",colorCLI[i]);
         }
+
+        if(nOfPlayer==1)
+        {
+            System.out.print("Lorenzo : ");
+            out.printColored("⚑  ",colorCLI[1]);
+        }
+
         System.out.println();
     }
 

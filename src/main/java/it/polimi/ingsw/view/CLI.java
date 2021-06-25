@@ -99,8 +99,8 @@ public class CLI extends Observable<ClientController> implements View {
         this.turnThread.interrupt();
     }
 
-    public void showPapalCell(MiniPlayer[] p){
-        terminal.printPapalPosition(p);
+    public void showPapalCell(MiniPlayer[] p,int lorenzo){
+        terminal.printPapalPosition(p,lorenzo);
     }
 
     /**
@@ -1330,5 +1330,8 @@ public class CLI extends Observable<ClientController> implements View {
             actionDone = false;
             DebugMessages.printWarning("Turn executed");
     }
-
+    @Override
+    public void setStarted() {
+        this.firstTurn=false;
+    }
 }

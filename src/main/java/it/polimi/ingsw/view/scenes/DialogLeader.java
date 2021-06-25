@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.scenes;
 
 import it.polimi.ingsw.model.cards.LeaderCard;
+import it.polimi.ingsw.utils.ConstantValues;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -49,8 +50,7 @@ public class DialogLeader extends BasicDialog{
         int i=0;
         for(LeaderCard leaderCard: this.cards)
         {
-            System.out.println("/images/cards/leaders/"+leaderCard.getId()+".jpg");
-            ImageView imgSource = loadImage("/images/cards/leaders/"+leaderCard.getId()+".jpg",130,200);
+            ImageView imgSource = loadImage(ConstantValues.leaderCardImagesPath +leaderCard.getId()+".jpg",130,200);
             source.getChildren().add(imgSource);
             imgSource.setId(String.valueOf(i));
             //Set image on drag event

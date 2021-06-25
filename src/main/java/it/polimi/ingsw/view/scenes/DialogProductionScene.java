@@ -6,7 +6,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-
+import it.polimi.ingsw.utils.ConstantValues;
 
 public class DialogProductionScene extends BasicSceneUpdater{
 
@@ -35,8 +35,10 @@ public class DialogProductionScene extends BasicSceneUpdater{
         int i=1;
         for(ProductionCard card:cards)
         {
-            //if(card[i-1] !=null) //TODO ADD EMPTY CARD DRAWING (print back of a card) and put card.getId instead of i
-            this.cards[i-1] = new ImageView(loadImage("/images/cards/productions/"+i+".jpg"));
+            if(card !=null) //TODO ADD EMPTY CARD DRAWING (print back of a card) and put card.getId instead of i
+                this.cards[i-1] = new ImageView(loadImage(ConstantValues.prodCardImagesPath+card.getId()+".jpg"));
+            else
+                this.cards[i-1] = new ImageView(loadImage("/images/cards/back.png"));
             int finalI = i;
             this.cards[i-1].setOnMouseClicked(event -> {
                 setPos(finalI -1);
@@ -45,6 +47,7 @@ public class DialogProductionScene extends BasicSceneUpdater{
             this.cards[i-1].setFitHeight(200);
             this.cards[i-1].setFitWidth(130);
             this.productions.getChildren().add(this.cards[i-1]);
+            this.cards[i-1].setId("production_card");
             i++;
         }
     }
