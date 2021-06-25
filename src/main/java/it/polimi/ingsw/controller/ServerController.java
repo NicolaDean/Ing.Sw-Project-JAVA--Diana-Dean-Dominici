@@ -211,7 +211,9 @@ public class ServerController extends Observable<ServerApp> implements Serializa
      */
     public void dashReset(int index)
     {
-        this.game.getPlayer(this.clients.get(index).getRealPlayerIndex()).getDashboard().resetGain();
+        int playerIndex = this.clients.get(index).getRealPlayerIndex();
+        Player p =  this.game.getPlayer(playerIndex);
+        p.resetTurn();
     }
 
     /**
