@@ -1,6 +1,5 @@
 package it.polimi.ingsw.controller;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
@@ -10,10 +9,8 @@ import it.polimi.ingsw.controller.pingManager.PongController;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
-import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
-import it.polimi.ingsw.model.factory.CardFactory;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniModel;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
@@ -292,11 +289,21 @@ public class ClientController implements Runnable{
     /**
      * notify players that game ended (in cli show dashboard of current player, in GUI show a Points Scene)
      */
-    public void endGame()
+    public void endGame(String []charts)
     {
-        this.showDashboard();
-        DebugMessages.printWarning("GAME ENDED, SOMEONE DISCONNECT");
+        this.showEndScene(charts);
 
+    }
+
+    public void showEndScene(String []charts){ //TODO scena per la gui
+        String mess="Charts:\n";
+        int i=0;
+        for(String s:charts) {
+            i++;
+            mess =mess + i + " " + s + "\n";
+        }
+        DebugMessages.printWarning(mess);
+        //cambia scena
     }
 
     /**

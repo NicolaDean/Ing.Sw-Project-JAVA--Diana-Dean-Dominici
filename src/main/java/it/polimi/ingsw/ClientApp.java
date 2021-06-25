@@ -2,7 +2,6 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.view.GuiHelper;
-import it.polimi.ingsw.viewtest.Appp;
 
 import java.io.IOException;
 import java.util.Arrays;
