@@ -30,7 +30,6 @@ public class Player extends Observable<ServerController> implements Serializable
     private List<LeaderTradeCard> bonusProductions;
     private boolean inkwell;
     private ArrayList<ResourceType> bonusball;
-    private int positionLeaderActive;
     private boolean[] surpassedcells;
     private int lastadded = 0;
     private int controllerIndex=0;
@@ -274,7 +273,6 @@ public class Player extends Observable<ServerController> implements Serializable
      * @return true if it's active
      */
     public void activateLeader(int position) throws NotSoddisfedPrerequisite, LeaderActivated {
-        positionLeaderActive = position;
         if(this.leaders[position] == null) throw new LeaderActivated("");
         this.leaders[position].activate(this);
     }
