@@ -305,6 +305,8 @@ public class DashboardScene extends BasicSceneUpdater {
         this.swap1.setVisible(false);
         this.swap2.setVisible(false);
         this.swap3.setVisible(false);
+        this.swap4.setVisible(false);
+        this.swap5.setVisible(false);
         this.swapbutton.setVisible(false);
         this.swaptext.setVisible(false);
     }
@@ -780,93 +782,132 @@ public class DashboardScene extends BasicSceneUpdater {
             pane.setPrefSize(130,200);
             ImageView card = loadImage("/images/cards/leaders/"+c.getId()+".jpg",130,200);
             pane.getChildren().add(card);
-            if(c.getCliRappresentation().equals("DEPOSIT"))
-            {
-                if(c.isActive()) {
 
-                    if(leaderdeposit==null) {
-                        leaderdeposit = new FlowPane(15, 12);
-                        leaderdeposit.setId("4");
-                    } else {
-                        leaderdeposit = new FlowPane(15, 12);
-                        leaderdeposit.setId("5");
-                    }
-
-
-                    leaderdeposit.setPrefSize(130, 188);
-
-                    if(imHereAfterMarketExstraction){
-                        leaderdeposit.setOnDragOver(this::onOver);
-                        leaderdeposit.setOnDragDropped(this::destinationOnDragDroppedForFlow); // da riscrivere destinationOnDragDropped per il leader
-                    }
-
-                    CheckBox check = new CheckBox();
-
-
-                    int index=1;
-                    check = swap5;
-                    if(c.getId() == controller.getActivatedLeaders().get(0)) {
-                        index = 0;
-                        check=swap4;
-
-                    }
-
-                    check.setAlignment(Pos.BOTTOM_RIGHT);
-                    if(bonusstorage[index]!=null)
-                        if(bonusstorage[index].getResource()!=null) {
-                            for(int k=0; k< bonusstorage[index].getResource().getQuantity(); k++) {
-                                ImageView resource = loadImage("/images/resources/" + bonusstorage[index].getResource().getNumericType() +".png", 30, 30);
-                                leaderdeposit.getChildren().add(resource);
-
-                            }
-                            if(bonusstorage[index].getResource().getQuantity()==2)
-                                leaderdeposit.setAlignment(Pos.BOTTOM_CENTER);
-                            else{
-                                ImageView pippo = loadImage("/images/resources/" + bonusstorage[index].getResource().getNumericType() +".png", 30, 30);
-                                pippo.setVisible(false);
-                                leaderdeposit.getChildren().add(pippo);
-                                leaderdeposit.setAlignment(Pos.BOTTOM_CENTER);
-
-                            }
-
-                            pane.getChildren().add(leaderdeposit);
-                            pane.getChildren().add(check);
-                        }
-                }
-
-            }
-            if(!cardDisabled) {
-                int finalI = i.get();
-                card.setOnMouseClicked(event -> {
-
-                    if (c.isActive()) {
-                        DebugMessages.printError("TRADEE");
-                        boolean out = GuiHelper.YesNoDialog("TRADE BONUS", "Do you want to use trade bonus on this card?");
-                        this.resetObserverAfterDialog();
-                        if (out) {
-                            List<Resource> result = GuiHelper.getGui().askWhiteBalls(ResourceType.values(), 1);
-
-                            ResourceType type = null;
-                            for (Resource r : result) {
-                                if (r.getQuantity() == 1) type = r.getType();
-                            }
-                            //TODO save somewhere the activation order of trade bonus
-                            ResourceType finalType = type;
-                            this.notifyObserver(ctrl -> ctrl.sendBonusProduction(finalI, finalType));
-                        }
-
-                        return;
-                    }
-                    boolean out = GuiHelper.YesNoDialog("Leader actviation", "Do you want to activate this leader?");
-                    this.resetObserverAfterDialog();
-                    if (out) controller.activateLeader(finalI);
-
-                });
-            }
+            addDepositPrintOnDepositCard(c,bonusstorage,pane);
+            //CHECK IF LEADER IS TRADE AND IF ACTIVE THEN ADD CLICK LISTENER IF NEEDED
+            this.addClickOnLeaderTradeCard(i.get(),c,card,controller);
             i.getAndIncrement();
             leaderCards.getChildren().add(pane);
         }
     });}
+
+
+    public void addDepositPrintOnDepositCard(LeaderCard card,Deposit[] bonusstorage,Pane pane)
+    {
+        if(card.getCliRappresentation().equals("DEPOSIT") && !cardDisabled)
+        {
+            if(card.isActive()) {
+
+
+                String id = "5";
+                leaderdeposit = new FlowPane(15, 12);
+                //if(getfirstdeposit(card).getId()==c.getId())
+                    //id = "4";
+
+                if(card.getActivationOrder()==0) id="4";
+                leaderdeposit.setId(id);
+
+
+                leaderdeposit.setPrefSize(130, 188);
+
+                if(imHereAfterMarketExstraction){
+                    leaderdeposit.setOnDragOver(this::onOver);
+                    leaderdeposit.setOnDragDropped(this::destinationOnDragDroppedForFlow); // da riscrivere destinationOnDragDropped per il leader
+                }
+
+                CheckBox check = new CheckBox();
+
+
+                int index=1;
+                check = swap5;
+                //if(card.getId() == getfirstdeposit(cards).getId()) {
+                if(card.getActivationOrder()==0) {
+                    index = 0;
+                    check=swap4;
+
+                }
+
+                check.setAlignment(Pos.BOTTOM_RIGHT);
+                if(bonusstorage[index]!=null)
+                    if(bonusstorage[index].getResource()!=null) {
+                        for(int k=0; k< bonusstorage[index].getResource().getQuantity(); k++) {
+                            ImageView resource = loadImage("/images/resources/" + bonusstorage[index].getResource().getNumericType() +".png", 30, 30);
+                            leaderdeposit.getChildren().add(resource);
+
+                        }
+                        if(bonusstorage[index].getResource().getQuantity()==2)
+                            leaderdeposit.setAlignment(Pos.BOTTOM_CENTER);
+                        else{
+                            ImageView pippo = loadImage("/images/resources/" + bonusstorage[index].getResource().getNumericType() +".png", 30, 30);
+                            pippo.setVisible(false);
+                            leaderdeposit.getChildren().add(pippo);
+                            leaderdeposit.setAlignment(Pos.BOTTOM_CENTER);
+
+                        }
+
+                        pane.getChildren().add(leaderdeposit);
+                        pane.getChildren().add(check);
+                    }
+            }
+
+        }
+    }
+
+    /**
+     * check if this card is trade and active, in case add to itt event listener to activate leader
+     * @param i           card index selected (0-1)
+     * @param card        card selected
+     * @param image       image viewed by user
+     * @param controller  client controller (this function is called from inside an observer lambda)
+     */
+    public void addClickOnLeaderTradeCard(int i,LeaderCard card, ImageView image, ClientController controller)
+    {
+        if(!cardDisabled) {
+            image.setOnMouseClicked(event -> {
+
+                if (card.isActive()) {
+                    DebugMessages.printError("TRADEE");
+                    boolean out = GuiHelper.YesNoDialog("TRADE BONUS", "Do you want to use trade bonus on this card?");
+                    this.resetObserverAfterDialog();
+                    if (out) {
+                        List<Resource> result = GuiHelper.getGui().askWhiteBalls(ResourceType.values(), 1);
+
+                        ResourceType type = null;
+                        for (Resource r : result) {
+                            if (r.getQuantity() == 1) type = r.getType();
+                        }
+                        //TODO save somewhere the activation order of trade bonus
+                        ResourceType finalType = type;
+                        this.notifyObserver(ctrl -> ctrl.sendBonusProduction(card.getActivationOrder(), finalType));
+                    }
+
+                    return;
+                }
+                boolean out = GuiHelper.YesNoDialog("Leader actviation", "Do you want to activate this leader?");
+                this.resetObserverAfterDialog();
+                if (out) controller.activateLeader(i);
+
+            });
+        }
+    }
+
+    public LeaderCard getfirstdeposit(LeaderCard[] cards)
+    {
+        LeaderCard card = null;
+        int i = 100;
+        for(LeaderCard c : cards) {
+            if (c.getCliRappresentation().equals("DEPOSIT") && c.isActive())
+                if(c.getActivationOrder() < i ) {
+                    card = c;
+                    i=c.getActivationOrder();
+                }
+        }
+
+        System.out.println("the first activated deposit is "+card.getType());
+        return card;
+
+    }
+
 
     private void resetObserverAfterDialog() {
         GuiHelper.setCurrentScene(this);

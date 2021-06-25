@@ -26,6 +26,7 @@ public class LeaderCard extends Card  {
     transient Packet updateMinimodel;
 
 
+
     public LeaderCard(List<Resource> cost,List<PrerequisiteCard> cardPrequisite, int victoryPoints, ResourceType type) {
         super(cost, victoryPoints);
         this.type = type;
@@ -40,10 +41,17 @@ public class LeaderCard extends Card  {
     {
         return id;
     }
+
+    public int getActivationOrder() {
+        return activationOrder;
+    }
+
     public ResourceType getType()
     {
         return this.type;
     }
+
+
 
     public void setActivationOrder(int order)
     {
