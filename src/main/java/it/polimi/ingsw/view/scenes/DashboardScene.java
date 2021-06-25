@@ -305,6 +305,8 @@ public class DashboardScene extends BasicSceneUpdater {
         this.swap1.setVisible(false);
         this.swap2.setVisible(false);
         this.swap3.setVisible(false);
+        this.swap4.setVisible(false);
+        this.swap5.setVisible(false);
         this.swapbutton.setVisible(false);
         this.swaptext.setVisible(false);
     }
@@ -784,13 +786,12 @@ public class DashboardScene extends BasicSceneUpdater {
             {
                 if(c.isActive()) {
 
-                    if(leaderdeposit==null) {
+
+                        String id = "5";
                         leaderdeposit = new FlowPane(15, 12);
-                        leaderdeposit.setId("4");
-                    } else {
-                        leaderdeposit = new FlowPane(15, 12);
-                        leaderdeposit.setId("5");
-                    }
+                        if(getfirstdeposit(cards).getId()==c.getId())
+                            id = "4";
+                        leaderdeposit.setId(id);
 
 
                     leaderdeposit.setPrefSize(130, 188);
@@ -805,7 +806,7 @@ public class DashboardScene extends BasicSceneUpdater {
 
                     int index=1;
                     check = swap5;
-                    if(c.getId() == controller.getActivatedLeaders().get(0)) {
+                    if(c.getId() == getfirstdeposit(cards).getId()) {
                         index = 0;
                         check=swap4;
 
@@ -867,6 +868,24 @@ public class DashboardScene extends BasicSceneUpdater {
             leaderCards.getChildren().add(pane);
         }
     });}
+
+    public LeaderCard getfirstdeposit(LeaderCard[] cards)
+    {
+        LeaderCard card = null;
+        int i = 100;
+        for(LeaderCard c : cards) {
+            if (c.getCliRappresentation().equals("DEPOSIT") && c.isActive())
+                if(c.getActivationOrder() < i ) {
+                    card = c;
+                    i=c.getActivationOrder();
+                }
+        }
+
+        System.out.println("the first activated deposit is "+card.getType());
+        return card;
+
+    }
+
 
     private void resetObserverAfterDialog() {
         GuiHelper.setCurrentScene(this);

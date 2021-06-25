@@ -8,7 +8,6 @@ import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GuiHelper;
 import it.polimi.ingsw.view.utils.FXMLpaths;
 import it.polimi.ingsw.view.utils.Logger;
-import it.polimi.ingsw.viewtest.Appp;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

@@ -14,6 +14,11 @@ import java.util.List;
 
 public interface View {
 
+    /**
+     * print end screen with charts
+     */
+    public void printEndScreen(String []charts);
+
     public void printWelcomeScreen();
 
     public void setMiniMarketDiscardedResouce(BasicBall miniMarketBalls);

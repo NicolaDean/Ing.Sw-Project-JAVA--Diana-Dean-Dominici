@@ -659,6 +659,20 @@ public class CLI extends Observable<ClientController> implements View {
     }
 
     /**
+     * print end screen with charts
+     */
+    @Override
+    public void printEndScreen(String []charts){
+        String mess="Charts:\n";
+        int i=0;
+        for(String s:charts) {
+            i++;
+            mess =mess + i + " " + s + "\n";
+        }
+        DebugMessages.printWarning(mess);
+    }
+
+    /**
      * Ask user in which deposit he want to insert recived resources
      * @param resourceList ask user where to put recived resources (eventualy call discard resources)
      */

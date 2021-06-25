@@ -27,7 +27,8 @@ public class DepositBonus extends LeaderCard{
         super.activate(player);
         //System.out.println(this.getType());
 
-        player.getDashboard().getStorage().initializeBonusDeposit(this.getType());
+
+        this.setActivationOrder(player.getDashboard().getStorage().initializeBonusDeposit(this.getType()));
 
 
 
