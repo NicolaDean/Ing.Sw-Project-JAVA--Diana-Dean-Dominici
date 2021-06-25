@@ -308,6 +308,8 @@ public class DashboardScene extends BasicSceneUpdater {
         this.swap1.setVisible(false);
         this.swap2.setVisible(false);
         this.swap3.setVisible(false);
+        this.swap4.setVisible(false);
+        this.swap5.setVisible(false);
         this.swapbutton.setVisible(false);
         this.swaptext.setVisible(false);
     }
@@ -787,13 +789,12 @@ public class DashboardScene extends BasicSceneUpdater {
             {
                 if(c.isActive()) {
 
-                    if(leaderdeposit==null) {
+
+                        String id = "5";
                         leaderdeposit = new FlowPane(15, 12);
-                        leaderdeposit.setId("4");
-                    } else {
-                        leaderdeposit = new FlowPane(15, 12);
-                        leaderdeposit.setId("5");
-                    }
+                        if(getfirstdeposit(cards).getId()==c.getId())
+                            id = "4";
+                        leaderdeposit.setId(id);
 
 
                     leaderdeposit.setPrefSize(130, 188);
@@ -876,8 +877,8 @@ public class DashboardScene extends BasicSceneUpdater {
         LeaderCard card = null;
         int i = 100;
         for(LeaderCard c : cards) {
-            if (c.getCliRappresentation().equals("DEPOSIT"))
-                if(c.getActivationOrder() < i) {
+            if (c.getCliRappresentation().equals("DEPOSIT") && c.isActive())
+                if(c.getActivationOrder() < i ) {
                     card = c;
                     i=c.getActivationOrder();
                 }

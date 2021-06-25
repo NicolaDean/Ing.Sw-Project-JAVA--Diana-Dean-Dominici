@@ -51,6 +51,8 @@ public class LeaderCard extends Card  {
         return this.type;
     }
 
+
+
     public void setActivationOrder(int order)
     {
         this.activationOrder = order;
