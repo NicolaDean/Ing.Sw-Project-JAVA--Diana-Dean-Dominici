@@ -133,6 +133,7 @@ public class PaymentDialog extends BasicDialog{
     }
     public void removeSourceQuantity(Pane root,ResourceType type)
     {
+        //TODO SI BUGGA l'estrazione da chest (lancia eccezione)
         for(Node x: root.getChildren())
         {
             Pane pane = (Pane)x;
