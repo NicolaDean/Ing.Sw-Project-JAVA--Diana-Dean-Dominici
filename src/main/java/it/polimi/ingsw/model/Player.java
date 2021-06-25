@@ -231,6 +231,7 @@ public class Player extends Observable<ServerController> implements Serializable
         }
         else
         {
+            this.incrementPosition();
             this.leaders[position] = null;
         }
 

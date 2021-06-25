@@ -347,6 +347,7 @@ public class Game implements Serializable {
         return false;
     }
 
+
     /**
      *
      * @return true if one of the ending condition is reached

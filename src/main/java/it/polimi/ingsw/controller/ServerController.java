@@ -676,7 +676,8 @@ public class ServerController extends Observable<ServerApp> implements Serializa
     {
         if(!isRightPlayer(player)) return this.notYourTurn();
 
-        Player p = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex());
+        int playerIndex = this.clients.get(player).getRealPlayerIndex();
+        Player p = this.game.getPlayer(playerIndex);
         try {
             if(action)
             {
@@ -689,7 +690,7 @@ public class ServerController extends Observable<ServerApp> implements Serializa
             else
             {
                 p.discardLeader(pos);
-                this.broadcastMessage(-1,new UpdateLeaders(p.getLeaders(),this.clients.get(player).getRealPlayerIndex()));
+                this.broadcastMessage(-1,new UpdateLeaders(p.getLeaders(),playerIndex));
                 //TODO send leaderUpdate with discarded leader
             }
 

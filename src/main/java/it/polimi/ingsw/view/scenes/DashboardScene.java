@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.scenes;
 
+import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.packets.InsertionInstruction;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
@@ -214,10 +215,6 @@ public class DashboardScene extends BasicSceneUpdater {
                 }
             }
 
-
-
-
-
             if(count==2) {
                 if(checkifmove())
                 {
@@ -246,7 +243,7 @@ public class DashboardScene extends BasicSceneUpdater {
 
         showButton.setOnMouseClicked(this::showLeader);
         endturn.setOnMouseClicked(event -> {
-            this.notifyObserver(controller -> controller.askEndTurn());
+            this.notifyObserver(ClientController::askEndTurn);
         });
 
         //DRAW ALL DASHBOARD COMPONENTS

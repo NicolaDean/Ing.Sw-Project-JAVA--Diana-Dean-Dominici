@@ -221,18 +221,6 @@ public class ServerApp {
         }
     }
 
-    public synchronized void initializeReconnectedClient(Socket s,ServerController match,String nickname)
-    {
-        //Create new ClientHandler with this controller
-        ClientHandler handler = new ClientHandler(s,match);
-        //Add Handler to Real Controller
-        //Create Thread
-        this.createRealClientThread(handler);
-
-        match.reconnect(s,nickname);
-        handler.respondToClient();
-    }
-
     /**
      *  execute login single player from fakeController
      * @param nickname
