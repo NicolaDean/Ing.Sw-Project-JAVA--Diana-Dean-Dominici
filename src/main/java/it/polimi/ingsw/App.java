@@ -2,7 +2,6 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.view.GuiHelper;
-import it.polimi.ingsw.viewtest.Appp;
 import javafx.stage.Stage;
 
 /**
