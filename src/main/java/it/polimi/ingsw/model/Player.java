@@ -451,6 +451,7 @@ public class Player extends Observable<ServerController> implements Serializable
     public void resetTurn() {
 
         this.dashboard.resetGain();
+        if(bonusProductions==null)return;
         for(BonusProductionInterface prod:bonusProductions)
         {
             prod.reset();

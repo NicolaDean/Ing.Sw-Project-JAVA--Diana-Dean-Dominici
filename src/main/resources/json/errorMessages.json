@@ -13,5 +13,6 @@
     "This deposit is empty or different type, extraction failed",
     "Leader already activated or discarted",
     "Wait for other players before starting! Or select the single player mode.",
-    "You can't do this move."
+    "You can't do this move.",
+    "Production already used this turn"
   ]

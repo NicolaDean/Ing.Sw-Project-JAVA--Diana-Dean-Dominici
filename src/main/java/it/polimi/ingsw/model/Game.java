@@ -161,6 +161,14 @@ public class Game implements Serializable {
 
         gamestarted=true;
 
+        currentPlayer = 0;
+
+        return outIndexes;
+    }
+
+
+    public void setFirstTurnAdvantage()
+    {
         players.get(0).setInkwell();
 
         //First turn advantage
@@ -172,12 +180,7 @@ public class Game implements Serializable {
         {
             players.get(3).incrementPosition();
         }
-        currentPlayer = 0;
-
-        return outIndexes;
     }
-
-
     /**
      * Discard resource of a player and increment other position
      * @param qty resources discarter

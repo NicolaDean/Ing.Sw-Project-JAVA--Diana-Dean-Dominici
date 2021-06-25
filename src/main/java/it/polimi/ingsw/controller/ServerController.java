@@ -288,10 +288,11 @@ public class ServerController extends Observable<ServerApp> implements Serializa
                 //Send broadcast with game started packet
                 initializeMinimodel();
 
-                this.isStarted = true;
                 TimeUnit.SECONDS.sleep(2);
-                //notify first player the is its turn
-                //this.clients.get(firstPlayer).sendToClient(new TurnNotify());
+
+                this.isStarted = true;
+                this.game.setFirstTurnAdvantage();
+
                 turnNotifier();
             } else {
                 this.warning("Game already started");

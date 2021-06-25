@@ -792,6 +792,12 @@ public class DashboardScene extends BasicSceneUpdater {
     });}
 
 
+    /**
+     * add resources rappresentation if this card is a deposit one and also active
+     * @param card             card to check
+     * @param bonusstorage     bonus available
+     * @param pane             pane rappresentation
+     */
     public void addDepositPrintOnDepositCard(LeaderCard card,Deposit[] bonusstorage,Pane pane)
     {
         if(card.getCliRappresentation().equals("DEPOSIT") && !cardDisabled)
@@ -865,7 +871,7 @@ public class DashboardScene extends BasicSceneUpdater {
         if(!cardDisabled) {
             image.setOnMouseClicked(event -> {
 
-                if (card.isActive()) {
+                if (card.isActive() && card.getCliRappresentation().equals("TRADE")) {
                     DebugMessages.printError("TRADEE");
                     boolean out = GuiHelper.YesNoDialog("TRADE BONUS", "Do you want to use trade bonus on this card?");
                     this.resetObserverAfterDialog();
