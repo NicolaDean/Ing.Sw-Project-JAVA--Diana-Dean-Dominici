@@ -3,6 +3,7 @@
 *.iml
 *.iws
 .attach_pid*
+*.ser
 
 # Mac
 .DS_Store
