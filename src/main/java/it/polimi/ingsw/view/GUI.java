@@ -296,6 +296,20 @@ public class GUI extends Observable<ClientController> implements View{
 
     }
 
+    /**
+     * print end screen with charts
+     */
+    @Override
+    public void printEndScreen(String []charts){
+        String mess="Charts:\n";
+        int i=0;
+        for(String s:charts) {
+            i++;
+            mess =mess + i + " " + s + "\n";
+        }
+        DebugMessages.printWarning(mess);
+    }
+
     @Override
     public void askResourceExtraction(List<Resource> resourceList) {
         System.out.println("PAYMENT ");

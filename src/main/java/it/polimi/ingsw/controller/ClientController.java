@@ -296,14 +296,7 @@ public class ClientController implements Runnable{
     }
 
     public void showEndScene(String []charts){ //TODO scena per la gui
-        String mess="Charts:\n";
-        int i=0;
-        for(String s:charts) {
-            i++;
-            mess =mess + i + " " + s + "\n";
-        }
-        DebugMessages.printWarning(mess);
-        //cambia scena
+        this.view.printEndScreen(charts);
     }
 
     /**
