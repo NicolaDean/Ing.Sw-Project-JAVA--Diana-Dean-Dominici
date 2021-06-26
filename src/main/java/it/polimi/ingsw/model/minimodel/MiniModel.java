@@ -49,7 +49,8 @@ public class MiniModel extends Observable<BasicSceneUpdater>
             int j=0;
             for(Stack<ProductionCard> cards:row)
             {
-                this.decks[i][j] = cards.peek();
+                if(!cards.isEmpty())
+                    this.decks[i][j] = cards.peek();
                 j++;
             }
             i++;

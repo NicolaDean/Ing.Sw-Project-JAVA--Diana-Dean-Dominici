@@ -112,6 +112,19 @@ public class ServerApp {
         long matchId=0;
         for(String arg : args)
         {
+            if(arg.equals("-leaderfree") || arg.equals("-lfree"))
+            {
+                DebugMessages.leaderFreeCheat();
+            }
+            if(arg.equals("-resall"))
+            {
+                DebugMessages.infiniteResources();
+            }
+            if(arg.equals("-res"))
+            {
+                DebugMessages.infiniteResourcesOnlyChest();
+            }
+
             if(arg.equals("-port") || arg.equals("-p"))
             {
                 try {

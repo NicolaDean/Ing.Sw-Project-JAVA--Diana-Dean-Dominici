@@ -262,11 +262,22 @@ public class DashboardScene extends BasicSceneUpdater {
             drawProductions (p.getDecks());
             drawPosition    (p.getPosition());
             drawNicknames();
+
+            if(controller.getMiniModel().getPlayers().length ==1)
+            {
+                drawLorenzo(controller.getMiniModel().getLorenzo());
+            }
             //DRAW FAITH TOKEN POSITION
 
         });
 
 
+    }
+
+    private void drawLorenzo(int lorenzo) {
+        Platform.runLater(()->{
+            this.faith.get(lorenzo).getChildren().add(loadImage("/images/resources/blackCross.png", 50, 50));
+        });
     }
 
     public void initializecheckboxes()
@@ -522,7 +533,7 @@ public class DashboardScene extends BasicSceneUpdater {
             if (card != null) {
                 ImageView immage = null;
 
-                immage = loadImage("/images/cards/productions/" + card.getId() + ".jpg", 130, 200);
+                immage = loadImage(ConstantValues.prodCardImagesPath + card.getId() + ".jpg", 130, 200);
                 immage.setId("production_card");
                 grid.add(immage, j - 1, 0);
 

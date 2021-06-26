@@ -89,7 +89,24 @@ public class ClientController implements Runnable{
     }
 
 
-    public void setInformation(MiniModel model, BasicBall[][] miniBallsMarket, BasicBall miniBallDiscarted)
+    public void setFirstTurnView(boolean firstTurn)
+    {
+        if(!firstTurn)
+        {
+            DebugMessages.printError("aaaaaa");
+            this.view.setStarted();
+        }
+
+    }
+
+    /**
+     * Set information about match inside minimodel, used to reconnect playr
+     * @param model              minimodel of this mathc
+     * @param miniBallsMarket
+     * @param miniBallDiscarted
+     * @param firstTurn
+     */
+    public void setInformation(MiniModel model, BasicBall[][] miniBallsMarket, BasicBall miniBallDiscarted,boolean firstTurn)
     {
         DebugMessages.printError("LOOOOOL");
         this.model = model;
@@ -542,7 +559,7 @@ public class ClientController implements Runnable{
 
         if(p!=null)
         {
-            this.view.showPapalCell(this.model.getPlayers());
+            this.view.showPapalCell(this.model.getPlayers(),this.model.getLorenzo());
             this.view.showDashboard(
                     p.getStorage(),
                     p.getChest(),
@@ -707,6 +724,7 @@ public class ClientController implements Runnable{
 
     public void excecuteTurn()
     {
+        DebugMessages.printError("TURNO");
         this.view.askTurnType();
     }
 
@@ -877,7 +895,8 @@ public class ClientController implements Runnable{
     /**
      * send to server inside "reconnectInfo.json" a reconnect request
      */
-    public void reconnect() {
+    public void
+    reconnect() {
 
         JsonReader reader = null;
         try {

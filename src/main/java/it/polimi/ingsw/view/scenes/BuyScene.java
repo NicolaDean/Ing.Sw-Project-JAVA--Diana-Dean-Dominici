@@ -117,7 +117,7 @@ public class BuyScene extends BasicSceneUpdater{
         {
             //TODO DRAW THE BACK OF CARD INSTEAD OF LEADER
             //Loading image
-            this.cards[y][x] = loadImage("/images/cards/leaders/1.jpg",130,200);
+            this.cards[y][x] = loadImage("/images/cars/back.png",130,200);
         }
         else
         {
