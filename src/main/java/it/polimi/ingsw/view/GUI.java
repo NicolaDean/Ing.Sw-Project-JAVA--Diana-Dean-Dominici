@@ -117,7 +117,7 @@ public class GUI extends Observable<ClientController> implements View{
     }
 
     @Override
-    public void showPapalCell(MiniPlayer[] p) {
+    public void showPapalCell(MiniPlayer[] p,int lorenzo) {
 
     }
 
@@ -538,5 +538,10 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void playerLogged(String nickname) {
         Platform.runLater(()->GuiHelper.sendMessage(nickname));
+    }
+
+    @Override
+    public void setStarted() {
+        this.firstTurn=false;
     }
 }

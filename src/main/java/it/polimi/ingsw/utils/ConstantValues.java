@@ -33,4 +33,6 @@ public class ConstantValues {
     public static String                    reconnectFile           ="reconnectInfo.json";
     public static String                    saveFileName            ="save-state-";
     public static String                    currentIdFile           ="server-match-id-index.json";
+    public static String                    prodCardImagesPath      ="/images/cards/productions/";
+    public static String                    leaderCardImagesPath    ="/images/cards/leaders/";
 }

@@ -28,7 +28,7 @@ public class LoggerTest {
             player[i]=new MiniPlayer(""+i);
             player[i].incrementPosition(a);
         }
-        l.printPapalPosition(player);
+        l.printPapalPosition(player,0);
 
         player = new MiniPlayer[4];
         a=(int)(Math.random()*10)%25;
@@ -38,7 +38,7 @@ public class LoggerTest {
         }
         player[3]= new MiniPlayer("3");
         player[3].incrementPosition((int)(Math.random()*10)%25);
-        l.printPapalPosition(player);
+        l.printPapalPosition(player,0);
 
 
         player = new MiniPlayer[4];
@@ -46,7 +46,7 @@ public class LoggerTest {
             player[i]=new MiniPlayer(""+i);
             player[i].incrementPosition((int)(Math.random()*10)%25);
         }
-        l.printPapalPosition(player);
+        l.printPapalPosition(player,0);
 
     }
 }

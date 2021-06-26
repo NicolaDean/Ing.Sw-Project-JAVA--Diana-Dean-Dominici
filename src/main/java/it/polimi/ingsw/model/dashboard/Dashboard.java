@@ -49,6 +49,21 @@ public class Dashboard  implements Serializable {
         turnGain    = new ResourceList();
     }
 
+    public ProductionCard[] getMinimodelCards()
+    {
+        ProductionCard[] out = new ProductionCard[ConstantValues.productionSpaces];
+
+        int i=0;
+        for(Stack<ProductionCard> deck:producionCards)
+        {
+            if(!deck.isEmpty())
+                out[i] = deck.peek();
+
+            i++;
+        }
+
+        return out;
+    }
     public int getScore(){
         return 0;
     }

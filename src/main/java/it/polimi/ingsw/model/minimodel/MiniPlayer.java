@@ -65,6 +65,11 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
     }
 
 
+    public void initializeDeck(ProductionCard[] decks)
+    {
+        this.decks = decks;
+    }
+
     /**
      *
      * @return dash deck

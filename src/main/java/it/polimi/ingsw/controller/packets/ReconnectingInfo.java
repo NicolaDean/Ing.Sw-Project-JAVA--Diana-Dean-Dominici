@@ -17,13 +17,15 @@ public class ReconnectingInfo extends Packet<ClientController> implements Packet
     BasicBall miniBallDiscarted;
     int index;
     long gameId;
+    boolean firstTurn;
 
-    public ReconnectingInfo(long gameId,MiniModel model, BasicBall[][] miniBallsMarket, BasicBall miniBallDiscarted) {
+    public ReconnectingInfo(long gameId, MiniModel model, BasicBall[][] miniBallsMarket, BasicBall miniBallDiscarted, boolean firstTurn) {
         super("ReconnectingInfo");
         this.model=model;
         this.miniBallsMarket=miniBallsMarket;
         this.miniBallDiscarted=miniBallDiscarted;
         this.gameId = gameId;
+        this.firstTurn =firstTurn;
     }
 
     /**
@@ -39,7 +41,8 @@ public class ReconnectingInfo extends Packet<ClientController> implements Packet
     public Packet analyze(ClientController controller)
     {
         DebugMessages.printError("INFORMATION SETTED WHEN RECONNECT");
-        controller.setInformation(model,miniBallsMarket,miniBallDiscarted);
+        controller.setFirstTurnView(firstTurn);
+        controller.setInformation(model,miniBallsMarket,miniBallDiscarted,firstTurn);
         //controller.abortHelp();
         return null;
     }

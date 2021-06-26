@@ -10,8 +10,8 @@ public  class DebugMessages {
 
     //DEBUG CHEATS
     public static boolean infiniteResourcesStorage = false;
-    public static boolean infiniteResourcesChest   = true;
-    public static boolean leaderFree               = true;
+    public static boolean infiniteResourcesChest   = false;
+    public static boolean leaderFree               = false;
 
     //DEBUG MESSAGES
     public static boolean enableError = true;
@@ -21,6 +21,22 @@ public  class DebugMessages {
     public static boolean windowsDetection = false;
     public static Logger log = new Logger();
 
+
+    public static void infiniteResources()
+    {
+        infiniteResourcesStorage = true;
+        infiniteResourcesChest = true;
+    }
+
+    public static void infiniteResourcesOnlyChest()
+    {
+        infiniteResourcesChest = true;
+    }
+
+    public  static void leaderFreeCheat()
+    {
+        leaderFree = true;
+    }
     /**
      * allow to print an error message in red
      * @param msg
