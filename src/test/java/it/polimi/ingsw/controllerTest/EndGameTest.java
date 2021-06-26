@@ -4,7 +4,6 @@ import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.EndGame;
 import it.polimi.ingsw.controller.packets.Packet;
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import org.junit.jupiter.api.Test;
 
