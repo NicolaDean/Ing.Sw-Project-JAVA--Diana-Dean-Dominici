@@ -908,22 +908,6 @@ public class DashboardScene extends BasicSceneUpdater {
         }
     }
 
-    public LeaderCard getfirstdeposit(LeaderCard[] cards)
-    {
-        LeaderCard card = null;
-        int i = 100;
-        for(LeaderCard c : cards) {
-            if (c.getCliRappresentation().equals("DEPOSIT") && c.isActive())
-                if(c.getActivationOrder() < i ) {
-                    card = c;
-                    i=c.getActivationOrder();
-                }
-        }
-
-        System.out.println("the first activated deposit is "+card.getType());
-        return card;
-
-    }
 
 
     private void resetObserverAfterDialog() {
