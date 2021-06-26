@@ -664,6 +664,9 @@ public class CLI extends Observable<ClientController> implements View {
      */
     @Override
     public void printEndScreen(String []charts){
+        this.terminal.printWarning("-----------------");
+        this.terminal.printWarning("GAME ENDED");
+        this.terminal.printWarning("-----------------");
         String mess="Charts:\n";
         int i=0;
         for(String s:charts) {
@@ -671,6 +674,7 @@ public class CLI extends Observable<ClientController> implements View {
             mess =mess + i + " " + s + "\n";
         }
         DebugMessages.printWarning(mess);
+        System.exit(0);
     }
 
     /**
@@ -1339,5 +1343,11 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void lorenzoTurn(String cliColor, String token) {
         DebugMessages.printWarning("Lorenzo drawed "  +cliColor + " Token ");
+    }
+
+    @Override
+    public void serverDisconnected() {
+        this.terminal.printError("Server Connection Crushed (Server Offline)");
+        System.exit(-1);
     }
 }

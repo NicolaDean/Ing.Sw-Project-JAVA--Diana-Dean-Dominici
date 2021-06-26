@@ -37,4 +37,5 @@ public class ConstantValues {
     public static String                    leaderCardImagesPath    ="/images/cards/leaders/";
     public static String                    tokens                  ="/images/tokens/";
     public static String                    backCard                ="/images/cards/back.png";
+    public static String                    papaltokens             ="/images/papalTokens/";
 }

@@ -235,4 +235,6 @@ public interface View {
      * @param token    action token used by lorenzo
      */
     void lorenzoTurn(String cliColor, String token);
+
+    void serverDisconnected();
 }

@@ -92,7 +92,7 @@ public class LorenzoServerController extends ServerController{
      */
     @Override
     public void checkPapalSpaceActivation(){
-        //TODO checkPapalSpaceActivation
+        super.checkPapalSpaceActivation();
     }
 
 

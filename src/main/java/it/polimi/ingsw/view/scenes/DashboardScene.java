@@ -269,6 +269,7 @@ public class DashboardScene extends BasicSceneUpdater {
             drawPosition    (p.getPosition());
             drawNicknames();
 
+            drawPapalSpace(p.getPapalSpaces());
             if(controller.getMiniModel().getPlayers().length ==1)
             {
                 drawLorenzo(controller.getMiniModel().getLorenzo());
@@ -279,6 +280,31 @@ public class DashboardScene extends BasicSceneUpdater {
 
 
     }
+
+    /**
+     * draw papal spaces of this players
+     * @param papalSpaces
+     */
+    private void drawPapalSpace(boolean[] papalSpaces) {
+        int i=0;
+        for(boolean x:papalSpaces)
+        {
+            switch (i)
+            {
+                case 0:
+                    if(x) papal1.getChildren().add(BasicSceneUpdater.loadImage(ConstantValues.papaltokens+"1.png",70,70));
+                    break;
+                case 1:
+                    if(x) papal2.getChildren().add(BasicSceneUpdater.loadImage(ConstantValues.papaltokens+"2.png",70,70));
+                    break;
+                case 2:
+                    if(x) papal3.getChildren().add(BasicSceneUpdater.loadImage(ConstantValues.papaltokens+"3.png",70,70));
+                    break;
+            }
+            i++;
+        }
+    }
+
 
     private void drawLorenzo(int lorenzo) {
         Platform.runLater(()->{

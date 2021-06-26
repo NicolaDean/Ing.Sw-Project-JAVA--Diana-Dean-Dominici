@@ -554,4 +554,15 @@ public class GUI extends Observable<ClientController> implements View{
         });
 
     }
+
+    @Override
+    public void serverDisconnected() {
+        Platform.runLater(() -> {
+            try {
+                GuiHelper.setRoot(FXMLpaths.serverError,new ServerErrorController());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 }

@@ -75,6 +75,10 @@ public class Game implements Serializable {
         return false;
     }
 
+    public boolean isEnded()
+    {
+        return isEnded;
+    }
     public boolean isGamestarted()
     {
         return gamestarted;

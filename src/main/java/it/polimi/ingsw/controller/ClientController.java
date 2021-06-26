@@ -612,8 +612,8 @@ public class ClientController implements Runnable{
         }catch (Exception e)
         {
             connected = false;
-            DebugMessages.printError("Server Connection Crushed (Server Offline)");
-            System.exit(-1);
+            this.view.serverDisconnected();
+
         }
 
     }
@@ -941,5 +941,9 @@ public class ClientController implements Runnable{
 
     public void lorenzoTurn(String cliColor, String token) {
         this.view.lorenzoTurn(cliColor,token);
+    }
+
+    public void updatePapalToken(boolean[] papalToken, int index) {
+        this.model.getPlayers()[index].setPapalSpace(papalToken);
     }
 }
