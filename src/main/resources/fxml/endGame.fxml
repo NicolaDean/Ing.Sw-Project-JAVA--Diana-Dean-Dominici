@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/Background.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+         <children>
+            <Group>
+                <children>
+                    <AnchorPane fx:id="paneMain" prefHeight="546.0" prefWidth="717.0" styleClass="root" stylesheets="@../css/EndScreen.css">
+               <children>
+                  <Text layoutX="170.0" layoutY="100.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" text="CHARTS">
+                     <font>
+                        <Font size="96.0" />
+                     </font>
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color red="0.6644737124443054" green="0.5980263352394104" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </fill>
+                  </Text>
+               </children>
+                  </AnchorPane>
+                </children>
+            </Group>
+            <ImageView disable="true" fitHeight="701.0" fitWidth="859.0" pickOnBounds="true" preserveRatio="false">
+                <image>
+                     <Image url="@../images/frames/frame1.png" />
+                </image>
+            </ImageView>
+         </children>
+</StackPane>

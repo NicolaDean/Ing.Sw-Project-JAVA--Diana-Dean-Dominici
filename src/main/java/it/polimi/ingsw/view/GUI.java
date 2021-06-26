@@ -308,6 +308,14 @@ public class GUI extends Observable<ClientController> implements View{
             mess =mess + i + " " + s + "\n";
         }
         DebugMessages.printWarning(mess);
+        Platform.runLater(()->{
+            try {
+                GuiHelper.setRoot(FXMLpaths.endGame,new EndGameScene(charts));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
     }
 
     @Override
@@ -344,8 +352,6 @@ public class GUI extends Observable<ClientController> implements View{
         //TODO find a way to detect automaticly the turn type
         //LOAD DASHBOARD SCENE WITH "turnSelectionController" when user do concrete action controller swith
         // to a specific controller that allow him to do only some actions
-        //askBuy();
-        //showMarket();
         this.notifyObserver(ClientController::showDashboard);
 
     }
@@ -360,7 +366,6 @@ public class GUI extends Observable<ClientController> implements View{
         //trurn chosing scene
         //TODO da riumovere da qui perchè andra dove fede mette il pulzante
         //waitMiniModelLoading();
-        //showMarket();
         waitMiniModelLoading();
         this.notifyObserver(ClientController::showDashboard);
     }
