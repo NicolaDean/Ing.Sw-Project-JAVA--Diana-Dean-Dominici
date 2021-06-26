@@ -35,10 +35,10 @@ public class DialogProductionScene extends BasicSceneUpdater{
         int i=1;
         for(ProductionCard card:cards)
         {
-            if(card !=null) //TODO ADD EMPTY CARD DRAWING (print back of a card) and put card.getId instead of i
+            if(card !=null)
                 this.cards[i-1] = new ImageView(loadImage(ConstantValues.prodCardImagesPath+card.getId()+".jpg"));
             else
-                this.cards[i-1] = new ImageView(loadImage("/images/cards/back.png"));
+                this.cards[i-1] = new ImageView(loadImage(ConstantValues.backCard));
             int finalI = i;
             this.cards[i-1].setOnMouseClicked(event -> {
                 setPos(finalI -1);

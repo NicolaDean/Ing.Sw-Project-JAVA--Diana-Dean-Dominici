@@ -16,4 +16,5 @@ public interface ActionToken {
 
     public boolean isSpecial();
 
+    public String getId();
 }

@@ -947,6 +947,12 @@ public class ServerController extends Observable<ServerApp> implements Serializa
 
         //se risulterà positivo invierà in broadcast EndTurn e chiudera la connessione in maniera safe
         if(game.checkEndGame()) lastTurn();
+
+        if(game.IsEnded())
+        {
+            endGame();
+            return null;
+        }
         Player player=null;
 
         saveGameState();
@@ -973,11 +979,7 @@ public class ServerController extends Observable<ServerApp> implements Serializa
 
         DebugMessages.printError("PLAYER "+ this.game.getCurrentPlayerIndex() + "->controller:"+this.game.getCurrentPlayer().getControllerIndex());
 
-        if(game.IsEnded())
-        {
-            endGame();
-            return null;
-        }
+
 
         currentClient = player.getControllerIndex();
 

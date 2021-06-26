@@ -15,7 +15,7 @@ public class LorenzoPositionUpdate extends Packet<ClientController> implements P
     @Override
     public Packet analyze(ClientController controller) {
 
-        DebugMessages.printWarning("Lorenzo new Pos" + pos);
+        controller.showMessage("Lorenzo new Pos" + pos);
         controller.lorenzoPositionUpdate(pos);
         return null;
     }

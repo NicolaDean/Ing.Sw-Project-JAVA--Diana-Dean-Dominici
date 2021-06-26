@@ -384,7 +384,7 @@ public class Game implements Serializable {
      */
     public boolean IsEnded()
     {
-        return this.isEnded && this.currentPlayer == ConstantValues.numberOfPlayer;
+        return this.isEnded && this.currentPlayer == 0;
     }
 
     /**

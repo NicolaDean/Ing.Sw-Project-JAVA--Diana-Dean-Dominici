@@ -35,4 +35,6 @@ public class ConstantValues {
     public static String                    currentIdFile           ="server-match-id-index.json";
     public static String                    prodCardImagesPath      ="/images/cards/productions/";
     public static String                    leaderCardImagesPath    ="/images/cards/leaders/";
+    public static String                    tokens                  ="/images/tokens/";
+    public static String                    backCard                ="/images/cards/back.png";
 }

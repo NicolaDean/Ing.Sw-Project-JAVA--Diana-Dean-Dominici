@@ -9,11 +9,12 @@ public class LorenzoTurn extends Packet<ClientController> implements PacketManag
 
     transient ActionToken actionToken;
     String CliColor;
+    String image;
     //String guiResource
 
     public LorenzoTurn(ActionToken actionToken) {
         super("LorenzoTurn");
-        this.actionToken=actionToken;
+        this.image    =actionToken.getId();
         this.CliColor = actionToken.getColor();
     }
 
@@ -21,7 +22,8 @@ public class LorenzoTurn extends Packet<ClientController> implements PacketManag
     @Override
     public Packet analyze(ClientController controller) {
 
-        DebugMessages.printWarning("Lorenzo drawed "  +this.CliColor + " Token ");
+        controller.lorenzoTurn(this.CliColor,this.image);
+
         return null;
     }
 }

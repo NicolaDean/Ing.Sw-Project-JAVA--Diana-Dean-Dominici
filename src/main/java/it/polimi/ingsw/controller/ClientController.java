@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
+import it.polimi.ingsw.model.lorenzo.token.ActionToken;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniModel;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
@@ -23,6 +24,7 @@ import it.polimi.ingsw.view.utils.ErrorManager;
 import it.polimi.ingsw.view.CLI;
 import it.polimi.ingsw.view.View;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -834,6 +836,7 @@ public class ClientController implements Runnable{
      */
     public void lorenzoCardDiscard(int x,int y,ProductionCard newCard)
     {
+
         this.model.lorenzoCardDiscard(x,y,newCard);
     }
     /**
@@ -934,5 +937,9 @@ public class ClientController implements Runnable{
 
     public void executePacket(BasicPacketFactory lastAction) {
         analyze(lastAction.toJson());
+    }
+
+    public void lorenzoTurn(String cliColor, String token) {
+        this.view.lorenzoTurn(cliColor,token);
     }
 }

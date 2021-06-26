@@ -9,8 +9,26 @@ import java.io.Serializable;
 
 public abstract  class BasicToken extends Observable<ServerController> implements ActionToken, Serializable {
 
+    String id;
     @Override
     public boolean isSpecial() {
         return false;
+    }
+
+    /**
+     *
+     * @return image name for gui
+     */
+    public String getId()
+    {
+        return id;
+    }
+
+    /**
+     * set image name for gui
+     * @param id image name
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 }

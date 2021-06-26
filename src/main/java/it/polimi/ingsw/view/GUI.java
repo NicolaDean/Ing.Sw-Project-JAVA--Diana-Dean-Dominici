@@ -6,6 +6,7 @@ import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
+import it.polimi.ingsw.model.lorenzo.token.ActionToken;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.dashboard.Deposit;
@@ -543,5 +544,14 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void setStarted() {
         this.firstTurn=false;
+    }
+
+    @Override
+    public void lorenzoTurn(String cliColor, String token) {
+
+        Platform.runLater(() -> {
+            GuiHelper.loadDialog(FXMLpaths.lorenzo,"Lorenzo Turn",new LorenzoDialog(token));
+        });
+
     }
 }

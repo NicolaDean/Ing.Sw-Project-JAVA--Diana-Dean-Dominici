@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.view.GuiHelper;
 import it.polimi.ingsw.view.observer.Observable;
@@ -40,11 +41,6 @@ public class BasicSceneUpdater extends Observable<ClientController> {
     }
 
 
-    public void centerComponent()
-    {
-
-    }
-
     /**
      * allow to load an image view
      * @param path    image path
@@ -77,7 +73,7 @@ public class BasicSceneUpdater extends Observable<ClientController> {
      */
     public void reciveError(String msg)
     {
-
+        DebugMessages.printError("MSG: " + msg);
     }
 
     /**

@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 import it.polimi.ingsw.model.dashboard.Deposit;
+import it.polimi.ingsw.model.lorenzo.token.ActionToken;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
@@ -1333,5 +1334,10 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void setStarted() {
         this.firstTurn=false;
+    }
+
+    @Override
+    public void lorenzoTurn(String cliColor, String token) {
+        DebugMessages.printWarning("Lorenzo drawed "  +cliColor + " Token ");
     }
 }

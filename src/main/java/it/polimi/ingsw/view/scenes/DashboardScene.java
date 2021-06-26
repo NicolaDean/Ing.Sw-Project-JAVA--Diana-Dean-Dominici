@@ -118,6 +118,12 @@ public class DashboardScene extends BasicSceneUpdater {
     public ImageView bin;
 
 
+    @FXML
+    public Pane papal1;
+    @FXML
+    public Pane papal2;
+    @FXML
+    public Pane papal3;
 
     CheckBox lastchecked;
 
@@ -924,6 +930,7 @@ public class DashboardScene extends BasicSceneUpdater {
 
     @Override
     public void reciveError(String msg) {
+        super.reciveError(msg);
         ToastMessage t = new ToastMessage(msg,this.root,5000);
         t.show();
         this.resetObserverAfterDialog();
