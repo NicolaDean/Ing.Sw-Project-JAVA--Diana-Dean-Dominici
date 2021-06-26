@@ -187,17 +187,17 @@ public class DashboardScene extends BasicSceneUpdater {
         shopbutton.setOnMouseClicked(event -> {
             this.notifyObserver(controller -> controller.showshop());
         });
-
-        you.setOnMouseClicked(event -> {
-            Platform.runLater(()->{
-                try {
-                    GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        if(!imHereAfterMarketExstraction) {
+            you.setOnMouseClicked(event -> {
+                Platform.runLater(() -> {
+                    try {
+                        GuiHelper.setRoot(FXMLpaths.dashboard, new DashboardScene());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
             });
-        });
-
+        }
         swapbutton.setOnMouseClicked(event -> {
             int count = 0;
             List<Integer> d = new ArrayList<Integer>();
@@ -354,24 +354,23 @@ public class DashboardScene extends BasicSceneUpdater {
 
                 if(finalI != controller.getMiniModel().getPersanalIndex())
                 {
-                    p.setOnMouseClicked(event -> {
-                        Platform.runLater(()->{
-                            try {
-                                if(finalI != controller.getMiniModel().getPersanalIndex())
-                                {
-                                    //If click on others nickname
-                                    GuiHelper.setRoot(FXMLpaths.dashboard,new SpyScene(finalI,player.getNickname()));
+                    if(!imHereAfterMarketExstraction) {
+                        p.setOnMouseClicked(event -> {
+                            Platform.runLater(() -> {
+                                try {
+                                    if (finalI != controller.getMiniModel().getPersanalIndex()) {
+                                        //If click on others nickname
+                                        GuiHelper.setRoot(FXMLpaths.dashboard, new SpyScene(finalI, player.getNickname()));
+                                    } else {
+                                        //If click on his nickname
+                                        //GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
-                                else
-                                {
-                                    //If click on his nickname
-                                    //GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            });
                         });
-                    });
+                    }
                     this.nicknames.add(p,0,i);
                 }
 
