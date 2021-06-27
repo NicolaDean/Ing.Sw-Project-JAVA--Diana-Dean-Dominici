@@ -305,15 +305,30 @@ public class ClientController implements Runnable{
 
     /**
      * notify players that game ended (in cli show dashboard of current player, in GUI show a Points Scene)
+     * @param charts array with nicknames
+     * @param score array with scores
      */
-    public void endGame(String []charts)
+    public void endGame(String []charts,int [] score)
     {
-        this.showEndScene(charts);
-
+        this.showEndScene(charts,score);
     }
 
-    public void showEndScene(String []charts){ //TODO scena per la gui
-        this.view.printEndScreen(charts);
+    /**
+     * notify player that game ended (
+     * @param lorenzoWin true if lorenzo win
+     */
+    public void endGameLorenzo(Boolean lorenzoWin)
+    {
+        this.view.printEndScreenLorenzo(lorenzoWin);
+    }
+
+    /**
+     * Show end game screen
+     * @param charts array with nicknames
+     * @param score array with scores
+     */
+    public void showEndScene(String []charts,int []score){ 
+        this.view.printEndScreen(charts,score);
     }
 
     /**

@@ -17,7 +17,12 @@ public interface View {
     /**
      * print end screen with charts
      */
-    public void printEndScreen(String []charts);
+    public void printEndScreen(String []charts,int []score);
+
+    /**
+     * print end screen for lorenzo game
+     */
+    public void printEndScreenLorenzo(Boolean lorenzoWin);
 
     public void printWelcomeScreen();
 

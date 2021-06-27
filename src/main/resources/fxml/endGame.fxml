@@ -17,7 +17,7 @@
                 <children>
                     <AnchorPane fx:id="paneMain" prefHeight="546.0" prefWidth="717.0" styleClass="root" stylesheets="@../css/EndScreen.css">
                <children>
-                  <Text layoutX="170.0" layoutY="100.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" text="CHARTS">
+                  <Text fx:id="text" layoutX="170.0" layoutY="100.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" text="CHART">
                      <font>
                         <Font size="96.0" />
                      </font>

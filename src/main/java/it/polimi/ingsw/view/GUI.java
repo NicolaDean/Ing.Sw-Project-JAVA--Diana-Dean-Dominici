@@ -80,6 +80,21 @@ public class GUI extends Observable<ClientController> implements View{
         });
     }
 
+    /**
+     * print end screen for lorenzo game
+     */
+    public void printEndScreenLorenzo(Boolean lorenzoWin){
+        DebugMessages.printWarning(lorenzoWin?"YOU LOST":"YOU WIN");
+        Platform.runLater(()->{
+            try {
+                GuiHelper.setRoot(FXMLpaths.endGame,new EndGameScene(lorenzoWin));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
+    }
+
     @Override
     public void showMessage(String msg) {
         Platform.runLater(()->GuiHelper.sendMessage(msg));
@@ -300,17 +315,15 @@ public class GUI extends Observable<ClientController> implements View{
      * print end screen with charts
      */
     @Override
-    public void printEndScreen(String []charts){
+    public void printEndScreen(String []charts,int []score){
         String mess="Charts:\n";
-        int i=0;
-        for(String s:charts) {
-            i++;
-            mess =mess + i + " " + s + "\n";
+        for (int j = 0; j < score.length; j++) {
+            mess =mess + (j+1) + " " + charts[j] + " VP: "+ score[j] + "\n";
         }
         DebugMessages.printWarning(mess);
         Platform.runLater(()->{
             try {
-                GuiHelper.setRoot(FXMLpaths.endGame,new EndGameScene(charts));
+                GuiHelper.setRoot(FXMLpaths.endGame,new EndGameScene(charts,score));
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -38,7 +38,7 @@ public class EndGameTest {
         server.getGame().getPlayers().get(2).increaseScore(1);
         server.getGame().getPlayers().get(1).increaseScore(3);
         server.getGame().getPlayers().get(0).increaseScore(5);
-        Packet p=new EndGame(server.exstractCharts());
+        Packet p=new EndGame(server.exstractCharts(), server.exstractScore());
         System.out.println("classifica vera:");
         for (Player i:server.getGame().getPlayers())
             System.out.println(i.getNickname()+" VP:"+i.getScore());

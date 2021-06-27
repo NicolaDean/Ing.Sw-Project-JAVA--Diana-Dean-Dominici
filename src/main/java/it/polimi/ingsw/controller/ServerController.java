@@ -993,7 +993,38 @@ public class ServerController extends Observable<ServerApp> implements Serializa
         //remove itself from availableControllers
         this.notifyObserver(serverApp -> {serverApp.closeController(this);});
 
-        this.broadcastMessage(-1, new EndGame(exstractCharts()));
+        this.broadcastMessage(-1, new EndGame(exstractCharts(),exstractScore()));
+    }
+    /**
+     * Extract from game the charts
+     * @return charts of player
+     */
+    public int [] exstractScore(){
+        List<String> nick=new ArrayList<>();
+        List<Integer> score=new ArrayList<>();
+        List<Integer> out=new ArrayList<>();
+
+        for (int i = 0; i < game.getNofplayers(); i++) {
+            nick.add(game.getPlayers().get(i).getNickname());
+            score.add(game.getPlayers().get(i).getScore());
+        }
+        String tmpN;
+        int tmpS;
+        for (int i = 0; i < game.getNofplayers(); i++) {
+            tmpN=nick.get(0);
+            tmpS=score.get(0);
+            for (int j = 0; j < nick.size()-1; j++) {
+                if(tmpS<game.getPlayers().get(j+1).getScore()){
+                    tmpN=nick.get(j+1);
+                    tmpS=score.get(j+1);
+                }
+            }
+            out.add(tmpS);
+            nick.remove(tmpN);
+            score.remove(Integer.valueOf(tmpS));
+        }
+
+        return out.stream().mapToInt(i->i).toArray();
     }
 
     /**
@@ -1033,7 +1064,7 @@ public class ServerController extends Observable<ServerApp> implements Serializa
      */
     public void lastTurn()
     {
-        this.broadcastMessage(-1, new EndGame(exstractCharts()));
+        this.broadcastMessage(-1, new EndGame(exstractCharts(),exstractScore()));
     }
 
     public void sendMessage(Packet p,int index)
