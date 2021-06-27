@@ -5,6 +5,7 @@ import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
+import it.polimi.ingsw.model.lorenzo.token.ActionToken;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
@@ -232,4 +233,13 @@ public interface View {
 
 
     void setStarted();
+
+    /**
+     * show lorenzo actions
+     * @param cliColor color of actionToken
+     * @param token    action token used by lorenzo
+     */
+    void lorenzoTurn(String cliColor, String token);
+
+    void serverDisconnected();
 }

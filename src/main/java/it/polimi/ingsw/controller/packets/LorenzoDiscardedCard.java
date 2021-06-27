@@ -21,8 +21,7 @@ public class LorenzoDiscardedCard extends Packet<ClientController> implements Pa
     @Override
     public Packet analyze(ClientController controller)
     {
-
-        DebugMessages.printWarning("Lorenzo discarded Card");
+        controller.showMessage("Lorenzo discarded Card");
         controller.lorenzoCardDiscard(x,y,newCard);
         return null;
     }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.lorenzo;
 
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.LorenzoPositionUpdate;
+import it.polimi.ingsw.enumeration.CardType;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.CellScore;
 import it.polimi.ingsw.model.Game;
@@ -10,6 +11,7 @@ import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.factory.TokenFactory;
 import it.polimi.ingsw.model.lorenzo.token.*;
 import it.polimi.ingsw.model.resources.Resource;
+import it.polimi.ingsw.utils.ConstantValues;
 
 import java.util.Collections;
 import java.util.Stack;
@@ -138,13 +140,21 @@ public class  LorenzoGame extends Game {
         return  out;
     }
 
+    /**
+     *
+     * @return true if thers an antire row of cards empty inside the shop (lorenzo discarded all)
+     */
     private boolean productionDeckIsEmty() {
-        for(Stack<ProductionCard>[] row : productionDecks)
+
+        for(int i=0;i< ConstantValues.colDeck;i++)
         {
-            for(Stack<ProductionCard> col :row)
+            int countEmptyDeck =0;
+            for(int j=0;j<ConstantValues.rowDeck;j++)
             {
-                if(col.isEmpty()) return true;
+                if(productionDecks[j][i].isEmpty())countEmptyDeck++;
             }
+
+            if(countEmptyDeck==ConstantValues.rowDeck) return true;
         }
         return false;
     }

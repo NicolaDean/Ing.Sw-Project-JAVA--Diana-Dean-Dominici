@@ -40,7 +40,7 @@ public class ReconnectingInfo extends Packet<ClientController> implements Packet
     @Override
     public Packet analyze(ClientController controller)
     {
-        DebugMessages.printError("INFORMATION SETTED WHEN RECONNECT");
+        controller.showMessage("INFORMATION SETTED WHEN RECONNECT");
         controller.setFirstTurnView(firstTurn);
         controller.setInformation(model,miniBallsMarket,miniBallDiscarted,firstTurn);
         //controller.abortHelp();

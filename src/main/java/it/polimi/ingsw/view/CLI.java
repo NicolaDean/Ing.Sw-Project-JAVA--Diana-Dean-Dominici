@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 import it.polimi.ingsw.model.dashboard.Deposit;
+import it.polimi.ingsw.model.lorenzo.token.ActionToken;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
@@ -670,11 +671,15 @@ public class CLI extends Observable<ClientController> implements View {
      */
     @Override
     public void printEndScreen(String []charts,int []score){
+        this.terminal.printWarning("-----------------");
+        this.terminal.printWarning("GAME ENDED");
+        this.terminal.printWarning("-----------------");
         String mess="Charts:\n";
         for (int j = 0; j < score.length; j++) {
             mess =mess + (j+1) + " " + charts[j] + " VP: "+ score[j] + "\n";
         }
         DebugMessages.printWarning(mess);
+        System.exit(0);
     }
 
     /**
@@ -1338,5 +1343,16 @@ public class CLI extends Observable<ClientController> implements View {
     @Override
     public void setStarted() {
         this.firstTurn=false;
+    }
+
+    @Override
+    public void lorenzoTurn(String cliColor, String token) {
+        DebugMessages.printWarning("Lorenzo drawed "  +cliColor + " Token ");
+    }
+
+    @Override
+    public void serverDisconnected() {
+        this.terminal.printError("Server Connection Crushed (Server Offline)");
+        System.exit(-1);
     }
 }

@@ -117,12 +117,12 @@ public class BuyScene extends BasicSceneUpdater{
         {
             //TODO DRAW THE BACK OF CARD INSTEAD OF LEADER
             //Loading image
-            this.cards[y][x] = loadImage("/images/cars/back.png",130,200);
+            this.cards[y][x] = loadImage(ConstantValues.backCard,130,200);
         }
         else
         {
             //Loading image
-            this.cards[y][x] = loadImage("/images/cards/productions/" +card.getId()+".jpg",130,200);
+            this.cards[y][x] = loadImage(ConstantValues.prodCardImagesPath +card.getId()+".jpg",130,200);
 
             this.cards[y][x].setId("production_card");
 
