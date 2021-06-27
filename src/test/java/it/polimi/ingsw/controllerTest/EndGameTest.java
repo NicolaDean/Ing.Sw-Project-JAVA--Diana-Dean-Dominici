@@ -5,10 +5,11 @@ import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.EndGame;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.model.Player;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class EndGameTest {
-    @Test
+    @Disabled
     public void serverControlChartsCheck(){
         ServerController server = new ServerController(true);
         try {
@@ -38,7 +39,7 @@ public class EndGameTest {
         server.getGame().getPlayers().get(2).increaseScore(1);
         server.getGame().getPlayers().get(1).increaseScore(3);
         server.getGame().getPlayers().get(0).increaseScore(5);
-        Packet p=new EndGame(server.exstractCharts());
+        Packet p=new EndGame(server.exstractCharts(), server.exstractScore());
         System.out.println("classifica vera:");
         for (Player i:server.getGame().getPlayers())
             System.out.println(i.getNickname()+" VP:"+i.getScore());

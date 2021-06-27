@@ -16,7 +16,7 @@ import it.polimi.ingsw.utils.ConstantValues;
 import java.util.Collections;
 import java.util.Stack;
 
-public class LorenzoGame extends Game {
+public class  LorenzoGame extends Game {
     ActionToken tokenDrawn;
     Lorenzo lorenzo;
     Stack<BasicToken> tokenDeck = new Stack<>();
@@ -169,10 +169,6 @@ public class LorenzoGame extends Game {
     }
 
 
-    public void loadTokens(ServerController controller)
-    {
-
-    }
     /**
      * shuffle all token together
      */

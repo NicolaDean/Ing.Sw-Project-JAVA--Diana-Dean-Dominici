@@ -65,6 +65,19 @@ public class LorenzoServerController extends ServerController{
         return new LorenzoTurn(((LorenzoGame)game).getTokenDrawn());
     }
 
+    /**
+     *endgame packet
+     */
+    public void endGame()
+    {
+        //remove itself from availableControllers
+        this.notifyObserver(serverApp -> {serverApp.closeController(this);});
+        //check if lorenzo win
+        Boolean lorenzoWin=game.checkCardCondition() || game.checkLastCellReached();
+
+        this.broadcastMessage(-1, new EndGameLorenzo(!lorenzoWin));
+    }
+
     @Override
     public void startGame() throws FullDepositException, NoBonusDepositOwned, WrongPosition {
         try {

@@ -8,15 +8,17 @@ import it.polimi.ingsw.utils.DebugMessages;
 public class EndGame extends Packet<ClientController> implements PacketManager<ClientController> {
 
     String [] charts;
+    int [] score;
 
-    public EndGame(String [] charts) {
+    public EndGame(String [] charts,int [] score) {
         super("EndGame");
         this.charts=charts;
+        this.score=score;
     }
 
     @Override
     public Packet analyze(ClientController controller) {
-        controller.endGame(charts);
+        controller.endGame(charts,score);
         return null;
     }
 

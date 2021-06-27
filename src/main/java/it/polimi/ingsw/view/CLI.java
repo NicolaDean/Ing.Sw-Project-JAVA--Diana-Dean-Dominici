@@ -74,6 +74,13 @@ public class CLI extends Observable<ClientController> implements View {
         }
     }
 
+    /**
+     * print end screen for lorenzo game
+     */
+    public void printEndScreenLorenzo(Boolean lorenzoWin){
+        DebugMessages.printWarning(lorenzoWin?"YOU LOST":"YOU WIN");
+    }
+
     @Override
     public void showMessage(String msg) {
         this.terminal.printGoodMessages(msg);
@@ -663,15 +670,13 @@ public class CLI extends Observable<ClientController> implements View {
      * print end screen with charts
      */
     @Override
-    public void printEndScreen(String []charts){
+    public void printEndScreen(String []charts,int []score){
         this.terminal.printWarning("-----------------");
         this.terminal.printWarning("GAME ENDED");
         this.terminal.printWarning("-----------------");
         String mess="Charts:\n";
-        int i=0;
-        for(String s:charts) {
-            i++;
-            mess =mess + i + " " + s + "\n";
+        for (int j = 0; j < score.length; j++) {
+            mess =mess + (j+1) + " " + charts[j] + " VP: "+ score[j] + "\n";
         }
         DebugMessages.printWarning(mess);
         System.exit(0);
