@@ -5,10 +5,11 @@ import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.EndGame;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.model.Player;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class EndGameTest {
-    @Test
+    @Disabled
     public void serverControlChartsCheck(){
         ServerController server = new ServerController(true);
         try {
