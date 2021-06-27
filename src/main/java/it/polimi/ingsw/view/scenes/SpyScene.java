@@ -23,6 +23,7 @@ public class SpyScene extends DashboardScene {
 
     @Override
     public void init() {
+        isaspy=true;
         disableCardClick();
         super.init();
         disableSwap();
