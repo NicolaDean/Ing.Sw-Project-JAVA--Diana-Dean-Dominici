@@ -11,6 +11,8 @@ import it.polimi.ingsw.model.lorenzo.token.*;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Stack;
 
 public class TokenFactory {
@@ -42,6 +44,7 @@ public class TokenFactory {
             JsonObject obj = element.getAsJsonObject();
 
             String type = obj.get("type").getAsString();
+            String id = obj.get("id").getAsString();
             int    qty  = obj.get("quantity").getAsInt();
 
             for(int i=0;i<qty;i++)
@@ -55,20 +58,22 @@ public class TokenFactory {
                         token = new ColoredActionToken(cardType,discard);
                         break;
                     case "OneCross":
-                        token = new BlackCrossToken();
+                        token = new SpecialBlackCrossToken();
                         break;
                     case "TwoCross":
-                        token = new SpecialBlackCrossToken();
+                        token = new BlackCrossToken();
                         break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + type);
                 }
 
                 token.setObserver(controller);
+                token.setId(id);
                 out.add(token);
             }
 
         }
+        Collections.shuffle(out);
         return out;
     }
 }

@@ -48,7 +48,6 @@ public class ServerApp {
     public void closeController(ServerController controller)
     {
         DebugMessages.printError("Controller ("+controller.getMatchId()+") ended match");
-        this.closed.add(controller);
         this.availableControllers.remove(controller);
     }
     /**
@@ -218,6 +217,7 @@ public class ServerApp {
                 ClientHandler handler = match.reconnect(socket,nickname);
                 if(handler!=null)
                 {
+                    match.setObserver(this);
                     match.exitPause();
                     this.executor.submit(handler);
                     this.availableControllers.add(match);
@@ -243,6 +243,7 @@ public class ServerApp {
     {
         //Create single player
         ServerController c = new LorenzoServerController();
+        c.setObserver(this);
         c.setMatchId(matchId);
         availableControllers.add(c);
         matchId++;
@@ -332,6 +333,7 @@ public class ServerApp {
 
         ServerController c = new ServerController(true);
         c.setMatchId(matchId);
+        c.setObserver(this);
         availableControllers.add(c);
         matchId++;
         try {

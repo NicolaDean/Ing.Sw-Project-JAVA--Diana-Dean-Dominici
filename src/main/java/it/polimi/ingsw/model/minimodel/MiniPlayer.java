@@ -26,6 +26,7 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
     private Deposit[]                   storage;
     private List<Resource>              discount;
     private ResourceType []             whiteBalls;
+    private boolean []                  papalToken;
     private LeaderTradeCard[]  trade;
 
     public MiniPlayer(String nickname) {
@@ -33,6 +34,7 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
         this.nickname = nickname;
         this.chest = new ResourceList();
         decks = new ProductionCard[3];
+        this.papalToken=new boolean[3];
     }
 
     /**
@@ -220,4 +222,19 @@ public class MiniPlayer extends Observable<BasicSceneUpdater> {
         return this.trade;
     }
 
+    /**
+     *
+     * @param papalToken player papal spaces
+     */
+    public void setPapalSpace(boolean[] papalToken) {
+        this.papalToken = papalToken;
+    }
+
+    /**
+     *
+     * @return an array of papal space of this player
+     */
+    public boolean[] getPapalSpaces() {
+        return this.papalToken;
+    }
 }

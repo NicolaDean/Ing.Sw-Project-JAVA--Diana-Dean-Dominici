@@ -35,6 +35,10 @@ public class PaymentDialog extends BasicDialog{
     @FXML
     public FlowPane deposit3;
     @FXML
+    public FlowPane deposit4;
+    @FXML
+    public FlowPane deposit5;
+    @FXML
     public FlowPane chest;
 
     List<Pane>pendingCost;
@@ -56,7 +60,8 @@ public class PaymentDialog extends BasicDialog{
         deposit1.setId("-d1");
         deposit2.setId("-d2");
         deposit3.setId("-d3");
-
+        deposit4.setId("-d4");
+        deposit5.setId("-d5");
 
         drawCost();
         drawStorage();
@@ -94,6 +99,14 @@ public class PaymentDialog extends BasicDialog{
             case "-d3":
                 packetInfo.add(new ExtractionInstruction(new Resource(type,1),2));
                 deposit3.getChildren().remove(0);
+                break;
+            case "-d4":
+                packetInfo.add(new ExtractionInstruction(new Resource(type,1),3));
+                deposit4.getChildren().remove(0);
+                break;
+            case "-d5":
+                packetInfo.add(new ExtractionInstruction(new Resource(type,1),4));
+                deposit5.getChildren().remove(0);
                 break;
             case "-c0":
                 packetInfo.add(new ExtractionInstruction(new Resource(type,1)));
@@ -133,11 +146,11 @@ public class PaymentDialog extends BasicDialog{
     }
     public void removeSourceQuantity(Pane root,ResourceType type)
     {
-        //TODO SI BUGGA l'estrazione da chest (lancia eccezione)
-        for(Node x: root.getChildren())
+        int cont=0;
+        for(int i=0;i<root.getChildren().size();i++)
         {
-            Pane pane = (Pane)x;
-            if(x.getId().equals(type.toString()))
+            Pane pane = (Pane) root.getChildren().get(i);
+            if(pane.getId().equals(type.toString()))
             {
                 Label l = ((Label)(pane.getChildren().get(1)));
                 String q = l.getText().substring(2);
@@ -145,7 +158,7 @@ public class PaymentDialog extends BasicDialog{
 
                 if(qty==0)
                 {
-                    this.source.getChildren().remove(x);
+                    this.source.getChildren().remove(root.getChildren().get(i));
                 }
                 else
                 {
@@ -165,6 +178,8 @@ public class PaymentDialog extends BasicDialog{
             drawDeposit(deposit1,storage[0]);
             drawDeposit(deposit2,storage[1]);
             drawDeposit(deposit3,storage[2]);
+            drawDeposit(deposit4,storage[3]);
+            drawDeposit(deposit5,storage[4]);
         });
     }
 
@@ -204,7 +219,8 @@ public class PaymentDialog extends BasicDialog{
      */
     public void drawDeposit(FlowPane container,Deposit deposit)
     {
-        if(deposit.getResource() == null)
+
+        if(deposit==null || deposit.getResource() == null)
         {
             System.out.println("Print empty dep");
             return;

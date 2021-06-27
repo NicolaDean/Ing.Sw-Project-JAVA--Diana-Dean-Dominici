@@ -118,6 +118,12 @@ public class DashboardScene extends BasicSceneUpdater {
     public ImageView bin;
 
 
+    @FXML
+    public Pane papal1;
+    @FXML
+    public Pane papal2;
+    @FXML
+    public Pane papal3;
 
     CheckBox lastchecked;
 
@@ -187,17 +193,17 @@ public class DashboardScene extends BasicSceneUpdater {
         shopbutton.setOnMouseClicked(event -> {
             this.notifyObserver(controller -> controller.showshop());
         });
-
-        you.setOnMouseClicked(event -> {
-            Platform.runLater(()->{
-                try {
-                    GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        if(!imHereAfterMarketExstraction) {
+            you.setOnMouseClicked(event -> {
+                Platform.runLater(() -> {
+                    try {
+                        GuiHelper.setRoot(FXMLpaths.dashboard, new DashboardScene());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
             });
-        });
-
+        }
         swapbutton.setOnMouseClicked(event -> {
             int count = 0;
             List<Integer> d = new ArrayList<Integer>();
@@ -263,6 +269,7 @@ public class DashboardScene extends BasicSceneUpdater {
             drawPosition    (p.getPosition());
             drawNicknames();
 
+            drawPapalSpace(p.getPapalSpaces());
             if(controller.getMiniModel().getPlayers().length ==1)
             {
                 drawLorenzo(controller.getMiniModel().getLorenzo());
@@ -273,6 +280,31 @@ public class DashboardScene extends BasicSceneUpdater {
 
 
     }
+
+    /**
+     * draw papal spaces of this players
+     * @param papalSpaces
+     */
+    private void drawPapalSpace(boolean[] papalSpaces) {
+        int i=0;
+        for(boolean x:papalSpaces)
+        {
+            switch (i)
+            {
+                case 0:
+                    if(x) papal1.getChildren().add(BasicSceneUpdater.loadImage(ConstantValues.papaltokens+"1.png",70,70));
+                    break;
+                case 1:
+                    if(x) papal2.getChildren().add(BasicSceneUpdater.loadImage(ConstantValues.papaltokens+"2.png",70,70));
+                    break;
+                case 2:
+                    if(x) papal3.getChildren().add(BasicSceneUpdater.loadImage(ConstantValues.papaltokens+"3.png",70,70));
+                    break;
+            }
+            i++;
+        }
+    }
+
 
     private void drawLorenzo(int lorenzo) {
         Platform.runLater(()->{
@@ -354,24 +386,23 @@ public class DashboardScene extends BasicSceneUpdater {
 
                 if(finalI != controller.getMiniModel().getPersanalIndex())
                 {
-                    p.setOnMouseClicked(event -> {
-                        Platform.runLater(()->{
-                            try {
-                                if(finalI != controller.getMiniModel().getPersanalIndex())
-                                {
-                                    //If click on others nickname
-                                    GuiHelper.setRoot(FXMLpaths.dashboard,new SpyScene(finalI,player.getNickname()));
+                    if(!imHereAfterMarketExstraction) {
+                        p.setOnMouseClicked(event -> {
+                            Platform.runLater(() -> {
+                                try {
+                                    if (finalI != controller.getMiniModel().getPersanalIndex()) {
+                                        //If click on others nickname
+                                        GuiHelper.setRoot(FXMLpaths.dashboard, new SpyScene(finalI, player.getNickname()));
+                                    } else {
+                                        //If click on his nickname
+                                        //GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
-                                else
-                                {
-                                    //If click on his nickname
-                                    //GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            });
                         });
-                    });
+                    }
                     this.nicknames.add(p,0,i);
                 }
 
@@ -908,22 +939,6 @@ public class DashboardScene extends BasicSceneUpdater {
         }
     }
 
-    public LeaderCard getfirstdeposit(LeaderCard[] cards)
-    {
-        LeaderCard card = null;
-        int i = 100;
-        for(LeaderCard c : cards) {
-            if (c.getCliRappresentation().equals("DEPOSIT") && c.isActive())
-                if(c.getActivationOrder() < i ) {
-                    card = c;
-                    i=c.getActivationOrder();
-                }
-        }
-
-        System.out.println("the first activated deposit is "+card.getType());
-        return card;
-
-    }
 
 
     private void resetObserverAfterDialog() {
@@ -941,6 +956,7 @@ public class DashboardScene extends BasicSceneUpdater {
 
     @Override
     public void reciveError(String msg) {
+        super.reciveError(msg);
         ToastMessage t = new ToastMessage(msg,this.root,5000);
         t.show();
         this.resetObserverAfterDialog();

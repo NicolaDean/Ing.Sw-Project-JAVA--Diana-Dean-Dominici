@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
 import it.polimi.ingsw.model.dashboard.Deposit;
+import it.polimi.ingsw.model.lorenzo.token.ActionToken;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.minimodel.MiniModel;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
@@ -23,6 +24,7 @@ import it.polimi.ingsw.view.utils.ErrorManager;
 import it.polimi.ingsw.view.CLI;
 import it.polimi.ingsw.view.View;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -305,15 +307,30 @@ public class ClientController implements Runnable{
 
     /**
      * notify players that game ended (in cli show dashboard of current player, in GUI show a Points Scene)
+     * @param charts array with nicknames
+     * @param score array with scores
      */
-    public void endGame(String []charts)
+    public void endGame(String []charts,int [] score)
     {
-        this.showEndScene(charts);
-
+        this.showEndScene(charts,score);
     }
 
-    public void showEndScene(String []charts){ //TODO scena per la gui
-        this.view.printEndScreen(charts);
+    /**
+     * notify player that game ended (
+     * @param lorenzoWin true if lorenzo win
+     */
+    public void endGameLorenzo(Boolean lorenzoWin)
+    {
+        this.view.printEndScreenLorenzo(lorenzoWin);
+    }
+
+    /**
+     * Show end game screen
+     * @param charts array with nicknames
+     * @param score array with scores
+     */
+    public void showEndScene(String []charts,int []score){ 
+        this.view.printEndScreen(charts,score);
     }
 
     /**
@@ -610,8 +627,8 @@ public class ClientController implements Runnable{
         }catch (Exception e)
         {
             connected = false;
-            DebugMessages.printError("Server Connection Crushed (Server Offline)");
-            System.exit(-1);
+            this.view.serverDisconnected();
+
         }
 
     }
@@ -834,6 +851,7 @@ public class ClientController implements Runnable{
      */
     public void lorenzoCardDiscard(int x,int y,ProductionCard newCard)
     {
+
         this.model.lorenzoCardDiscard(x,y,newCard);
     }
     /**
@@ -934,5 +952,13 @@ public class ClientController implements Runnable{
 
     public void executePacket(BasicPacketFactory lastAction) {
         analyze(lastAction.toJson());
+    }
+
+    public void lorenzoTurn(String cliColor, String token) {
+        this.view.lorenzoTurn(cliColor,token);
+    }
+
+    public void updatePapalToken(boolean[] papalToken, int index) {
+        this.model.getPlayers()[index].setPapalSpace(papalToken);
     }
 }

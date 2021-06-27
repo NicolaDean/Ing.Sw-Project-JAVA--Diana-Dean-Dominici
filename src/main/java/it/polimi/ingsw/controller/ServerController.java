@@ -129,6 +129,8 @@ public class ServerController extends Observable<ServerApp> implements Serializa
      */
     public void removeClient(int index)
     {
+
+
         synchronized (this.lock)
         {
 
@@ -136,6 +138,13 @@ public class ServerController extends Observable<ServerApp> implements Serializa
             {
                 this.warning("Client "+ index + " disconnected from game number "+ this.getMatchId());
                 this.game.getPlayer(clients.get(index).getRealPlayerIndex()).setConnectionState(false);
+
+                if(this.game.isEnded())
+                {
+                    clients.clear();
+                    this.notifyObserver(serverApp -> {serverApp.closeController(this);});
+                    return;
+                }
 
                 if(currentClient == index)
                     this.nextTurn();
@@ -367,6 +376,7 @@ public class ServerController extends Observable<ServerApp> implements Serializa
             players[i].updateChest(p.getDashboard().getChest());
             players[i].setIndex(i);
             players[i].setLeaderCards(p.getLeaders());
+            players[i].setPapalSpace(p.getPapalToken());
             i++;
         }
 
@@ -388,7 +398,10 @@ public class ServerController extends Observable<ServerApp> implements Serializa
         int index=0;
         boolean out=false;
         for (int i = 0; i < nOfplayer; i++) { //check if someone have activated papal space
-            if(tmp_score[i]!=this.game.getPlayers().get(i).getScore()){
+            Player p = this.game.getPlayers().get(i);
+            if(tmp_score[i]!=p.getScore()){
+                p.setPapalToken(this.game.getCurrentPapalSpaceToReach()-1);
+                this.broadcastMessage(-1,new PapalSpaceUpdate(p.getPapalToken(),i));
                 out=true;
             }
         }
@@ -947,6 +960,8 @@ public class ServerController extends Observable<ServerApp> implements Serializa
 
         //se risulterà positivo invierà in broadcast EndTurn e chiudera la connessione in maniera safe
         if(game.checkEndGame()) lastTurn();
+
+
         Player player=null;
 
         saveGameState();
@@ -973,13 +988,15 @@ public class ServerController extends Observable<ServerApp> implements Serializa
 
         DebugMessages.printError("PLAYER "+ this.game.getCurrentPlayerIndex() + "->controller:"+this.game.getCurrentPlayer().getControllerIndex());
 
+
+
+        currentClient = player.getControllerIndex();
+
         if(game.IsEnded())
         {
             endGame();
             return null;
         }
-
-        currentClient = player.getControllerIndex();
 
         turnNotifier();
         return null;
@@ -993,7 +1010,38 @@ public class ServerController extends Observable<ServerApp> implements Serializa
         //remove itself from availableControllers
         this.notifyObserver(serverApp -> {serverApp.closeController(this);});
 
-        this.broadcastMessage(-1, new EndGame(exstractCharts()));
+        this.broadcastMessage(-1, new EndGame(exstractCharts(),exstractScore()));
+    }
+    /**
+     * Extract from game the charts
+     * @return charts of player
+     */
+    public int [] exstractScore(){
+        List<String> nick=new ArrayList<>();
+        List<Integer> score=new ArrayList<>();
+        List<Integer> out=new ArrayList<>();
+
+        for (int i = 0; i < game.getNofplayers(); i++) {
+            nick.add(game.getPlayers().get(i).getNickname());
+            score.add(game.getPlayers().get(i).getScore());
+        }
+        String tmpN;
+        int tmpS;
+        for (int i = 0; i < game.getNofplayers(); i++) {
+            tmpN=nick.get(0);
+            tmpS=score.get(0);
+            for (int j = 0; j < nick.size()-1; j++) {
+                if(tmpS<game.getPlayers().get(j+1).getScore()){
+                    tmpN=nick.get(j+1);
+                    tmpS=score.get(j+1);
+                }
+            }
+            out.add(tmpS);
+            nick.remove(tmpN);
+            score.remove(Integer.valueOf(tmpS));
+        }
+
+        return out.stream().mapToInt(i->i).toArray();
     }
 
     /**
@@ -1033,7 +1081,7 @@ public class ServerController extends Observable<ServerApp> implements Serializa
      */
     public void lastTurn()
     {
-        this.broadcastMessage(-1, new EndGame(exstractCharts()));
+        this.broadcastMessage(-1, new LastTurn());
     }
 
     public void sendMessage(Packet p,int index)

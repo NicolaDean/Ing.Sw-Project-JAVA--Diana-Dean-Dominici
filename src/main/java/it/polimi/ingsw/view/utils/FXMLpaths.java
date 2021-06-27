@@ -16,5 +16,8 @@ public class FXMLpaths {
     public static String dashboard       = "Dashboard";
     public static String yesNo           = "yesNoDialog";
     public static String toast           = "toastMsg";
-    public static String move           = "moveDialog";
+    public static String move            = "moveDialog";
+    public static String endGame         = "endGame";
+    public static String lorenzo         = "lorenzoDialog";
+    public static String serverError     ="serverDisconnected";
 }

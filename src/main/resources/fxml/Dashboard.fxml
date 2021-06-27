@@ -163,7 +163,7 @@
                          </fx:define>
                         <Button id="button" fx:id="showButton" layoutX="855.0" layoutY="628.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="92.0" stylesheets="@../css/Global.css" text="Show Leader" />
                         <FlowPane fx:id="leaderCards" layoutX="542.0" layoutY="469.0" prefHeight="209.0" prefWidth="300.0" />
-                         <AnchorPane fx:id="toastForMarketInsersion" layoutX="169.0" layoutY="32.0">
+                         <AnchorPane fx:id="toastForMarketInsersion" layoutX="169.0" layoutY="32.0" AnchorPane.leftAnchor="169.0">
                              <children>
                                  <ImageView fitHeight="187.0" fitWidth="570.0" pickOnBounds="true" style="-fx-background-color: #1d1d1d;">
                                      <image>
@@ -204,6 +204,9 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
+                        <Pane fx:id="papal1" layoutX="220.0" layoutY="90.0" prefHeight="69.0" prefWidth="70.0" />
+                        <Pane layoutX="704.0" layoutY="91.0" prefHeight="69.0" prefWidth="70.0" />
+                        <Pane fx:id="papal2" layoutX="441.0" layoutY="40.0" prefHeight="69.0" prefWidth="70.0" />
                      </children>
                   </AnchorPane>
                   <ImageView id="production_card" fx:id="shopbutton" fitHeight="97.0" fitWidth="213.0" layoutX="71.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">

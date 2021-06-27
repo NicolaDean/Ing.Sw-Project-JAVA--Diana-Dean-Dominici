@@ -51,6 +51,8 @@
             <FlowPane fx:id="deposit2" layoutX="79.0" layoutY="112.0" prefHeight="47.0" prefWidth="92.0" />
             <FlowPane fx:id="deposit3" layoutX="64.0" layoutY="164.0" prefHeight="56.0" prefWidth="134.0" />
             <FlowPane fx:id="chest" layoutX="39.0" layoutY="265.0" prefHeight="104.0" prefWidth="131.0" />
+            <FlowPane fx:id="deposit4" layoutX="131.0" layoutY="21.0" prefHeight="47.0" prefWidth="92.0" />
+            <FlowPane fx:id="deposit5" layoutX="14.0" layoutY="21.0" prefHeight="47.0" prefWidth="92.0" />
          </children>
       </AnchorPane>
     </header>

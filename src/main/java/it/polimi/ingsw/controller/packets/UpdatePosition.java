@@ -21,9 +21,7 @@ public class UpdatePosition extends Packet<ClientController> implements PacketMa
     @Override
     public Packet analyze(ClientController controller)
     {
-        //TODO la persona che scarta la risorsa vede aumentare anche la sua posizione (ma solo nel minimodel) DA FIXARE
-       controller.showMessage("Player " + controller.getMiniModel().getPlayers()[player].getNickname() + " discarded a resource");
-        //controller.incrementPositionPlayersWithOut(player,position);
+             controller.showMessage("Player " + controller.getMiniModel().getPlayers()[player].getNickname() + " discarded a resource");
         return null;
     }
 

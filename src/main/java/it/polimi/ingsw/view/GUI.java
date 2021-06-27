@@ -6,6 +6,7 @@ import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
+import it.polimi.ingsw.model.lorenzo.token.ActionToken;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.model.dashboard.Deposit;
@@ -77,6 +78,21 @@ public class GUI extends Observable<ClientController> implements View{
                     e.printStackTrace();
                 }
             }
+        });
+    }
+
+    /**
+     * print end screen for lorenzo game
+     */
+    public void printEndScreenLorenzo(Boolean lorenzoWin){
+        DebugMessages.printWarning(lorenzoWin?"YOU LOST":"YOU WIN");
+        Platform.runLater(()->{
+            try {
+                GuiHelper.setRoot(FXMLpaths.endGame,new EndGameScene(lorenzoWin));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         });
     }
 
@@ -300,14 +316,20 @@ public class GUI extends Observable<ClientController> implements View{
      * print end screen with charts
      */
     @Override
-    public void printEndScreen(String []charts){
+    public void printEndScreen(String []charts,int []score){
         String mess="Charts:\n";
-        int i=0;
-        for(String s:charts) {
-            i++;
-            mess =mess + i + " " + s + "\n";
+        for (int j = 0; j < score.length; j++) {
+            mess =mess + (j+1) + " " + charts[j] + " VP: "+ score[j] + "\n";
         }
         DebugMessages.printWarning(mess);
+        Platform.runLater(()->{
+            try {
+                GuiHelper.setRoot(FXMLpaths.endGame,new EndGameScene(charts,score));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
     }
 
     @Override
@@ -315,7 +337,10 @@ public class GUI extends Observable<ClientController> implements View{
         System.out.println("PAYMENT ");
         PaymentDialog dialog = new PaymentDialog(resourceList);
         Platform.runLater(()->{
-            GuiHelper.loadDialog(FXMLpaths.payment,"Payment",dialog);
+            ButtonType response = null;
+            do {
+                response =  GuiHelper.loadDialog(FXMLpaths.payment,"Payment",dialog);
+            }while(!response.equals(ButtonType.OK));
         });
     }
 
@@ -344,8 +369,6 @@ public class GUI extends Observable<ClientController> implements View{
         //TODO find a way to detect automaticly the turn type
         //LOAD DASHBOARD SCENE WITH "turnSelectionController" when user do concrete action controller swith
         // to a specific controller that allow him to do only some actions
-        //askBuy();
-        //showMarket();
         this.notifyObserver(ClientController::showDashboard);
 
     }
@@ -360,7 +383,6 @@ public class GUI extends Observable<ClientController> implements View{
         //trurn chosing scene
         //TODO da riumovere da qui perchè andra dove fede mette il pulzante
         //waitMiniModelLoading();
-        //showMarket();
         waitMiniModelLoading();
         this.notifyObserver(ClientController::showDashboard);
     }
@@ -538,5 +560,25 @@ public class GUI extends Observable<ClientController> implements View{
     @Override
     public void setStarted() {
         this.firstTurn=false;
+    }
+
+    @Override
+    public void lorenzoTurn(String cliColor, String token) {
+
+        Platform.runLater(() -> {
+            GuiHelper.loadDialog(FXMLpaths.lorenzo,"Lorenzo Turn",new LorenzoDialog(token));
+        });
+
+    }
+
+    @Override
+    public void serverDisconnected() {
+        Platform.runLater(() -> {
+            try {
+                GuiHelper.setRoot(FXMLpaths.serverError,new ServerErrorController());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

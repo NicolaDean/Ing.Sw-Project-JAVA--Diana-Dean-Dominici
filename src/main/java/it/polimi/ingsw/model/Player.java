@@ -30,6 +30,7 @@ public class Player extends Observable<ServerController> implements Serializable
     private List<LeaderTradeCard> bonusProductions;
     private boolean inkwell;
     private ArrayList<ResourceType> bonusball;
+    private boolean[] papalToken;
     private boolean[] surpassedcells;
     private int lastadded = 0;
     private int controllerIndex=0;
@@ -51,6 +52,8 @@ public class Player extends Observable<ServerController> implements Serializable
         this.bonusProductions =null;
         bonusball = new ArrayList<>();
         connectionState = true;
+
+        papalToken = new boolean[3];
     }
 
 
@@ -456,5 +459,13 @@ public class Player extends Observable<ServerController> implements Serializable
         {
             prod.reset();
         }
+    }
+
+    public boolean[] getPapalToken() {
+        return this.papalToken;
+    }
+
+    public void setPapalToken(int index) {
+        this.papalToken[index] =true;
     }
 }
