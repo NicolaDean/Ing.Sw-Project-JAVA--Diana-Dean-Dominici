@@ -531,7 +531,6 @@ public class ServerController extends Observable<ServerApp> implements Serializa
 
             return setPendingCost(p.getDashboard());
         } catch (AckManager err) {
-            err.printStackTrace();
             return err.getAck();
         }
 
