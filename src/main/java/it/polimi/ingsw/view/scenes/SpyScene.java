@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.scenes.BasicSceneUpdater;
 import javafx.application.Platform;
+import javafx.scene.layout.Background;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class SpyScene extends DashboardScene {
 
     @Override
     public void init() {
+        //root.getStylesheets().add("/css/Spy.css");
         isaspy=true;
         disableCardClick();
         super.init();

@@ -819,8 +819,8 @@ public class DashboardScene extends BasicSceneUpdater {
         }
 
         AtomicInteger i= new AtomicInteger();
-        AtomicInteger j= new AtomicInteger();
-        j.set(0);
+
+
         leaderCards.setHgap(10);
         this.notifyObserver(controller -> {
         for(LeaderCard c : cards)
@@ -834,7 +834,7 @@ public class DashboardScene extends BasicSceneUpdater {
                 pane.getChildren().add(card);
 
                 leaderCards.getChildren().add(pane);
-                j.getAndIncrement();
+
             }
             if(c!=null)
             {
@@ -843,8 +843,20 @@ public class DashboardScene extends BasicSceneUpdater {
 
 
 
+
             leaderbin.setOnMouseClicked(event -> {
-                this.discardleader(j.get());
+
+                int abc=0;
+                int zzz = 0;
+                for (LeaderCard A: cards) {
+                    if(A!= null && c!=null) {
+                        if (A.getId() == c.getId())
+                            zzz = abc;
+
+                    }
+                    abc++;
+                }
+                this.discardleader(zzz);
             });
             leaderbin.setLayoutX(95);
             leaderbin.setVisible(false);
@@ -872,6 +884,7 @@ public class DashboardScene extends BasicSceneUpdater {
             this.addClickOnLeaderTradeCard(i.get(),c,card,controller);
             i.getAndIncrement();
             leaderCards.getChildren().add(pane);
+
         }
     }});}
 
