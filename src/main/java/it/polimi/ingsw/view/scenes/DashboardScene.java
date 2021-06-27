@@ -815,15 +815,43 @@ public class DashboardScene extends BasicSceneUpdater {
         }
 
         AtomicInteger i= new AtomicInteger();
+        AtomicInteger j= new AtomicInteger();
+        j.set(0);
         this.notifyObserver(controller -> {
         for(LeaderCard c : cards)
         {
             Pane pane = new Pane();
-
-            pane.resize(130,200);
+            pane.resize(150,200);
             pane.setPrefSize(130,200);
+            if(c==null)
+            {
+                ImageView card = loadImage("/images/cards/back.png" , 130, 200);
+                pane.getChildren().add(card);
+                leaderCards.getChildren().add(pane);
+                j.getAndIncrement();
+            }
+            if(c!=null)
+            {
+            ImageView leaderbin = loadImage("/images/other/bin2.png", 30, 30);
+            leaderbin.setId("production_card");
+
+            leaderbin.setOnMouseClicked(event -> {
+                this.discardleader(j.get());
+            });
+            leaderbin.setLayoutX(95);
+            leaderbin.setVisible(false);
+            if(!c.isActive()) {
+                leaderbin.setVisible(true);
+
+            }
+
+
             ImageView card = loadImage("/images/cards/leaders/"+c.getId()+".jpg",130,200);
             pane.getChildren().add(card);
+            pane.getChildren().add(leaderbin);
+
+
+
 
             addDepositPrintOnDepositCard(c,bonusstorage,pane);
             //CHECK IF LEADER IS TRADE AND IF ACTIVE THEN ADD CLICK LISTENER IF NEEDED
@@ -831,7 +859,22 @@ public class DashboardScene extends BasicSceneUpdater {
             i.getAndIncrement();
             leaderCards.getChildren().add(pane);
         }
-    });}
+    }});}
+
+    private void discardleader(int j) {
+        boolean out = GuiHelper.YesNoDialog("DISCARD", "Are you sure you want to discard this leader?");
+        if(out)
+        this.notifyObserver(controller -> {
+            controller.discardLeader(j);
+
+        });
+
+
+
+    }
+
+
+
 
 
     /**
@@ -864,6 +907,9 @@ public class DashboardScene extends BasicSceneUpdater {
                 }
 
                 CheckBox check = new CheckBox();
+
+                check.setAlignment(Pos.BOTTOM_RIGHT);
+
 
 
                 int index=1;
