@@ -324,7 +324,10 @@ public class GUI extends Observable<ClientController> implements View{
         System.out.println("PAYMENT ");
         PaymentDialog dialog = new PaymentDialog(resourceList);
         Platform.runLater(()->{
-            GuiHelper.loadDialog(FXMLpaths.payment,"Payment",dialog);
+            ButtonType response = null;
+            do {
+                response =  GuiHelper.loadDialog(FXMLpaths.payment,"Payment",dialog);
+            }while(!response.equals(ButtonType.OK));
         });
     }
 
