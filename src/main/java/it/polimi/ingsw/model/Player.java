@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
+import it.polimi.ingsw.controller.packets.PapalSpaceUpdate;
 import it.polimi.ingsw.controller.packets.UpdateCardBuyed;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.exceptions.*;
@@ -467,5 +468,7 @@ public class Player extends Observable<ServerController> implements Serializable
 
     public void setPapalToken(int index) {
         this.papalToken[index] =true;
+
+        this.notifyObserver(controller -> {controller.sendPapalSpaceUptate(this.papalToken,this.controllerIndex);});
     }
 }

@@ -15,7 +15,6 @@ public class ActivateLeader   extends Packet<ServerController> implements Packet
         this.pos = pos;
     }
 
-
     @Override
     public Packet analyze(ServerController controller) {
         return controller.activateLeader(this.pos,this.action,this.getClientIndex());

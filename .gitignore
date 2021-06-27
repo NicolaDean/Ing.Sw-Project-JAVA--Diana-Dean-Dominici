@@ -3,7 +3,8 @@
 *.iml
 *.iws
 .attach_pid*
-
+*.ser
+./*.ser
 # Mac
 .DS_Store
 
@@ -20,5 +21,4 @@ target/
 
 reconnectInfo.json
 
-*.ser
-./*.ser
+

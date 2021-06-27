@@ -105,7 +105,12 @@ public class LorenzoServerController extends ServerController{
      */
     @Override
     public void checkPapalSpaceActivation(){
-        super.checkPapalSpaceActivation();
+        boolean out = this.game.papalSpaceCheck();
+
+        if(out)
+        {
+            this.broadcastMessage(-1,new PapalScoreActiveted());
+        }
     }
 
 
