@@ -138,6 +138,9 @@ public class DashboardScene extends BasicSceneUpdater {
     int index = -1;
 
     boolean showLeaders, imHereAfterMarketExstraction;
+
+    boolean isaspy = false;
+
     List<Resource> resourceExtracted;
     List<Resource> resourceDiscarted;
     List<Resource> resourceInserted;
@@ -352,6 +355,7 @@ public class DashboardScene extends BasicSceneUpdater {
         this.swap5.setVisible(false);
         this.swapbutton.setVisible(false);
         this.swaptext.setVisible(false);
+
     }
 
     /**
@@ -837,6 +841,8 @@ public class DashboardScene extends BasicSceneUpdater {
             ImageView leaderbin = loadImage("/images/other/bin2.png", 30, 30);
             leaderbin.setId("production_card");
 
+
+
             leaderbin.setOnMouseClicked(event -> {
                 this.discardleader(j.get());
             });
@@ -846,11 +852,14 @@ public class DashboardScene extends BasicSceneUpdater {
                 leaderbin.setVisible(true);
 
             }
+                if(isaspy)
+                    leaderbin.setVisible(false);
 
 
-            ImageView card = loadImage("/images/cards/leaders/"+c.getId()+".jpg",130,200);
+
+                ImageView card = loadImage("/images/cards/leaders/"+c.getId()+".jpg",130,200);
             card.setSmooth(true);
-            if(!c.isActive())
+            if(!c.isActive() && !isaspy)
                 card.setId("production_card");
             pane.getChildren().add(card);
             pane.getChildren().add(leaderbin);
