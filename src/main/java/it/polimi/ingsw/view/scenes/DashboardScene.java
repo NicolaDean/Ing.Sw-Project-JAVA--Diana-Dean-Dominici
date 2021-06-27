@@ -817,6 +817,7 @@ public class DashboardScene extends BasicSceneUpdater {
         AtomicInteger i= new AtomicInteger();
         AtomicInteger j= new AtomicInteger();
         j.set(0);
+        leaderCards.setHgap(10);
         this.notifyObserver(controller -> {
         for(LeaderCard c : cards)
         {
@@ -827,6 +828,7 @@ public class DashboardScene extends BasicSceneUpdater {
             {
                 ImageView card = loadImage("/images/cards/back.png" , 130, 200);
                 pane.getChildren().add(card);
+
                 leaderCards.getChildren().add(pane);
                 j.getAndIncrement();
             }
@@ -847,6 +849,9 @@ public class DashboardScene extends BasicSceneUpdater {
 
 
             ImageView card = loadImage("/images/cards/leaders/"+c.getId()+".jpg",130,200);
+            card.setSmooth(true);
+            if(!c.isActive())
+                card.setId("production_card");
             pane.getChildren().add(card);
             pane.getChildren().add(leaderbin);
 
