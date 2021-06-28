@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>it.polimi.ingsw.controller</OriginalElement>
+  <nodes>
+    <node x="369.2044270833333" y="4704.5">it.polimi.ingsw.controller.LorenzoServerController</node>
+    <node x="702.3544270833333" y="282.0">it.polimi.ingsw.controller.pingManager.PongController</node>
+    <node x="61.83776041666664" y="0.0">it.polimi.ingsw.controller.interpreters.BasicJsonInterpreter</node>
+    <node x="762.0130208333333" y="0.0">it.polimi.ingsw.controller.pingManager.GenericPing</node>
+    <node x="453.35442708333335" y="282.0">it.polimi.ingsw.controller.AckExample</node>
+    <node x="675.8828125" y="4704.0">it.polimi.ingsw.controller.pingManager.PingController</node>
+    <node x="0.0" y="4693.0">it.polimi.ingsw.controller.interpreters.JsonInterpreterServer</node>
+    <node x="304.6875" y="473.0">it.polimi.ingsw.controller.ClientController</node>
+    <node x="175.35442708333335" y="292.5">it.polimi.ingsw.controller.interpreters.JsonInterpreterClient</node>
+    <node x="112.5546875" y="3015.0">it.polimi.ingsw.controller.ServerController</node>
+    <node x="279.55078125" y="2855.0">it.polimi.ingsw.controller.packets</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.polimi.ingsw.controller.packets" target="it.polimi.ingsw.controller.packets">
+      <point x="-31.666666666666657" y="15.0" />
+      <point x="323.88411458333337" y="2935.0" />
+      <point x="229.55078125" y="2935.0" />
+      <point x="229.55078125" y="2858.75" />
+      <point x="-76.0" y="-11.25" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.packets" target="it.polimi.ingsw.controller.ServerController">
+      <point x="31.666666666666742" y="15.0" />
+      <point x="387.21744791666674" y="2985.0" />
+      <point x="490.5546875" y="2985.0" />
+      <point x="162.0" y="-809.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.controller.pingManager.PongController">
+      <point x="77.25000000000006" y="-1161.0" />
+      <point x="639.4375" y="423.0" />
+      <point x="729.6044270833333" y="423.0" />
+      <point x="-81.75" y="60.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.pingManager.PingController" target="it.polimi.ingsw.controller.ServerController">
+      <point x="-80.25" y="-94.0" />
+      <point x="702.6328125" y="4663.0" />
+      <point x="501.35468749999995" y="4663.0" />
+      <point x="172.79999999999995" y="809.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.packets" target="it.polimi.ingsw.controller.ClientController">
+      <point x="12.666666666666629" y="-15.0" />
+      <point x="368.21744791666663" y="2815.0" />
+      <point x="390.52083333333337" y="2815.0" />
+      <point x="-171.66666666666666" y="1161.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.interpreters.JsonInterpreterClient" target="it.polimi.ingsw.controller.interpreters.BasicJsonInterpreter">
+      <point x="0.0" y="-50.0" />
+      <point x="304.35442708333335" y="262.0" />
+      <point x="287.58776041666664" y="262.0" />
+      <point x="96.75" y="116.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.interpreters.JsonInterpreterClient" target="it.polimi.ingsw.controller.ClientController">
+      <point x="51.60000000000002" y="50.0" />
+      <point x="355.95442708333337" y="433.0" />
+      <point x="433.43750000000006" y="433.0" />
+      <point x="-128.74999999999994" y="-1161.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.controller.interpreters.JsonInterpreterClient">
+      <point x="-231.74999999999994" y="-1161.0" />
+      <point x="330.43750000000006" y="453.0" />
+      <point x="252.75442708333333" y="453.0" />
+      <point x="-51.60000000000002" y="50.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.controller.AckExample">
+      <point x="-25.749999999999943" y="-1161.0" />
+      <point x="536.4375" y="453.0" />
+      <point x="510.60442708333335" y="453.0" />
+      <point x="-57.25" y="60.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ServerController" target="it.polimi.ingsw.controller.packets">
+      <point x="-162.0" y="-809.0" />
+      <point x="166.5546875" y="2985.0" />
+      <point x="349.21744791666663" y="2985.0" />
+      <point x="-6.333333333333371" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.pingManager.PingController" target="it.polimi.ingsw.controller.packets">
+      <point x="-26.75" y="-94.0" />
+      <point x="756.1328125" y="4653.0" />
+      <point x="644.4622395833334" y="4653.0" />
+      <point x="644.4622395833334" y="2955.0" />
+      <point x="425.21744791666674" y="2955.0" />
+      <point x="69.66666666666674" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.pingManager.PongController" target="it.polimi.ingsw.controller.pingManager.GenericPing">
+      <point x="54.5" y="-60.5" />
+      <point x="865.8544270833333" y="262.0" />
+      <point x="837.3880208333333" y="262.0" />
+      <point x="-25.125" y="116.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.LorenzoServerController" target="it.polimi.ingsw.controller.packets">
+      <point x="29.0" y="-93.5" />
+      <point x="514.2044270833333" y="4673.0" />
+      <point x="555.0546875" y="4673.0" />
+      <point x="555.0546875" y="2975.0" />
+      <point x="399.88411458333337" y="2975.0" />
+      <point x="44.33333333333337" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.LorenzoServerController" target="it.polimi.ingsw.controller.ServerController">
+      <point x="-87.0" y="-93.5" />
+      <point x="398.2044270833333" y="4673.0" />
+      <point x="328.5546875" y="4673.0" />
+      <point x="0.0" y="809.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.interpreters.BasicJsonInterpreter" target="it.polimi.ingsw.controller.packets">
+      <point x="32.25" y="116.0" />
+      <point x="223.08776041666664" y="262.0" />
+      <point x="132.08776041666664" y="262.0" />
+      <point x="132.08776041666664" y="2825.0" />
+      <point x="317.55078125" y="2825.0" />
+      <point x="-38.0" y="-15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.pingManager.PongController" target="it.polimi.ingsw.controller.ClientController">
+      <point x="81.75" y="60.5" />
+      <point x="893.1044270833333" y="453.0" />
+      <point x="793.9375" y="453.0" />
+      <point x="231.75000000000006" y="-1161.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.interpreters.JsonInterpreterServer" target="it.polimi.ingsw.controller.interpreters.BasicJsonInterpreter">
+      <point x="-103.125" y="-105.0" />
+      <point x="34.375" y="4673.0" />
+      <point x="36.22135416666663" y="4673.0" />
+      <point x="36.22135416666663" y="262.0" />
+      <point x="94.08776041666664" y="262.0" />
+      <point x="-96.75" y="116.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.ClientController" target="it.polimi.ingsw.controller.packets">
+      <point x="0.0" y="1161.0" />
+      <point x="562.1875" y="2825.0" />
+      <point x="393.55078125" y="2825.0" />
+      <point x="38.0" y="-15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.interpreters.JsonInterpreterServer" target="it.polimi.ingsw.controller.ServerController">
+      <point x="34.375" y="-105.0" />
+      <point x="171.875" y="4673.0" />
+      <point x="155.7546875" y="4673.0" />
+      <point x="-172.8" y="809.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.pingManager.PingController" target="it.polimi.ingsw.controller.pingManager.GenericPing">
+      <point x="26.75" y="-94.0" />
+      <point x="809.6328125" y="4663.0" />
+      <point x="930.8544270833333" y="4663.0" />
+      <point x="930.8544270833333" y="262.0" />
+      <point x="887.6380208333333" y="262.0" />
+      <point x="25.125" y="116.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.interpreters.JsonInterpreterServer" target="it.polimi.ingsw.controller.packets">
+      <point x="-34.375" y="-105.0" />
+      <point x="103.125" y="4673.0" />
+      <point x="102.0546875" y="4673.0" />
+      <point x="102.0546875" y="2975.0" />
+      <point x="336.55078125" y="2975.0" />
+      <point x="-19.0" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.controller.interpreters.JsonInterpreterClient" target="it.polimi.ingsw.controller.packets">
+      <point x="-103.20000000000005" y="50.0" />
+      <point x="201.1544270833333" y="453.0" />
+      <point x="227.9507812500001" y="453.0" />
+      <point x="227.9507812500001" y="2815.0" />
+      <point x="342.88411458333337" y="2815.0" />
+      <point x="-12.666666666666629" y="-15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.4170711809096471" x="968.8825389602723" y="4215.131937992078" />
+  <SelectedNodes>
+    <node>it.polimi.ingsw.controller.LorenzoServerController</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
