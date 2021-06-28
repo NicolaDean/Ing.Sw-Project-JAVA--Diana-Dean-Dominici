@@ -24,6 +24,13 @@ public class BasicProduction  extends Packet<ServerController> implements Packet
     }
     @Override
     public Packet analyze(ServerController controller) {
-        return controller.basicProduction(res1,res2,obt,this.getClientIndex());
+        Packet p = controller.basicProduction(res1,res2,obt,this.getClientIndex());
+
+        if(p.getType().equals("ACK"))
+        {
+            controller.sendMessage(new ProdFailed(),this.getClientIndex());
+            return p;
+        }
+        return p;
     }
 }

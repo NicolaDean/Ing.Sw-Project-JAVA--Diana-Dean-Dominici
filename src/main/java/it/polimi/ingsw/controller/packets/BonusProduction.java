@@ -20,6 +20,13 @@ public class BonusProduction   extends Packet<ServerController> implements Packe
 
     @Override
     public Packet analyze(ServerController controller) {
-        return controller.bonusProduction(this.position,this.obt,this.getClientIndex());
+        Packet p=  controller.bonusProduction(this.position,this.obt,this.getClientIndex());
+
+        if(p.getType().equals("ACK"))
+        {
+            controller.sendMessage(new  ProdFailed(),this.getClientIndex());
+            return p;
+        }
+        return p;
     }
 }

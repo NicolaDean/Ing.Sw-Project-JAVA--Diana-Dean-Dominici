@@ -965,4 +965,8 @@ public class ClientController implements Runnable{
     public void updatePapalToken(boolean[] papalToken, int index) {
         this.model.getPlayers()[index].setPapalSpace(papalToken);
     }
+
+    public void askProduction() {
+        this.view.askProduction();
+    }
 }
