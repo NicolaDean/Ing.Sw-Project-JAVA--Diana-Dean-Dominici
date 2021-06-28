@@ -48,12 +48,18 @@ public class CliColors extends PrintStream
         super(out,true);
     }
 
+    /**
+     * delete style
+     */
     public void reset()
     {
         if(!CurrentOS.IsWindows())
             this.print(CLI_RESET);
     }
 
+    /**
+     * print clear character
+     */
     public void clear(){
         if(!CurrentOS.IsWindows())
             this.println(CLEAR_FULL);
@@ -63,49 +69,81 @@ public class CliColors extends PrintStream
         this.flush();
     }
 
+    /**
+     * set bold
+     */
     public  void setBold()
     {
         if(!CurrentOS.IsWindows())
             this.print(BOLD);
     }
 
+    /**
+     * set underline
+     */
     public void setUnderline()
     {
         if(!CurrentOS.IsWindows())
             this.print(UNDERLINE);
     }
 
+    /**
+     * set reversed
+     */
     public void setReversed()
     {
         if(!CurrentOS.IsWindows())
             this.print(REVERSED);
     }
 
+    /**
+     * print a text with color and background
+     * @param backgroundStyle background color
+     */
     public void setBackgroundColor(String backgroundStyle)
     {
         if(!CurrentOS.IsWindows())
             this.print(backgroundStyle);
     }
 
+    /**
+     * print a text with color and background
+     * @param textColor        text color
+     */
     public void setTextColor(String textColor)
     {
         if(!CurrentOS.IsWindows())
             this.print(textColor);
     }
 
+    /**
+     * print a text with color and background
+     * @param content         string to print
+     * @param textColor        text color
+     */
     public void printlnColored(String content, String textColor)
     {
         this.printColored(content,textColor);
         System.out.println();
     }
 
-
+    /**
+     * print a text with color and background
+     * @param content         string to print
+     * @param textColor        text color
+     * @param backgroundStyle background color
+     */
     public void printlnColored(String content, String textColor, String backgroundStyle)
     {
         this.setBackgroundColor(backgroundStyle);
         this.printlnColored(content,textColor);
     }
 
+    /**
+     * print a text with color and background
+     * @param content         string to print
+     * @param textColor        text color
+     */
     public void printColored(String content, String textColor)
     {
         this.setTextColor(textColor);
@@ -113,17 +151,18 @@ public class CliColors extends PrintStream
         reset();
     }
 
+    /**
+     * print a text with color and background
+     * @param content         string to print
+     * @param textColor        text color
+     * @param backgroundStyle background color
+     */
     public void printColored(String content, String textColor, String backgroundStyle)
     {
         this.setBackgroundColor(backgroundStyle);
         this.printColored(content,textColor);
     }
 
-    public void newLine()
-    {
-        this.println("");
-        this.reset();
-    }
 
 
 }

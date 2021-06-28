@@ -1,5 +1,8 @@
 package it.polimi.ingsw.view.utils;
 
+/**
+ * contain all GUI fxml names file
+ */
 public class FXMLpaths {
 
     public static String home            = "home";
