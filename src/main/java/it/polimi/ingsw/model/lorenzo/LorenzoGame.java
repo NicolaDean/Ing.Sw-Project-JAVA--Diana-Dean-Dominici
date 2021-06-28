@@ -41,10 +41,6 @@ public class  LorenzoGame extends Game {
         return 0;
     }
 
-    public boolean isFull() {
-        return getNofplayers()==1;
-
-    }
 
     /**
      *
@@ -211,4 +207,10 @@ public class  LorenzoGame extends Game {
     {
         return this.isEnded;
     }
+
+    /**
+     * Discard resource of a player and increment other position
+     * @param qty resources discarter
+     */
+
 }

@@ -34,6 +34,10 @@ public class BasicSceneUpdater extends Observable<ClientController> {
         //GuiHelper.resize(1280,720);
     }
 
+    public void resetObserverAfterDialog() {
+        GuiHelper.setCurrentScene(this);
+        GuiHelper.getGui().notifyObserver(ctrl->ctrl.addModelObserver(this));
+    }
 
     public ButtonType loadDialog(String path,String title,BasicSceneUpdater controller)
     {

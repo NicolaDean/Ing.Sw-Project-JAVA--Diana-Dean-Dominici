@@ -348,10 +348,10 @@ public class ServerController extends Observable<ServerApp> implements Serializa
         List<Resource> resources = new ResourceList();
         if(DebugMessages.infiniteResourcesChest)
         {
-            resources.add(new Resource(COIN,2));
-            resources.add(new Resource(SERVANT,2));
-            resources.add(new Resource(SHIELD,2));
-            resources.add(new Resource(ROCK,2));
+            resources.add(new Resource(COIN,100));
+            resources.add(new Resource(SERVANT,100));
+            resources.add(new Resource(SHIELD,100));
+            resources.add(new Resource(ROCK,100));
 
             for (Player p : game.getPlayers()) {
                 p.chestInsertion(resources);
