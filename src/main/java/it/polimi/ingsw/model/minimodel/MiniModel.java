@@ -11,6 +11,9 @@ import it.polimi.ingsw.view.scenes.BasicSceneUpdater;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * Rappresent game state inside view
+ */
 public class MiniModel extends Observable<BasicSceneUpdater>
 {
 
@@ -29,6 +32,15 @@ public class MiniModel extends Observable<BasicSceneUpdater>
     {
         return this.players[persanalIndex];
     }
+
+    /**
+     * Called when a new card sis buyed from shop
+     * @param newCard       card to put inside shop
+     * @param x             col shop
+     * @param y             row shop
+     * @param dashboardPos   dash position to update
+     * @param index         player who buyed
+     */
     public void updateCard(ProductionCard newCard,int x,int y,int dashboardPos,int index)
     {
         players[index].setNewCard(dashboardPos,decks[x][y]);
@@ -38,6 +50,10 @@ public class MiniModel extends Observable<BasicSceneUpdater>
         this.notifyObserver(scene -> scene.updateDeckCard(newCard,x,y));
     }
 
+    /**
+     * Load decks from real model and convert to minimodel format
+     * @param decks decks from game model
+     */
     public void setDeck(Stack<ProductionCard>[][] decks)
     {
         //this.decks = new ProductionCard[ConstantValues.colDeck][ConstantValues.rowDeck];
@@ -60,6 +76,10 @@ public class MiniModel extends Observable<BasicSceneUpdater>
     }
 
 
+    /**
+     *
+     * @return true if model is loadel 100% (to avoid to do model access before its loaded)
+     */
     public boolean isLoaded()
     {
         return isLoaded;

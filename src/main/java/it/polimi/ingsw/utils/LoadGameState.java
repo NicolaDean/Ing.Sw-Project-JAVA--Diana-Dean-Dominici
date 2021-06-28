@@ -52,6 +52,11 @@ public class LoadGameState {
         //TODO
     }
 
+    /**
+     * save on file last created match id
+     * @param id             id of last created match
+     * @throws IOException   file dosnt exist
+     */
     public static void writeCurrentId(long id) throws IOException {
 
         Writer writer = new FileWriter(ConstantValues.currentIdFile);
@@ -61,6 +66,11 @@ public class LoadGameState {
         writer.close();
     }
 
+    /**
+     *
+     * @return id of last match created (loaded from file)
+     * @throws IOException file dosnt exist
+     */
     public static long loadCurrentId() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(ConstantValues.currentIdFile));
         Gson gson = new Gson();

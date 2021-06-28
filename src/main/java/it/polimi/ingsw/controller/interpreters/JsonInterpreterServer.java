@@ -23,20 +23,28 @@ public class JsonInterpreterServer extends BasicJsonInterpreter {
         return playerIndex;
     }
 
+    /**
+     *
+     * @return the controller associated with this interpreter
+     */
     public ServerController getController() {
         return controller;
     }
 
+    /**
+     * set player index
+     * @param playerIndex
+     */
     public void setPlayerIndex(int playerIndex) {
         this.playerIndex = playerIndex;
     }
 
-    //TODO: Nota: il controller contiene la view quindi al suo interno c'è tutto ciò che serve per eseguire il pacchetto
     /**
      *  Dispatch the packet based on the "type" field
      * @param type      type of packet
      * @param content   custom type content
      */
+    @Override
     public void dispatchPacket(String type,JsonObject content)
     {
         Packet<ServerController> packet = null;
@@ -55,45 +63,4 @@ public class JsonInterpreterServer extends BasicJsonInterpreter {
 
 }
 
-        /*switch (type)
-        {
-            case "ACK":
-                packet = BasicPacketFactory.getPacket(type,content, ACK.class);
-                break;
-            case "UpdatePosition":
-                packet = BasicPacketFactory.getPacket(type,content, UpdatePosition.class);
-                break;
-            case "Login":
-                packet = BasicPacketFactory.getPacket(type,content, Login.class);
-                break;
-            case "Production":
-                packet = BasicPacketFactory.getPacket(type,content,Production.class);
-                break;
-            case "BasicProduction":
-                packet = BasicPacketFactory.getPacket(type,content, BasicProduction.class);
-                break;
-            case "BonusProduction":
-                packet = BasicPacketFactory.getPacket(type,content, BonusProduction.class);
-                break;
-            case "MarketExtraction":
-                packet = BasicPacketFactory.getPacket(type,content,MarketExtraction.class);
-                break;
-            case "StorageMassExtraction":
-                packet = BasicPacketFactory.getPacket(type,content,StorageMassExtraction.class);
-                break;
-            case "SwapDeposit":
-                packet = BasicPacketFactory.getPacket(type,content,SwapDeposit.class);
-                break;
-            case "EndTurn":
-                packet = BasicPacketFactory.getPacket(type,content, EndTurn.class);
-                break;
-            case "SetTurnType":
-                packet = BasicPacketFactory.getPacket(type,content,SetTurnType.class);
-                break;
-            case "ActivateLeader":
-                packet = BasicPacketFactory.getPacket(type,content, ActivateLeader.class);
-                break;
-            default:
-                throw new IllegalStateException("Unknown  Packet type : " + type);
-        }*/
 

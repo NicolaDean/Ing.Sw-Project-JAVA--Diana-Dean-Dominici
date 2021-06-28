@@ -22,17 +22,26 @@ public  class DebugMessages {
     public static Logger log = new Logger();
 
 
+    /**
+     * give to all player infinite resources inside chest and storage
+     */
     public static void infiniteResources()
     {
         infiniteResourcesStorage = true;
         infiniteResourcesChest = true;
     }
 
+    /**
+     * infinite res inside chest
+     */
     public static void infiniteResourcesOnlyChest()
     {
         infiniteResourcesChest = true;
     }
 
+    /**
+     * can activate leaders with no prerequisite
+     */
     public  static void leaderFreeCheat()
     {
         leaderFree = true;

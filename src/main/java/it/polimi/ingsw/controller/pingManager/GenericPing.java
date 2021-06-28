@@ -5,6 +5,10 @@ import it.polimi.ingsw.view.observer.Observable;
 import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * generic ping or pong clas, contain common method between pong,ping
+ * @param <T>
+ */
 public abstract class GenericPing<T> extends Observable<T> implements Runnable{
 
     protected int index;

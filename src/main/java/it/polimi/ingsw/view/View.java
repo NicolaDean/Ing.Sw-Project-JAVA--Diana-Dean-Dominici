@@ -212,8 +212,14 @@ public interface View {
      */
     public void askEndTurn();
 
+    /**
+     * ask player if he want to move resources froma  deposit to another
+     */
     public void askMoveResources();
 
+    /**
+     * If connection fail
+     */
     public void connectionfailed();
 
 
