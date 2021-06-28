@@ -5,8 +5,10 @@ import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.market.balls.BasicBall;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.view.CLI;
+import it.polimi.ingsw.view.GuiHelper;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.utils.Logger;
+import it.polimi.ingsw.view.utils.ToastMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -37,6 +39,9 @@ public class MarketScene extends BasicSceneUpdater{
     @Override
     public void init() {
         super.init();
+
+        GuiHelper.setCurrentPage(ConstantValues.markTurn);
+
         this.balls = new ImageView[ConstantValues.marketRow][ConstantValues.marketCol];
         this.discartedBall = new ImageView();
         updateMarket();
@@ -82,7 +87,8 @@ public class MarketScene extends BasicSceneUpdater{
     @FXML
     public void exstractionRow(ActionEvent event){
         this.notifyObserver(clientController -> this.isMyTurn=clientController.isMyTurn());
-        if(isMyTurn) {
+        if(isMyTurn && GuiHelper.getCurrentPage()== -1) {
+            GuiHelper.setFixedTurnType();
             int pos = Integer.parseInt((String) ((Node) event.getSource()).getUserData());
             this.notifyObserver(clientController -> {
                 clientController.sendMarketExtraction(false, pos);
@@ -90,18 +96,31 @@ public class MarketScene extends BasicSceneUpdater{
             setExstracionButtonVisible(false);
             back.setVisible(false);
         }
+        else
+        {
+            ToastMessage t = new ToastMessage("You cant extract from Market",5000);
+            t.show();
+            this.resetObserverAfterDialog();
+        }
     }
 
     @FXML
     public void exstractionCol(ActionEvent event){
         this.notifyObserver(clientController -> this.isMyTurn=clientController.isMyTurn());
-        if(isMyTurn) {
+        if(isMyTurn && GuiHelper.getCurrentPage()==-1) {
+            GuiHelper.setFixedTurnType();
             int pos = Integer.parseInt((String) ((Node) event.getSource()).getUserData());
             this.notifyObserver(clientController -> {
                 clientController.sendMarketExtraction(true, pos);
             });
             setExstracionButtonVisible(false);
             back.setVisible(false);
+        }
+        else
+        {
+            ToastMessage t = new ToastMessage("You cant extract from Market",5000);
+            t.show();
+            this.resetObserverAfterDialog();
         }
     }
 

@@ -113,8 +113,8 @@ public class PaymentDialog extends BasicDialog{
                 removeChest(id);
                 break;
         }
+        System.out.println("Ha finito la transaz");
         ImageView a = new ImageView(img);
-
         destination.getChildren().add(resourcePane(new Resource(type,1),50));
         removeSourceQuantity(this.source,type);
 
@@ -123,10 +123,13 @@ public class PaymentDialog extends BasicDialog{
 
     public void removeChest(String id)
     {
+        int toRemove =-1;
+        int i =0;
         for(Node x: this.chest.getChildren())
         {
             Pane pane = (Pane) x;
-            if(x.getId().equals(id))
+            String tmp = x.getId();
+            if(tmp.equals(id))
             {
                 Label l = ((Label)(pane.getChildren().get(1)));
                 String q = l.getText().substring(2);
@@ -134,7 +137,39 @@ public class PaymentDialog extends BasicDialog{
 
                 if(qty==0)
                 {
-                    this.chest.getChildren().remove(x);
+                    toRemove = i;
+                }
+                else
+                {
+                    l.setText("Q:" + (qty));
+                }
+                i++;
+            }
+
+        }
+
+        try {
+            if(toRemove !=-1) this.chest.getChildren().remove(toRemove);
+        }catch (Exception exception)
+        {
+            exception.printStackTrace();
+        }
+
+    }
+    public void removeSourceQuantity(Pane root,ResourceType type)
+    {
+        for(Node x: root.getChildren())
+        {
+            Pane pane = (Pane) x;
+            if(x.getId().equals(type.toString()))
+            {
+                Label l = ((Label)(pane.getChildren().get(1)));
+                String q = l.getText().substring(2);
+                int qty = Integer.parseInt(q)-1;
+
+                if(qty==0)
+                {
+                    this.source.getChildren().remove(x);
                 }
                 else
                 {
@@ -143,9 +178,7 @@ public class PaymentDialog extends BasicDialog{
             }
 
         }
-    }
-    public void removeSourceQuantity(Pane root,ResourceType type)
-    {
+        /**
         int cont=0;
         for(int i=0;i<root.getChildren().size();i++)
         {
@@ -165,7 +198,7 @@ public class PaymentDialog extends BasicDialog{
                     l.setText("Q:" + (qty));
                 }
             }
-        }
+        }*/
     }
     /**
      * draw user storage and add drag event to resources
@@ -238,13 +271,6 @@ public class PaymentDialog extends BasicDialog{
         }
     }
 
-    /**
-     * draw bonus deposits of user
-     */
-    public void drawBonusDeposits()
-    {
-        //TODO
-    }
 
     /**
      * draw user resources contained inside chest and add drag event to resources

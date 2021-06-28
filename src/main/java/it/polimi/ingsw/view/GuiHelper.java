@@ -35,6 +35,8 @@ public class GuiHelper extends Application {
     private static BasicSceneUpdater    currentScene;
     private static boolean              buyType = false;
 
+    private static int                  currentPage     = -1;
+    private static boolean              fixedTurnType  = false;
     public GuiHelper()
     {
         guiHelper = this;
@@ -100,6 +102,58 @@ public class GuiHelper extends Application {
     public static boolean getBuyType()
     {
         return buyType;
+    }
+
+    /**
+     * set true a boolean that indicate that from now the turn type cant be setted
+     */
+    public static void setFixedTurnType()
+    {
+        if(currentPage!=-1)
+        {
+            System.out.println("Page setted to -> " + currentPage);
+            fixedTurnType = true;
+        }
+    }
+
+    /**
+     * reset boolean that dosnt allow to do certain action based on current turn type
+     */
+    public static void resetFixedTurnType()
+    {
+        currentPage   = -1;
+        fixedTurnType = false;
+    }
+
+    /**
+     *
+     * @return the integer corresponding to current turn type
+     */
+    public static int getCurrentPage()
+    {
+        if(fixedTurnType)
+        {
+            return currentPage;
+        }
+        else
+        {
+            return -1;
+        }
+
+    }
+
+    /**
+     * allow to set which turn type is active inside gui
+     * @param currPage active turn type
+     */
+    public static void setCurrentPage(int currPage)
+    {
+        if(!fixedTurnType)
+        {
+            System.out.println("change page -> " +  currPage);
+            currentPage = currPage;
+        }
+
     }
 
     public static void setCurrentScene(BasicSceneUpdater scene)

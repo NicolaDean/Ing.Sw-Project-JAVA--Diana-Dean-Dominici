@@ -136,7 +136,6 @@ public class ServerApp {
             //IF USER START SERVER WITH OTHER ATRIBUTE WILL OVERWRITE THE MATCH saved one by one starting with id 1
             if(arg.equals("-restart") || arg.equals("-r"))
             {
-               //TODO load server from files
                 //Carica da json l'id da cui partire a contare
                 try {
                     matchId = LoadGameState.loadCurrentId();

@@ -1,0 +1,70 @@
+.root{
+    -fx-background-image: url("../images/dashboard/dashboard-back.jpg");
+    -fx-background-size: cover;
+}
+
+#Button
+{
+
+
+}
+
+#production_card{
+    -fx-margin-left: 30px;
+    -fx-border-radius: 100 100 100 100;
+    -fx-background-radius: 100 100 100 100;
+}
+
+#production_card:hover
+{
+
+    -fx-effect: dropshadow(gaussian, #f2e0d6, 20, 0.3, 0, 0);
+    -fx-alignment: center;
+    -fx-cursor: hand;
+    -fx-fit-to-height: 220px;
+    -fx-fit-to-width : 150px;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+
+}
+
+#fancytext {
+
+    -fx-stroke: black;
+    -fx-stroke-width: 5;
+}
+
+.insert
+{
+    -fx-background-image: url("../images/other/toast.png");
+    -fx-background-size: cover;
+}
+
+.check-box .box {
+
+    -fx-background-color: white;
+    -fx-border-color:black;
+    -fx-border-width: 2px;
+    -fx-animated: 2px;
+
+
+}
+
+.check-box:selected .mark {
+
+    -fx-background-color: white;
+
+}
+
+.check-box:selected .box {
+
+    -fx-background-color: #29e367;
+}
+
+#fancytext2{
+
+    -fx-stroke: black;
+
+    -fx-font-family: Papyrus;
+
+}

@@ -891,8 +891,8 @@ public class ClientController implements Runnable{
         String nickname = this.model.getPersonalPlayer().getNickname();
         String ip       = this.server.getInetAddress().getHostAddress();
         int    port     = this.server.getPort();
-
-        Reconnect saveInfo = new Reconnect(nickname,ip,port,gameId);
+        boolean single = this.model.getPlayers().length == 1;
+        Reconnect saveInfo = new Reconnect(nickname,ip,port,gameId,single);
 
         Writer writer = null;
         try {
@@ -937,7 +937,11 @@ public class ClientController implements Runnable{
                 this.sendMessage(reconnect);
                 this.starttolisten();
 
-                this.view.askCommand();
+                if(!reconnect.isSingle())
+                {
+                    this.view.askCommand();
+                }
+
 
             } catch (IOException e) {
                 e.printStackTrace();

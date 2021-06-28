@@ -40,6 +40,12 @@ public class ToastMessage {
         this.expiringTime = time;
     }
 
+    public ToastMessage(String msg,int time)
+    {
+        this.msg = msg;
+        this.expiringTime = time;
+    }
+
     /**
      * Create a message stage that disappear after expiring time
      */

@@ -8,6 +8,7 @@ import java.util.List;
 
 public class PapalSpace  implements Serializable {
 
+    private int index;
     private int initialPosition;
     private int finalPosition;
     private int score;
@@ -42,6 +43,8 @@ public class PapalSpace  implements Serializable {
     {
         if(p.getPosition() >= this.initialPosition)
         {
+            p.increaseScore(this.score);
+            p.setPapalToken(index);
             return true;
         }
         else
@@ -98,15 +101,11 @@ public class PapalSpace  implements Serializable {
             isAlreadyActivate=true;
             for(Player p:players)
             {
-                if(this.checkPlayerInsidePapalSpace(p))
-                {
-                    p.increaseScore(this.score);
-                }
+                this.checkPlayerInsidePapalSpace(p);
             }
         }
 
         return out;
-
     }
 
     /**
@@ -131,5 +130,13 @@ public class PapalSpace  implements Serializable {
         }
 
         return out;
+    }
+
+    /**
+     *
+     * @param i relative position inside the map
+     */
+    public void setIndex(int i) {
+        this.index = i;
     }
 }

@@ -105,8 +105,26 @@ public class LorenzoServerController extends ServerController{
      */
     @Override
     public void checkPapalSpaceActivation(){
-        super.checkPapalSpaceActivation();
+        boolean out = this.game.papalSpaceCheck();
+
+        if(out)
+        {
+            this.broadcastMessage(-1,new PapalScoreActiveted());
+        }
     }
+
+
+    /**
+     * if users try to reconnect to a paused game thats already loaded/online this function change only the boolean state
+     * Else if try to reconnect to an offline match is called exitPause() (that will do other operations)
+     */
+    @Override
+    public void exitPauseOnline()
+    {
+        nextTurn();
+        paused = false;
+    }
+
 
 
 }

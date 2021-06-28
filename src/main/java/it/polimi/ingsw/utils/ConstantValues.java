@@ -38,4 +38,11 @@ public class ConstantValues {
     public static String                    tokens                  ="/images/tokens/";
     public static String                    backCard                ="/images/cards/back.png";
     public static String                    papaltokens             ="/images/papalTokens/";
+
+
+    public static int                       buyTurn                 = 1;
+    public static int                       markTurn                = 2;
+    public static int                       prodTurn                = 3;
+    public static int                       skipTurn                = 4;
+
 }

@@ -13,6 +13,7 @@ import it.polimi.ingsw.model.dashboard.Deposit;
 import it.polimi.ingsw.model.minimodel.MiniPlayer;
 import it.polimi.ingsw.model.resources.Resource;
 import it.polimi.ingsw.model.resources.ResourceList;
+import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.observer.Observable;
 import it.polimi.ingsw.view.scenes.*;
@@ -32,6 +33,9 @@ public class GUI extends Observable<ClientController> implements View{
     private BasicBall       miniMarketDiscardedResouce;
     private boolean         isMarketLoaded;
     boolean                 isMyTurn; //used just for endTurn button and market exstraction
+
+    int currentPage;
+    int turnType;
 
     boolean firstTurn = true;
     Thread gui;
@@ -194,6 +198,8 @@ public class GUI extends Observable<ClientController> implements View{
 
         });
 
+        GuiHelper.setBuyType(true);
+        currentPage = ConstantValues.buyTurn;
     }
 
     /**
@@ -522,6 +528,7 @@ public class GUI extends Observable<ClientController> implements View{
                     return;
                 }
                 if (GuiHelper.YesNoDialog("End TURN", "Do you want to end turn?")) {
+                    GuiHelper.resetFixedTurnType();
                     this.notifyObserver(ClientController::sendDashReset);
                     this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
                     this.notifyObserver(clientController -> clientController.setMyTurn(false));
@@ -530,7 +537,9 @@ public class GUI extends Observable<ClientController> implements View{
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }else{}
+                }else{
+                    GuiHelper.setFixedTurnType();
+                }
                 try {
                     GuiHelper.setRoot(FXMLpaths.dashboard,new DashboardScene());
                 } catch (IOException e) {

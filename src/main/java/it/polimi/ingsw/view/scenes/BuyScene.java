@@ -8,6 +8,7 @@ import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GuiHelper;
 import it.polimi.ingsw.view.utils.FXMLpaths;
 import it.polimi.ingsw.view.utils.Logger;
+import it.polimi.ingsw.view.utils.ToastMessage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -58,6 +59,7 @@ public class BuyScene extends BasicSceneUpdater{
     {
         super.init();
 
+        GuiHelper.setCurrentPage(ConstantValues.buyTurn);
         this.col = -1;
         this.row = -1;
 
@@ -171,7 +173,22 @@ public class BuyScene extends BasicSceneUpdater{
         selectedCard.setImage(currCard);
     }
 
+    @Override
+    public void reciveMessage(String msg) {
+        super.reciveMessage(msg);
+        ToastMessage t = new ToastMessage(msg,this.root,5000);
+        t.show();
+        this.resetObserverAfterDialog();
+    }
+
+
     public void buyButton(MouseEvent mouseEvent) {
+
+        if(GuiHelper.getCurrentPage()!=-1 && GuiHelper.getCurrentPage()!=ConstantValues.buyTurn)
+        {
+          reciveMessage("You cant buy this turn");
+          return;
+        }
 
         if(this.row == -1 && this.col==-1)
         {
@@ -183,6 +200,7 @@ public class BuyScene extends BasicSceneUpdater{
 
         if(result.equals(ButtonType.OK) && dialog.getPos()!= -1)
         {
+            GuiHelper.setCurrentPage(ConstantValues.buyTurn);
             GuiHelper.setBuyType(true);
             this.pos = dialog.getPos();
             click.setText((this.col + 1) + " - " + (this.row + 1) + "-> in pos: "+ dialog.pos);

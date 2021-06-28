@@ -36,6 +36,7 @@ public class MapFactory {
 
         List<PapalSpace> out = new ArrayList<>();
 
+        int i=0;
         for(JsonElement o:array)
         {
             JsonObject papalSpace = o.getAsJsonObject();
@@ -44,7 +45,10 @@ public class MapFactory {
             int finish = papalSpace.get("finalPosition").getAsInt();
             int score  = papalSpace.get("score").getAsInt();
 
-            out.add(new PapalSpace(start,finish,score));
+            PapalSpace papal = new PapalSpace(start,finish,score);
+            papal.setIndex(i);
+            out.add(papal);
+            i++;
 
         }
 

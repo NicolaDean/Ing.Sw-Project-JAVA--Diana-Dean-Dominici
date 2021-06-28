@@ -246,6 +246,13 @@ public class DashboardScene extends BasicSceneUpdater {
 
         basicProd.setOnMouseClicked(event->{
             if(!cardDisabled) {
+                GuiHelper.setCurrentPage(ConstantValues.prodTurn);
+                if(GuiHelper.getCurrentPage()!=-1 && GuiHelper.getCurrentPage()!=ConstantValues.prodTurn)
+                {
+
+                    reciveMessage("You cant produce now");
+                    return;
+                }
                 GuiHelper.getGui().askBasicProduction();
             }
         });
@@ -576,8 +583,14 @@ public class DashboardScene extends BasicSceneUpdater {
                 if(!cardDisabled)
                 {
                     immage.setOnMouseClicked(event -> {
-                        System.out.println("bella ziii");
+                        GuiHelper.setCurrentPage(ConstantValues.prodTurn);
 
+                        if(GuiHelper.getCurrentPage()!=-1 && GuiHelper.getCurrentPage()!=ConstantValues.prodTurn)
+                        {
+
+                            reciveMessage("You cant produce now");
+                            return;
+                        }
                         boolean res = GuiHelper.YesNoDialog("Production Card Activation", "Do you want to produce with this card?");
                         this.resetObserverAfterDialog();
 
@@ -585,6 +598,8 @@ public class DashboardScene extends BasicSceneUpdater {
                             GuiHelper.setBuyType(false);
                             this.notifyObserver(ctrl -> ctrl.sendProduction(finalJ - 1));
                         }
+
+
                     });
                 }
 
@@ -819,8 +834,8 @@ public class DashboardScene extends BasicSceneUpdater {
         }
 
         AtomicInteger i= new AtomicInteger();
-        AtomicInteger j= new AtomicInteger();
-        j.set(0);
+
+
         leaderCards.setHgap(10);
         this.notifyObserver(controller -> {
         for(LeaderCard c : cards)
@@ -834,7 +849,7 @@ public class DashboardScene extends BasicSceneUpdater {
                 pane.getChildren().add(card);
 
                 leaderCards.getChildren().add(pane);
-                j.getAndIncrement();
+
             }
             if(c!=null)
             {
@@ -843,8 +858,20 @@ public class DashboardScene extends BasicSceneUpdater {
 
 
 
+
             leaderbin.setOnMouseClicked(event -> {
-                this.discardleader(j.get());
+
+                int abc=0;
+                int zzz = 0;
+                for (LeaderCard A: cards) {
+                    if(A!= null && c!=null) {
+                        if (A.getId() == c.getId())
+                            zzz = abc;
+
+                    }
+                    abc++;
+                }
+                this.discardleader(zzz);
             });
             leaderbin.setLayoutX(95);
             leaderbin.setVisible(false);
@@ -872,6 +899,7 @@ public class DashboardScene extends BasicSceneUpdater {
             this.addClickOnLeaderTradeCard(i.get(),c,card,controller);
             i.getAndIncrement();
             leaderCards.getChildren().add(pane);
+
         }
     }});}
 
@@ -973,24 +1001,35 @@ public class DashboardScene extends BasicSceneUpdater {
         if(!cardDisabled) {
             image.setOnMouseClicked(event -> {
 
+
                 if (card.isActive() && card.getCliRappresentation().equals("TRADE")) {
+
                     DebugMessages.printError("TRADEE");
+                    if(GuiHelper.getCurrentPage()!=-1 && GuiHelper.getCurrentPage()!=ConstantValues.prodTurn)
+                    {
+
+                        reciveMessage("You cant produce now");
+                        return;
+                    }
+
                     boolean out = GuiHelper.YesNoDialog("TRADE BONUS", "Do you want to use trade bonus on this card?");
                     this.resetObserverAfterDialog();
                     if (out) {
+                        GuiHelper.setCurrentPage(ConstantValues.prodTurn);
                         List<Resource> result = GuiHelper.getGui().askWhiteBalls(ResourceType.values(), 1);
 
                         ResourceType type = null;
                         for (Resource r : result) {
                             if (r.getQuantity() == 1) type = r.getType();
                         }
-                        //TODO save somewhere the activation order of trade bonus
                         ResourceType finalType = type;
                         this.notifyObserver(ctrl -> ctrl.sendBonusProduction(card.getActivationOrder(), finalType));
                     }
 
                     return;
                 }
+
+                if(card.isActive()) return;
                 boolean out = GuiHelper.YesNoDialog("Leader actviation", "Do you want to activate this leader?");
                 this.resetObserverAfterDialog();
                 if (out) controller.activateLeader(i);
@@ -1001,10 +1040,7 @@ public class DashboardScene extends BasicSceneUpdater {
 
 
 
-    private void resetObserverAfterDialog() {
-        GuiHelper.setCurrentScene(this);
-        GuiHelper.getGui().notifyObserver(ctrl->ctrl.addModelObserver(this));
-    }
+
 
     @Override
     public void reciveMessage(String msg) {
