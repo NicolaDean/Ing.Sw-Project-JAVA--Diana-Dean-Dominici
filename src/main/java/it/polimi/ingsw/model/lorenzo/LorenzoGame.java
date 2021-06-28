@@ -41,10 +41,6 @@ public class  LorenzoGame extends Game {
         return 0;
     }
 
-    public boolean isFull() {
-        return getNofplayers()==1;
-
-    }
 
     /**
      *
@@ -78,17 +74,20 @@ public class  LorenzoGame extends Game {
     /**
      * //Check if someone surpass a papal space and in case add the score of papalToken to the players
      */
-    public void papalSpaceCheck() {
+    public boolean papalSpaceCheck() {
+        boolean out = false;
         if(getCurrentPapalSpaceToReach() < getPapalSpaces().size())
         {
             //Check if someone surpass a papal space and in case add the score of papalToken to the players
-            boolean out = getPapalSpaces().get(getCurrentPapalSpaceToReach()).checkPapalSpaceActivation(getPlayers(),lorenzo);
+            out = getPapalSpaces().get(getCurrentPapalSpaceToReach()).checkPapalSpaceActivation(getPlayers(),lorenzo);
             while(out && getCurrentPapalSpaceToReach()+1 < getPapalSpaces().size()){
                 setCurrentPapalSpaceToReach(getCurrentPapalSpaceToReach()+1);
                 out = getPapalSpaces().get(getCurrentPapalSpaceToReach()).checkPapalSpaceActivation(getPlayers(),lorenzo);
             }
 
         }
+
+        return out;
     }
 
 
@@ -208,4 +207,10 @@ public class  LorenzoGame extends Game {
     {
         return this.isEnded;
     }
+
+    /**
+     * Discard resource of a player and increment other position
+     * @param qty resources discarter
+     */
+
 }

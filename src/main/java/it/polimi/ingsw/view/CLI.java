@@ -1030,16 +1030,6 @@ public class CLI extends Observable<ClientController> implements View {
     public void askTurnType() {
 
 
-
-        /*//Wait help commands to be completed (eg. if user was already in a input blocking operation as swap,spy,activateleader)
-        while(!getHelpStatus())
-        {
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException interruptedException) {
-                interruptedException.printStackTrace();
-            }
-        }*/
         setHelpKill(false);
         this.input.restart();
         DebugMessages.printError("Input resetted");
@@ -1242,13 +1232,12 @@ public class CLI extends Observable<ClientController> implements View {
         terminal.printGoodMessages("Your last action has been successfully completed");
         //terminal.printRequest("Do you want to end turn? (yes or no)");
         String in = null;
-        if(turnSelected == 2) {
+        if(turnSelected == ConstantValues.markTurn) {
             this.terminal.printWarning("you completed the action and the turn automatically ended.");
             in = "y";
             actionDone = false;
         }
-        else
-            in = this.customRead("\nDo you want to end the turn? (yes or no)");
+        else in = this.customRead("\nDo you want to end the turn? (yes or no)");
         in = in.toLowerCase(Locale.ROOT);
         if(in.equals("yes") || in.equals("y")) {
             actionDone = false;
@@ -1260,20 +1249,20 @@ public class CLI extends Observable<ClientController> implements View {
         else
         {
 
-            if(turnSelected == 1)
+            if(turnSelected == ConstantValues.buyTurn)
             {
                 this.askBuy();
             }
-            else if(turnSelected == 2)
+            else if(turnSelected == ConstantValues.markTurn)
             {
                 actionDone = false;
                 this.notifyObserver(controller -> controller.sendMessage(new EndTurn()));
             }
-            else if(turnSelected == 3)
+            else if(turnSelected == ConstantValues.prodTurn)
             {
                 this.askProduction();
             }
-            else if(turnSelected == 4)
+            else if(turnSelected == ConstantValues.skipTurn)
             {
                 this.askEndTurn();
             }
@@ -1291,9 +1280,6 @@ public class CLI extends Observable<ClientController> implements View {
      *  the thread is "aborted" when turn notify is recived
      */
     public void waitturn(){
-        //terminal.printSeparator();
-        //terminal.printGoodMessages("sto aspettando il mio turno");
-        //terminal.printSeparator();
         waiting = true;
         try {
             TimeUnit.MILLISECONDS.sleep(110);
@@ -1317,20 +1303,20 @@ public class CLI extends Observable<ClientController> implements View {
     {
             switch (cmd) {
                 case "1":
-                    turnSelected =1;
+                    turnSelected = ConstantValues.buyTurn;
                     this.askBuy();
                     break;
                 case "market":
                 case "2":
-                    turnSelected =2;
+                    turnSelected = ConstantValues.markTurn;
                     this.askMarketExtraction();
                     break;
                 case "3":
-                    turnSelected =3;
+                    turnSelected = ConstantValues.prodTurn;
                     this.askProduction();
                     break;
                 case "4":
-                    turnSelected =4;
+                    turnSelected = ConstantValues.skipTurn;
                     this.askEndTurn();
                     break;
                 default:

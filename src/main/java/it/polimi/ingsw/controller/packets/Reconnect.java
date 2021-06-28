@@ -10,14 +10,15 @@ public class Reconnect extends Packet<ServerController> implements PacketManager
        long    id;
        String  ip;
        int     port;
-
-    public Reconnect(String nickname,String ip,int port,long id)
+       boolean single;
+    public Reconnect(String nickname,String ip,int port,long id,boolean single)
     {
         super("Reconnect");
         this.nickname   = nickname;
         this.ip         = ip;
         this.port       = port;
         this.id         = id;
+        this.single     = single;
 
         //this.playerIndex = playerIndex;
     }
@@ -45,5 +46,9 @@ public class Reconnect extends Packet<ServerController> implements PacketManager
 
     public long getId() {
         return this.id;
+    }
+
+    public boolean isSingle() {
+        return this.single;
     }
 }

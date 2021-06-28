@@ -219,10 +219,16 @@ public class Dashboard  implements Serializable {
         try
         {
             boolean out = card.produce(p);
-            this.pendingCost.addAll(card.getRawMaterials());
+            if(out)
+            {
+                this.pendingCost.addAll(card.getRawMaterials());
+            }
 
         } catch (NotEnoughResource notEnoughResource) {
             throw new NotEnoughResource("");
+        }catch (AlreadyUsed alreadyUsed)
+        {
+            throw new AlreadyUsed("");
         }
 
     }
@@ -242,11 +248,6 @@ public class Dashboard  implements Serializable {
         //this.chest = ResourceOperator.remove(this.chest,res);
     }
 
-    public void applyChestCosts(List<Resource> res)
-    {
-        this.pendingCost.removeAll(res);
-        this.chest.removeAll(res);
-    }
 
     /**
      * apply a cost on the storage ( and check if discount is available)

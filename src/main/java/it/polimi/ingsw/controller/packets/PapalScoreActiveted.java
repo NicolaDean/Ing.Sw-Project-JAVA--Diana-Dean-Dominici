@@ -8,24 +8,15 @@ import java.util.List;
 
 public class PapalScoreActiveted extends Packet<ClientController> implements PacketManager<ClientController>{
 
-    int player;
-
-    public PapalScoreActiveted(int playerIndex)
+    public PapalScoreActiveted()
     {
         super("PapalScoreActiveted");
-        this.player            = playerIndex;
     }
 
     @Override
     public Packet analyze(ClientController controller)
     {
-        List<PapalSpace> papalSpaces= MapFactory.loadPapalSpacesFromJsonFile();
-
-        controller.showMessage(controller.getMiniModel().getPlayers()[player].getNickname() + " Reach a papal space");
-        for(PapalSpace ps: papalSpaces)
-            if((controller.getMiniModel().getPlayers()[player].getPosition() >= ps.getInitialPosition()) && (controller.getMiniModel().getPlayers()[player].getPosition() <= ps.getFinalPosition()) )
-                DebugMessages.printWarning("you got "+ps.getScore()+" VP for being in the papal space");
-
+        controller.showMessage("Papal space activated!!!");
         return null;
     }
 }

@@ -384,35 +384,14 @@ public class ServerController extends Observable<ServerApp> implements Serializa
     }
 
     /**
-     * check papalspace position and ad point
+     * check papalspace position and send users update relatives to their papal spaces
      */
     public void checkPapalSpaceActivation(){
-        int nOfplayer= this.game.getPlayers().size();
-        int[] tmp_score = new int[nOfplayer];
-        for (int i = 0; i < nOfplayer; i++) { //save score to check if someone activate a papal cell
-                tmp_score[i]=this.game.getPlayers().get(i).getScore();
-        }
+        boolean out = this.game.papalSpaceCheck();  //increment point
 
-        this.game.papalSpaceCheck();  //increment point
-
-        int index=0;
-        boolean out=false;
-        for (int i = 0; i < nOfplayer; i++) { //check if someone have activated papal space
-            Player p = this.game.getPlayers().get(i);
-            if(tmp_score[i]!=p.getScore()){
-                p.setPapalToken(this.game.getCurrentPapalSpaceToReach()-1);
-                this.broadcastMessage(-1,new PapalSpaceUpdate(p.getPapalToken(),i));
-                out=true;
-            }
-        }
-
-        for (int j = 0; j < nOfplayer-1; j++) { //found player that activate papal cell
-            if(this.game.getPlayers().get(j).getPosition()>this.game.getPlayers().get(j+1).getPosition())
-                index=j;
-        }
-
-        if(out){
-            this.broadcastMessage(-1, new PapalScoreActiveted(index));
+        if(out)
+        {
+            this.broadcastMessage(-1,new PapalScoreActiveted());
         }
     }
 
@@ -531,7 +510,7 @@ public class ServerController extends Observable<ServerApp> implements Serializa
 
             return setPendingCost(p.getDashboard());
         } catch (AckManager err) {
-            err.printStackTrace();
+            //err.printStackTrace();
             return err.getAck();
         }
 
@@ -1156,19 +1135,6 @@ public class ServerController extends Observable<ServerApp> implements Serializa
     }
 
     /**
-     *
-     * @return true if fake controller is setted to reconnect state by reconnect packet inside waiting room
-     */
-    public boolean isReconnected()
-    {
-        return this.isReconnected;
-    }
-    public Packet getReconnected()
-    {
-        return this.reconnected;
-    }
-
-    /**
      * if waiting room recive a reconnect packet it affect the fake controller by setting true this flag
      */
     public void setReconnect(String nickname,long id)
@@ -1179,7 +1145,8 @@ public class ServerController extends Observable<ServerApp> implements Serializa
     }
 
     /**
-     * exit pause state and lauch turn
+     * when user reconnect to an offline match the server will load from file
+     * if this happen this function allow to change Paused stato to false and search an onlyne player
      */
     public void exitPause() {
 
@@ -1192,6 +1159,10 @@ public class ServerController extends Observable<ServerApp> implements Serializa
         nextTurn();
     }
 
+    /**
+     * if users try to reconnect to a paused game thats already loaded/online this function change only the boolean state
+     * Else if try to reconnect to an offline match is called exitPause() (that will do other operations)
+     */
     public void exitPauseOnline()
     {
         paused = false;
@@ -1207,5 +1178,12 @@ public class ServerController extends Observable<ServerApp> implements Serializa
         paused = true;
     }
 
-
+    /**
+     *
+     * @param papalToken        boolean papal token list
+     * @param controllerIndex   player controller index
+     */
+    public void sendPapalSpaceUptate(boolean[] papalToken, int controllerIndex) {
+        this.broadcastMessage(-1,new PapalSpaceUpdate(papalToken,this.clients.get(controllerIndex).getRealPlayerIndex()));
+    }
 }

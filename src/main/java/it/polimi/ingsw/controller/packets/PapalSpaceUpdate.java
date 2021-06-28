@@ -15,6 +15,7 @@ public class PapalSpaceUpdate  extends Packet<ClientController> implements Packe
     public PapalSpaceUpdate(boolean[] papalToken,int index) {
         super("PapalSpaceUpdate");
         this.papalToken = papalToken;
+        this.index = index;
     }
 
     @Override

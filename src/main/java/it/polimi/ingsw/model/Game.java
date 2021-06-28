@@ -42,6 +42,7 @@ public class Game implements Serializable {
         this.currentPlayer   =0;
         this.players = new ArrayList<>();
         this.currentPapalSpaceToReach = 0;
+
     }
 
 
@@ -201,19 +202,21 @@ public class Game implements Serializable {
     /**
      * //Check if someone surpass a papal space and in case add the score of papalToken to the players
      */
-    public void papalSpaceCheck()
+    public boolean papalSpaceCheck()
     {
+        boolean out = false;
         //PAPAL SPACE
         if(this.currentPapalSpaceToReach < this.papalSpaces.size())
         {
-
-            boolean out = this.papalSpaces.get(this.currentPapalSpaceToReach).checkPapalSpaceActivation(this.players);
-            while(out == true && this.currentPapalSpaceToReach+1 < this.papalSpaces.size()){
+            out =  this.papalSpaces.get(this.currentPapalSpaceToReach).checkPapalSpaceActivation(this.players);
+            while(out && this.currentPapalSpaceToReach+1 < this.papalSpaces.size()){
                 this.currentPapalSpaceToReach++;
                 out = this.papalSpaces.get(this.currentPapalSpaceToReach).checkPapalSpaceActivation(this.players);
             }
 
         }
+
+        return out;
     }
 
     /**
