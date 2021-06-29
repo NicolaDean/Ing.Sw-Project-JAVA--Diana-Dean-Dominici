@@ -19,8 +19,17 @@ public class Production extends Packet<ServerController> implements PacketManage
 
     @Override
     public Packet analyze(ServerController controller) {
+        Packet p = controller.production(this.position,this.getClientIndex());
 
-        return controller.production(this.position,this.getClientIndex());
+
+        if(p.getType().equals("ACK"))
+        {
+            controller.sendMessage(new ProdFailed(),this.getClientIndex());
+            return p;
+        }
+        return p;
+
+
     }
 
 }

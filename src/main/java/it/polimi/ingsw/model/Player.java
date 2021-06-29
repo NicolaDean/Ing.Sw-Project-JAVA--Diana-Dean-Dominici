@@ -462,10 +462,18 @@ public class Player extends Observable<ServerController> implements Serializable
         }
     }
 
+    /**
+     *
+     * @return list of papal tokens owned by player (true if activated)
+     */
     public boolean[] getPapalToken() {
         return this.papalToken;
     }
 
+    /**
+     * Add papal token in position index tto this player
+     * @param index
+     */
     public void setPapalToken(int index) {
         this.papalToken[index] =true;
 

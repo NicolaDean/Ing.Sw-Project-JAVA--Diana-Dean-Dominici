@@ -15,6 +15,9 @@ import javafx.application.Platform;
 
 import java.util.List;
 
+/**
+ * rappresent player state inside view
+ */
 public class MiniPlayer extends Observable<BasicSceneUpdater> {
 
     private int index;

@@ -8,8 +8,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * generate random nickames
+ */
 public class RandomNicks {
 
+    /**
+     *
+     * @return random nickname from json files,generate also a random number to avoid collisions
+     */
     static public String getRandomNickname()
     {
         List<String> errors;

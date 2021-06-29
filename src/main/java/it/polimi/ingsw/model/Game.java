@@ -46,27 +46,49 @@ public class Game implements Serializable {
     }
 
 
-
+    /**
+     *
+     * @param x col
+     * @param y row
+     * @return get a specific production card from shop
+     */
     public ProductionCard drawProductionCard(int x, int y)
     {
         return this.getProductionDecks()[x][y].peek();
     }
 
+    /**
+     *
+     * @return index of current player inside players list
+     */
     public int getCurrentPlayerIndex()
     {
         return this.currentPlayer;
     }
 
+    /**
+     *
+     * @return player at "currentIndex" position
+     */
     public Player getCurrentPlayer()
     {
         return this.players.get(this.currentPlayer);
     }
 
+    /**
+     *
+     * @return the market
+     */
     public Market getMarket()
     {
         return this.market;
     }
 
+    /**
+     *
+     * @param nickname nickname to check
+     * @return true if already exist
+     */
     public boolean checkNickname(String nickname)
     {
         for(Player p : this.players)
@@ -76,23 +98,34 @@ public class Game implements Serializable {
         return false;
     }
 
+    /**
+     *
+     * @return true if match is ended
+     */
     public boolean isEnded()
     {
         return isEnded;
     }
+
+    /**
+     *
+     * @return true if match is started
+     */
     public boolean isGamestarted()
     {
         return gamestarted;
     }
+
+    /**
+     *
+     * @param nickname nickname of player who want to enter
+     * @return true if thers no space of nickname already taken
+     */
     public boolean isFull(String nickname) {
         return (this.nofplayers==4 || gamestarted || checkNickname(nickname));
 
     }
 
-    public void removePlayer(int index)
-    {
-        this.players.remove(index);
-    }
 
     /**
      * function to add a new player to the game
@@ -124,11 +157,11 @@ public class Game implements Serializable {
         return players.get(index);
     }
 
-    public int getRealPlayerHandlerIndex()
-    {
-        return this.getCurrentPlayer().getControllerIndex();
-    }
-
+    /**
+     * start the game and shuffle players
+     * @return a list of integer corresponding to the new order of players after initial shyffle
+     * @throws NotEnoughPlayers if thers only one playr
+     */
     public int[] startGame() throws NotEnoughPlayers
     {
 
@@ -172,6 +205,9 @@ public class Game implements Serializable {
     }
 
 
+    /**
+     * add positions bonus to player as from rules
+     */
     public void setFirstTurnAdvantage()
     {
         players.get(0).setInkwell();
@@ -284,6 +320,11 @@ public class Game implements Serializable {
 
         return players.get(currentPlayer);
     }
+
+    /**
+     *
+     * @return players list
+     */
     public List<Player> getPlayers() {
         return players;
     }
@@ -357,30 +398,58 @@ public class Game implements Serializable {
         this.currentPapalSpaceToReach = currentPapalSpaceToReach;
     }
 
+    /**
+     * set current player who had turn right
+     * @param currentPlayer  current player turn
+     */
     public void setCurrentPlayer(int currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
 
+    /**
+     * set nofplayer in this game
+     * @param nofplayers  number of player
+     */
     public void setNofplayers(int nofplayers) {
         this.nofplayers = nofplayers;
     }
 
+    /**
+     *
+     * @return deck of leaders
+     */
     public LeaderCard[] getLeaders() {
         return leaders;
     }
 
+    /**
+     *
+     * @return list of faith track cells
+     */
     public List<CellScore> getScorePositions() {
         return scorePositions;
     }
 
+    /**
+     *
+     * @return list of papal spaces
+     */
     public List<PapalSpace> getPapalSpaces() {
         return papalSpaces;
     }
 
+    /**
+     *
+     * @return the index corresponding to the current papal space to reach
+     */
     public int getCurrentPapalSpaceToReach() {
         return currentPapalSpaceToReach;
     }
 
+    /**
+     *
+     * @return number of player in this match
+     */
     public int getNofplayers() {
         return nofplayers;
     }

@@ -17,6 +17,7 @@ public class JsonInterpreterClient extends BasicJsonInterpreter{
         this.controller = clientController;
     }
 
+    @Override
     public void dispatchPacket(String type, JsonObject content)
     {
         Packet<ClientController> packet = null;

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>it.polimi.ingsw.view.scenes</OriginalElement>
+  <nodes>
+    <node x="922.8134615384618" y="2472.0">it.polimi.ingsw.view.scenes.PaymentDialog</node>
+    <node x="400.0000000000002" y="430.0">it.polimi.ingsw.view.scenes.DashboardScene</node>
+    <node x="2128.3134615384615" y="1387.5">it.polimi.ingsw.view.scenes.ServerErrorController</node>
+    <node x="229.0" y="1365.0">it.polimi.ingsw.view.scenes.LoginScene</node>
+    <node x="2364.3134615384615" y="1288.0">it.polimi.ingsw.view.scenes.WaitingStartScene</node>
+    <node x="0.0" y="1288.0">it.polimi.ingsw.view.scenes.EndGameScene</node>
+    <node x="3056.3134615384615" y="1321.0">it.polimi.ingsw.view.scenes.AskServerData</node>
+    <node x="2575.3134615384615" y="1167.5">it.polimi.ingsw.view.scenes.MarketScene</node>
+    <node x="1717.8134615384618" y="2714.0">it.polimi.ingsw.view.scenes.YesNoDialog</node>
+    <node x="1357.3134615384618" y="1156.5">it.polimi.ingsw.view.scenes.BuyScene</node>
+    <node x="1896.8134615384618" y="2615.0">it.polimi.ingsw.view.scenes.DialogLeader</node>
+    <node x="2863.3134615384615" y="1365.0">it.polimi.ingsw.view.scenes.LorenzoDialog</node>
+    <node x="553.5000000000002" y="2725.0">it.polimi.ingsw.view.scenes.SpyScene</node>
+    <node x="2199.8134615384615" y="2714.0">it.polimi.ingsw.view.scenes.MoveScene</node>
+    <node x="1106.3134615384618" y="1332.5">it.polimi.ingsw.view.scenes.DialogProductionScene</node>
+    <node x="1252.8134615384618" y="2560.0">it.polimi.ingsw.view.scenes.InitialResources</node>
+    <node x="1672.3134615384618" y="1365.5">it.polimi.ingsw.view.scenes.BasicDialog</node>
+    <node x="1621.3134615384618" y="0.0">it.polimi.ingsw.view.scenes.BasicSceneUpdater</node>
+    <node x="914.3134615384618" y="1365.0">it.polimi.ingsw.view.scenes.ToastController</node>
+    <node x="1942.3134615384618" y="1354.5">it.polimi.ingsw.view.scenes.HomeScene</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.polimi.ingsw.view.scenes.WaitingStartScene" target="it.polimi.ingsw.view.scenes.BasicSceneUpdater">
+      <point x="0.0" y="-138.0" />
+      <point x="2459.8134615384615" y="390.0" />
+      <point x="1878.544230769231" y="390.0" />
+      <point x="81.23076923076928" y="170.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.SpyScene" target="it.polimi.ingsw.view.scenes.DashboardScene">
+      <point x="0.0" y="-50.0" />
+      <point x="0.0" y="996.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.DialogLeader" target="it.polimi.ingsw.view.scenes.BasicDialog">
+      <point x="0.0" y="-160.0" />
+      <point x="2038.3134615384618" y="2452.0" />
+      <point x="1847.3134615384618" y="2452.0" />
+      <point x="50.0" y="60.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.MarketScene" target="it.polimi.ingsw.view.scenes.BasicSceneUpdater">
+      <point x="0.0" y="-258.5" />
+      <point x="2709.3134615384615" y="380.0" />
+      <point x="1905.6211538461541" y="380.0" />
+      <point x="108.30769230769238" y="170.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.MoveScene" target="it.polimi.ingsw.view.scenes.BasicDialog">
+      <point x="0.0" y="-61.0" />
+      <point x="2298.3134615384615" y="2442.0" />
+      <point x="1897.3134615384618" y="2442.0" />
+      <point x="100.0" y="60.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.LoginScene" target="it.polimi.ingsw.view.scenes.BasicSceneUpdater">
+      <point x="0.0" y="-61.0" />
+      <point x="304.5" y="370.0" />
+      <point x="1661.9288461538463" y="370.0" />
+      <point x="-135.38461538461547" y="170.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.PaymentDialog" target="it.polimi.ingsw.view.scenes.BasicDialog">
+      <point x="0.0" y="-303.0" />
+      <point x="1077.8134615384618" y="2442.0" />
+      <point x="1697.3134615384618" y="2442.0" />
+      <point x="-100.0" y="60.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.BuyScene" target="it.polimi.ingsw.view.scenes.BasicSceneUpdater">
+      <point x="0.0" y="-269.5" />
+      <point x="1504.8134615384618" y="410.0" />
+      <point x="1770.2365384615387" y="410.0" />
+      <point x="-27.076923076923094" y="170.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.EndGameScene" target="it.polimi.ingsw.view.scenes.BasicSceneUpdater">
+      <point x="0.0" y="-138.0" />
+      <point x="104.5" y="360.0" />
+      <point x="1634.8519230769232" y="360.0" />
+      <point x="-162.46153846153857" y="170.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.DialogProductionScene" target="it.polimi.ingsw.view.scenes.BasicSceneUpdater">
+      <point x="0.0" y="-93.5" />
+      <point x="1221.8134615384618" y="400.0" />
+      <point x="1743.1596153846156" y="400.0" />
+      <point x="-54.15384615384619" y="170.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.YesNoDialog" target="it.polimi.ingsw.view.scenes.BasicDialog">
+      <point x="0.0" y="-61.0" />
+      <point x="0.0" y="60.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.InitialResources" target="it.polimi.ingsw.view.scenes.BasicDialog">
+      <point x="0.0" y="-215.0" />
+      <point x="1394.3134615384618" y="2452.0" />
+      <point x="1747.3134615384618" y="2452.0" />
+      <point x="-50.0" y="60.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.LorenzoDialog" target="it.polimi.ingsw.view.scenes.BasicSceneUpdater">
+      <point x="0.0" y="-61.0" />
+      <point x="2949.8134615384615" y="370.0" />
+      <point x="1932.6980769230772" y="370.0" />
+      <point x="135.38461538461547" y="170.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.BasicDialog" target="it.polimi.ingsw.view.scenes.BasicSceneUpdater">
+      <point x="0.0" y="-60.5" />
+      <point x="0.0" y="170.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.ServerErrorController" target="it.polimi.ingsw.view.scenes.BasicSceneUpdater">
+      <point x="0.0" y="-38.5" />
+      <point x="2236.3134615384615" y="400.0" />
+      <point x="1851.467307692308" y="400.0" />
+      <point x="54.15384615384619" y="170.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.AskServerData" target="it.polimi.ingsw.view.scenes.BasicSceneUpdater">
+      <point x="0.0" y="-105.0" />
+      <point x="3137.3134615384615" y="360.0" />
+      <point x="1959.7750000000003" y="360.0" />
+      <point x="162.46153846153857" y="170.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.DashboardScene" target="it.polimi.ingsw.view.scenes.BasicSceneUpdater">
+      <point x="0.0" y="-996.0" />
+      <point x="634.0000000000002" y="380.0" />
+      <point x="1689.0057692307694" y="380.0" />
+      <point x="-108.30769230769238" y="170.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.ToastController" target="it.polimi.ingsw.view.scenes.BasicSceneUpdater">
+      <point x="0.0" y="-61.0" />
+      <point x="1000.3134615384618" y="390.0" />
+      <point x="1716.0826923076925" y="390.0" />
+      <point x="-81.23076923076928" y="170.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes.HomeScene" target="it.polimi.ingsw.view.scenes.BasicSceneUpdater">
+      <point x="0.0" y="-71.5" />
+      <point x="2025.3134615384618" y="410.0" />
+      <point x="1824.3903846153848" y="410.0" />
+      <point x="27.076923076923094" y="170.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5" x="1376.800604229607" y="334.0" />
+  <SelectedNodes>
+    <node>it.polimi.ingsw.view.scenes.HomeScene</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Constructors</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

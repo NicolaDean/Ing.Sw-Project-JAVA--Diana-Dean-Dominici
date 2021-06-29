@@ -95,10 +95,20 @@ public class GuiHelper extends Application {
             System.out.println("REOPEN");
         }
     }
+
+    /**
+     * set that the payment that will arive is of buy type or not
+     * @param b
+     */
     public static void setBuyType(boolean b)
     {
         buyType = b;
     }
+
+    /**
+     *
+     * @return true if payment is of buy type
+     */
     public static boolean getBuyType()
     {
         return buyType;
@@ -156,25 +166,28 @@ public class GuiHelper extends Application {
 
     }
 
+    /**
+     * save the current active scene
+     * @param scene scene tos et
+     */
     public static void setCurrentScene(BasicSceneUpdater scene)
     {
         currentScene =  scene;
     }
-    public static BasicSceneUpdater getCurrentScene()
-    {
-        return currentScene;
-    }
+
+
+    /**
+     * Show a YES or NO dialog generic
+     * @param title  title of dialog
+     * @param msg  msg to show
+     * @return true if clicked yes, false either
+     */
     public static boolean YesNoDialog(String title,String msg)
     {
         return loadDialog(FXMLpaths.yesNo,title,new YesNoDialog(msg)).equals(ButtonType.YES);
     }
 
-    public static void resize(double width,double height)
-    {
-        GuiHelper.getStage().setWidth(width);
-        GuiHelper.getStage().setHeight(height);
 
-    }
     /**
      *
      * @return the Gui class
@@ -268,6 +281,13 @@ public class GuiHelper extends Application {
         return getParent(loader);
     }
 
+    /**
+     *
+     * Load an fxml using default controller specified in fxml
+     * @param fxml          scene to load
+     * @return              loaded Scene
+     * @throws IOException  somting goes wrong in loading
+     */
     public static Parent loadFXML(String fxml,BasicSceneUpdater sceneUpdater,boolean a) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
@@ -306,15 +326,13 @@ public class GuiHelper extends Application {
         return out;
     }
 
-    public static ButtonType loadDialogFromDash(String path,String title,BasicSceneUpdater controller)
-    {
-        BasicSceneUpdater x =  currentScene;
-
-        ButtonType aa = loadDialog(path,title,controller);
-
-        gui.notifyObserver(c->c.addModelObserver(x));
-        return aa;
-    }
+    /**
+     * Load a dialof from FXML file
+     * @param path        path of file
+     * @param title       title of dialog
+     * @param controller   controller to use
+     * @return button clicked by user(YES,NO,CANCEL...)
+     */
 
     public static ButtonType loadDialog(String path,String title,BasicSceneUpdater controller)
     {

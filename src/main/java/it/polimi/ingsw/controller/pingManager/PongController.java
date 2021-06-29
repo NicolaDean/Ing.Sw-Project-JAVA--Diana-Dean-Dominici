@@ -5,6 +5,9 @@ import it.polimi.ingsw.utils.DebugMessages;
 
 import java.io.PrintWriter;
 
+/**
+ * pong from Client to Server
+ */
 public class PongController extends GenericPing<ClientController> {
 
 
@@ -23,6 +26,10 @@ public class PongController extends GenericPing<ClientController> {
     }
 
 
+    /**
+     * set index of this pong controller
+     * @param index player index
+     */
     public void setIndex(int index)
     {
         this.index = index;

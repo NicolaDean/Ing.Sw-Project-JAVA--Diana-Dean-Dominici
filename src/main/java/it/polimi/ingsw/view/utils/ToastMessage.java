@@ -22,6 +22,9 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
+/**
+ * class that show fading messages
+ */
 public class ToastMessage {
 
     Pane root;

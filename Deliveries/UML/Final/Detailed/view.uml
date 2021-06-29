@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>it.polimi.ingsw.view</OriginalElement>
+  <nodes>
+    <node x="2679.0" y="0.0">it.polimi.ingsw.view.utils.FXMLpaths</node>
+    <node x="2410.0" y="0.0">it.polimi.ingsw.view.utils.InputReaderValidation</node>
+    <node x="755.0" y="461.5">it.polimi.ingsw.view.observer.Observable</node>
+    <node x="1205.0" y="0.0">it.polimi.ingsw.view.utils.CliColors</node>
+    <node x="2884.0" y="0.0">it.polimi.ingsw.view.utils.ToastMessage</node>
+    <node x="0.0" y="0.0">it.polimi.ingsw.view.View</node>
+    <node x="0.0" y="1347.0">it.polimi.ingsw.view.GUI</node>
+    <node x="0.0" y="2999.0">it.polimi.ingsw.view.utils.ErrorManager</node>
+    <node x="294.0" y="2999.0">it.polimi.ingsw.view.utils.RandomNicks</node>
+    <node x="1959.0" y="0.0">it.polimi.ingsw.view.GuiHelper</node>
+    <node x="1515.0" y="0.0">it.polimi.ingsw.view.utils.Logger</node>
+    <node x="508.0" y="1094.0">it.polimi.ingsw.view.CLI</node>
+    <node x="1016.0" y="2009.0">it.polimi.ingsw.view.scenes</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.polimi.ingsw.view.CLI" target="it.polimi.ingsw.view.View">
+      <point x="-122.0" y="-930.0" />
+      <point x="630.0" y="1064.0" />
+      <point x="366.0000000000001" y="1064.0" />
+      <point x="122.00000000000011" y="522.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.GUI" target="it.polimi.ingsw.view.View">
+      <point x="-122.0" y="-677.0" />
+      <point x="-122.0" y="522.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.GUI" target="it.polimi.ingsw.view.observer.Observable">
+      <point x="122.0" y="-677.0" />
+      <point x="366.0" y="1074.0" />
+      <point x="794.6666666666667" y="1074.0" />
+      <point x="-79.33333333333331" y="60.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.CLI" target="it.polimi.ingsw.view.observer.Observable">
+      <point x="122.0" y="-930.0" />
+      <point x="0.0" y="60.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.scenes" target="it.polimi.ingsw.view.observer.Observable">
+      <point x="0.0" y="-15.0" />
+      <point x="1088.0" y="1074.0" />
+      <point x="953.3333333333333" y="1074.0" />
+      <point x="79.33333333333331" y="60.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.38403334402051936" x="1342.5054846486853" y="2602.330940056771" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
