@@ -56,7 +56,10 @@ public class ClientController implements Runnable{
     private List<Integer>         activatedLeaders;
 
 
-
+    /**
+     * allow to recive network packets and comunicate to gui / cli which action/scene show
+     * @param type
+     */
     public ClientController(boolean type)
     {
         this.connected = false;

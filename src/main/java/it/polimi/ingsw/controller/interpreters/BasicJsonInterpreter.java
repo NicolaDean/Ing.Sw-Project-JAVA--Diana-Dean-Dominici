@@ -5,6 +5,9 @@ import com.google.gson.JsonParser;
 import it.polimi.ingsw.WaitingRoom;
 import it.polimi.ingsw.controller.packets.PacketManager;
 
+/**
+ * Elaborate String json packets and execute operation on model through an "observer style" approach used inside class PACKET
+ */
 public class BasicJsonInterpreter {
 
     JsonParser parser;

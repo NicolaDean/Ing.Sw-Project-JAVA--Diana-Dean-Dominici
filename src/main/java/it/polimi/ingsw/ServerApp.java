@@ -28,8 +28,12 @@ public class ServerApp {
     private ServerSocket            serverSocket;
     private long                    matchId;
     List<ServerController>          availableControllers;
-    List<ServerController>          closed;
 
+    /**
+     *
+     * @param port      server port
+     * @param matchId   match id to assignate to the next match created (0 if just started, old value if restarted)
+     */
     public ServerApp(int port,long matchId)
     {
         this.executor             = Executors.newCachedThreadPool();
@@ -96,13 +100,21 @@ public class ServerApp {
             //executor.submit(new ClientHandler(socket,this.controller));
             ServerController fake = new ServerController(socket);
             fake.setObserver(this);
-            executor.submit(new WaitingRoom(socket,availableControllers,fake ,executor));
+            executor.submit(new WaitingRoom(socket,fake));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * parse server arguments
+     * @param args arguments to launch server (-res,-leaderfree,-resall..)
+     *             -res        cheat for chest
+     *             -resall     cheat for chest and storage
+     *             -leaderfree can activate leader with no prerequisite
+     *             -reconnect  reload server state
+     */
     public static void main(String[] args) {
 
         int port = ConstantValues.defaultServerPort;

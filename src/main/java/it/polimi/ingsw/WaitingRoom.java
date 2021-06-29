@@ -14,20 +14,22 @@ import java.net.Socket;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
+/**
+ * wait clients login packet (after user login this thread die)
+ */
 public class WaitingRoom extends ClientHandler{
 
-
-    List<ServerController> controllers;
     ServerController fakeController;
-    private final ExecutorService executor;
-    int currentClient = 0;
 
-    public WaitingRoom(Socket socket, List<ServerController> controllers, ServerController fakeController, ExecutorService executor)
+    /**
+     * Waiting room is a class that accept clients connection before login packet
+     * @param socket           client socket
+     * @param fakeController   a server controller without clientsHandler list
+     */
+    public WaitingRoom(Socket socket, ServerController fakeController)
     {
         super(socket,fakeController);
         this.fakeController     = fakeController;
-        this.controllers        = controllers;
-        this.executor           = executor;
     }
 
 

@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Java fx manager class, change scene and save GUI state
+ */
 public class GuiHelper extends Application {
 
     private static Scene                scene;

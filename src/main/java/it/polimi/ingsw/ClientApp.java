@@ -8,11 +8,12 @@ import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 
+/**
+ * simply read arguments and load server,Cli,Gui
+ */
 public class ClientApp {
 
     ClientController controller;
-    int port;
-
 
     public ClientApp()
     {

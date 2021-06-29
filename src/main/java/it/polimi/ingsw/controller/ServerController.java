@@ -129,15 +129,12 @@ public class ServerController extends Observable<ServerApp> implements Serializa
      */
     public void removeClient(int index)
     {
-
-
         synchronized (this.lock)
         {
 
             if(isStarted)
             {
                 this.warning("Client "+ index + " disconnected from game number "+ this.getMatchId());
-                this.game.getPlayer(clients.get(index).getRealPlayerIndex()).setConnectionState(false);
 
                 if(this.game.isEnded())
                 {
@@ -145,6 +142,8 @@ public class ServerController extends Observable<ServerApp> implements Serializa
                     this.notifyObserver(serverApp -> {serverApp.closeController(this);});
                     return;
                 }
+
+                this.game.getPlayer(clients.get(index).getRealPlayerIndex()).setConnectionState(false);
 
                 if(currentClient == index)
                     this.nextTurn();

@@ -26,6 +26,9 @@ import javafx.scene.control.ButtonType;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * graphical interface
+ */
 public class GUI extends Observable<ClientController> implements View{
 
     boolean singleplayer;

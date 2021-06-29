@@ -1,5 +1,8 @@
 package it.polimi.ingsw.enumeration;
 
+/**
+ * ACK error codes
+ */
 public enum ErrorMessages {
     Ok,
     NotYourTurn,

@@ -20,6 +20,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * rappresent a player, his map and all his owns
+ */
 public class Player extends Observable<ServerController> implements Serializable {
 
     private String nickname;

@@ -13,6 +13,9 @@ import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.List;
 
+/**
+ * common interface with all methods of cli and gui
+ */
 public interface View {
 
     /**

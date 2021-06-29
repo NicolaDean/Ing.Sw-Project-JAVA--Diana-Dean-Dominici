@@ -17,6 +17,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * Game model, contain a general GAME STATUS of this match
+ */
 public class Game implements Serializable {
     private List<Player> players;
     protected LeaderCard[] leaders;
