@@ -10,7 +10,6 @@ public class BuyCard  extends Packet<ServerController> implements PacketManager<
     int y;
     int position;
 
-
     public BuyCard(int x,int y,int pos)
     {
         super("BuyCard");

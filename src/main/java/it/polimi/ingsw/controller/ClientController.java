@@ -586,6 +586,7 @@ public class ClientController implements Runnable{
         }
 
     }
+
     /**
      * send packet to server
      * @param p
@@ -599,6 +600,10 @@ public class ClientController implements Runnable{
         }
     }
 
+    /**
+     * analyze message and respond to client
+     * @param message message
+     */
     public void analyze(String message)
     {
         Thread t = new Thread(()->{
@@ -633,24 +638,6 @@ public class ClientController implements Runnable{
 
     }
 
-    /**
-     * increment players position without player index
-     * @param index player index
-     * @param quantity quantity to add
-     */
-    public void incrementPositionPlayersWithOut(int index,int quantity){
-        /*for(MiniPlayer p:this.model.getPlayers())
-            if(!p.equals(this.model.getPlayers()[index]))
-
-            p.incrementPosition(quantity);
-         */
-
-            MiniPlayer[] players = this.model.getPlayers();
-            for(int i=0; i<players.length;i++)
-            {
-                if(i != index)  players[i].incrementPosition(quantity);
-            }
-    }
 
     /**
      *
@@ -679,17 +666,28 @@ public class ClientController implements Runnable{
         }
     }
 
+    /**
+     * show market extraction to client
+     * @param res
+     * @param whiteBalls
+     */
     public void showMarketResult(List<Resource>res,int whiteBalls)
     {
         ResourceType[] resourceTypes = this.model.getPersonalPlayer().getWhiteBalls();
         this.view.showMarketExtraction(res,whiteBalls,resourceTypes);
     }
 
+    /**
+     * print market screen
+     */
     public void showmarket()
     {
         this.view.showMarket();
     }
 
+    /**
+     * print shop screen
+     */
     public void showshop()
     {
         this.view.askBuy();
@@ -734,11 +732,17 @@ public class ClientController implements Runnable{
         this.model.getPlayers()[index].setWhiteBalls(whiteBalls);
     }
 
+    /**
+     *  show production cards
+     */
     public void showDecks()
     {
         view.showDecks(this.model.getDecks());
     }
 
+    /**
+     * start turn
+     */
     public void excecuteTurn()
     {
         DebugMessages.printError("TURNO");
