@@ -28,13 +28,14 @@ public class ColoredActionToken  extends BasicToken {
     @Override
     public void activateToken(LorenzoGame l) {
         int remaining = bonus;
+        int cicle;
 
         for (int y = 0; y < ConstantValues.colDeck; y++){
             for (int x = 0; x < ConstantValues.rowDeck; x++) {
 
                 if( (!l.getProductionDecks()[x][y].empty()) && (l.getProductionDecks()[x][y].peek().getType()==type)) {
 
-                    int cicle = bonus - (bonus-remaining);
+                    cicle = bonus - (bonus-remaining);
 
                     for (int i = 0; i < cicle; i++) {
 

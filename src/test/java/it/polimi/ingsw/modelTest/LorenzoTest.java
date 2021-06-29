@@ -30,15 +30,15 @@ public class LorenzoTest {
             currPlayer = game.getPlayer(0);
         } catch (Exception e) { e.printStackTrace(); }
 
-        currPlayer.incrementPosition(3);
+        currPlayer.incrementPosition(3); //cella 3
         game.nextTurn();
         assertEquals(currPlayer.getScore(), 1);
 
-        currPlayer.incrementPosition(12);
+        currPlayer.incrementPosition(12); //cella 15
         game.nextTurn();
         assertEquals(currPlayer.getScore(), 11);
 
-        currPlayer.incrementPosition(9);
+        currPlayer.incrementPosition(9); //cella 24
         game.nextTurn();
         assertEquals(currPlayer.getScore(), 29);
 
@@ -128,7 +128,6 @@ public class LorenzoTest {
         Player currPlayer = null;
         LorenzoGame game = null;
 
-
         game = new LorenzoGame();
         game.resetDeckToken();
         try { game.addPlayer("Richi"); } catch (Exception e) {}
@@ -139,7 +138,7 @@ public class LorenzoTest {
 
         game.getLorenzo().incrementPosition(24);
         game.nextTurn();
-        currPlayer.incrementPosition(23);
+        currPlayer.incrementPosition(24);
         game.nextTurn();
 
         assertEquals(game.getCurrentPlayer().getScore(), 20);

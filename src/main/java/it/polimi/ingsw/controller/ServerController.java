@@ -493,7 +493,9 @@ public class ServerController extends Observable<ServerApp> implements Serializa
         ProductionCard card = null;
 
         if(!isRightPlayer(player)) return this.notYourTurn();
-        if(this.game.getProductionDecks()[x][y].isEmpty()) return( new AckManager("Empty deck position")).getAck();
+        if(this.game.getProductionDecks()[x][y].isEmpty()){
+            return(new ACK(ErrorMessages.WrongPosition));
+        };
 
         card = this.game.drawProductionCard(x,y);
         try
@@ -512,11 +514,11 @@ public class ServerController extends Observable<ServerApp> implements Serializa
 
             return setPendingCost(p.getDashboard());
         } catch (AckManager err) {
-            //err.printStackTrace();
+            err.printStackTrace();
             return err.getAck();
         }
-
     }
+
 
     /**
      * production of a player

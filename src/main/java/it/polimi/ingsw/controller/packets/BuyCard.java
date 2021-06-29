@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller.packets;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
+import it.polimi.ingsw.exceptions.AckManager;
 
 public class BuyCard  extends Packet<ServerController> implements PacketManager<ServerController> {
 
@@ -22,6 +23,8 @@ public class BuyCard  extends Packet<ServerController> implements PacketManager<
     public Packet analyze(ServerController controller)
     {
         Packet p = controller.buyCard(this.x,this.y,this.position,this.getClientIndex());
+
+
 
         if(p.getType().equals("ACK"))
         {

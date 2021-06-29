@@ -310,8 +310,6 @@ public class Game implements Serializable {
         else
             currentPlayer++;
 
-
-
         //Papal space activation check
         papalSpaceCheck();
 
