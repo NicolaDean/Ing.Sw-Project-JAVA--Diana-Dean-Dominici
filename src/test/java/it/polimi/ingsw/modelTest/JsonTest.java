@@ -8,17 +8,27 @@ import org.junit.jupiter.api.Test;
 public class JsonTest {
 
 
+    /**
+     * Load production cards from json
+     * @throws Exception
+     */
     @Test
     public void LoadProdCard() throws Exception {
         CardFactory.loadProductionCardsFromJsonFile();
     }
 
+    /**
+     * Load papal spaces from json
+     */
     @Test
     public void LoadPapalSpace()
     {
         MapFactory.loadPapalSpacesFromJsonFile();
     }
 
+    /**
+     * load leader card from json
+     */
     @Test
     public void LoadLeadersTest()
     {

@@ -20,6 +20,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ProductionTest {
 
+    /**
+     * check if user can buy a production card
+     * @throws FullDepositException model exception for deposit insertion
+     * @throws NoBonusDepositOwned  model exception for deposit exctraction
+     * @throws WrongPosition        model exception for not existing deposit
+     */
     @Test
     public void CheckCost() throws FullDepositException, NoBonusDepositOwned, WrongPosition {
         Player p = new Player();
@@ -41,6 +47,12 @@ public class ProductionTest {
         assertTrue(card.checkCost(p.getDashboard()));
     }
 
+    /**
+     * try to buy a card from shop, test user dosnt have res and user have res case
+     * @throws FullDepositException model exception for deposit insertion
+     * @throws NoBonusDepositOwned  model exception for deposit exctraction
+     * @throws WrongPosition        model exception for not existing deposit
+     */
     @Test
     public void BuyTest() throws FullDepositException, NoBonusDepositOwned, WrongPosition {
         Player p = new Player();
@@ -69,7 +81,14 @@ public class ProductionTest {
         });
     }
 
-    @Disabled
+    /**
+     * try doing some varius operation with production (produce with wrong cards, dont have res,have res,,,)
+     * @throws FullDepositException model exception for deposit insertion
+     * @throws NoBonusDepositOwned  model exception for deposit exctraction
+     * @throws WrongPosition        model exception for not existing deposit
+     * @throws EmptyDeposit         model exception for not existing deposit
+     */
+    @Test
     public void ProductionTest() throws FullDepositException, NoBonusDepositOwned, WrongPosition, EmptyDeposit {
         Player p = new Player();
 
@@ -149,6 +168,9 @@ public class ProductionTest {
 
     @Test
 
+    /**
+     * try buy a card with discount leader activated (check if discount work)
+     */
     public void discountedCostTest()
     {
 

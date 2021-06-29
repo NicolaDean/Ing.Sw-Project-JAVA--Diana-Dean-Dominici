@@ -25,6 +25,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class LeadersTest {
+    /**
+     * check if discount leader activation work well (add to player discount list)
+     */
     @Test
     public void discountBonusTest()
     {
@@ -50,6 +53,9 @@ public class LeadersTest {
 
     }
 
+    /**
+     * check if trade bonus leader work well (if add correctly bonusProduction interfaces to player)
+     */
     @Test
     public void tradeBonusTest()
     {
@@ -89,6 +95,10 @@ public class LeadersTest {
 
     }
 
+    /**
+     * check if leader prerequisite check work well (if user have rigth prerequisite to activate card)
+     * @throws Exception model exception
+     */
     @Test
     public void checkPrerequisite() throws Exception {
         Game g = new Game();
@@ -114,6 +124,9 @@ public class LeadersTest {
 
     }
 
+    /**
+     * try loading and adding leaders card to minimodel
+     */
     @Test
     public void testMinimodel()
     {

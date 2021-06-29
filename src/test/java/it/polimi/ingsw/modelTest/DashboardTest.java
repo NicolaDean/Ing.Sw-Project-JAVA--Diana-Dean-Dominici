@@ -19,6 +19,11 @@ import java.util.List;
 public class DashboardTest {
 
 
+    /**
+     * check if dashboard card insertion work correctrly
+     * try to do diffferent combination of insertions (levels, positions..)
+     * @throws Exception custom exceptions used inside model
+     */
     @Test
     public void TestCardsInsertion() throws Exception {
         List<Resource> res = new ArrayList<Resource>();
@@ -84,6 +89,10 @@ public class DashboardTest {
 
     }
 
+    /**
+     * Check if real time score calculus is right
+     * @throws Exception model exceptions
+     */
     @Test
     public void TestScoreCalculation() throws Exception {
         List<Resource> res = new ArrayList<Resource>();
@@ -104,6 +113,12 @@ public class DashboardTest {
 
     }
 
+    /**
+     * check if "all available resources" function work well and retrive all res from chest and storage
+     * @throws FullDepositException  Deposit full (cant insert any more res)
+     * @throws NoBonusDepositOwned   (wrond deposit index)
+     * @throws WrongPosition         (wrong depoisti index)
+     */
     @Test
     void TestGetAllResources() throws FullDepositException, NoBonusDepositOwned, WrongPosition {
         Dashboard dash = new Dashboard();
@@ -123,6 +138,10 @@ public class DashboardTest {
         assertTrue(ResourceOperator.extractQuantityOf(ROCK,tmp) == 2);
     }
 
+    /**
+     * check if dashboard production execution work well(eg pricing, activation,..)
+     * @throws Exception model exception
+     */
     @Test void TestProduction() throws Exception {
         Dashboard dash = new Dashboard();
 
@@ -142,6 +161,10 @@ public class DashboardTest {
         });
     }
 
+    /**
+     * check if pending cost of buy or production work well
+     * @throws Exception model exception
+     */
     @Test
     void TestPendingCost() throws Exception {
         List<Resource> res = new ArrayList<Resource>();
