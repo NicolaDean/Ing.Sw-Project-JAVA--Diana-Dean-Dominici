@@ -93,8 +93,12 @@ public interface View {
      */
     public void askBonusProduction(BonusProductionInterface[] bonus);
 
-
+    /**
+     * show list of resource with discont
+     * @param resourceList
+     */
     public void showDiscount(List<Resource> resourceList);
+
     /**
      * ask user what kind of basic production he want
      */
