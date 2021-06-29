@@ -111,13 +111,18 @@ public class ClientController implements Runnable{
      */
     public void setInformation(MiniModel model, BasicBall[][] miniBallsMarket, BasicBall miniBallDiscarted,boolean firstTurn)
     {
-        DebugMessages.printError("LOOOOOL");
         this.model = model;
         view.setMarket(miniBallsMarket,miniBallDiscarted);
         this.showDashboard();
     }
-    /*
+
+    /**
      * set all initial information into miniMarted
+     * @param index
+     * @param players
+     * @param productionDecks
+     * @param miniBallsMarket
+     * @param miniBallDiscarted
      */
     public void setInformation(int index,MiniPlayer[] players, Stack<ProductionCard>[][] productionDecks, BasicBall[][] miniBallsMarket, BasicBall miniBallDiscarted){
         view.setMarket(miniBallsMarket,miniBallDiscarted);
@@ -416,11 +421,6 @@ public class ClientController implements Runnable{
     public void sendStartCommand()
     {
         this.sendMessage(new StartGame());
-    }
-
-    public void printHelp()
-    {
-        view.askCommand();
     }
 
 
@@ -956,18 +956,33 @@ public class ClientController implements Runnable{
 
     }
 
+    /**
     public void executePacket(BasicPacketFactory lastAction) {
         analyze(lastAction.toJson());
     }
+     */
 
+    /**
+     * print lorenzo action
+     * @param cliColor
+     * @param token
+     */
     public void lorenzoTurn(String cliColor, String token) {
         this.view.lorenzoTurn(cliColor,token);
     }
 
+    /**
+     *  set papal space boolean on player
+     * @param papalToken papal tocken array
+     * @param index player index
+     */
     public void updatePapalToken(boolean[] papalToken, int index) {
         this.model.getPlayers()[index].setPapalSpace(papalToken);
     }
 
+    /**
+     * ask user what production card he want to asctivate
+     */
     public void askProduction() {
         this.view.askProduction();
     }
