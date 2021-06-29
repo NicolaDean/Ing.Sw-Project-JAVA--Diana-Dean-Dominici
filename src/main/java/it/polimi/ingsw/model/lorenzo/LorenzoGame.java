@@ -84,9 +84,7 @@ public class  LorenzoGame extends Game {
                 setCurrentPapalSpaceToReach(getCurrentPapalSpaceToReach()+1);
                 out = getPapalSpaces().get(getCurrentPapalSpaceToReach()).checkPapalSpaceActivation(getPlayers(),lorenzo);
             }
-
         }
-
         return out;
     }
 

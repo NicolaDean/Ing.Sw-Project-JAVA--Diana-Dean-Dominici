@@ -117,15 +117,12 @@ public class PapalSpace  implements Serializable {
     public boolean checkPapalSpaceActivation(List<Player> players, Lorenzo l) {
         boolean out = ((l.getPosition()>=this.finalPosition) || (players.get(0).getPosition() >=this.finalPosition));
 
-        if(out)
+        if(out && !isAlreadyActivate)
         {
             isAlreadyActivate=true;
             for(Player p:players)
             {
-                if(this.checkPlayerInsidePapalSpace(p))
-                {
-                    p.increaseScore(this.score);
-                }
+                this.checkPlayerInsidePapalSpace(p);
             }
         }
 

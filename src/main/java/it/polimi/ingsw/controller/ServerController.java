@@ -490,10 +490,14 @@ public class ServerController extends Observable<ServerApp> implements Serializa
      */
     public Packet buyCard(int x,int y,int pos,int player){
         Player p = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex());
+        ProductionCard card = null;
 
         if(!isRightPlayer(player)) return this.notYourTurn();
+        if(this.game.getProductionDecks()[x][y].isEmpty()){
+            return(new ACK(ErrorMessages.WrongPosition));
+        };
 
-        ProductionCard card = this.game.drawProductionCard(x,y);
+        card = this.game.drawProductionCard(x,y);
         try
         {
             card.buy(p,pos);
@@ -510,11 +514,11 @@ public class ServerController extends Observable<ServerApp> implements Serializa
 
             return setPendingCost(p.getDashboard());
         } catch (AckManager err) {
-            //err.printStackTrace();
+            err.printStackTrace();
             return err.getAck();
         }
-
     }
+
 
     /**
      * production of a player

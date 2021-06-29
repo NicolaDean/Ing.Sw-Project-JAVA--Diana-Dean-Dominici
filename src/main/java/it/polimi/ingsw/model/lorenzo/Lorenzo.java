@@ -17,10 +17,6 @@ public class Lorenzo implements Serializable {
         return positionBlackCross;
     }
 
-    public ActionToken drawToken(){
-        return null;
-    }
-
     public void activateToken(LorenzoGame l,ActionToken a){
         a.activateToken(l);
     }

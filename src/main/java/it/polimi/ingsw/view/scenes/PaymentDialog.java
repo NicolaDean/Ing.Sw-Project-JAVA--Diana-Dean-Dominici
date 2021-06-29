@@ -125,6 +125,7 @@ public class PaymentDialog extends BasicDialog{
     {
         int toRemove =-1;
         int i =0;
+
         for(Node x: this.chest.getChildren())
         {
             Pane pane = (Pane) x;
@@ -158,6 +159,9 @@ public class PaymentDialog extends BasicDialog{
     }
     public void removeSourceQuantity(Pane root,ResourceType type)
     {
+        boolean removed = false;
+        Node i = null;
+
         for(Node x: root.getChildren())
         {
             Pane pane = (Pane) x;
@@ -169,7 +173,8 @@ public class PaymentDialog extends BasicDialog{
 
                 if(qty==0)
                 {
-                    this.source.getChildren().remove(x);
+                    removed=true;
+                    i = x;
                 }
                 else
                 {
@@ -178,27 +183,9 @@ public class PaymentDialog extends BasicDialog{
             }
 
         }
-        /**
-        int cont=0;
-        for(int i=0;i<root.getChildren().size();i++)
-        {
-            Pane pane = (Pane) root.getChildren().get(i);
-            if(pane.getId().equals(type.toString()))
-            {
-                Label l = ((Label)(pane.getChildren().get(1)));
-                String q = l.getText().substring(2);
-                int qty = Integer.parseInt(q)-1;
 
-                if(qty==0)
-                {
-                    this.source.getChildren().remove(root.getChildren().get(i));
-                }
-                else
-                {
-                    l.setText("Q:" + (qty));
-                }
-            }
-        }*/
+        if(removed) this.source.getChildren().remove(i);
+
     }
     /**
      * draw user storage and add drag event to resources

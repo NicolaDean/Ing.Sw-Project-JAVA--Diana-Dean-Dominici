@@ -52,7 +52,6 @@ public class ClientController implements Runnable{
     private ErrorManager          errorManager;
     private View                  view;   //Interface with all view methods
     private MiniModel             model;
-    private AckExample            resolver;
 
     private List<Integer>         activatedLeaders;
 
@@ -70,8 +69,7 @@ public class ClientController implements Runnable{
 
         this.interpreter= new JsonInterpreterClient(this);
         this.errorManager = new ErrorManager();
-        this.resolver = new AckExample();
-        model= new MiniModel(); //provvisiorio
+        model= new MiniModel();
         this.lock = new Object();
     }
 
@@ -148,10 +146,7 @@ public class ClientController implements Runnable{
         return view;
     }
 
-    public void setAckManagmentAction(Consumer <View> action)
-    {
-        this.resolver.setAction(action);
-    }
+
 
     public MiniModel getMiniModel()
     {
