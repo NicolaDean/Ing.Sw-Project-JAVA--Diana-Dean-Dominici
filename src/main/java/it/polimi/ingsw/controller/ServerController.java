@@ -490,10 +490,12 @@ public class ServerController extends Observable<ServerApp> implements Serializa
      */
     public Packet buyCard(int x,int y,int pos,int player){
         Player p = this.game.getPlayer(this.clients.get(player).getRealPlayerIndex());
+        ProductionCard card = null;
 
         if(!isRightPlayer(player)) return this.notYourTurn();
+        if(this.game.getProductionDecks()[x][y].isEmpty()) return( new AckManager("Empty deck position")).getAck();
 
-        ProductionCard card = this.game.drawProductionCard(x,y);
+        card = this.game.drawProductionCard(x,y);
         try
         {
             card.buy(p,pos);
