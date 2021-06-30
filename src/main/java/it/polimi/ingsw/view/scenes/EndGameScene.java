@@ -1,9 +1,13 @@
 package it.polimi.ingsw.view.scenes;
 
+import it.polimi.ingsw.view.GuiHelper;
+import it.polimi.ingsw.view.utils.FXMLpaths;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
 
 
 public class EndGameScene extends BasicSceneUpdater{
@@ -12,9 +16,12 @@ public class EndGameScene extends BasicSceneUpdater{
     public AnchorPane paneMain;
     @FXML
     public Text text;
+    @FXML
+    public Button goHome;
 
     String [] nick;
     int [] score;
+    int VP;
     Boolean isLorenzo,lorenzoWin;
 
     public EndGameScene(String[] nick,int [] score) {
@@ -23,20 +30,43 @@ public class EndGameScene extends BasicSceneUpdater{
         isLorenzo=false;
     }
 
-    public EndGameScene(Boolean lorenzoWin) {
+    public EndGameScene(Boolean lorenzoWin,int VP) {
         this.isLorenzo=true;
         this.lorenzoWin=lorenzoWin;
+        this.VP=VP;
     }
 
     @Override
     public void init() {
         super.init();
-        if(isLorenzo) printWinLost();
+
+        goHome.setOnMouseClicked(mouseEvent -> {
+            try {
+                GuiHelper.setRoot(FXMLpaths.home);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        if(isLorenzo) printWinLostScore();
         else createCharts();
+
+
     }
 
-    private void printWinLost(){
+    private void printWinLostScore(){
+        Button b=new Button("VP: "+VP);
+        b.setId("player");
+
+        b.setMinHeight(60);
+        b.setMinWidth(150);
+
+        b.setDisable(true);
+        b.setLayoutX(300);
+        b.setLayoutY(400);
+        b.setOpacity(100);
         text.setText(lorenzoWin?"YOU LOST":"YOU WIN");
+        paneMain.getChildren().add(b);
     }
 
     private void createCharts(){

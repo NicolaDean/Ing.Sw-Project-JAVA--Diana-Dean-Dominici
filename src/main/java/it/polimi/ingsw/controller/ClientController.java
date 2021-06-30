@@ -319,9 +319,9 @@ public class ClientController implements Runnable{
      * notify player that game ended (
      * @param lorenzoWin true if lorenzo win
      */
-    public void endGameLorenzo(Boolean lorenzoWin)
+    public void endGameLorenzo(Boolean lorenzoWin,int VP)
     {
-        this.view.printEndScreenLorenzo(lorenzoWin);
+        this.view.printEndScreenLorenzo(lorenzoWin,VP);
     }
 
     /**

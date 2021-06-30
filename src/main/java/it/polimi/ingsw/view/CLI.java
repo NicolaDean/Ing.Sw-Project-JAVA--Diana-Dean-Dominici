@@ -77,8 +77,8 @@ public class CLI extends Observable<ClientController> implements View {
     /**
      * print end screen for lorenzo game
      */
-    public void printEndScreenLorenzo(Boolean lorenzoWin){
-        DebugMessages.printWarning(lorenzoWin?"YOU LOST":"YOU WIN");
+    public void printEndScreenLorenzo(Boolean lorenzoWin,int VP){
+        DebugMessages.printWarning(lorenzoWin?"YOU LOST":"YOU WIN \nVP:"+VP);
     }
 
     @Override

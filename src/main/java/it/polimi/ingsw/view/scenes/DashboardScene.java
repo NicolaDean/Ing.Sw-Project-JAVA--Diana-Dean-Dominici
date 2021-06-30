@@ -317,9 +317,11 @@ public class DashboardScene extends BasicSceneUpdater {
 
 
     private void drawLorenzo(int lorenzo) {
-        Platform.runLater(()->{
-            this.faith.get(lorenzo).getChildren().add(loadImage("/images/resources/blackCross.png", 50, 50));
-        });
+        if (!(lorenzo>25)){
+            Platform.runLater(() -> {
+                this.faith.get(lorenzo).getChildren().add(loadImage("/images/resources/blackCross.png", 50, 50));
+            });
+        }
     }
 
     public void initializecheckboxes()
@@ -438,9 +440,11 @@ public class DashboardScene extends BasicSceneUpdater {
      */
     public void drawPosition(int pos)
     {
-        Platform.runLater(()->{
-            this.faith.get(pos).getChildren().add(loadImage("/images/resources/tokenPosition.png", 50, 50));
-        });
+        if(!(pos>25)) {
+            Platform.runLater(() -> {
+                this.faith.get(pos).getChildren().add(loadImage("/images/resources/tokenPosition.png", 50, 50));
+            });
+        }
     }
 
     @Override

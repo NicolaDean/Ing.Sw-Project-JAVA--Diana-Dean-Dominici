@@ -26,8 +26,11 @@ public interface View {
     /**
      * print end screen for lorenzo game
      */
-    public void printEndScreenLorenzo(Boolean lorenzoWin);
+    public void printEndScreenLorenzo(Boolean lorenzoWin,int VP);
 
+    /**
+     * print welcome screen
+     */
     public void printWelcomeScreen();
 
     public void setMiniMarketDiscardedResouce(BasicBall miniMarketBalls);
