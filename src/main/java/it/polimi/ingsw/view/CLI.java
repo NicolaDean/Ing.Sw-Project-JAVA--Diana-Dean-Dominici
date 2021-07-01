@@ -1341,4 +1341,10 @@ public class CLI extends Observable<ClientController> implements View {
         this.terminal.printError("Server Connection Crushed (Server Offline)");
         System.exit(-1);
     }
+
+    @Override
+    public void reconnectionFailed() {
+        this.terminal.printError("Reconnection Failed, we are sorry (Server responder 404 not found)");
+        System.exit(-1);
+    }
 }
