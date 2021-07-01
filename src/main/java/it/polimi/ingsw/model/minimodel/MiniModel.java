@@ -22,11 +22,19 @@ public class MiniModel extends Observable<BasicSceneUpdater>
     private boolean isLoaded = false;
     private MiniPlayer[] players;
     private ProductionCard [][] decks;
+    private String currentlyplaying;
     public MiniModel()
     {
         players = new MiniPlayer[ConstantValues.numberOfPlayer];
     }
 
+    public String getCurrentlyplaying() {
+        return currentlyplaying;
+    }
+
+    public void setCurrentlyplaying(String currentlyplaying) {
+        this.currentlyplaying = currentlyplaying;
+    }
 
     public MiniPlayer getPersonalPlayer()
     {

@@ -23,7 +23,13 @@ public class NotifyOtherPlayerTurn  extends Packet<ClientController> implements 
             e.printStackTrace();
         }
 
-        controller.showMessage("It's "+nickname+"'s turn...");
+
+
+        if(!nickname.equals(controller.getMiniModel().getPersonalPlayer().getNickname()))
+            controller.showMessage("It's "+nickname+"'s turn...");
+        else
+            controller.showMessage("It's your turn!");
+        controller.getMiniModel().setCurrentlyplaying(nickname);
 
         return null;
     }

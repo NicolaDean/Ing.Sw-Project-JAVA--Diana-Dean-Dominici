@@ -418,7 +418,7 @@ public class ServerController extends Observable<ServerApp> implements Serializa
 
 
         for (Player p: this.getGame().getPlayers()) {
-            if (p.getControllerIndex() != currentClient)
+
             {
                 if(p.checkConnection())
                      clients.get(p.getControllerIndex()).sendToClient(new NotifyOtherPlayerTurn(this.game.getCurrentPlayer().getNickname()));

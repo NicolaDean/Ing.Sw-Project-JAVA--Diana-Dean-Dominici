@@ -235,6 +235,7 @@ public class GuiHelper extends Application {
      */
     public static void sendMessage(String msg)
     {
+
         currentScene.reciveMessage(msg);
     }
 
