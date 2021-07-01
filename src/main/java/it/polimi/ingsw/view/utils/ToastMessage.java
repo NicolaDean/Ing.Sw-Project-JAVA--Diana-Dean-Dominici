@@ -54,6 +54,8 @@ public class ToastMessage {
      */
     public void show()
     {
+        if(msg.equals(""))
+            return;
         try {
             container = new Stage();
             container.initOwner(GuiHelper.getStage());
