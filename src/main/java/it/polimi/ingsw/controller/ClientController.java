@@ -971,4 +971,7 @@ public class ClientController implements Runnable{
     public void askProduction() {
         this.view.askProduction();
     }
+
+    public void failedReconnection() {
+    }
 }
