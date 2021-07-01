@@ -44,17 +44,17 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane stylesheets="@../css/Background.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.BuyScene">
+<StackPane stylesheets="@../css/Background.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.scenes.BuyScene">
    <children>
       <Group>
          <children>
             <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="820.0" prefWidth="1200.0" stylesheets="@../css/Cards.css">
                <children>
-                  <VBox layoutX="168.0" layoutY="47.0" prefHeight="700.0" prefWidth="900.0">
+                  <VBox layoutX="168.0" layoutY="79.0" prefHeight="700.0" prefWidth="900.0">
                      <children>
-                        <HBox prefHeight="233.0" prefWidth="900.0">
+                        <HBox prefHeight="228.0" prefWidth="900.0">
                            <children>
-                              <FlowPane fx:id="Row1" prefHeight="233.0" prefWidth="901.0" />
+                              <FlowPane fx:id="Row1" prefHeight="228.0" prefWidth="905.0" />
                            </children>
                         </HBox>
                         <HBox prefHeight="233.0" prefWidth="900.0">
@@ -72,13 +72,14 @@
                   <Label layoutX="843.0" layoutY="4.0" prefHeight="81.0" prefWidth="311.0" text="CARD CLICKED:" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <Label fx:id="click" layoutX="952.0" layoutY="30.0" text="Label" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="20.0" />
                      </font>
                   </Label>
-                  <ImageView fx:id="selectedCard" fitHeight="150.0" fitWidth="200.0" layoutX="825.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="590.0" AnchorPane.leftAnchor="825.0" AnchorPane.rightAnchor="175.0" AnchorPane.topAnchor="60.0" />
+                  <ImageView fx:id="selectedCard" fitHeight="150.0" fitWidth="200.0" layoutX="907.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="560.0" AnchorPane.leftAnchor="907.0" AnchorPane.rightAnchor="93.0" AnchorPane.topAnchor="110.0" />
                   <ImageView id="production_card" fx:id="buyButton" fitHeight="97.0" fitWidth="213.0" layoutX="962.0" layoutY="327.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/interface/Button.png" />

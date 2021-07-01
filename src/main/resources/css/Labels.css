@@ -3,3 +3,13 @@
     font-family: 'Cardinal';
     src: url('../font/Cardinal.ttf');
 }
+
+#greenfont
+{
+    font-family: 'Cardinal';
+    src: url('../font/Cardinal.ttf');
+    -fx-font-size: 12pt ;
+    -fx-fill: lightseagreen;
+    -fx-stroke: black;
+    -fx-stroke-width: 2px;
+}

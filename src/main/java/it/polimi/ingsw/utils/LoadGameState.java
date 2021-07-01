@@ -21,7 +21,17 @@ public class LoadGameState {
     public static ServerController loadGame(long id) throws IOException, ClassNotFoundException {
 
         ObjectInputStream objectinputstream = null;
-        FileInputStream streamIn = new FileInputStream(ConstantValues.saveFileName + id + ".ser");
+
+
+        File tmp = new File(ConstantValues.saveFileName + id + ".ser");
+        if(!tmp.exists())
+        {
+            DebugMessages.printError("Save  File Of this match dosnt exist");
+            DebugMessages.printError("YOU MUST RUN SERVER JAR FROM SAME FOLDER AS JAR");
+            return null;
+        }
+
+        FileInputStream streamIn = new FileInputStream(tmp);
         objectinputstream = new ObjectInputStream(streamIn);
         GameSaveState loadData = (GameSaveState) objectinputstream.readObject();
 

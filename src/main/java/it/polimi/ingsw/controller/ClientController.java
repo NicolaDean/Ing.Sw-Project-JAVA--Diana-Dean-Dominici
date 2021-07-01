@@ -954,7 +954,16 @@ public class ClientController implements Runnable{
 
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("reconnectInfo.json"));
+            File tmp = new File("reconnectInfo.json");
+            if(!tmp.exists())
+            {
+                DebugMessages.printError("Reconnection file damaged or not existing");
+                DebugMessages.printError("YOU MUST RUN JAR FROM SAME FOLDER AS JAR");
+                return;
+            }
+
+            FileReader file = new FileReader(tmp);
+            reader = new JsonReader(file);
             JsonParser parser = new JsonParser();
 
             //Parse packet
@@ -1019,5 +1028,12 @@ public class ClientController implements Runnable{
      */
     public void askProduction() {
         this.view.askProduction();
+    }
+
+    /**
+     * method called from "failed Reconnection" packet to comunicate to client the operation failed
+     */
+    public void failedReconnection() {
+        this.view.reconnectionFailed();
     }
 }

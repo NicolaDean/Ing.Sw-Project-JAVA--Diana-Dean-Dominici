@@ -257,5 +257,13 @@ public interface View {
      */
     void lorenzoTurn(String cliColor, String token);
 
+    /**
+     * show page with server connection error
+     */
     void serverDisconnected();
+
+    /**
+     * show "reconnection failed" error
+     */
+    void reconnectionFailed();
 }

@@ -249,6 +249,19 @@ public class ClientHandler implements Runnable, Serializable {
 
     }
 
+    public static void sendToClient(Socket s,Packet p)
+    {
+
+        try {
+            PrintWriter writer = new PrintWriter(s.getOutputStream());
+            writer.println(p.generateJson());
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     /**
      * Add new Data to disconnected client handler (new interpreter,new socket....)
      * Used when a client try to reconnect to this server

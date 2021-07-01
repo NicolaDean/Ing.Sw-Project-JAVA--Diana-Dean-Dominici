@@ -63,6 +63,10 @@ public class BuyScene extends BasicSceneUpdater{
         this.col = -1;
         this.row = -1;
 
+        Row1.setHgap(10);
+        Row2.setHgap(10);
+        Row3.setHgap(10);
+
         buyButton.setOnMouseClicked(this::buyButton);
         backButton.setOnMouseClicked(this::goBack);
         //GuiHelper.resize(1280,720);

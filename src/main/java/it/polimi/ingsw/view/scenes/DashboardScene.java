@@ -374,8 +374,11 @@ public class DashboardScene extends BasicSceneUpdater {
     {
 
         this.notifyObserver(controller -> {
+            boolean currentplayer= false;
 
             this.nickname.setText(controller.getMiniModel().getPlayers()[this.index].getNickname());
+
+
 
             int i=0;
             this.nicknames.setAlignment(Pos.CENTER);
@@ -389,7 +392,15 @@ public class DashboardScene extends BasicSceneUpdater {
                 p.setId("nick");
                 Label l = new Label(player.getNickname());
                 l.setTextAlignment(TextAlignment.CENTER);
-                l.setId("font");
+                if(player.getNickname().equals(controller.getMiniModel().getCurrentlyplaying()))
+                {
+                    l.setId("greenfont");
+                    currentplayer=true;
+                    System.out.println("\n\nho provato a mettere il testo verde\n\n");
+
+                }
+                else
+                    l.setId("font");
                 l.setAlignment(Pos.CENTER);
                 l.setPrefSize(100,50);
                 p.getChildren().add(l);
@@ -421,6 +432,9 @@ public class DashboardScene extends BasicSceneUpdater {
 
                 i++;
             }
+            if(!currentplayer)
+
+                nickname.setId("greentext");
 
         });
     }
@@ -790,6 +804,10 @@ public class DashboardScene extends BasicSceneUpdater {
         event.consume();
     }
 
+
+    /**
+     * prints the resource that has been exctracted in the market
+     */
     private void printResourceExtracted(){
         this.showLeader(null);
         for (int i = 0; i < resourceExtracted.size(); i++) {
@@ -892,6 +910,8 @@ public class DashboardScene extends BasicSceneUpdater {
             card.setSmooth(true);
             if(!c.isActive() && !isaspy)
                 card.setId("production_card");
+            if(c.isActive())
+                card.setId("activated_leader");
             pane.getChildren().add(card);
             pane.getChildren().add(leaderbin);
 
@@ -1052,6 +1072,7 @@ public class DashboardScene extends BasicSceneUpdater {
         ToastMessage t = new ToastMessage(msg,this.root,5000);
         t.show();
         this.resetObserverAfterDialog();
+        this.drawNicknames();
     }
 
     @Override

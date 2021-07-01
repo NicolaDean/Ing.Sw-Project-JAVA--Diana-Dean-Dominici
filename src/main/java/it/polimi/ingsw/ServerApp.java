@@ -2,10 +2,7 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.LorenzoServerController;
 import it.polimi.ingsw.controller.ServerController;
-import it.polimi.ingsw.controller.packets.ACK;
-import it.polimi.ingsw.controller.packets.Login;
-import it.polimi.ingsw.controller.packets.LoginSinglePlayer;
-import it.polimi.ingsw.controller.packets.Packet;
+import it.polimi.ingsw.controller.packets.*;
 import it.polimi.ingsw.enumeration.ErrorMessages;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.utils.ConstantValues;
@@ -233,12 +230,17 @@ public class ServerApp {
                     this.executor.submit(handler);
                     this.availableControllers.add(match);
                 }
+                else
+                {
+                    DebugMessages.printError("Error during loading saving data");
+                    ClientHandler.sendToClient(socket,new ReconnectionFailed());
+                }
 
             }
             else
             {
                 DebugMessages.printError("Error during loading saving data");
-                //TODO Respond to client Error during reconnection
+                ClientHandler.sendToClient(socket,new ReconnectionFailed());
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

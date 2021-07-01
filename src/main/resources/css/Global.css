@@ -86,6 +86,21 @@
     -fx-font-size: 12pt ;
 }
 
+#greenfont
+{
+    font-family: 'Cardinal';
+    src: url('../font/Cardinal.ttf');
+    -fx-font-size: 12pt ;
+
+    -fx-text-fill: lightseagreen;
+    -fx-text-stroke: black;
+
+
+    -fx-stroke: black;
+    -fx-stroke-width: 2px;
+}
+
+
 #fancytext{
 
     -fx-stroke: black;
