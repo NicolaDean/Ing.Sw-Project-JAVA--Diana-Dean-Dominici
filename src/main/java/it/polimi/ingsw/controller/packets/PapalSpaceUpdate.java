@@ -7,6 +7,9 @@ import it.polimi.ingsw.utils.DebugMessages;
 
 import java.util.List;
 
+/**
+ * packet that informs that a papal space has been reached
+ */
 public class PapalSpaceUpdate  extends Packet<ClientController> implements PacketManager<ClientController> {
 
     int player;

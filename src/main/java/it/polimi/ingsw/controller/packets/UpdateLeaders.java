@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.model.cards.LeaderCard;
 import it.polimi.ingsw.utils.DebugMessages;
 
+/**
+ * packet to update the leaders
+ */
 public class UpdateLeaders  extends Packet<ClientController> implements PacketManager<ClientController> {
 
     LeaderCard[] leaderCards;

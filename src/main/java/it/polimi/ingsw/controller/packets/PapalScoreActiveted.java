@@ -6,6 +6,9 @@ import it.polimi.ingsw.model.factory.MapFactory;
 import it.polimi.ingsw.utils.DebugMessages;
 import java.util.List;
 
+/**
+ * packet that informs that a papalscore has been activated
+ */
 public class PapalScoreActiveted extends Packet<ClientController> implements PacketManager<ClientController>{
 
     public PapalScoreActiveted()

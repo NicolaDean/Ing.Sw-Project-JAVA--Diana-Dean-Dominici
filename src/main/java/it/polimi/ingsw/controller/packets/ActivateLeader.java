@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 
+/**
+ * packet to send a request of leader activation
+ */
 public class ActivateLeader   extends Packet<ServerController> implements PacketManager<ServerController> {
     int pos;
     boolean action;//true activate false discard

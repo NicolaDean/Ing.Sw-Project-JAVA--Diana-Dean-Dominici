@@ -2,6 +2,9 @@ package it.polimi.ingsw.controller.packets;
 
 import it.polimi.ingsw.controller.ClientController;
 
+/**
+ * packet that the server sends when the game ends
+ */
 public class EndGameLorenzo  extends Packet<ClientController> implements PacketManager<ClientController> {
     Boolean lorenzoWin;
     int VP;

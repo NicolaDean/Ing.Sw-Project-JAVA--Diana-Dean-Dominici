@@ -6,6 +6,9 @@ import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 import it.polimi.ingsw.enumeration.ErrorMessages;
 
+/**
+ * packet that shows the error occured during an operation
+ */
 public class ACK extends Packet<ClientController> implements PacketManager<ClientController>{
 
     int errorMSG;

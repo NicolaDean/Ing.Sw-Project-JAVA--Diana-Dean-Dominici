@@ -6,6 +6,9 @@ import it.polimi.ingsw.model.resources.ResourceList;
 
 import java.util.List;
 
+/**
+ * packet taht sends the list of resources gotten from an extraction
+ */
 public class StorageMassExtraction extends Packet<ServerController> implements PacketManager<ServerController> {
     boolean buyturn;
     List<ExtractionInstruction> insertions;

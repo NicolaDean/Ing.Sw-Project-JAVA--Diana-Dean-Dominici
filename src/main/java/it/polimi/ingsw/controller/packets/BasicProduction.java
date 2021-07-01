@@ -5,7 +5,9 @@ import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 import it.polimi.ingsw.enumeration.ResourceType;
 
-
+/**
+ * packet to ask a basic production
+ */
 public class BasicProduction  extends Packet<ServerController> implements PacketManager<ServerController> {
 
     private ResourceType res1;

@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.ClientController;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * packet that informs that a move failed
+ */
 public class MoveFailed extends  Packet<ClientController> implements PacketManager<ClientController> {
 
 

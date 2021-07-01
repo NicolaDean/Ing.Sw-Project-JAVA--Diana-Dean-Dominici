@@ -2,6 +2,10 @@ package it.polimi.ingsw.controller.packets;
 
 import it.polimi.ingsw.controller.ServerController;
 
+/**
+ * interface that implements the methods used by the packets
+ * @param <T>
+ */
 public interface PacketManager<T>{
 
 

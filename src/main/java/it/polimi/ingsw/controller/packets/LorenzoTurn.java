@@ -5,6 +5,9 @@ import it.polimi.ingsw.model.lorenzo.token.ActionToken;
 import it.polimi.ingsw.utils.ConstantValues;
 import it.polimi.ingsw.utils.DebugMessages;
 
+/**
+ * packet that informs that is lorenzo's turn
+ */
 public class LorenzoTurn extends Packet<ClientController> implements PacketManager<ClientController>{
 
     transient ActionToken actionToken;

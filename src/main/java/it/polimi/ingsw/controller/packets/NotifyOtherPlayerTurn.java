@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.ClientController;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * packet that informs the players about who is currently playing
+ */
 public class NotifyOtherPlayerTurn  extends Packet<ClientController> implements PacketManager<ClientController>{
 
     String nickname;

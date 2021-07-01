@@ -2,6 +2,9 @@ package it.polimi.ingsw.controller.packets;
 
 import it.polimi.ingsw.controller.ServerController;
 
+/**
+ * packet to ask the server to perform a move action
+ */
 public class AskMove extends Packet<ServerController> implements PacketManager<ServerController>{
 
     int d1;

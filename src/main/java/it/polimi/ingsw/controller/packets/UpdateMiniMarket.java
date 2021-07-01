@@ -7,6 +7,9 @@ import it.polimi.ingsw.controller.packets.PacketManager;
 import it.polimi.ingsw.utils.DebugMessages;
 import it.polimi.ingsw.view.GuiHelper;
 
+/**
+ * packet used to update the mini market for each client
+ */
 public class UpdateMiniMarket extends Packet<ClientController> implements PacketManager<ClientController>{
     Boolean dir;
     int pos;

@@ -8,6 +8,9 @@ import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.List;
 
+/**
+ * packet to send a pending cost to a client
+ */
 public class PendingCost  extends Packet<ClientController> implements PacketManager<ClientController> {
 
     List<Resource> pendingCost;

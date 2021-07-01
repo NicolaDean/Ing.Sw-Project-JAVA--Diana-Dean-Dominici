@@ -9,6 +9,9 @@ import it.polimi.ingsw.model.minimodel.MiniPlayer;
 
 import java.util.Stack;
 
+/**
+ * packet that notifies the clients that the game started
+ */
 public class GameStarted extends Packet<ClientController> implements PacketManager<ClientController>{
 
     MiniPlayer[] players;

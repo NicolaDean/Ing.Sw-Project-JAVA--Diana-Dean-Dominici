@@ -5,6 +5,9 @@ import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.model.lorenzo.token.ActionToken;
 import it.polimi.ingsw.utils.DebugMessages;
 
+/**
+ * packet that the server sends when the game ends
+ */
 public class EndGame extends Packet<ClientController> implements PacketManager<ClientController> {
 
     String [] charts;

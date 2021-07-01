@@ -5,6 +5,9 @@ import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.List;
 
+/**
+        * a custom turnnotify for pendin costs
+        */
 public class TurnNotifySpecialPending extends TurnNotify{
 
 

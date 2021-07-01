@@ -10,6 +10,9 @@ import it.polimi.ingsw.utils.DebugMessages;
 
 import java.util.Stack;
 
+/**
+ * packet for sharing the reconnection informations needed
+ */
 public class ReconnectingInfo extends Packet<ClientController> implements PacketManager<ClientController>{
 
     MiniModel model;

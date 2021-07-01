@@ -3,6 +3,9 @@ package it.polimi.ingsw.controller.packets;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.model.cards.LeaderCard;
 
+/**
+ * packet to inform the server which leader the client selected
+ */
 public class SelectLeader extends Packet<ServerController> implements PacketManager<ServerController> {
 
         int l1;

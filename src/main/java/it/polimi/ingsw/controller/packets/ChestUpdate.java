@@ -5,6 +5,9 @@ import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.List;
 
+/**
+ * packet sent by the server to update the storage in the minimodel of the clients
+ */
 public class ChestUpdate extends  Packet<ClientController> implements PacketManager<ClientController> {
 
     public List<Resource> chest;

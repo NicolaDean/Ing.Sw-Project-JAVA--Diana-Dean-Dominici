@@ -6,6 +6,10 @@ import it.polimi.ingsw.controller.packets.PacketManager;
 import it.polimi.ingsw.enumeration.ResourceType;
 import it.polimi.ingsw.model.resources.Resource;
 
+
+/**
+ * packet used to discard resources
+ */
 public class DiscardResource extends Packet<ServerController> implements PacketManager<ServerController>{
     int quantity;
     ResourceType type;

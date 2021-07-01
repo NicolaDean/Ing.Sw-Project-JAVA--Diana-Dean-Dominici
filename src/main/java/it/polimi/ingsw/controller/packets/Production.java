@@ -5,6 +5,9 @@ import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 
+/**
+ * packet that asks to activate a production on a card
+ */
 public class Production extends Packet<ServerController> implements PacketManager<ServerController> {
 
     int position;

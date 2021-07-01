@@ -2,6 +2,9 @@ package it.polimi.ingsw.controller.packets;
 
 import it.polimi.ingsw.controller.ServerController;
 
+/**
+ * clients' answer to the server's ping packets
+ */
 public class Pong extends Packet<ServerController> implements PacketManager<ServerController>{
 
     int index;

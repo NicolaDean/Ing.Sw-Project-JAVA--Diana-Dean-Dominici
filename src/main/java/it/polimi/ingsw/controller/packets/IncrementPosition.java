@@ -3,6 +3,9 @@ package it.polimi.ingsw.controller.packets;
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.utils.DebugMessages;
 
+/**
+ * packet that tells the new position of a player
+ */
 public class IncrementPosition extends Packet<ClientController> implements PacketManager<ClientController>{
 
     int position;

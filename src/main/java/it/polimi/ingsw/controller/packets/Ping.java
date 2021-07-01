@@ -3,6 +3,9 @@ package it.polimi.ingsw.controller.packets;
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.ServerController;
 
+/**
+ * packet used to ping the clients
+ */
 public class Ping extends Packet<ClientController> implements PacketManager<ClientController> {
 
     int index;

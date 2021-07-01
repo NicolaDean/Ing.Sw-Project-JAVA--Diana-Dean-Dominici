@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 
+/**
+ * packet to ask a marcket extraction
+ */
 public class MarketExtraction  extends Packet<ServerController> implements PacketManager<ServerController> {
 
     private boolean direction;

@@ -3,6 +3,9 @@ package it.polimi.ingsw.controller.packets;
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.utils.DebugMessages;
 
+/**
+ * packet that notifies that a red ball has been extracted
+ */
 public class ExtreactedRedBall extends Packet<ClientController> implements PacketManager<ClientController>{
 
     int position;

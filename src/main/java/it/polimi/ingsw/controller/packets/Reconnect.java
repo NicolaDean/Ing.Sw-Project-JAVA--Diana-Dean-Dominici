@@ -4,6 +4,9 @@ import it.polimi.ingsw.WaitingRoom;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.utils.DebugMessages;
 
+/**
+ * packet used to reconnect
+ */
 public class Reconnect extends Packet<ServerController> implements PacketManager<ServerController> {
 
        String  nickname;

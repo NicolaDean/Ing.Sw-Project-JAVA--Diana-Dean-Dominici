@@ -144,6 +144,11 @@ public class BuyScene extends BasicSceneUpdater{
         if(y==2) Row3.getChildren().add(this.cards[y][x]);
     }
 
+    /**
+     * the function that tells whoch card the user clicked
+     * @param x
+     * @param y
+     */
     public void clickFunction(int x,int y)
     {
         click.setOpacity(1);
@@ -177,6 +182,7 @@ public class BuyScene extends BasicSceneUpdater{
         selectedCard.setImage(currCard);
     }
 
+
     @Override
     public void reciveMessage(String msg) {
         super.reciveMessage(msg);
@@ -186,6 +192,10 @@ public class BuyScene extends BasicSceneUpdater{
     }
 
 
+    /**
+     * the button to buy the card
+     * @param mouseEvent
+     */
     public void buyButton(MouseEvent mouseEvent) {
 
         if(GuiHelper.getCurrentPage()!=-1 && GuiHelper.getCurrentPage()!=ConstantValues.buyTurn)
@@ -217,6 +227,10 @@ public class BuyScene extends BasicSceneUpdater{
         }
     }
 
+    /**
+     * go back to the dashboard
+     * @param mouseEvent
+     */
     public void goBack(MouseEvent mouseEvent)
     {
         try {

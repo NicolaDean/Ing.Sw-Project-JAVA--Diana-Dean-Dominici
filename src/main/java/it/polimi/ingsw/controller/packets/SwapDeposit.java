@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 
+/**
+ * packet to ask the server to perform a swap
+ */
 public class SwapDeposit  extends Packet<ServerController> implements PacketManager<ServerController> {
 
     int pos1;

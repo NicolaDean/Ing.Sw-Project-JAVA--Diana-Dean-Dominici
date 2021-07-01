@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.ClientController;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * packet that informs that a swap failed
+ */
 public class SwapFailed extends  Packet<ClientController> implements PacketManager<ClientController> {
     int d1;
     int d2;

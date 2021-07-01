@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.model.resources.Resource;
 
+/**
+ * packet to send the informations about an extraction (row col - number)
+ */
 public class ExtractionInstruction {
 
     boolean location; // true storage, false chest

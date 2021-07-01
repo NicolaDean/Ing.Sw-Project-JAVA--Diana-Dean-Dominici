@@ -8,6 +8,9 @@ import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.List;
 
+/**
+ * packet that shows the result of an extraction
+ */
 public class MarketResult   extends Packet<ClientController> implements PacketManager<ClientController> {
 
     List<Resource>  gainedResources;

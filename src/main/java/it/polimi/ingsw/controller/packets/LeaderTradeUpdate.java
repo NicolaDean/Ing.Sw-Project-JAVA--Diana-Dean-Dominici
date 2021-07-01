@@ -5,7 +5,9 @@ import it.polimi.ingsw.model.cards.leaders.BonusProductionInterface;
 import it.polimi.ingsw.model.cards.leaders.LeaderTradeCard;
 
 import java.util.List;
-
+/**
+ * pakcet that informs that a trade leader is active
+ */
 public class LeaderTradeUpdate extends Packet<ClientController> implements PacketManager<ClientController> {
 
 

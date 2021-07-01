@@ -8,6 +8,9 @@ import it.polimi.ingsw.controller.packets.PacketManager;
 
 import java.lang.reflect.Type;
 
+/**
+ * a class that produces packets
+ */
 public class BasicPacketFactory
 {
     String type;

@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.model.cards.ProductionCard;
 import it.polimi.ingsw.utils.DebugMessages;
 
+/**
+ * packet that informs about a lorenzo's action
+ */
 public class LorenzoDiscardedCard extends Packet<ClientController> implements PacketManager<ClientController> {
 
     int x;

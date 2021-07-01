@@ -7,6 +7,9 @@ import it.polimi.ingsw.model.resources.ResourceList;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * packet that informs which resources are inserted
+ */
 public class StorageMassInsertion extends Packet<ServerController> implements PacketManager<ServerController> {
 
 

@@ -6,6 +6,9 @@ import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.List;
 
+/**
+ * pakcet that informs that a white ball leader is active
+ */
 public class LeaderWhiteUpdate   extends Packet<ClientController> implements PacketManager<ClientController> {
 
     ResourceType[] resourceType;

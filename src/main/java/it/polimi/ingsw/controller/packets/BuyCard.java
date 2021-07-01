@@ -5,6 +5,9 @@ import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 import it.polimi.ingsw.exceptions.AckManager;
 
+/**
+ * packet that asks to perform a buy action
+ */
 public class BuyCard  extends Packet<ServerController> implements PacketManager<ServerController> {
 
     int x;

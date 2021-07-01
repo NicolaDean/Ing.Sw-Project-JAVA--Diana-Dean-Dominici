@@ -3,6 +3,9 @@ package it.polimi.ingsw.controller.packets;
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.model.cards.ProductionCard;
 
+/**
+ * pcaket to update the cards in the shop once one is bought
+ */
 public class UpdateCardBuyed  extends Packet<ClientController> implements PacketManager<ClientController>{
 
     ProductionCard newCard;

@@ -3,6 +3,9 @@ package it.polimi.ingsw.controller.packets;
 import it.polimi.ingsw.controller.ServerController;
 import it.polimi.ingsw.model.resources.Resource;
 
+/**
+ * packet that sends the informations about an insertion (position)
+ */
 public class InsertionInstruction {
 
     Resource resource;

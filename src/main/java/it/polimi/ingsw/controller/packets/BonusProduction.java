@@ -5,6 +5,9 @@ import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 import it.polimi.ingsw.enumeration.ResourceType;
 
+/**
+ * packet to ask a bonus production
+ */
 public class BonusProduction   extends Packet<ServerController> implements PacketManager<ServerController>{
 
     private int position;

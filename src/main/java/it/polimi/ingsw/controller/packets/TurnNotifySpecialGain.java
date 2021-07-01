@@ -5,6 +5,9 @@ import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.List;
 
+/**
+ * a custom turnnotify for gains
+ */
 public class TurnNotifySpecialGain extends TurnNotify{
 
 

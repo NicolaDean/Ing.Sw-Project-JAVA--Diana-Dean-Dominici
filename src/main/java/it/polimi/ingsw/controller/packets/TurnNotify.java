@@ -2,6 +2,9 @@ package it.polimi.ingsw.controller.packets;
 
 import it.polimi.ingsw.controller.ClientController;
 
+/**
+ * packet that notifies a player that it's his turn
+ */
 public class TurnNotify  extends Packet<ClientController> implements PacketManager<ClientController>{
 
     public TurnNotify() {

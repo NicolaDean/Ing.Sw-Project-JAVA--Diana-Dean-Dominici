@@ -2,6 +2,10 @@ package it.polimi.ingsw.controller.packets;
 
 import it.polimi.ingsw.controller.ServerController;
 
+/**
+ * the standard packet class, the father of all packets
+ * @param <T>
+ */
 public abstract class   Packet<T> implements PacketManager<T>
 {
 

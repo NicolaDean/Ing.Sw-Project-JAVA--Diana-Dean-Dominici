@@ -2,6 +2,9 @@ package it.polimi.ingsw.controller.packets;
 
 import it.polimi.ingsw.controller.ClientController;
 
+/**
+ * packet that informs that the reconnection failed
+ */
 public class ReconnectionFailed  extends  Packet<ClientController> implements PacketManager<ClientController> {
 
     public ReconnectionFailed()

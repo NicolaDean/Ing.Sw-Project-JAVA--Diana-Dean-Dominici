@@ -6,6 +6,9 @@ import it.polimi.ingsw.controller.packets.Packet;
 import it.polimi.ingsw.controller.packets.PacketManager;
 import it.polimi.ingsw.utils.DebugMessages;
 
+/**
+ * packet to update the position of a player
+ */
 public class UpdatePosition extends Packet<ClientController> implements PacketManager<ClientController>{
 
     int position;
