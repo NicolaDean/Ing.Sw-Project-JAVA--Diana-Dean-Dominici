@@ -205,8 +205,8 @@
                            </font>
                         </Label>
                         <Pane fx:id="papal1" layoutX="220.0" layoutY="90.0" prefHeight="69.0" prefWidth="70.0" />
-                        <Pane layoutX="704.0" layoutY="91.0" prefHeight="69.0" prefWidth="70.0" />
                         <Pane fx:id="papal2" layoutX="441.0" layoutY="40.0" prefHeight="69.0" prefWidth="70.0" />
+                        <Pane fx:id="papal3" layoutX="704.0" layoutY="91.0" prefHeight="69.0" prefWidth="70.0" />
                      </children>
                   </AnchorPane>
                   <ImageView id="production_card" fx:id="shopbutton" fitHeight="97.0" fitWidth="213.0" layoutX="71.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">

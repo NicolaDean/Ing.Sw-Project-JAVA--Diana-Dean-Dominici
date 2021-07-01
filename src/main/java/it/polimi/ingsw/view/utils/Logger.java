@@ -226,6 +226,10 @@ public class Logger {
         System.out.println("════╝");
     }
 
+    /**
+     * print legend of player inside match and their name and color
+     * @param players
+     */
     public void printPapalPositionLegend(MiniPlayer[] players){
         int nOfPlayer=players.length;
         String[] colorCLI= new String[nOfPlayer];
@@ -407,6 +411,12 @@ public class Logger {
         }
     }
 
+    /**
+     * print row cost list of a card
+     * @param resourceList cost
+     * @param fieldname    row name (eg cost,obtained,prereq..
+     * @param faith        faith gsined
+     */
     public void printPaddedCost(List<Resource> resourceList,String fieldname,int faith)
     {
             this.out.print("║");
@@ -436,6 +446,9 @@ public class Logger {
             this.out.print("║");
     }
 
+    /**
+     * empty card
+     */
     public void printEmptyCard()
     {
         this.out.print("║");
@@ -444,6 +457,10 @@ public class Logger {
     }
 
 
+    /**
+     * print a bonus card
+     * @param bonusProductionInterface
+     */
     public void printBonusCards(BonusProductionInterface[] bonusProductionInterface)
     {
         this.out.print("╔");
@@ -563,6 +580,10 @@ public class Logger {
 
     }
 
+    /**
+     * print a matrix of cards of cards
+     * @param productionCards
+     */
     public void printDeks(ProductionCard[][] productionCards)
     {
         for(ProductionCard[] row:productionCards)
@@ -571,6 +592,12 @@ public class Logger {
         }
     }
 
+    /**
+     * print a dashboard
+     * @param storage        storage
+     * @param chest          chest
+     * @param productionCards  cards of this player
+     */
     public void printDashboard(Deposit[] storage,List<Resource> chest,ProductionCard[] productionCards)
     {
         this.printSeparator();
@@ -586,6 +613,10 @@ public class Logger {
     }
 
 
+    /**
+     * print leaders of this player
+     * @param cards leader owned
+     */
     public void printLeaders(LeaderCard[] cards)
     {
 
@@ -742,6 +773,9 @@ public class Logger {
         out.printlnColored(content,this.goodMessage,this.istructionBackground);
     }
 
+    /**
+     * print a list of possible choices in resources
+     */
     public void printResourceTypeSelection(ResourceType[] resourceTypes)
     {
         int i=1;
@@ -754,6 +788,10 @@ public class Logger {
             i++;
         }
     }
+
+    /**
+     * print a list of ALL possible choices in resources
+     */
     public void printResourceTypeSelection()
     {
 
@@ -854,6 +892,10 @@ public class Logger {
         return;
     }
 
+    /**
+     * print a single resource
+     * @param res res to print
+     */
     public void printResource(Resource res)
     {
         int          qty    = res.getQuantity();
@@ -865,6 +907,10 @@ public class Logger {
         this.reset();
     }
 
+    /**
+     * print a list of resources with no ESCAPE
+     * @param resourceList  res to print
+     */
     public void printInlineResourceList(List<Resource> resourceList)
     {
         for(Resource res : resourceList)
@@ -872,6 +918,11 @@ public class Logger {
             if(res.getQuantity() != 0) this.printResource(res);
         }
     }
+
+    /**
+     * print a list of resources
+     * @param resourceList  res to print
+     */
     public void printResourceList(List<Resource> resourceList)
     {
         this.printInlineResourceList(resourceList);
@@ -884,36 +935,6 @@ public class Logger {
         this.out.reset();
     }
 
-    /**
-     * Display all cards currently visible (buyable)
-     */
-    public void displayDecks()
-    {
 
-    }
-
-    /**
-     * Print the storage/deposits owned by this user
-     */
-    public void displayStorage()
-    {
-
-    }
-
-    /**
-     * Print a "summary" of others player resources/position
-     */
-    public void printOthersPlayer()
-    {
-
-    }
-
-    /**
-     * Print the productionCards visible
-     */
-    public void printProductions()
-    {
-
-    }
 
 }

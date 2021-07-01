@@ -9,19 +9,19 @@ import java.util.List;
 
 public class PapalSpaceUpdate  extends Packet<ClientController> implements PacketManager<ClientController> {
 
-    int index;
+    int player;
     boolean[] papalToken;
 
     public PapalSpaceUpdate(boolean[] papalToken,int index) {
         super("PapalSpaceUpdate");
         this.papalToken = papalToken;
-        this.index = index;
+        this.player = index;
     }
 
     @Override
     public Packet analyze(ClientController controller) {
 
-        controller.updatePapalToken(papalToken,index);
+        controller.updatePapalToken(papalToken,player);
         return null;
     }
 }

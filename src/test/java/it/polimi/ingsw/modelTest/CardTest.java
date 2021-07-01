@@ -14,6 +14,9 @@ import static it.polimi.ingsw.enumeration.ResourceType.SERVANT;
 
 public class CardTest {
 
+    /**
+     * Check if cart contain right values
+     */
     @Test
     public void CheckCostTesting()
     {

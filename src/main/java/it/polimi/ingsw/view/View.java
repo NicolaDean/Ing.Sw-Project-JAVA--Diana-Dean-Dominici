@@ -13,6 +13,9 @@ import it.polimi.ingsw.model.resources.Resource;
 
 import java.util.List;
 
+/**
+ * common interface with all methods of cli and gui
+ */
 public interface View {
 
     /**
@@ -23,8 +26,11 @@ public interface View {
     /**
      * print end screen for lorenzo game
      */
-    public void printEndScreenLorenzo(Boolean lorenzoWin);
+    public void printEndScreenLorenzo(Boolean lorenzoWin,int VP);
 
+    /**
+     * print welcome screen
+     */
     public void printWelcomeScreen();
 
     public void setMiniMarketDiscardedResouce(BasicBall miniMarketBalls);
@@ -90,8 +96,12 @@ public interface View {
      */
     public void askBonusProduction(BonusProductionInterface[] bonus);
 
-
+    /**
+     * show list of resource with discont
+     * @param resourceList
+     */
     public void showDiscount(List<Resource> resourceList);
+
     /**
      * ask user what kind of basic production he want
      */
@@ -212,8 +222,14 @@ public interface View {
      */
     public void askEndTurn();
 
+    /**
+     * ask player if he want to move resources froma  deposit to another
+     */
     public void askMoveResources();
 
+    /**
+     * If connection fail
+     */
     public void connectionfailed();
 
 
@@ -241,5 +257,13 @@ public interface View {
      */
     void lorenzoTurn(String cliColor, String token);
 
+    /**
+     * show page with server connection error
+     */
     void serverDisconnected();
+
+    /**
+     * show "reconnection failed" error
+     */
+    void reconnectionFailed();
 }

@@ -108,6 +108,12 @@ public class ResourceOperator {
         return tmp;
     }
 
+    /**
+     *
+     * @param type type to count
+     * @param list list to check
+     * @return quantity of a specific resource type
+     */
     public static int extractQuantityOf(ResourceType type, List<Resource> list)
     {
         for(Resource res:list)
@@ -117,14 +123,6 @@ public class ResourceOperator {
         return 0;
     }
 
-    public static Resource extractResourceOf(ResourceType type, List<Resource> list)
-    {
-        for(Resource res:list)
-        {
-            if(res.getType() == type) return res;
-        }
-        return new Resource(type,0);
-    }
 
     /**
      * list A - list B (UNSAFE!!, dosnt check if A hase more resource then B) if that happen quantity is setted to 0 to avoid infinite loop
@@ -151,6 +149,11 @@ public class ResourceOperator {
         return out;
     }
 
+    /**
+     * check if a list is empty
+     * @param resources  list to check
+     * @return true if empty
+     */
     public static boolean isEmpty(List<Resource> resources)
     {
         for(Resource res1 : resources) {
@@ -160,7 +163,12 @@ public class ResourceOperator {
 
     }
 
-
+    /**
+     *
+     * @param resources  list to elaborate
+     * @param res   resource to remove
+     * @return new list with res removed
+     */
     public static List<Resource> remove(List<Resource> resources,Resource res)
     {
         int pos=0;

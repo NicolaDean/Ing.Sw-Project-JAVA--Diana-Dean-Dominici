@@ -9,6 +9,9 @@ import java.util.HashMap;
 import static it.polimi.ingsw.enumeration.ResourceType.*;
 
 
+/**
+ * CLI resources rappresentation
+ */
 public class ResourceRappresentation {
 
     private final HashMap<ResourceType,String> colorRappresentation             = new HashMap<ResourceType,String>();
@@ -35,16 +38,27 @@ public class ResourceRappresentation {
         cardTypeColorRappresentation.put(CardType.GREEN     , CliColors.GREEN_BACKGROUND);
     }
 
+    /**
+     *
+     * @param resourceType
+     * @return resource reappresentation inside CLI
+     */
     public String getColorRappresentation(ResourceType resourceType)
     {
         return this.colorRappresentation.get(resourceType);
     }
 
+    //TODO
     public String getNonColorRappresentation(ResourceType resourceType)
     {
         return this.noColorRappresentation.get(resourceType);
     }
 
+    /**
+     *
+     * @param type
+     * @return Card rappresentation inside cli
+     */
     public String getCardTypeColorRappresentation(CardType type)
     {
         return this.cardTypeColorRappresentation.get(type);

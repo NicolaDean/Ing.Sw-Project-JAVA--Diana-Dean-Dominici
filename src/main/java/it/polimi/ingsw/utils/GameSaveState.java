@@ -18,6 +18,10 @@ public class GameSaveState implements Serializable {
         this.expiring.setTime(this.expiring.getTime() + days(30));//30 days expiring Save data
     }
 
+    /**
+     *  load controller from file
+     * @return the server contoller loaded from file
+     */
     public ServerController getController()
     {
         Date today = new Date();
@@ -31,6 +35,11 @@ public class GameSaveState implements Serializable {
         }
     }
 
+    /**
+     * Set an expiring date
+     * @param days
+     * @return
+     */
     public static long days(int days)
     {
         return 1000L *60*60*24* days;

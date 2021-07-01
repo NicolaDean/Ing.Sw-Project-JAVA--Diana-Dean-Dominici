@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>it.polimi.ingsw.model</OriginalElement>
+  <nodes>
+    <node x="2183.75" y="949.5">it.polimi.ingsw.model.cards.leaders.DepositBonus</node>
+    <node x="1532.0" y="2182.0">it.polimi.ingsw.model.minimodel</node>
+    <node x="1209.75" y="949.5">it.polimi.ingsw.model.cards.leaders.LeaderWhiteCard</node>
+    <node x="766.0" y="2182.0">it.polimi.ingsw.model.resources.Resource</node>
+    <node x="1821.75" y="0.0">it.polimi.ingsw.model.cards.Card</node>
+    <node x="1062.0" y="2182.0">it.polimi.ingsw.model.cards.PrerequisiteCard</node>
+    <node x="1051.0" y="1570.0">it.polimi.ingsw.model.market.balls.ResourceBall</node>
+    <node x="727.0" y="503.0">it.polimi.ingsw.model.cards.leaders.BonusProductionInterface</node>
+    <node x="0.0" y="0.0">it.polimi.ingsw.model.Player</node>
+    <node x="1688.75" y="949.5">it.polimi.ingsw.model.cards.leaders.LeaderDiscountCard</node>
+    <node x="1916.75" y="260.0">it.polimi.ingsw.model.cards.ProductionCard</node>
+    <node x="433.0" y="2182.0">it.polimi.ingsw.model.dashboard.Deposit</node>
+    <node x="1745.0" y="2182.0">it.polimi.ingsw.model.factory</node>
+    <node x="1345.0" y="1603.5">it.polimi.ingsw.model.market.balls.WhiteBall</node>
+    <node x="450.5" y="1140.0">it.polimi.ingsw.model.lorenzo</node>
+    <node x="0.0" y="2182.0">it.polimi.ingsw.model.resources.ResourceOperator</node>
+    <node x="706.0" y="1333.0">it.polimi.ingsw.model.market.Market</node>
+    <node x="1344.0" y="2182.0">it.polimi.ingsw.model.CellScore</node>
+    <node x="0.0" y="1333.0">it.polimi.ingsw.model.dashboard.Dashboard</node>
+    <node x="1788.0" y="1333.0">it.polimi.ingsw.model.PapalSpace</node>
+    <node x="1468.75" y="293.0">it.polimi.ingsw.model.cards.LeaderCard</node>
+    <node x="371.0" y="0.0">it.polimi.ingsw.model.Game</node>
+    <node x="1342.0" y="1333.0">it.polimi.ingsw.model.market.balls.BasicBall</node>
+    <node x="732.75" y="894.0">it.polimi.ingsw.model.cards.leaders.LeaderTradeCard</node>
+    <node x="2195.0" y="1333.0">it.polimi.ingsw.model.dashboard.Storage</node>
+    <node x="1554.0" y="1603.5">it.polimi.ingsw.model.market.balls.RedBall</node>
+    <node x="445.0" y="1333.0">it.polimi.ingsw.model.resources.ResourceList</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.polimi.ingsw.model.cards.leaders.LeaderTradeCard" target="it.polimi.ingsw.model.cards.LeaderCard">
+      <point x="114.25" y="-105.0" />
+      <point x="1075.5" y="864.0" />
+      <point x="1522.25" y="864.0" />
+      <point x="-160.5" y="259.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.market.balls.ResourceBall" target="it.polimi.ingsw.model.market.balls.BasicBall">
+      <point x="0.0" y="-83.0" />
+      <point x="1188.0" y="1545.0" />
+      <point x="1374.5" y="1545.0" />
+      <point x="-65.0" y="93.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.lorenzo" target="it.polimi.ingsw.model.Game">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="545.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.cards.leaders.DepositBonus" target="it.polimi.ingsw.model.cards.LeaderCard">
+      <point x="0.0" y="-49.5" />
+      <point x="2404.25" y="864.0" />
+      <point x="1843.25" y="864.0" />
+      <point x="160.5" y="259.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.market.balls.WhiteBall" target="it.polimi.ingsw.model.market.balls.BasicBall">
+      <point x="0.0" y="-49.5" />
+      <point x="0.0" y="93.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.market.balls.RedBall" target="it.polimi.ingsw.model.market.balls.BasicBall">
+      <point x="0.0" y="-49.5" />
+      <point x="1648.5" y="1545.0" />
+      <point x="1504.5" y="1545.0" />
+      <point x="65.0" y="93.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.cards.leaders.LeaderTradeCard" target="it.polimi.ingsw.model.cards.leaders.BonusProductionInterface">
+      <point x="-114.25" y="-105.0" />
+      <point x="0.0" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.cards.ProductionCard" target="it.polimi.ingsw.model.cards.Card">
+      <point x="0.0" y="-292.0" />
+      <point x="2175.75" y="235.0" />
+      <point x="1983.0" y="235.0" />
+      <point x="53.75" y="105.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.cards.leaders.LeaderDiscountCard" target="it.polimi.ingsw.model.cards.LeaderCard">
+      <point x="0.0" y="-49.5" />
+      <point x="1926.25" y="874.0" />
+      <point x="1736.25" y="874.0" />
+      <point x="53.5" y="259.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.cards.leaders.LeaderWhiteCard" target="it.polimi.ingsw.model.cards.LeaderCard">
+      <point x="0.0" y="-49.5" />
+      <point x="1439.25" y="874.0" />
+      <point x="1629.25" y="874.0" />
+      <point x="-53.5" y="259.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.cards.LeaderCard" target="it.polimi.ingsw.model.cards.Card">
+      <point x="0.0" y="-259.0" />
+      <point x="1682.75" y="235.0" />
+      <point x="1875.5" y="235.0" />
+      <point x="-53.75" y="105.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.4" x="1083.827328348063" y="3280.666666666667" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -26,6 +26,9 @@ import javafx.scene.control.ButtonType;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * graphical interface
+ */
 public class GUI extends Observable<ClientController> implements View{
 
     boolean singleplayer;
@@ -88,11 +91,11 @@ public class GUI extends Observable<ClientController> implements View{
     /**
      * print end screen for lorenzo game
      */
-    public void printEndScreenLorenzo(Boolean lorenzoWin){
+    public void printEndScreenLorenzo(Boolean lorenzoWin,int VP){
         DebugMessages.printWarning(lorenzoWin?"YOU LOST":"YOU WIN");
         Platform.runLater(()->{
             try {
-                GuiHelper.setRoot(FXMLpaths.endGame,new EndGameScene(lorenzoWin));
+                GuiHelper.setRoot(FXMLpaths.endGame,new EndGameScene(lorenzoWin,VP));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -589,5 +592,10 @@ public class GUI extends Observable<ClientController> implements View{
                 e.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void reconnectionFailed() {
+        serverDisconnected();
     }
 }

@@ -21,7 +21,17 @@ public class LoadGameState {
     public static ServerController loadGame(long id) throws IOException, ClassNotFoundException {
 
         ObjectInputStream objectinputstream = null;
-        FileInputStream streamIn = new FileInputStream(ConstantValues.saveFileName + id + ".ser");
+
+
+        File tmp = new File(ConstantValues.saveFileName + id + ".ser");
+        if(!tmp.exists())
+        {
+            DebugMessages.printError("Save  File Of this match dosnt exist");
+            DebugMessages.printError("YOU MUST RUN SERVER JAR FROM SAME FOLDER AS JAR");
+            return null;
+        }
+
+        FileInputStream streamIn = new FileInputStream(tmp);
         objectinputstream = new ObjectInputStream(streamIn);
         GameSaveState loadData = (GameSaveState) objectinputstream.readObject();
 
@@ -52,6 +62,11 @@ public class LoadGameState {
         //TODO
     }
 
+    /**
+     * save on file last created match id
+     * @param id             id of last created match
+     * @throws IOException   file dosnt exist
+     */
     public static void writeCurrentId(long id) throws IOException {
 
         Writer writer = new FileWriter(ConstantValues.currentIdFile);
@@ -61,6 +76,11 @@ public class LoadGameState {
         writer.close();
     }
 
+    /**
+     *
+     * @return id of last match created (loaded from file)
+     * @throws IOException file dosnt exist
+     */
     public static long loadCurrentId() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(ConstantValues.currentIdFile));
         Gson gson = new Gson();

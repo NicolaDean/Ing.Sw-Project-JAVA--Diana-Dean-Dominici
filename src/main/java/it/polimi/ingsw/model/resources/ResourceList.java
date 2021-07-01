@@ -5,7 +5,9 @@ import it.polimi.ingsw.enumeration.ResourceType;
 import java.io.Serializable;
 import java.util.*;
 
-
+/**
+ * Custom list that COMPACT resources instead of keep them separated
+ */
 public class ResourceList implements List, Serializable
 {
 

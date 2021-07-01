@@ -85,6 +85,10 @@ public class InputReaderValidation {
         return cancellString;
     }
 
+    /**
+     *
+     * @return a string corresponding to console input stream
+     */
     public String readLine(){
         //return this.console.nextLine();
         try {
@@ -96,41 +100,25 @@ public class InputReaderValidation {
         return null;
     }
 
-    public int readInt()
-    {
-        try {
-            return Integer.parseInt(this.console2.readLine());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
+
+    /**
+     *
+     * @param num to check
+     * @param min resuisite min
+     * @param max resuisite max
+     * @return true if input number satisfy requisite
+     */
     public boolean validateInt(int num,int min,int max)
     {
         return num>=min && num<=max;
     }
 
+
     /**
-     * Read a line with minimum lenght
-     * @param lenght minimum lenght
-     * @return line with more then minimum lenght
+     *
+     * @return true if buffer ready
+     * @throws IOException
      */
-    public String readLine(int lenght)
-    {
-        String out;
-        do {
-            try {
-                out= console2.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-                out="";
-            }
-
-        }while(!(out.length() >= lenght));
-
-        return out;
-    }
-
     public boolean bufferReady() throws IOException {
 
         return this.console2.ready();

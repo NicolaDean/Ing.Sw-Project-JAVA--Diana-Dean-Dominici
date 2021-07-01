@@ -6,6 +6,9 @@ import it.polimi.ingsw.utils.DebugMessages;
 import java.io.PrintWriter;
 import java.io.Serializable;
 
+/**
+ * Pong from server to client
+ */
 public class PingController extends GenericPing<ServerController> implements Serializable {
 
     boolean gameStarted = false;
@@ -43,11 +46,6 @@ public class PingController extends GenericPing<ServerController> implements Ser
     public void setGameStarted()
     {
         this.gameStarted = true;
-    }
-
-    public boolean getPinged()
-    {
-        return this.isPinged;
     }
 
     /**

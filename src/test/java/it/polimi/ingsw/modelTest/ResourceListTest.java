@@ -11,6 +11,9 @@ import static it.polimi.ingsw.enumeration.ResourceType.*;
 
 public class ResourceListTest {
 
+    /**
+     * check if can add res to custom resource list
+     */
     @Test
     public void AddToListTest()
     {
@@ -27,6 +30,9 @@ public class ResourceListTest {
 
     @Test
 
+    /**
+     * check if resource list remove override work
+     */
     public void RemovingTest()
     {
         List<Resource> tmp = new ResourceList();
@@ -37,6 +43,9 @@ public class ResourceListTest {
         assertTrue(ResourceOperator.extractQuantityOf(COIN,tmp) == 1);
     }
 
+    /**
+     * check if resource list isempty override work
+     */
     @Test
 
     public void isEmptyTest()

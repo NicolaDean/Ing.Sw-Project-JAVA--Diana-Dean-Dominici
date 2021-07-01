@@ -9,6 +9,9 @@ import it.polimi.ingsw.view.utils.Logger;
 import org.junit.jupiter.api.Test;
 
 public class LoggerTest {
+    /**
+     * test Market CLi rappresentation
+     */
     @Test
     public void testMarketPrint(){
         Logger l=new Logger();
@@ -18,6 +21,9 @@ public class LoggerTest {
         l.printMarket(v);
     }
 
+    /**
+     * test CLI rappresentation of faith track
+     */
     @Test
     public void testPapalPrint(){
         Logger l=new Logger();

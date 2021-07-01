@@ -51,6 +51,10 @@ public class StorageTest {
 
     }
 
+    /**
+     * check if leader bonus deposit work well and add 1 bonus deposit to storage in pos 4 or 5
+     * @throws Exception model exception
+     */
     @Test
     public void TestCorrectBonusDepositSwap() throws Exception {
         Player player = new Player();

@@ -26,7 +26,11 @@ public class ClientHandler implements Runnable, Serializable {
     transient private PingController pingController;
 
 
-    //TODO aggiungere una funzione nel game "getIndexFromIndex" che viene chiamata quando mischio i giocatori
+    /**
+     * Handle clients socket connection by waiting for their messages
+     * @param client       client socket
+     * @param controller   match controller
+     */
     public ClientHandler(Socket client,ServerController controller)
     {
 
@@ -39,22 +43,15 @@ public class ClientHandler implements Runnable, Serializable {
 
     }
 
+    /**
+     *
+     * @return true if socket is valid
+     */
     public boolean checkSocket()
     {
         return this.socket!=null;
     }
 
-    public void disconnect()
-    {
-        this.input.close();
-        this.output.close();
-
-        try {
-            this.socket.close();
-        } catch (IOException e) {
-            DebugMessages.printWarning("Client aborted for endgame");
-        }
-    }
 
     /**
      * get the ping controller (its needed to setPing)
@@ -248,6 +245,19 @@ public class ClientHandler implements Runnable, Serializable {
             output.println(p.generateJson());
             output.flush();
             lock.notify();
+        }
+
+    }
+
+    public static void sendToClient(Socket s,Packet p)
+    {
+
+        try {
+            PrintWriter writer = new PrintWriter(s.getOutputStream());
+            writer.println(p.generateJson());
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
