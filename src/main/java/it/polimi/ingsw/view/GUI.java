@@ -91,11 +91,11 @@ public class GUI extends Observable<ClientController> implements View{
     /**
      * print end screen for lorenzo game
      */
-    public void printEndScreenLorenzo(Boolean lorenzoWin){
+    public void printEndScreenLorenzo(Boolean lorenzoWin,int VP){
         DebugMessages.printWarning(lorenzoWin?"YOU LOST":"YOU WIN");
         Platform.runLater(()->{
             try {
-                GuiHelper.setRoot(FXMLpaths.endGame,new EndGameScene(lorenzoWin));
+                GuiHelper.setRoot(FXMLpaths.endGame,new EndGameScene(lorenzoWin,VP));
             } catch (IOException e) {
                 e.printStackTrace();
             }

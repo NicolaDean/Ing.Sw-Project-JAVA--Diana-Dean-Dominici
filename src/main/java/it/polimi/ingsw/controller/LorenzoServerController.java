@@ -75,7 +75,7 @@ public class LorenzoServerController extends ServerController{
         //check if lorenzo win
         Boolean lorenzoWin=game.checkCardCondition() || game.checkLastCellReached();
 
-        this.broadcastMessage(-1, new EndGameLorenzo(!lorenzoWin));
+        this.broadcastMessage(-1, new EndGameLorenzo(!lorenzoWin,game.getPlayers().get(0).getScore()));
     }
 
     @Override

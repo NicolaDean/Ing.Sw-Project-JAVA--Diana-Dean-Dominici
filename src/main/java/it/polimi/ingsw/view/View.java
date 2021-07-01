@@ -26,8 +26,11 @@ public interface View {
     /**
      * print end screen for lorenzo game
      */
-    public void printEndScreenLorenzo(Boolean lorenzoWin);
+    public void printEndScreenLorenzo(Boolean lorenzoWin,int VP);
 
+    /**
+     * print welcome screen
+     */
     public void printWelcomeScreen();
 
     public void setMiniMarketDiscardedResouce(BasicBall miniMarketBalls);
@@ -93,8 +96,12 @@ public interface View {
      */
     public void askBonusProduction(BonusProductionInterface[] bonus);
 
-
+    /**
+     * show list of resource with discont
+     * @param resourceList
+     */
     public void showDiscount(List<Resource> resourceList);
+
     /**
      * ask user what kind of basic production he want
      */

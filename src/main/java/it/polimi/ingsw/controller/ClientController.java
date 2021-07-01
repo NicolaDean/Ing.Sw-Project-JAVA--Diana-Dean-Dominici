@@ -76,11 +76,13 @@ public class ClientController implements Runnable{
         this.lock = new Object();
     }
 
+    public ClientController() {
+        lock = new Object();
+    }
 
     public int getIndex() {
         return index;
     }
-
 
     public void setActivatedLeaders(int i)
     {
@@ -91,15 +93,21 @@ public class ClientController implements Runnable{
         return activatedLeaders;
     }
 
+    public void setMyTurn(boolean myTurn) {
+        isMyTurn = myTurn;
+    }
 
-    public void setFirstTurnView(boolean firstTurn)
+    public boolean isMyTurn() {
+        return isMyTurn;
+    }
+
+    public View getView() {
+        return view;
+    }
+
+    public MiniModel getMiniModel()
     {
-        if(!firstTurn)
-        {
-            DebugMessages.printError("aaaaaa");
-            this.view.setStarted();
-        }
-
+        return this.model;
     }
 
     /**
@@ -111,13 +119,18 @@ public class ClientController implements Runnable{
      */
     public void setInformation(MiniModel model, BasicBall[][] miniBallsMarket, BasicBall miniBallDiscarted,boolean firstTurn)
     {
-        DebugMessages.printError("LOOOOOL");
         this.model = model;
         view.setMarket(miniBallsMarket,miniBallDiscarted);
         this.showDashboard();
     }
-    /*
+
+    /**
      * set all initial information into miniMarted
+     * @param index
+     * @param players
+     * @param productionDecks
+     * @param miniBallsMarket
+     * @param miniBallDiscarted
      */
     public void setInformation(int index,MiniPlayer[] players, Stack<ProductionCard>[][] productionDecks, BasicBall[][] miniBallsMarket, BasicBall miniBallDiscarted){
         view.setMarket(miniBallsMarket,miniBallDiscarted);
@@ -137,25 +150,6 @@ public class ClientController implements Runnable{
 
     }
 
-    public void setMyTurn(boolean myTurn) {
-        isMyTurn = myTurn;
-    }
-
-    public boolean isMyTurn() {
-        return isMyTurn;
-    }
-
-    public View getView() {
-        return view;
-    }
-
-
-
-    public MiniModel getMiniModel()
-    {
-        return this.model;
-    }
-
     /**
      *
      * @param newCard new card (under the buyed one)
@@ -167,6 +161,7 @@ public class ClientController implements Runnable{
     {
         this.model.updateCard(newCard,x,y,dashboardPos,index);
     }
+
     /**
      * Add new logged player to the minimodel
      * @param index
@@ -175,11 +170,6 @@ public class ClientController implements Runnable{
     public void notifyPlayer(int index, String nickname)
     {
         this.view.playerLogged(nickname);
-    }
-
-    public ClientController() {
-
-        lock = new Object();
     }
 
     /**
@@ -198,7 +188,6 @@ public class ClientController implements Runnable{
     {
         this.view.showError(errorManager.getErrorMessageFromCode(code));
     }
-
 
     /**
      * Set connection to server  status
@@ -222,6 +211,19 @@ public class ClientController implements Runnable{
             this.pongController = new PongController(index,output);
             new Thread(this.pongController);
         }
+    }
+
+    /**
+     * ser first turn screen
+     * @param firstTurn
+     */
+    public void setFirstTurnView(boolean firstTurn)
+    {
+        if(!firstTurn)
+        {
+            this.view.setStarted();
+        }
+
     }
 
     /**
@@ -317,9 +319,9 @@ public class ClientController implements Runnable{
      * notify player that game ended (
      * @param lorenzoWin true if lorenzo win
      */
-    public void endGameLorenzo(Boolean lorenzoWin)
+    public void endGameLorenzo(Boolean lorenzoWin,int VP)
     {
-        this.view.printEndScreenLorenzo(lorenzoWin);
+        this.view.printEndScreenLorenzo(lorenzoWin,VP);
     }
 
     /**
@@ -418,11 +420,6 @@ public class ClientController implements Runnable{
         this.sendMessage(new StartGame());
     }
 
-    public void printHelp()
-    {
-        view.askCommand();
-    }
-
 
     /**
      * create a new socket for this ip/port pair
@@ -485,7 +482,6 @@ public class ClientController implements Runnable{
             e.printStackTrace();
         }
     }
-
 
     /**
      * Set his own nickname to minimodel
@@ -619,6 +615,7 @@ public class ClientController implements Runnable{
         });
         t.start();
     }
+
     /**
      * wait server messages
      */
@@ -636,7 +633,6 @@ public class ClientController implements Runnable{
 
     }
 
-
     /**
      *
      * @param index     player index
@@ -647,7 +643,6 @@ public class ClientController implements Runnable{
     }
 
     /**
-     * //TODO Obsolete function, client almost never respond to server message immediatly but use directly "sendMessage"
      * Send respond to server
      */
     public void respondToClient()
@@ -691,11 +686,17 @@ public class ClientController implements Runnable{
         this.view.askBuy();
     }
 
+    /**
+     * ask the user what bonus producton card he want activate
+     */
     public void askBonusProductions()
     {
         this.view.askBonusProduction(this.model.getPersonalPlayer().getTrade());
     }
 
+    /**
+     * show list of resource with discont
+     */
     public void showDiscount()
     {
         this.view.showDiscount(this.model.getPersonalPlayer().getDiscount());
@@ -747,6 +748,9 @@ public class ClientController implements Runnable{
         this.view.askTurnType();
     }
 
+    /**
+     * ask initial resource to player
+     */
     public void askInitialResoruce()
     {
 
@@ -759,28 +763,49 @@ public class ClientController implements Runnable{
             this.view.askInitialResoruce(0);
     }
 
+    /**
+     * ask end turn to player
+     */
     public void askEndTurn(){
         this.view.askEndTurn();
     }
 
+    /**
+     * ask user what card he want to buy
+     */
     public void askBuy(){
             this.view.askBuy();
     }
 
+    /**
+     * ask user where to exract resources to pay a production/buy...
+     * @param resourceList
+     */
     public void askResourceExtraction(List<Resource> resourceList)
     {
         this.view.askResourceExtraction(resourceList);
     }
 
+    /**
+     * send to server list of instruction for insert resource
+     * @param instructions
+     */
     public void sendResourceInsertion(List<InsertionInstruction> instructions)
     {
         DebugMessages.printError("Inviato");
         this.sendMessage(new StorageMassInsertion(instructions));
     }
+
+    /**
+     * send to server list of instruction for insert resource from market
+     * @param buyturn
+     * @param instructions
+     */
     public void sendResourceExtraction(boolean buyturn,List<ExtractionInstruction> instructions)
     {
         this.sendMessage(new StorageMassExtraction( buyturn,instructions));
     }
+
     /**
      * Send a packet of market exrtrction
      * @param dir col = true row = false
@@ -792,7 +817,7 @@ public class ClientController implements Runnable{
     }
 
     /**
-     *extraction row from minimarker
+     * extraction row from minimarker
      * @param pos row position, it must be between 1 and 3
      */
     public void exstractRow(int pos)  {
@@ -810,10 +835,19 @@ public class ClientController implements Runnable{
         view.setMarket(null,null);
     }
 
+    /**
+     * show error from view
+     * @param msg message
+     */
     public void showError(String msg)
     {
         this.view.showError(msg);
     }
+
+    /**
+     * show message from view
+     * @param msg message
+     */
     public void showMessage(String msg)
     {
         this.view.showMessage(msg);
@@ -956,18 +990,33 @@ public class ClientController implements Runnable{
 
     }
 
+    /**
     public void executePacket(BasicPacketFactory lastAction) {
         analyze(lastAction.toJson());
     }
+     */
 
+    /**
+     * print lorenzo action
+     * @param cliColor
+     * @param token
+     */
     public void lorenzoTurn(String cliColor, String token) {
         this.view.lorenzoTurn(cliColor,token);
     }
 
+    /**
+     * set papal space boolean on player
+     * @param papalToken papal tocken array
+     * @param index player index
+     */
     public void updatePapalToken(boolean[] papalToken, int index) {
         this.model.getPlayers()[index].setPapalSpace(papalToken);
     }
 
+    /**
+     * ask user what production card he want to asctivate
+     */
     public void askProduction() {
         this.view.askProduction();
     }
