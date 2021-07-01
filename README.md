@@ -44,9 +44,9 @@ All project is documented with JavaDoc comment style
 * Server Persistance
 * Resilience to disconnection of clients
 * EXTRA:
-   * Nickname Random Generator (NRG) (if user dosnt chose a nickname it will automaticly generate a random one)
+   * Nickname Random Generator (NRG) (if user doesn't choose a nickname it will automaticly generate a random one)
    * Drag&Drop of Resources/cards inside GUI
-   * Persistance of server is optimized to load saved match only if a user try to reconnect to it (dosnt load all saving match at start)
+   * Persistance of server is optimized to load saved match only if a user try to reconnect to it (doesnt load all saving match at start)
 ## Compile & Package
 To generate jar we use SHADE maven plugin so you can simply type ```maven package``` and the jar will be generated inside ```"SHADE FOLDER"```
 ## Server
@@ -81,15 +81,15 @@ java -jar AM12.jar -server [-port -p <port_number>] [-r] [-res] [-resall] [-lead
 [Sequence Diagram of how it work](https://github.com/NicolaDean/ingswAM2021-Diana-Dean-Dominici/blob/master/Deliveries/Network/Reconnection.png)
 ### CLI
 * Open the CLI
-* (Wait the logo to appear) -> click INVIO
+* (Wait the logo to appear) -> click ENTER
 * If you read the message ```press -r o -reconnect to recconnect``` follow the instruction to reconnect
 * press ```-r o -reconnect```
 * If the match inside ```"reconnectInfo.json"``` exist and is still online/saved you will be reconnected
-#### Recoonection Faile possible cause
-* File ```"reconnectInfo.json"``` dosnt Exist
+#### Reconnection failed possible cause
+* File ```"reconnectInfo.json"``` doesnt exist
 * You launched the JAR from a directory different from one of the JAR
-* Match is already Finished
-* Saving File expiring date is reached
+* Match is already finished
+* Saving file expiring date is reached
 ### GUI
 * Open the GUI
 * In the Home scene click  "Try Reconnect" button
