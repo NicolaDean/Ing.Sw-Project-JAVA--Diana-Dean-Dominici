@@ -39,7 +39,7 @@ All project is documented with JavaDoc comment style
 * FULL Rules
 * GUI
 * CLI
-### Advanced Functionalities
+### Advanced Functionalities (3FA + Some extra)
 * MultiMatch
 * Server Persistance
 * Resilience to disconnection of clients
@@ -47,8 +47,8 @@ All project is documented with JavaDoc comment style
    * Nickname Random Generator (NRG) (if user dosnt chose a nickname it will automaticly generate a random one)
    * Drag&Drop of Resources/cards inside GUI
    * Persistance of server is optimized to load saved match only if a user try to reconnect to it (dosnt load all saving match at start)
-## Usage
-
+## Compile & Package
+To generate jar we use SHADE maven plugin so you can simply type ```maven package``` and the jar will be generated inside ```"SHADE FOLDER"```
 ## Server
 ### Excecution:
 To execute Server please run the following command
@@ -73,6 +73,7 @@ java -jar AM12.jar -server [-port -p <port_number>] [-r] [-res] [-resall] [-lead
 
 ## HOW reconnect to server after disconnection (of client or server)
 ```diff
+- (NOTE 0.) CLI DOSNT SUPPORT WINDOW CMD please use WLS, Windows 10 Powershell,MAC,Linux
 - (NOTE 1.) BEFORE LAUNCH CLIENT MOVE INSIDE THE SAME FOLDER AS JAR (move with cd command)
 - (NOTE 2.) IT IS POSSIBLE TO RECONNECT IN AUTOMATIC ONLY TO THE LAST MATCH ABBANDONED (read note3 to reconnect other match) 
 - (NOTE 3.) (TO reconnect to other match please modify the save file ```reconnectInfo.json``` by hand)
@@ -80,7 +81,7 @@ java -jar AM12.jar -server [-port -p <port_number>] [-r] [-res] [-resall] [-lead
 [Sequence Diagram of how it work](https://github.com/NicolaDean/ingswAM2021-Diana-Dean-Dominici/blob/master/Deliveries/Network/Reconnection.png)
 ### CLI
 * Open the CLI
-* (Wait the logo to appar) -> click INVIO
+* (Wait the logo to appear) -> click INVIO
 * If you read the message ```press -r o -reconnect to recconnect``` follow the instruction to reconnect
 * press ```-r o -reconnect```
 * If the match inside ```"reconnectInfo.json"``` exist and is still online/saved you will be reconnected
