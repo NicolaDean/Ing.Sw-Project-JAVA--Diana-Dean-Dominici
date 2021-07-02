@@ -22,7 +22,7 @@ A livello di gameplay invece gli utenti potranno disporre di un client CLI (term
 
 ### JavaDoc
 
-All project is documented with JavaDoc comment style
+All project is documented with [JavaDoc](https://github.com/NicolaDean/ingswAM2021-Diana-Dean-Dominici/tree/master/Deliveries/JavDoc) comment style
 ### Librerie e Plugins
 
 | Libreria/Plugin  | Descrizione |
