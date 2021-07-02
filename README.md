@@ -49,6 +49,8 @@ All project is documented with JavaDoc comment style
    * Persistance of server is optimized to load saved match only if a user try to reconnect to it (doesnt load all saving match at start)
 ## Compile & Package
 To generate jar we use SHADE maven plugin so you can simply type ```maven package``` and the jar will be generated inside ```"SHADE FOLDER"```
+## JAR
+[Download JAR](https://github.com/NicolaDean/ingswAM2021-Diana-Dean-Dominici/blob/master/DEPLOY%20JAR/AM12.jar)
 ## Server
 ### Excecution:
 To execute Server please run the following command
