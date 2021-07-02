@@ -53,13 +53,20 @@ public class MarketScene extends BasicSceneUpdater{
         setExstracionButtonVisible(true);
     }
 
+    /**
+     * update market scene
+     */
     @Override
     public void updateMarket() {
         this.notifyObserver(clientController -> { fillMarket(clientController.getView().getMiniMarketBalls(),clientController.getView().getMiniMarketDiscardedResouce()); });
     }
 
+    /**
+     * draw all balls
+     * @param balls
+     * @param discarted
+     */
     public void fillMarket(BasicBall[][] balls, BasicBall discarted){
-        //c'è qualcosa che non va con la drawBall
         for(int i=0;i<ConstantValues.marketRow;i++)
             for(int j=0;j<ConstantValues.marketCol;j++)
                 drawBall(balls[i][j], i, j, gpaneBalls);
@@ -67,6 +74,13 @@ public class MarketScene extends BasicSceneUpdater{
             drawBall(discarted,0,0,gpaneDiscardedBall);
     }
 
+    /**
+     * braw ball
+     * @param ball color
+     * @param row row
+     * @param col cal
+     * @param gpaneBalls pane
+     */
     public void drawBall(BasicBall ball,int row,int col,GridPane gpaneBalls){
         if(!isAlreadySetted) {
             this.balls[row][col] = loadImage("/images/balls/" + ball.getColor() + ".png", 50, 50);
@@ -77,6 +91,10 @@ public class MarketScene extends BasicSceneUpdater{
         }
     }
 
+    /**
+     * set off arrow botton
+     * @param visible
+     */
     public void setExstracionButtonVisible(boolean visible){
         row1.setVisible(visible);
         row2.setVisible(visible);
@@ -87,6 +105,10 @@ public class MarketScene extends BasicSceneUpdater{
         col4.setVisible(visible);
     }
 
+    /**
+     * exstractin from rows
+     * @param event event
+     */
     @FXML
     public void exstractionRow(ActionEvent event){
         this.notifyObserver(clientController -> this.isMyTurn=clientController.isMyTurn());
@@ -107,6 +129,10 @@ public class MarketScene extends BasicSceneUpdater{
         }
     }
 
+    /**
+     * exstractin from colums
+     * @param event event
+     */
     @FXML
     public void exstractionCol(ActionEvent event){
         this.notifyObserver(clientController -> this.isMyTurn=clientController.isMyTurn());
@@ -127,6 +153,10 @@ public class MarketScene extends BasicSceneUpdater{
         }
     }
 
+    /**
+     * go to dashboard
+     * @param event
+     */
     @FXML
     public void comeBack(ActionEvent event){
         this.notifyObserver(ClientController::showDashboard);

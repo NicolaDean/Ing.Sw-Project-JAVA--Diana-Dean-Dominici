@@ -337,7 +337,6 @@ public class GuiHelper extends Application {
      * @param controller   controller to use
      * @return button clicked by user(YES,NO,CANCEL...)
      */
-
     public static ButtonType loadDialog(String path,String title,BasicSceneUpdater controller)
     {
 

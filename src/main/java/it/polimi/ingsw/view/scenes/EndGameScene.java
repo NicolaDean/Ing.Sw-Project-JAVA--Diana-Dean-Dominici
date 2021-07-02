@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 
 /**
- * show user game result chart
+ * Scene used to request server informartion
  */
 public class EndGameScene extends BasicSceneUpdater{
 
