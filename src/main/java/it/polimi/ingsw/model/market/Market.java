@@ -22,6 +22,7 @@ public class Market implements Serializable {
     private List<Resource> pendingResourceExtracted = new ResourceList();
     private BasicBall discardedResouce;
     private BasicBall resouces[][]=new BasicBall[marketRow][marketCol];
+
     /**
      * build e shuffle balls
      */
