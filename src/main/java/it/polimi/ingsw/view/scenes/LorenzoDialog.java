@@ -5,6 +5,9 @@ import it.polimi.ingsw.utils.ConstantValues;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 
+/**
+ * show lorenzo action during turns in single player
+ */
 public class LorenzoDialog extends BasicSceneUpdater{
 
     @FXML

@@ -40,6 +40,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Home page of game
+ * Rappresent the dashboard with all user resources and faith track, and cards
+ * Here user can navigate to Market,Shop,Spy and do whatever action he need in this turn
+ */
 public class DashboardScene extends BasicSceneUpdater {
 
     @FXML

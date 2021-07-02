@@ -12,6 +12,9 @@ import javafx.scene.layout.Background;
 
 import java.util.List;
 
+/**
+ * set a different "userIndex" inside dashboard so you see others player data
+ */
 public class SpyScene extends DashboardScene {
 
     private String nickname = "0";

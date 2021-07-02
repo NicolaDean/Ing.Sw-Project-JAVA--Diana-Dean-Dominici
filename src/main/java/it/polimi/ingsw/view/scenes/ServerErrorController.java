@@ -7,6 +7,9 @@ import javafx.scene.control.Button;
 
 import java.io.IOException;
 
+/**
+ * server disconnected scene (if server goes down)
+ */
 public class ServerErrorController extends BasicSceneUpdater{
 
     @FXML

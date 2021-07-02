@@ -5,6 +5,9 @@ import javafx.scene.control.DialogPane;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * ask how much res he want to move in a deposit
+ */
 public class MoveScene extends BasicDialog{
     
     AtomicInteger value;

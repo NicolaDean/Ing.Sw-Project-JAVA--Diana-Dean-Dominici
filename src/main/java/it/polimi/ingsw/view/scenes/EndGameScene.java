@@ -9,7 +9,9 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-
+/**
+ * show user game result chart
+ */
 public class EndGameScene extends BasicSceneUpdater{
 
     @FXML

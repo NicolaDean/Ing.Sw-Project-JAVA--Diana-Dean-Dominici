@@ -16,6 +16,9 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
+/**
+ * allow user to see market during other turn or execut extraction during his turn
+ */
 public class MarketScene extends BasicSceneUpdater{
 
 

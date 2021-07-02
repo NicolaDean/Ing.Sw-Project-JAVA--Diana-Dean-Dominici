@@ -24,6 +24,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Class with all the common methods between scene controllers
+ * Its an Observer so whenever client modify the model this scene wil be notified
+ * Its an observable so whenever occure this class can notify controller
+ */
 public class BasicSceneUpdater extends Observable<ClientController> {
 
 

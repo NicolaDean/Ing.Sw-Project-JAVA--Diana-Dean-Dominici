@@ -14,6 +14,11 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.FlowPane;
 
 
+/**
+ * ask user which leader he want
+ * he can also delete his action and do another one
+ * (drag & drop)
+ */
 public class DialogLeader extends BasicDialog{
 
 

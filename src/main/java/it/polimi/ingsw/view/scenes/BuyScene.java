@@ -24,6 +24,9 @@ import java.io.IOException;
 import java.util.List;
 
 
+/**
+ * basicly the shop of cards inside game, allow to buy card and position them inside Dashboard
+ */
 public class BuyScene extends BasicSceneUpdater{
 
 
