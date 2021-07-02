@@ -40,11 +40,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Scene used to choose turn type, move resources and check papal space
+ */
 public class DashboardScene extends BasicSceneUpdater {
 
     @FXML
     public AnchorPane root;
-
     @FXML
     public Text swaptext;
     //SWAP

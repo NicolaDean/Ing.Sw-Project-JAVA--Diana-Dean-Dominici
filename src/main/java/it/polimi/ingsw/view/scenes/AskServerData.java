@@ -19,6 +19,9 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
+/**
+ * Scene used to request server informartion
+ */
 public class AskServerData extends BasicSceneUpdater {
 
     @FXML

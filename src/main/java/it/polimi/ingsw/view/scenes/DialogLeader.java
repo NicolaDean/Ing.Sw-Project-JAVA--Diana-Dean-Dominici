@@ -13,10 +13,10 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.FlowPane;
 
-
+/**
+ * Scene used to request leader card
+ */
 public class DialogLeader extends BasicDialog{
-
-
 
     @FXML
     public ImageView bin;
@@ -24,19 +24,21 @@ public class DialogLeader extends BasicDialog{
     public FlowPane source;
     @FXML
     public FlowPane destination;
-
+    @FXML
     public Button   btOk;
 
     LeaderCard[] cards;
-
     int [] out = new int[2];
-
     int numOfInserted =0;
+
+    /**
+     *
+     * @param cards leader card
+     */
     public DialogLeader(LeaderCard[] cards)
     {
         this.cards = cards;
     }
-
 
     @Override
     public void init() {
@@ -88,7 +90,6 @@ public class DialogLeader extends BasicDialog{
                 }
         );
     }
-
 
     /**
      * function called when an image is dropped from source to destination
@@ -148,6 +149,7 @@ public class DialogLeader extends BasicDialog{
             destination.getChildren().add(img);
         }
     }
+
     /**
      * simply consume drag event if present when mouse is over the destination/bin
      * @param event drag event
@@ -157,6 +159,7 @@ public class DialogLeader extends BasicDialog{
         event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         event.consume();
     }
+
     /**
      * function called if an imageView is dropped on the bin image
      * if the image was inside destination container this function remove it from view and decrese "numOfInserted"

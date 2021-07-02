@@ -5,6 +5,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 
+/**
+ * Scene used to dialog
+ */
 public class BasicDialog extends BasicSceneUpdater{
 
     @FXML

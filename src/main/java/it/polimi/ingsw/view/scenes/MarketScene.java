@@ -50,6 +50,9 @@ public class MarketScene extends BasicSceneUpdater{
         setExstracionButtonVisible(true);
     }
 
+    /**
+     * update market scene
+     */
     @Override
     public void updateMarket() {
         this.notifyObserver(clientController -> { fillMarket(clientController.getView().getMiniMarketBalls(),clientController.getView().getMiniMarketDiscardedResouce()); });

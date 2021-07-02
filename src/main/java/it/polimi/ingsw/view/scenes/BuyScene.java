@@ -23,9 +23,10 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.util.List;
 
-
+/**
+ * Scene used to buy turn
+ */
 public class BuyScene extends BasicSceneUpdater{
-
 
     @FXML
     public FlowPane Row1;
@@ -35,7 +36,6 @@ public class BuyScene extends BasicSceneUpdater{
     public FlowPane Row3;
     @FXML
     public AnchorPane root;
-
     @FXML
     public Label click;
     @FXML
@@ -44,8 +44,7 @@ public class BuyScene extends BasicSceneUpdater{
     public ImageView buyButton;
     @FXML
     public ImageView backButton;
-
-
+    @FXML
     private ImageView[][] cards;
 
     //Server request data
@@ -121,7 +120,6 @@ public class BuyScene extends BasicSceneUpdater{
 
         if(card== null)
         {
-            //TODO DRAW THE BACK OF CARD INSTEAD OF LEADER
             //Loading image
             this.cards[y][x] = loadImage(ConstantValues.backCard,130,200);
         }

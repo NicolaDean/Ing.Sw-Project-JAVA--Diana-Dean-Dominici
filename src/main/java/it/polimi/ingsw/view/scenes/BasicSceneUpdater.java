@@ -24,6 +24,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Parent class used by all scenes classes to implement commond funcion
+ */
 public class BasicSceneUpdater extends Observable<ClientController> {
 
 
@@ -34,11 +37,21 @@ public class BasicSceneUpdater extends Observable<ClientController> {
         //GuiHelper.resize(1280,720);
     }
 
+    /**
+     * reset observerver
+     */
     public void resetObserverAfterDialog() {
         GuiHelper.setCurrentScene(this);
         GuiHelper.getGui().notifyObserver(ctrl->ctrl.addModelObserver(this));
     }
 
+    /**
+     * Load a dialof from FXML file
+     * @param path        path of file
+     * @param title       title of dialog
+     * @param controller   controller to use
+     * @return button clicked by user(YES,NO,CANCEL...)
+     */
     public ButtonType loadDialog(String path,String title,BasicSceneUpdater controller)
     {
        return GuiHelper.loadDialog(path,title,controller);
@@ -129,6 +142,9 @@ public class BasicSceneUpdater extends Observable<ClientController> {
 
     }
 
+    /**
+     * update market scene
+     */
     public void updateMarket()
     {
 
@@ -145,6 +161,12 @@ public class BasicSceneUpdater extends Observable<ClientController> {
 
     }
 
+    /**
+     * update leader card
+     * @param player player
+     * @param leaderCards leader card
+     * @param bonus bonus deposit
+     */
     public void updateLeaders(int player, LeaderCard[] leaderCards, Deposit[] bonus)
     {
 

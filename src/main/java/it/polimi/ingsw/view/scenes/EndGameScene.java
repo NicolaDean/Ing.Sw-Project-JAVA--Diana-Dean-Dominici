@@ -9,7 +9,9 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-
+/**
+ * Scene used to request server informartion
+ */
 public class EndGameScene extends BasicSceneUpdater{
 
     @FXML
