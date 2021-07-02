@@ -999,11 +999,6 @@ public class ClientController implements Runnable{
 
     }
 
-    /**
-    public void executePacket(BasicPacketFactory lastAction) {
-        analyze(lastAction.toJson());
-    }
-     */
 
     /**
      * print lorenzo action
