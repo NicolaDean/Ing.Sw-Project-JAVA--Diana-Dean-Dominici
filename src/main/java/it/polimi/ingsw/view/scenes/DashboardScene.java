@@ -152,8 +152,10 @@ public class DashboardScene extends BasicSceneUpdater {
     Deposit[]                   tmpStorage;
     FlowPane leaderdeposit;
 
-
-
+    /**
+     * Costructor used to market extraction
+     * @param resourceList
+     */
     public DashboardScene(List<Resource> resourceList) {
         imHereAfterMarketExstraction =true;
         this.resourceExtracted =resourceList;
@@ -167,22 +169,12 @@ public class DashboardScene extends BasicSceneUpdater {
         imHereAfterMarketExstraction =false;
     }
 
-
-    /**
-     * Disable card click ability during spy (avoid user produce with others card)
-     *
-     * If this control is "broken" the server do contoll as well (so its impossible to use others card anyway)
-     */
-    public void disableCardClick()
-    {
-        cardDisabled = true;
-    }
     @Override
     public void init() {
 
         super.init();
 
-        initializecheckboxes();
+        initializeCheckboxes();
 
 
         showLeaders = false;
@@ -229,7 +221,7 @@ public class DashboardScene extends BasicSceneUpdater {
             }
 
             if(count==2) {
-                if(checkifmove())
+                if(checkIfMove())
                 {
                     AtomicInteger answer = new AtomicInteger();
                     MoveScene dialog = new MoveScene(answer);
@@ -296,6 +288,16 @@ public class DashboardScene extends BasicSceneUpdater {
     }
 
     /**
+     * Disable card click ability during spy (avoid user produce with others card)
+     *
+     * If this control is "broken" the server do contoll as well (so its impossible to use others card anyway)
+     */
+    public void disableCardClick()
+    {
+        cardDisabled = true;
+    }
+
+    /**
      * draw papal spaces of this players
      * @param papalSpaces
      */
@@ -319,7 +321,10 @@ public class DashboardScene extends BasicSceneUpdater {
         }
     }
 
-
+    /**
+     * draw lorenzo position
+     * @param lorenzo
+     */
     private void drawLorenzo(int lorenzo) {
         if (!(lorenzo>25)){
             Platform.runLater(() -> {
@@ -328,7 +333,10 @@ public class DashboardScene extends BasicSceneUpdater {
         }
     }
 
-    public void initializecheckboxes()
+    /**
+     * set check Boxes
+     */
+    public void initializeCheckboxes()
     {
         swap4.setOnAction(actionEvent -> select4());
         swap5.setOnAction(actionEvent -> select5());
@@ -342,7 +350,11 @@ public class DashboardScene extends BasicSceneUpdater {
 
     }
 
-    public boolean checkifmove()
+    /**
+     * checker for move
+     * @return
+     */
+    public boolean checkIfMove()
     {
         List<Integer> selected = new ArrayList<>();
         for(int i=0; i<boxes.length;i++) {
@@ -442,6 +454,7 @@ public class DashboardScene extends BasicSceneUpdater {
 
         });
     }
+
     public int getIndex()
     {
         return this.index;
@@ -465,6 +478,11 @@ public class DashboardScene extends BasicSceneUpdater {
         }
     }
 
+    /**
+     * method used by observable to update scene player position
+     * @param player player that has some updates in miniplayer
+     * @param newPos new player position
+     */
     @Override
     public void updatePlayerPosition(int player, int newPos) {
         if(player != this.index) return;
@@ -508,6 +526,11 @@ public class DashboardScene extends BasicSceneUpdater {
         chestservantq.setId("fancytext");
     }
 
+
+    /**
+     * update this miniplayer chest with server data
+     * @param chest new chest
+     */
     @Override
     public void updateChest(int player, List<Resource> chest) {
         if(player != this.index) return;
@@ -517,6 +540,10 @@ public class DashboardScene extends BasicSceneUpdater {
         Platform.runLater(() -> this.drawChest(chest));
     }
 
+    /**
+     * set storage to this miniplayer, used during miniplayer generation
+     * @param storage new storage
+     */
     @Override
     public void updateStorage(int player, Deposit[] storage)
     {
@@ -530,7 +557,10 @@ public class DashboardScene extends BasicSceneUpdater {
 
     }
 
-
+    /**
+     * remove element from grid pane
+     * @param pane
+     */
     public void removeElementFromGridPane(GridPane pane)
     {
         int s = pane.getChildren().size();
@@ -539,6 +569,7 @@ public class DashboardScene extends BasicSceneUpdater {
             pane.getChildren().remove(0);
         }
     }
+
     /**
      * Draw storage of player
      * @param storage  storage to print
@@ -931,6 +962,10 @@ public class DashboardScene extends BasicSceneUpdater {
         }
     }});}
 
+    /**
+     * discard leader
+     * @param j position
+     */
     private void discardleader(int j) {
         boolean out = GuiHelper.YesNoDialog("DISCARD", "Are you sure you want to discard this leader?");
         if(out)
@@ -942,10 +977,6 @@ public class DashboardScene extends BasicSceneUpdater {
 
 
     }
-
-
-
-
 
     /**
      * add resources rappresentation if this card is a deposit one and also active
@@ -1066,10 +1097,6 @@ public class DashboardScene extends BasicSceneUpdater {
         }
     }
 
-
-
-
-
     @Override
     public void reciveMessage(String msg) {
         super.reciveMessage(msg);
@@ -1138,6 +1165,9 @@ public class DashboardScene extends BasicSceneUpdater {
 
     }
 
+    /**
+     * reset checkbox
+     */
     public void select1()
     {
         if(countchecked()==3)
@@ -1145,6 +1175,9 @@ public class DashboardScene extends BasicSceneUpdater {
         lastchecked = swap1;
     }
 
+    /**
+     * reset checkbox
+     */
     public void select2()
     {
         if(countchecked()==3)
@@ -1152,6 +1185,9 @@ public class DashboardScene extends BasicSceneUpdater {
         lastchecked = swap2;
     }
 
+    /**
+     * reset checkbox
+     */
     public void select3()
     {
         if(countchecked()==3)
@@ -1159,12 +1195,19 @@ public class DashboardScene extends BasicSceneUpdater {
         lastchecked = swap3;
     }
 
+    /**
+     * reset checkbox
+     */
     public void select4()
     {
         if(countchecked()==3)
             uncheck(swap4);
         lastchecked = swap4;
     }
+
+    /**
+     * reset checkbox
+     */
     public void select5()
     {
         if(countchecked()==3)
@@ -1172,6 +1215,10 @@ public class DashboardScene extends BasicSceneUpdater {
         lastchecked = swap5;
     }
 
+    /**
+     *
+     * @return number of check box
+     */
     public int countchecked()
     {
         int count = 0;
@@ -1182,10 +1229,14 @@ public class DashboardScene extends BasicSceneUpdater {
         return count;
     }
 
-    public void uncheck(CheckBox lmao)
+    /**
+     * uncheck all boxes without param
+     * @param check checkbox
+     */
+    public void uncheck(CheckBox check)
     {
         for (CheckBox c :boxes) {
-            if(c.isSelected() && c!=lastchecked && c!=lmao)
+            if(c.isSelected() && c!=lastchecked && c!=check)
                 c.setSelected(false);
         }
     }
