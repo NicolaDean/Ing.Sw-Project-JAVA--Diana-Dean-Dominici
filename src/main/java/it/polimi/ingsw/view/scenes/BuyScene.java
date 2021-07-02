@@ -23,8 +23,9 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.util.List;
 
+
 /**
- * Scene used to buy turn
+ * basicly the shop of cards inside game, allow to buy card and position them inside Dashboard
  */
 public class BuyScene extends BasicSceneUpdater{
 

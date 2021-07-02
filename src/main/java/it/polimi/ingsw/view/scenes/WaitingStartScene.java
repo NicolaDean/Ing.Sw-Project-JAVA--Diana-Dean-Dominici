@@ -11,8 +11,9 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-
-//TODO TROVARE UN MODO DI RENDERE I CONTROLLORI DELLE SCENE VISIBILI DALLE FUNZIONI DELLA GUI
+/**
+ * scene to wait others player to login (when user stargame this scene disappear)
+ */
 public class WaitingStartScene extends BasicSceneUpdater {
 
     int userMsgPadding = 0;

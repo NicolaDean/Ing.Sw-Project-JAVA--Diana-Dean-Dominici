@@ -9,6 +9,9 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
+/**
+ * ask user nickname
+ */
 public class LoginScene extends BasicSceneUpdater {
 
     @FXML

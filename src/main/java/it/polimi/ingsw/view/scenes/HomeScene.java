@@ -8,6 +8,9 @@ import it.polimi.ingsw.view.utils.FXMLpaths;
 
 import java.io.IOException;
 
+/**
+ * Home page with Login and reconnect buttons
+ */
 public class HomeScene  extends BasicSceneUpdater {
 
 

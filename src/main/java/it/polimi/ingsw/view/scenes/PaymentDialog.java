@@ -22,6 +22,9 @@ import java.util.List;
 
 import static it.polimi.ingsw.enumeration.ResourceType.COIN;
 
+/**
+ * allow user to pay a debt by drag and drop resources from storage/chest to payment box
+ */
 public class PaymentDialog extends BasicDialog{
 
     @FXML

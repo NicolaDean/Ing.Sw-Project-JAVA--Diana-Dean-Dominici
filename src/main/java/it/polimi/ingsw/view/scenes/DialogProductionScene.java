@@ -8,6 +8,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import it.polimi.ingsw.utils.ConstantValues;
 
+/**
+ * Ask user where he want to put a buyed card
+ */
 public class DialogProductionScene extends BasicSceneUpdater{
 
     @FXML

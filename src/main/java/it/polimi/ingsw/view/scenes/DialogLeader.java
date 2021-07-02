@@ -13,8 +13,11 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.FlowPane;
 
+
 /**
- * Scene used to request leader card
+ * ask user which leader he want
+ * he can also delete his action and do another one
+ * (drag & drop)
  */
 public class DialogLeader extends BasicDialog{
 

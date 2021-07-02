@@ -17,6 +17,9 @@ import javafx.scene.layout.Pane;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * ask user which resources he want from a list (drag & drop)
+ */
 public class InitialResources extends BasicDialog{
 
 

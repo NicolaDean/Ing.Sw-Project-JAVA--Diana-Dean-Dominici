@@ -20,7 +20,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 
 /**
- * Scene used to request server informartion
+ * Scene to ask user IP and port of server to connect
  */
 public class AskServerData extends BasicSceneUpdater {
 
