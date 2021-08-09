@@ -11,6 +11,15 @@ L'approccio utilizzato per realizzare l'app è del tipo MVC (ModelViewControl) i
 
 A livello di gameplay invece gli utenti potranno disporre di un client CLI (terminale) oppure di un client GUI (interfaccia grafica).
 
+## Authors
+
+* [Diana Federico Filippo](https://github.com/FedericoFilippoDiana)
+* [Dean Nicola](https://github.com/NicolaDean)
+* [Dominici Riccardo](https://github.com/RiccardoDominici)
+
+### Copyright
+The CODE is openSource, Graphical resources (Images, GameBoard, Cards...) instead are under copyright of  [Cranio Creations](http://www.craniocreations.it/prodotto/lorenzo-il-magnifico/)
+
 ## Documentazione
 
 ### UML
